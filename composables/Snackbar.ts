@@ -6,7 +6,7 @@ export const useSnackbar = () => {
     Array<{ id: number; type: SnackbarType; message: string }>
   >("snackbarQueue", () => []);
 
-  const enqueue = (type: SnackbarType, message: string) => {
+  const enqueue = (message: string, type: SnackbarType) => {
     const id = idCounter.value;
     queue.value.push({ id: idCounter.value++, type, message });
     setTimeout(() => dequeue(id), 5000);
