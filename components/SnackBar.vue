@@ -10,20 +10,22 @@ const snackbarStore = useSnackbar();
     <div
       class="group m-2 flex items-center justify-between rounded-lg px-2 py-0.5 text-white shadow-md"
       :class="
-        snackbar.type === 'info'
-          ? 'bg-slate-900'
-          : snackbar.type === 'error'
+        snackbar.type === 'error'
           ? 'bg-red-500'
           : snackbar.type === 'success'
-          ? 'bg-emerald-500'
-          : 'bg-amber-500'
+            ? 'bg-emerald-500'
+            : snackbar.type === 'warning'
+              ? 'bg-yellow-500'
+              : snackbar.type === 'info'
+                ? 'bg-slate-900'
+                : 'bg-slate-900'
       "
       v-for="snackbar in snackbarStore.queue.value"
       :key="snackbar.id"
     >
       <p class="mr-0.5">{{ snackbar.message }}</p>
       <XCircleIcon
-        class="invisible size-5 cursor-pointer group-hover:visible"
+        class="hidden size-5 cursor-pointer group-hover:block"
         @click="snackbarStore.dequeue(snackbar.id)"
       />
     </div>

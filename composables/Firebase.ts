@@ -1,4 +1,3 @@
-import type { Firestore } from "firebase/firestore";
 import {
   doc,
   setDoc,
@@ -6,7 +5,6 @@ import {
   getDocs,
   getDoc,
   updateDoc,
-  deleteDoc,
   query,
   where,
 } from "firebase/firestore";
@@ -21,8 +19,9 @@ const uuid = () => {
 };
 
 //https://firebase.google.com/docs/firestore/manage-data/add-data
-export function useFirebase(db: Firestore) {
-  const { user } = useAuth(db);
+export function useFirebase() {
+  const { user } = useAuth();
+  const { $db: db } = useNuxtApp();
 
   /**
    *
