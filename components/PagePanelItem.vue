@@ -18,7 +18,6 @@ const props = defineProps<{
   selected: boolean;
 }>();
 const emit = defineEmits<{
-  click: [];
   addPage: [];
   toggleFavorite: [];
   duplicatePrivate: [];
@@ -35,10 +34,10 @@ const isOpen = ref(false);
 </script>
 
 <template>
-  <button
+  <NuxtLink
     class="group/pageitem flex items-center justify-between rounded-md py-1 hover:bg-gray-200 focus:border-transparent focus:outline-none focus:ring-0 dark:hover:bg-stone-700"
     :class="{ 'bg-gray-200 font-semibold dark:bg-stone-700': props.selected }"
-    @click="() => emit('click')"
+    :to="`/edit/${props.page.id}`"
   >
     <div class="flex">
       <button
@@ -151,5 +150,5 @@ const isOpen = ref(false);
         </button>
       </ToolTip>
     </div>
-  </button>
+  </NuxtLink>
 </template>

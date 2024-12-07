@@ -1,4 +1,5 @@
 import type { PageItem, Page, PageUpdate } from "@/types/page";
+
 const DEBOUNCE_TIME = 2000;
 
 export function usePageState() {
@@ -6,17 +7,23 @@ export function usePageState() {
   const snackbarStore = useSnackbar();
 
   // private state
-  const lastUpdatedAt = ref(Date.now());
+  const lastUpdatedAt = useState("lastUpdatedAt", () => Date.now());
 
   // public state
-  const pages = ref<PageItem[]>([]);
-  const currentPage = ref<Page>();
+  const pages = useState<PageItem[]>("pages", () => []);
+  const currentPage = useState<Page | undefined>(
+    "currentPage",
+    () => undefined,
+  );
 
   /**
    * Unsaved changes to the current page, not including blocks
    * If undefined, there are no unsaved changes
    */
-  const pageUpdateToSave = ref<PageUpdate>();
+  const pageUpdateToSave = useState<PageUpdate | undefined>(
+    "pageUpdateToSave",
+    () => undefined,
+  );
 
   const selectPage = async (pageId: string) => {
     const page = await firebase.getPage(pageId);
@@ -29,6 +36,7 @@ export function usePageState() {
       executePageUpdateDb();
     }
     currentPage.value = page;
+    navigateTo(`/edit/${pageId}`);
   };
 
   const createPage = async () => {

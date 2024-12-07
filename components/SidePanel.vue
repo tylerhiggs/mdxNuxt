@@ -21,7 +21,6 @@ const emit = defineEmits<{
   openSettings: [];
   openSearch: [];
   createPage: [];
-  openPage: [string];
   deletePage: [string];
 }>();
 
@@ -51,9 +50,9 @@ const toggleSearchCommand = `${ctrlOrCmd}+K`;
 </script>
 
 <template>
-  <div
+  <nav
     v-if="userStore.user.value && isOpen"
-    class="group fixed bottom-0 left-0 top-0 flex w-64 flex-col bg-slate-50 px-1 py-0.5 dark:bg-stone-800"
+    class="group relative bottom-0 left-0 top-0 flex h-full w-64 flex-col bg-slate-50 px-1 py-0.5 dark:bg-stone-800"
   >
     <Popover class="relative w-full">
       <PopoverButton
@@ -150,7 +149,6 @@ const toggleSearchCommand = `${ctrlOrCmd}+K`;
       :key="page.id"
       :page="page"
       :selected="page.id === currentPageId"
-      @click="() => emit('openPage', page.id)"
       @delete="() => emit('deletePage', page.id)"
     />
     <p class="my-0.5 ml-3 text-xs font-normal text-gray-400">Private</p>
@@ -158,8 +156,7 @@ const toggleSearchCommand = `${ctrlOrCmd}+K`;
       v-for="page in privatePages"
       :key="page.id"
       :page="page"
-      @click="() => emit('openPage', page.id)"
       :selected="page.id === currentPageId"
     />
-  </div>
+  </nav>
 </template>
