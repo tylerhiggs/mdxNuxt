@@ -1,19 +1,14 @@
-import {
-  GoogleAuthProvider,
-  getAuth,
-  signInWithPopup,
-  signOut,
-} from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 
 // https://github.com/nuxt/nuxt/issues/14508
 
 export const useAuth = () => {
-  const { $db: db } = useNuxtApp();
+  const { $db: db, $auth: auth } = useNuxtApp();
   const snackbarStore = useSnackbar();
 
   const isSignedIn = () => {
-    return !!getAuth().currentUser;
+    return !!auth.currentUser;
   };
   const loading = useState<boolean>("loadingUser", () => true);
   const userRef = useState<{
@@ -62,11 +57,11 @@ export const useAuth = () => {
 
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
-    signInWithPopup(getAuth(), provider);
+    signInWithPopup(auth, provider);
   };
 
   const signOutInternal = () => {
-    signOut(getAuth())
+    signOut(auth)
       .then(() => {
         console.log("Signed out");
       })

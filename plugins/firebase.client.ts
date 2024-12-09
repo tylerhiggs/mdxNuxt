@@ -24,10 +24,10 @@ export default defineNuxtPlugin((nuxtApp) => {
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
-  const db = getFirestore(app);
   const auth = getAuth(app);
+  const db = getFirestore(app);
 
-  onAuthStateChanged(getAuth(), async (user) => {
+  onAuthStateChanged(auth, async (user) => {
     const store = useAuth();
     const snackbarStore = useSnackbar();
     if (!user && !store.loading.value) {

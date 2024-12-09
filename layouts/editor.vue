@@ -2,14 +2,19 @@
 import { ArrowPathIcon } from "@heroicons/vue/24/outline";
 const authStore = useAuth();
 const { pages, currentPage, createPage, deletePage, getPages } = usePageState();
-watch(
-  () => authStore.user.value,
-  async (user) => {
-    if (user) {
-      getPages();
-    }
-  },
-);
+onMounted(() => {
+  if (authStore.user.value) {
+    getPages();
+  }
+  watch(
+    () => authStore.user.value,
+    async (user) => {
+      if (user) {
+        getPages();
+      }
+    },
+  );
+});
 
 const showSearch = ref(false);
 const showSettings = ref(false);
