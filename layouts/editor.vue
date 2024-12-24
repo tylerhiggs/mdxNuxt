@@ -38,6 +38,7 @@ const showSettings = ref(false);
         <slot />
         <SearchDialog :open="showSearch" @close="showSearch = false" />
         <SettingsDialog :open="showSettings" @close="showSettings = false" />
+        <SnackBar />
       </div>
     </div>
   </div>

@@ -8,7 +8,13 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import type { Page, PageUpdate, PageItem, Block } from "../types/page";
+import type {
+  Page,
+  PageUpdate,
+  PageItem,
+  Block,
+  BlockUpdate,
+} from "../types/page";
 
 const uuid = () => {
   return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
@@ -113,6 +119,32 @@ export function useFirebase() {
     }
   };
 
+  const updatePageBlock = async ({
+    textContent,
+    pageId,
+    blockId,
+  }: BlockUpdate) => {
+    console.log("we made it", textContent, pageId, blockId);
+    if (!user.value) {
+      console.error("User not signed in");
+      return false;
+    }
+    try {
+      await updateDoc(
+        doc(db, "users", user.value.id, "pages", pageId, "blocks", blockId),
+        {
+          lastUpdatedAt: Date.now(),
+          lastUpdatedByName: user.value.displayName || "Anonymous",
+          textContent,
+        },
+      );
+      return true;
+    } catch (e) {
+      console.error("Error updating page block:", e);
+      return false;
+    }
+  };
+
   /**
    *
    * @param title
@@ -136,13 +168,7 @@ export function useFirebase() {
       id: newBlockId,
       type: "text",
       index: 0,
-      textContent: [
-        {
-          id: uuid(),
-          types: [],
-          content: "",
-        },
-      ],
+      textContent: "",
     };
     const newPage: Page = {
       id: newId,
@@ -209,5 +235,6 @@ export function useFirebase() {
     getPage,
     updatePage,
     deletePage,
+    updatePageBlock,
   };
 }

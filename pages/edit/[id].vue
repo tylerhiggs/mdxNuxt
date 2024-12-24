@@ -8,7 +8,8 @@ definePageMeta({
   },
 });
 const emojiDataStore = useEmojiData();
-const { selectPage, isSaved, currentPage, updatePage } = usePageState();
+const { selectPage, isSaved, currentPage, updatePage, updateBlock } =
+  usePageState();
 const route = useRoute();
 watch(
   () => route.params.id,
@@ -30,6 +31,7 @@ onMounted(() => {
     :page="currentPage"
     :isSaved="isSaved"
     @updatePage="updatePage"
+    @updateBlock="updateBlock"
   />
 
   <div v-else>

@@ -1,4 +1,9 @@
-import type { PageItem, Page, PageUpdate } from "@/types/page";
+import {
+  type PageItem,
+  type Page,
+  type PageUpdate,
+  type BlockUpdate,
+} from "@/types/page";
 
 const DEBOUNCE_TIME = 2000;
 
@@ -22,6 +27,11 @@ export function usePageState() {
    */
   const pageUpdateToSave = useState<PageUpdate | undefined>(
     "pageUpdateToSave",
+    () => undefined,
+  );
+
+  const blockUpdateToSave = useState<BlockUpdate | undefined>(
+    "blockUpdateToSave",
     () => undefined,
   );
 
@@ -80,6 +90,37 @@ export function usePageState() {
     snackbarStore.enqueue("Successfully updated page", "success");
   };
 
+  const executeBlockUpdateDb = async () => {
+    const update = blockUpdateToSave.value;
+    if (!update) {
+      console.error("No page update to save");
+      snackbarStore.enqueue("No page update to save", "error");
+      return;
+    }
+    const success = await firebase.updatePageBlock(update);
+    if (!success) {
+      console.error(
+        "[pageState]: Error updating page block - ",
+        blockUpdateToSave.value,
+      );
+      snackbarStore.enqueue("Error updating page block", "error");
+      return;
+    }
+    if (currentPage.value && currentPage.value.id === update.pageId) {
+      currentPage.value = {
+        ...currentPage.value,
+        blocks: currentPage.value.blocks.map((block) => {
+          if (block.id === update.blockId) {
+            return { ...block, textContent: update.textContent };
+          }
+          return block;
+        }),
+      };
+    }
+    blockUpdateToSave.value = undefined;
+    snackbarStore.enqueue("Successfully updated page block", "success");
+  };
+
   /**
    *
    * Update the current page with the given update, but not the
@@ -133,6 +174,37 @@ export function usePageState() {
     }, DEBOUNCE_TIME);
   };
 
+  const updateBlock = async (
+    pageId: string,
+    blockId: string,
+    textContent: string,
+    instantSave: boolean = false,
+  ) => {
+    if (!currentPage.value) {
+      console.error("No current page to update");
+      snackbarStore.enqueue("No current page to update", "error");
+      return;
+    }
+    if (pageId !== currentPage.value.id) {
+      console.error("Unable to update page due to mismatching ids");
+      snackbarStore.enqueue("Unable to update page", "error");
+    }
+    blockUpdateToSave.value = {
+      blockId,
+      pageId,
+      textContent,
+    };
+    lastUpdatedAt.value = Date.now();
+    if (instantSave) {
+      executeBlockUpdateDb();
+      return;
+    }
+    setTimeout(() => {
+      if (lastUpdatedAt.value + DEBOUNCE_TIME > Date.now()) return;
+      executeBlockUpdateDb();
+    }, DEBOUNCE_TIME);
+  };
+
   const deletePage = async (pageId: string) => {
     const success = await firebase.deletePage(pageId);
     if (!success) {
@@ -170,7 +242,16 @@ export function usePageState() {
     ),
     currentPage: computed(() => {
       return currentPage.value
-        ? { ...currentPage.value, ...pageUpdateToSave.value }
+        ? {
+            ...currentPage.value,
+            ...pageUpdateToSave.value,
+            blocks: currentPage.value.blocks.map((block) => {
+              return blockUpdateToSave.value &&
+                block.id === blockUpdateToSave.value.blockId
+                ? { ...block, textContent: blockUpdateToSave.value.textContent }
+                : block;
+            }),
+          }
         : undefined;
     }),
     selectPage,
@@ -181,5 +262,6 @@ export function usePageState() {
     }),
     deletePage,
     getPages,
+    updateBlock,
   };
 }

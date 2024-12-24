@@ -13,7 +13,7 @@ const props = defineProps<{
 
 const emits = defineEmits<{
   updatePage: [page: PageUpdate, instantSave?: boolean];
-  updateBlock: [block: Block, instantSave?: boolean];
+  updateBlock: [pageId: string, blockId: string, content: string];
 }>();
 
 const updateTitle = (event: Event) => {
@@ -30,10 +30,82 @@ const favoritePage = () => {
 const selectEmoji = (emoji: string) => {
   emits("updatePage", { id: props.page.id, emoji }, true);
 };
-const updateBlock = (block: Block, instantSave?: boolean) => {
-  emits("updateBlock", block, instantSave);
+const updateBlock = (event: Event, block: Block) => {
+  const target = event.target as HTMLDivElement;
+  const innerText = target.innerText.replace(/\n/g, "");
+  if (!element.value) console.error("element is null in onInput");
+  latestCaretPos.value = getCaretPosition();
+  resetCaretPositionToLatestValue(latestCaretPos.value);
+  emits("updateBlock", props.page.id, block.id, innerText);
+};
+const focusedBlockId = ref(props.page.blocks[0].id);
+const element = computed(() => {
+  return elements.value.find((el) => el.id === focusedBlockId.value);
+});
+const elements = ref<HTMLElement[]>([]);
+
+watch(element, (el) => {
+  if (el) {
+    el.focus();
+  }
+});
+
+onUpdated(() => {
+  if (element.value && getCaretPosition() !== latestCaretPos.value) {
+    resetCaretPositionToLatestValue(latestCaretPos.value);
+  }
+});
+
+/**
+ * Get the current caret position in the contenteditable element
+ */
+const getCaretPosition = () => {
+  try {
+    const selection = window.getSelection();
+    if (selection && element.value) {
+      const range = selection.getRangeAt(0);
+      const preCaretRange = range.cloneRange();
+      preCaretRange.selectNodeContents(element.value);
+      preCaretRange.setEnd(range.endContainer, range.endOffset);
+      return preCaretRange.toString().length;
+    }
+    console.error(
+      `returning 0 because ${selection ? "element" : "selection"} is null`,
+    );
+    return 0;
+  } catch (e) {
+    console.error("Unable to get the caret position: ", e);
+    return 0;
+  }
+};
+
+const latestCaretPos = ref(0);
+
+const resetCaretPositionToLatestValue = (index: number) => {
+  const selection = window.getSelection();
+  if (selection && element.value?.childNodes[0]) {
+    const range = document.createRange();
+    range.setStart(element.value.childNodes[0], index);
+    range.collapse(true);
+    selection.removeAllRanges();
+    selection.addRange(range);
+  }
 };
 </script>
+
+<style scoped>
+.textarea {
+  display: block;
+  overflow: hidden;
+  min-height: 80%;
+  line-height: 20px;
+}
+
+.textarea[contenteditable]:empty::before {
+  content: "Write something, or type / to use commands";
+  color: gray;
+}
+</style>
 
 <template>
   <div class="absolute inset-0 left-64 z-0 dark:bg-stone-900 dark:text-white">
@@ -85,7 +157,20 @@ const updateBlock = (block: Block, instantSave?: boolean) => {
     </div>
 
     <div class="flex h-full w-full flex-col items-center">
-      Todo: put editor content here
+      <span
+        contenteditable
+        @input="(event) => updateBlock(event, block)"
+        @keydown.enter="
+          () => snackbarStore.enqueue('Not implemented', 'warning')
+        "
+        v-for="block in page.blocks"
+        :key="block.id"
+        ref="elements"
+        :id="block.id"
+        class="textarea mt-4 w-8/12 resize-none border-none bg-transparent text-lg outline-none dark:text-white"
+      >
+        {{ block.textContent }}
+      </span>
     </div>
   </div>
 </template>

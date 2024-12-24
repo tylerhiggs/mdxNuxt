@@ -23,33 +23,17 @@ export type Block = {
   id: string;
   index: number;
   type: BlockType;
-  textContent: TextNode[];
+  textContent: string;
 };
 
-export type BlockType = "text" | "code" | "table";
-
-export type TextNode = {
-  id: string;
-  types: TextNodeType[];
-  content: string;
-  tabs?: number;
-  link?: string;
-};
-
-export type TextNodeType =
-  | "bold"
-  | "italic"
-  | "strikethrough"
-  | "link"
-  | "inline-code"
-  | "ol"
-  | "ul"
-  | "blockquote"
-  | "h1"
-  | "h2"
-  | "h3";
+export type BlockType = "text" | "table";
 
 export type PageUpdate = { id: string } & Partial<Omit<Page, "blocks">>;
+export type BlockUpdate = {
+  pageId: string;
+  blockId: string;
+  textContent: string;
+};
 
 export type PageItem = {
   id: string;
