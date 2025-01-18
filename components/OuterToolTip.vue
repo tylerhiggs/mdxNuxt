@@ -3,8 +3,8 @@ import { useTooltip } from "~/composables/Tooltip";
 
 const tooltipStore = useTooltip();
 
-const xCoord = computed(() => `${tooltipStore.x}px`);
-const yCoord = computed(() => `${tooltipStore.y}px`);
+const xCoord = computed(() => `${tooltipStore.x.value}px`);
+const yCoord = computed(() => `${tooltipStore.y.value}px`);
 </script>
 
 <style scoped>
@@ -40,9 +40,9 @@ const yCoord = computed(() => `${tooltipStore.y}px`);
 <template>
   <div
     class="absolute z-50 text-nowrap rounded-md bg-black px-2 py-1 text-xs text-white"
-    :class="[tooltipStore.position]"
-    v-if="tooltipStore.x"
+    :class="[tooltipStore.position.value]"
+    v-if="tooltipStore.x.value"
   >
-    {{ tooltipStore.title }}
+    {{ tooltipStore.title.value }}
   </div>
 </template>

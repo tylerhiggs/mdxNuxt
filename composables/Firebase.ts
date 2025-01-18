@@ -87,6 +87,9 @@ export function useFirebase() {
           const data = doc.data() as Block;
           ret.blocks.push(data);
         });
+        setDoc(doc(db, "users", user.value.id), {
+          lastPageVisited: ret.id,
+        });
         return ret;
       }
       console.error("No such document");
@@ -202,6 +205,9 @@ export function useFirebase() {
           ...block,
         },
       );
+      setDoc(doc(db, "users", user.value.id), {
+        lastPageVisited: newId,
+      });
       return newPage;
     } catch (error) {
       console.error("Error adding page:", error);

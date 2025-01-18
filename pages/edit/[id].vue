@@ -14,6 +14,7 @@ const route = useRoute();
 watch(
   () => route.params.id,
   (paramId) => {
+    console.log("paramId", paramId);
     const strParamId = paramId as string;
     if (currentPage.value?.id !== strParamId) {
       selectPage(strParamId as string);
@@ -22,6 +23,7 @@ watch(
 );
 onMounted(() => {
   emojiDataStore.getEmojiData();
+  selectPage(route.params.id as string);
 });
 </script>
 

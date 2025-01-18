@@ -39,6 +39,7 @@ const showSettings = ref(false);
         <SearchDialog :open="showSearch" @close="showSearch = false" />
         <SettingsDialog :open="showSettings" @close="showSettings = false" />
         <SnackBar />
+        <OuterToolTip />
       </div>
     </div>
   </div>

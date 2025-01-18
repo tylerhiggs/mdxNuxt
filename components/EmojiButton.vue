@@ -53,7 +53,6 @@ const mouseover = (event: MouseEvent) => {
     </ListboxOptions>
   </Listbox>
   <button
-    v-else
     class="rounded-sm p-1 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none"
     @click="() => emits('select', props.emoji.char)"
     @mouseenter="mouseover"

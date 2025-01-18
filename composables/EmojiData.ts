@@ -19,37 +19,28 @@ export const useEmojiData = () => {
     () => ({}),
   );
   const loading = useState("loadingEmojiData", () => true);
-  const index = useState<{ [word: string]: EmojiData[] }>(
-    "emojiDataIndex",
-    () => ({}),
-  );
-  const indexKeys = computed(() => Object.keys(index.value));
 
-  const searchEmoji = async (query: string) => {
+  const searchEmoji = (query: string) => {
+    if (!query) return Object.values(emojiData.value).flat();
     const words = query.toLowerCase().split(" ");
-    const matchingKeys = indexKeys.value.filter((key) =>
-      words.some((word) => key.toLowerCase().includes(word)),
-    );
-    const matchingEmoji = matchingKeys.reduce((accumulator, currentValue) => {
-      accumulator.push(...index.value[currentValue]);
-      return accumulator;
-    }, [] as EmojiData[]);
-    const used = new Set<string>();
-    return matchingEmoji.filter((emoji) => {
-      if (used.has(emoji.char)) return false;
-      used.add(emoji.char);
-      return true;
-    });
+    return Object.values(emojiData.value)
+      .flat()
+      .filter((emoji) =>
+        words.every(
+          (word) =>
+            emoji.name.toLowerCase().includes(word) ||
+            emoji.group.toLowerCase().includes(word) ||
+            emoji.subgroup.toLowerCase().includes(word),
+        ),
+      );
   };
 
   const getEmojiData = async () => {
-    console.log("Getting emoji data");
+    if (emojiData.value && emojiData.value.length) return;
     const usedNames = new Set<string>();
     try {
       const response = await fetch(URL);
       const data = (await response.json()) as Array<EmojiData>;
-      console.log("Got emoji data");
-      console.log(data);
       emojiData.value = data.reduce(
         (accumulator, currentValue) => {
           if (!accumulator[currentValue.group]) {
@@ -78,27 +69,6 @@ export const useEmojiData = () => {
           return accumulator;
         },
         {} as { [group: string]: EmojiData[] },
-      );
-      console.log(emojiData.value);
-
-      index.value = data.reduce(
-        (accumulator, currentValue) => {
-          const words = [
-            ...currentValue.name.split(" "),
-            ...currentValue.group.split(" "),
-            ...currentValue.subgroup.split("-"),
-          ];
-          words
-            .filter((word) => word.length > 2)
-            .forEach((word) => {
-              if (!accumulator[word]) {
-                accumulator[word] = [currentValue];
-              }
-              accumulator[word].push(currentValue);
-            });
-          return accumulator;
-        },
-        {} as { [word: string]: EmojiData[] },
       );
     } catch (error) {
       snackbarStore.enqueue("Failed to get emoji data", "error");

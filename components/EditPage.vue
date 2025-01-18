@@ -16,6 +16,20 @@ const emits = defineEmits<{
   updateBlock: [pageId: string, blockId: string, content: string];
 }>();
 
+const focusedBlockId = ref(
+  props.page.blocks.length ? props.page.blocks[0].id : undefined,
+);
+const element = computed(() => {
+  return elements.value.find((el) => el.id === focusedBlockId.value);
+});
+const elements = ref<HTMLElement[]>([]);
+
+watch(element, (el) => {
+  if (el) {
+    el.focus();
+  }
+});
+
 const updateTitle = (event: Event) => {
   const target = event.target as HTMLInputElement;
   emits("updatePage", { id: props.page.id, title: target.value });
@@ -32,22 +46,16 @@ const selectEmoji = (emoji: string) => {
 };
 const updateBlock = (event: Event, block: Block) => {
   const target = event.target as HTMLDivElement;
-  const innerText = target.innerText.replace(/\n/g, "");
-  if (!element.value) console.error("element is null in onInput");
-  latestCaretPos.value = getCaretPosition();
-  resetCaretPositionToLatestValue(latestCaretPos.value);
-  emits("updateBlock", props.page.id, block.id, innerText);
+  const caretPosition = getCaretPosition();
+  latestCaretPos.value = caretPosition;
+  emits("updateBlock", props.page.id, block.id, target.innerText);
+  nextTick(() => {
+    resetCaretPositionToLatestValue(caretPosition);
+  });
 };
-const focusedBlockId = ref(props.page.blocks[0].id);
-const element = computed(() => {
-  return elements.value.find((el) => el.id === focusedBlockId.value);
-});
-const elements = ref<HTMLElement[]>([]);
 
-watch(element, (el) => {
-  if (el) {
-    el.focus();
-  }
+onBeforeUpdate(() => {
+  latestCaretPos.value = getCaretPosition();
 });
 
 onUpdated(() => {
@@ -67,6 +75,7 @@ const getCaretPosition = () => {
       const preCaretRange = range.cloneRange();
       preCaretRange.selectNodeContents(element.value);
       preCaretRange.setEnd(range.endContainer, range.endOffset);
+      console.log("returning caret pos", preCaretRange.toString().length);
       return preCaretRange.toString().length;
     }
     console.error(
@@ -83,13 +92,102 @@ const latestCaretPos = ref(0);
 
 const resetCaretPositionToLatestValue = (index: number) => {
   const selection = window.getSelection();
-  if (selection && element.value?.childNodes[0]) {
+  if (selection && element.value) {
     const range = document.createRange();
-    range.setStart(element.value.childNodes[0], index);
+    let charCount = 0;
+    let nodeStack = [element.value];
+    let node,
+      foundStart = false;
+
+    while ((node = nodeStack.pop()) && !foundStart) {
+      if (node.nodeType === 3) {
+        // Text node
+        const nextCharCount =
+          charCount +
+          (node.nodeType === 3 ? (node as unknown as Text).length : 0);
+        if (index <= nextCharCount) {
+          range.setStart(node, index - charCount);
+          foundStart = true;
+        } else {
+          charCount = nextCharCount;
+        }
+      } else {
+        let i = node.childNodes.length;
+        while (i--) {
+          nodeStack.push(node.childNodes[i] as HTMLElement);
+        }
+      }
+    }
+
     range.collapse(true);
     selection.removeAllRanges();
     selection.addRange(range);
   }
+};
+
+const onEnter = (event: KeyboardEvent, block: Block) => {
+  event.preventDefault();
+  const selection = window.getSelection();
+  if (!selection) return;
+  const range = selection.getRangeAt(0);
+  const br = document.createElement("br");
+  range.insertNode(br);
+  range.setStartAfter(br);
+  range.collapse(true);
+  latestCaretPos.value += 1;
+};
+
+const keydown = (event: KeyboardEvent, block: Block) => {
+  console.log("keydown", event.key);
+  if (
+    event.key === "ArrowLeft" ||
+    event.key === "ArrowRight" ||
+    event.key === "ArrowUp" ||
+    event.key === "ArrowDown"
+  ) {
+    latestCaretPos.value = getCaretPosition();
+  }
+  if ((event.metaKey || event.ctrlKey) && event.key === "b") {
+    event.preventDefault(); // Prevent the default browser action
+
+    const selection = window.getSelection();
+    if (!selection) return;
+    const range = selection.getRangeAt(0);
+
+    if (range && !selection.isCollapsed) {
+      // Wrap the selected text in ** for bold
+      const selectedText = selection.toString();
+      const boldedText = `**${selectedText}**`;
+
+      // Replace the selected text with bolded text
+      range.deleteContents();
+      range.insertNode(document.createTextNode(boldedText));
+
+      // Move the caret to the end of the bolded text
+      selection.collapseToEnd();
+
+      // Update the content state
+      updateBlock(event, block);
+    } else {
+      // No text selected; insert ** for bold typing
+      const boldMarkers = "**";
+      const textNode = document.createTextNode(boldMarkers);
+      const laterTextNode = document.createTextNode(boldMarkers);
+
+      range.insertNode(textNode);
+      range.setStartAfter(textNode);
+      range.insertNode(laterTextNode);
+      range.collapse(true);
+
+      // Update the content state
+      updateBlock(event, block);
+    }
+  }
+};
+
+const click = (block: Block) => {
+  focusedBlockId.value = block.id;
+  latestCaretPos.value = getCaretPosition();
 };
 </script>
 
@@ -160,16 +258,21 @@ const resetCaretPositionToLatestValue = (index: number) => {
       <span
         contenteditable
         @input="(event) => updateBlock(event, block)"
-        @keydown.enter="
-          () => snackbarStore.enqueue('Not implemented', 'warning')
-        "
+        @keydown.meta.b="(event) => keydown(event, block)"
+        @keydown.ctrl.b="(event) => keydown(event, block)"
+        @keydown.right="(event) => keydown(event, block)"
+        @keydown.left="(event) => keydown(event, block)"
+        @keydown.up="(event) => keydown(event, block)"
+        @keydown.down="(event) => keydown(event, block)"
+        @keydown.enter="(event) => onEnter(event, block)"
+        @click="() => click(block)"
         v-for="block in page.blocks"
         :key="block.id"
         ref="elements"
         :id="block.id"
+        v-html="block.textContent"
         class="textarea mt-4 w-8/12 resize-none border-none bg-transparent text-lg outline-none dark:text-white"
       >
-        {{ block.textContent }}
       </span>
     </div>
   </div>

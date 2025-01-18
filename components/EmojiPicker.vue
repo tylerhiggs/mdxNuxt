@@ -9,6 +9,8 @@ import {
 import { MagnifyingGlassIcon, SwatchIcon } from "@heroicons/vue/24/outline";
 import { XCircleIcon } from "@heroicons/vue/24/solid";
 
+const PAGE_SIZE = 120;
+
 const emits = defineEmits<{
   select: [emoji: string];
 }>();
@@ -37,7 +39,7 @@ watch(searchHtmlInput, (input) => {
   }
 });
 
-const numEmojis = ref(120);
+const numEmojis = ref(PAGE_SIZE);
 
 const filteredEmojiData = ref<EmojiData[]>(
   Object.values(emojiDataStore.emojiData.value).reduce((acc, emojis) => {
@@ -47,6 +49,7 @@ const filteredEmojiData = ref<EmojiData[]>(
 );
 
 watch(search, (value) => {
+  numEmojis.value = PAGE_SIZE;
   if (!value) {
     filteredEmojiData.value = Object.values(
       emojiDataStore.emojiData.value,
@@ -57,9 +60,7 @@ watch(search, (value) => {
     return;
   }
   const searchValue = value.toLocaleLowerCase();
-  emojiDataStore.searchEmoji(searchValue).then((data) => {
-    filteredEmojiData.value = data;
-  });
+  filteredEmojiData.value = emojiDataStore.searchEmoji(searchValue);
 });
 
 const groupedFilteredEmojiData = computed(() => {
@@ -92,7 +93,7 @@ const handleScroll = (event: Event) => {
   if (!event.target) return;
   const target = event.target as HTMLElement;
   if (target.scrollTop + target.clientHeight >= target.scrollHeight - 50) {
-    numEmojis.value += 100;
+    numEmojis.value += PAGE_SIZE;
   }
 };
 

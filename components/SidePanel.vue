@@ -89,7 +89,7 @@ const toggleSearchCommand = `${ctrlOrCmd}+K`;
         </ToolTip>
         <ToolTip message="Create a new page" position="right">
           <button
-            @click="emit('createPage')"
+            @click.prevent="emit('createPage')"
             class="flex items-center rounded-md p-1 text-2xl hover:bg-gray-300 dark:hover:bg-stone-600"
           >
             <PencilSquareIcon
