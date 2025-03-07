@@ -17,6 +17,9 @@ defineProps<{
   top: 100%;
   left: 50%;
   transform: translateX(-50%) translateY(0.2rem);
+  max-width: calc(-24px + 100vw);
+  white-space: nowrap;
+  overflow: hidden;
 }
 .left {
   right: 100%;

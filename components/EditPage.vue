@@ -22,7 +22,7 @@ const focusedBlockId = ref(
 const element = computed(() => {
   return elements.value.find((el) => el.id === focusedBlockId.value);
 });
-const elements = ref<HTMLElement[]>([]);
+const elements = ref<HTMLTextAreaElement[]>([]);
 
 watch(element, (el) => {
   if (el) {
@@ -44,166 +44,120 @@ const favoritePage = () => {
 const selectEmoji = (emoji: string) => {
   emits("updatePage", { id: props.page.id, emoji }, true);
 };
-const updateBlock = (event: Event, block: Block) => {
-  const target = event.target as HTMLDivElement;
-  const caretPosition = getCaretPosition();
-  latestCaretPos.value = caretPosition;
-  emits("updateBlock", props.page.id, block.id, target.innerText);
-  nextTick(() => {
-    resetCaretPositionToLatestValue(caretPosition);
-  });
+
+const updateBlockTextarea = (event: Event, block: Block) => {
+  const target = event.target as HTMLTextAreaElement;
+  emits("updateBlock", props.page.id, block.id, target.value);
 };
 
-onBeforeUpdate(() => {
-  latestCaretPos.value = getCaretPosition();
-});
-
-onUpdated(() => {
-  if (element.value && getCaretPosition() !== latestCaretPos.value) {
-    resetCaretPositionToLatestValue(latestCaretPos.value);
+const platformConsistent = (event: KeyboardEvent) => {
+  if (navigator.platform.toLocaleLowerCase().includes("mac")) {
+    return event.metaKey;
   }
-});
+  return event.ctrlKey;
+};
 
-/**
- * Get the current caret position in the contenteditable element
- */
-const getCaretPosition = () => {
-  try {
-    const selection = window.getSelection();
-    if (selection && element.value) {
-      const range = selection.getRangeAt(0);
-      const preCaretRange = range.cloneRange();
-      preCaretRange.selectNodeContents(element.value);
-      preCaretRange.setEnd(range.endContainer, range.endOffset);
-      console.log("returning caret pos", preCaretRange.toString().length);
-      return preCaretRange.toString().length;
-    }
+const bold = (event: KeyboardEvent, block: Block) => {
+  event.preventDefault(); // Prevent the default browser action
+  if (!platformConsistent(event)) {
+    return;
+  }
+  insertFormating("**");
+  if (!element.value) {
+    return;
+  }
+  emits("updateBlock", props.page.id, block.id, element.value.value);
+};
+
+const italic = (event: KeyboardEvent, block: Block) => {
+  event.preventDefault(); // Prevent the default browser action
+  if (!platformConsistent(event)) {
+    return;
+  }
+  insertFormating("__");
+  if (!element.value) {
+    return;
+  }
+  emits("updateBlock", props.page.id, block.id, element.value.value);
+};
+
+const openParen = (event: KeyboardEvent, block: Block) => {
+  if (event.key !== "(") {
+    return;
+  }
+  event.preventDefault(); // Prevent the default browser action
+  insertFormating("(", "", ")");
+  if (!element.value) {
+    return;
+  }
+  emits("updateBlock", props.page.id, block.id, element.value.value);
+};
+
+//https://dev.to/shivams136/simple-markdown-insertion-in-the-text-using-pure-javascript-pl4
+const insertFormating = (text: string, defaultTxt = "", text2 = "") => {
+  const txtarea = element.value;
+  if (!txtarea) {
     console.error(
-      `returning 0 because ${selection ? "element" : "selection"} is null`,
+      `No text area found in insertFormating(${text}, ${defaultTxt}, ${text2})`,
     );
-    return 0;
-  } catch (e) {
-    console.error("Unable to get the caret position: ", e);
-    return 0;
+    return;
   }
-};
+  const selectStart = txtarea.selectionStart;
+  const selectEnd = txtarea.selectionEnd;
+  const scrollPos = txtarea.scrollTop;
+  const caretPos = txtarea.selectionStart;
+  let mode = 0;
+  let front = txtarea.value.substring(0, caretPos);
+  let back = txtarea.value.substring(selectEnd, txtarea.value.length);
+  let middle = txtarea.value.substring(caretPos, selectEnd);
 
-const latestCaretPos = ref(0);
-
-const resetCaretPositionToLatestValue = (index: number) => {
-  const selection = window.getSelection();
-  if (selection && element.value) {
-    const range = document.createRange();
-    let charCount = 0;
-    let nodeStack = [element.value];
-    let node,
-      foundStart = false;
-
-    while ((node = nodeStack.pop()) && !foundStart) {
-      if (node.nodeType === 3) {
-        // Text node
-        const nextCharCount =
-          charCount +
-          (node.nodeType === 3 ? (node as unknown as Text).length : 0);
-        if (index <= nextCharCount) {
-          range.setStart(node, index - charCount);
-          foundStart = true;
-        } else {
-          charCount = nextCharCount;
-        }
-      } else {
-        let i = node.childNodes.length;
-        while (i--) {
-          nodeStack.push(node.childNodes[i] as HTMLElement);
-        }
-      }
-    }
-
-    range.collapse(true);
-    selection.removeAllRanges();
-    selection.addRange(range);
+  // Sets ending tag as opening tag if empty
+  if (text2 == "") {
+    text2 = text;
   }
-};
+  const textLen = text.length;
+  const text2Len = text2.length;
 
-const onEnter = (event: KeyboardEvent, block: Block) => {
-  event.preventDefault();
-  const selection = window.getSelection();
-  if (!selection) return;
-  const range = selection.getRangeAt(0);
-  const br = document.createElement("br");
-  range.insertNode(br);
-  range.setStartAfter(br);
-  range.collapse(true);
-  latestCaretPos.value += 1;
-};
-
-const keydown = (event: KeyboardEvent, block: Block) => {
-  console.log("keydown", event.key);
-  if (
-    event.key === "ArrowLeft" ||
-    event.key === "ArrowRight" ||
-    event.key === "ArrowUp" ||
-    event.key === "ArrowDown"
-  ) {
-    latestCaretPos.value = getCaretPosition();
-  }
-  if ((event.metaKey || event.ctrlKey) && event.key === "b") {
-    event.preventDefault(); // Prevent the default browser action
-
-    const selection = window.getSelection();
-    if (!selection) return;
-    const range = selection.getRangeAt(0);
-
-    if (range && !selection.isCollapsed) {
-      // Wrap the selected text in ** for bold
-      const selectedText = selection.toString();
-      const boldedText = `**${selectedText}**`;
-
-      // Replace the selected text with bolded text
-      range.deleteContents();
-      range.insertNode(document.createTextNode(boldedText));
-
-      // Move the caret to the end of the bolded text
-      selection.collapseToEnd();
-
-      // Update the content state
-      updateBlock(event, block);
-    } else {
-      // No text selected; insert ** for bold typing
-      const boldMarkers = "**";
-      const textNode = document.createTextNode(boldMarkers);
-      const laterTextNode = document.createTextNode(boldMarkers);
-
-      range.insertNode(textNode);
-      range.setStartAfter(textNode);
-      range.insertNode(laterTextNode);
-      range.collapse(true);
-
-      // Update the content state
-      updateBlock(event, block);
+  if (selectStart === selectEnd) {
+    middle = defaultTxt;
+    mode = 1;
+  } else {
+    if (front.slice(-textLen) == text && back.slice(0, text2Len) == text2) {
+      front = front.slice(0, front.length - textLen);
+      back = back.slice(text2Len);
+      text = "";
+      text2 = "";
+      mode = 2;
+    } else if (
+      middle.slice(0, textLen) == text &&
+      middle.slice(-text2Len) == text2
+    ) {
+      middle = middle.slice(textLen, middle.length - text2Len);
+      text = "";
+      text2 = "";
+      mode = 3;
     }
   }
-};
-
-const click = (block: Block) => {
-  focusedBlockId.value = block.id;
-  latestCaretPos.value = getCaretPosition();
+  txtarea.value = front + text + middle + text2 + back;
+  if (selectStart !== selectEnd) {
+    if (mode === 0) {
+      txtarea.selectionStart = selectStart + textLen;
+      txtarea.selectionEnd = selectEnd + textLen;
+    } else if (mode === 2) {
+      txtarea.selectionStart = selectStart - textLen;
+      txtarea.selectionEnd = selectEnd - textLen;
+    } else if (mode === 3) {
+      txtarea.selectionStart = selectStart;
+      txtarea.selectionEnd = selectEnd - textLen - text2Len;
+    }
+  } else {
+    txtarea.selectionStart = selectStart + textLen;
+    txtarea.selectionEnd = txtarea.selectionStart + middle.length;
+  }
+  txtarea.focus();
+  txtarea.scrollTop = scrollPos;
 };
 </script>
-
-<style scoped>
-.textarea {
-  display: block;
-  overflow: hidden;
-  min-height: 80%;
-  line-height: 20px;
-}
-
-.textarea[contenteditable]:empty::before {
-  content: "Write something, or type / to use commands";
-  color: gray;
-}
-</style>
 
 <template>
   <div class="absolute inset-0 left-64 z-0 dark:bg-stone-900 dark:text-white">
@@ -254,26 +208,22 @@ const click = (block: Block) => {
       </div>
     </div>
 
-    <div class="flex h-full w-full flex-col items-center">
-      <span
-        contenteditable
-        @input="(event) => updateBlock(event, block)"
-        @keydown.meta.b="(event) => keydown(event, block)"
-        @keydown.ctrl.b="(event) => keydown(event, block)"
-        @keydown.right="(event) => keydown(event, block)"
-        @keydown.left="(event) => keydown(event, block)"
-        @keydown.up="(event) => keydown(event, block)"
-        @keydown.down="(event) => keydown(event, block)"
-        @keydown.enter="(event) => onEnter(event, block)"
-        @click="() => click(block)"
+    <div
+      class="field-sizing-content flex h-full w-full resize-y flex-col items-center"
+    >
+      <textarea
         v-for="block in page.blocks"
-        :key="block.id"
         ref="elements"
         :id="block.id"
-        v-html="block.textContent"
-        class="textarea mt-4 w-8/12 resize-none border-none bg-transparent text-lg outline-none dark:text-white"
-      >
-      </span>
+        :value="block.textContent"
+        class="text-md mt-4 min-h-full w-8/12 resize-none border-none bg-transparent font-sans text-lg font-normal outline-none dark:text-white"
+        @input="(event) => updateBlockTextarea(event, block)"
+        @keydown.meta.b="(event) => bold(event, block)"
+        @keydown.ctrl.b="(event) => bold(event, block)"
+        @keydown.meta.i="(event) => italic(event, block)"
+        @keydown.ctrl.i="(event) => italic(event, block)"
+        @keydown="(event) => openParen(event, block)"
+      />
     </div>
   </div>
 </template>

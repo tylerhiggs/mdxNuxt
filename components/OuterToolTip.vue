@@ -1,17 +1,38 @@
 <script setup lang="ts">
-import { useTooltip } from "~/composables/Tooltip";
+import { ref, computed } from "vue";
+
+const MARGIN_PX = 2;
 
 const tooltipStore = useTooltip();
+const tooltipRef = ref<HTMLElement | null>(null);
 
-const xCoord = computed(() => `${tooltipStore.x.value}px`);
+const xCoord = computed(() => `${adjustedX.value}px`);
 const yCoord = computed(() => `${tooltipStore.y.value}px`);
+
+const adjustedX = computed(() => {
+  console.log("tooltipStore.x.value", tooltipStore.x.value);
+  const tooltip = tooltipRef.value;
+  if (!tooltip) return { x: 0, y: 0 };
+
+  const rect = tooltip.getBoundingClientRect();
+  const { innerWidth } = window;
+
+  const newX = tooltipStore.x.value;
+
+  if (!newX) return 0;
+
+  if (newX + rect.right > innerWidth) {
+    return newX - (newX + rect.right - innerWidth) - MARGIN_PX;
+  }
+  if (newX + rect.left < 0) {
+    return newX - (newX + rect.left) + MARGIN_PX;
+  }
+
+  return tooltipStore.x.value;
+});
 </script>
 
 <style scoped>
-.z-1000 {
-  z-index: 1000;
-}
-
 .top {
   left: v-bind(xCoord);
   top: v-bind(yCoord);
@@ -39,10 +60,14 @@ const yCoord = computed(() => `${tooltipStore.y.value}px`);
 
 <template>
   <div
+    ref="tooltipRef"
     class="absolute z-50 text-nowrap rounded-md bg-black px-2 py-1 text-xs text-white"
     :class="[tooltipStore.position.value]"
     v-if="tooltipStore.x.value"
   >
-    {{ tooltipStore.title.value }}
+    <p>{{ tooltipStore.title.value }}</p>
+    <p v-if="tooltipStore.message.value" class="font-mono text-gray-400">
+      {{ tooltipStore.message.value }}
+    </p>
   </div>
 </template>

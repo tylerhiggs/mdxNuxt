@@ -9,6 +9,23 @@ const emits = defineEmits<{
   favoritePage: [];
   selectPage: [string];
 }>();
+const tooltipStore = useTooltip();
+
+const mouseover = (event: MouseEvent) => {
+  const target = event.target as HTMLElement;
+  const rect = target.getBoundingClientRect();
+  tooltipStore.show(
+    "Share or publish to the web",
+    rect.right,
+    rect.bottom,
+    "bottom",
+    "⌘⇧O",
+  );
+};
+
+const mouseleave = () => {
+  tooltipStore.hide();
+};
 </script>
 
 <template>
@@ -39,6 +56,14 @@ const emits = defineEmits<{
           })
         }}
       </p>
+      <button
+        class="ml-2 flex items-center text-gray-500 hover:text-gray-700"
+        @click="() => emits('favoritePage')"
+        @mouseover="mouseover"
+        @mouseleave="mouseleave"
+      >
+        Share
+      </button>
       <button
         class="ml-2 flex items-center text-gray-500 hover:text-gray-700"
         @click="() => emits('favoritePage')"
