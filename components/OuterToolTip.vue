@@ -22,10 +22,10 @@ const adjustedX = computed(() => {
   if (!newX) return 0;
 
   if (newX + rect.right > innerWidth) {
-    return newX - (newX + rect.right - innerWidth) - MARGIN_PX;
+    return innerWidth - rect.right - MARGIN_PX;
   }
   if (newX + rect.left < 0) {
-    return newX - (newX + rect.left) + MARGIN_PX;
+    return MARGIN_PX - rect.left;
   }
 
   return tooltipStore.x.value;
