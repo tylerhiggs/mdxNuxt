@@ -1,4 +1,11 @@
-import { sqliteTable, text, integer, index } from "drizzle-orm/sqlite-core";
+import {
+  sqliteTable,
+  text,
+  integer,
+  index,
+  AnySQLiteColumn,
+  real,
+} from "drizzle-orm/sqlite-core";
 
 export const users = sqliteTable(
   "users",
@@ -19,10 +26,20 @@ export const pages = sqliteTable(
     id: integer("id").primaryKey({ autoIncrement: true }),
     userId: integer("userId")
       .notNull()
-      .references(() => users.id),
+      .references(() => users.id, { onDelete: "cascade" }),
     title: text("title").notNull(),
     emoji: text("emoji").notNull(),
-    blocks: text("blocks").notNull(),
+    isPublic: integer("isPublic", { mode: "boolean" }).notNull().default(false),
+    isFavorite: integer("isFavorite", { mode: "boolean" })
+      .notNull()
+      .default(false),
+    path: text("path").notNull(),
+    parentId: integer("parent_id").references((): AnySQLiteColumn => pages.id),
+    lastUpdatedAt: integer("lastUpdatedAt", { mode: "timestamp" }).notNull(),
+    lastUpdatedByName: text("lastUpdatedByName").notNull(),
+    createdAt: integer("createdAt", { mode: "timestamp" }).notNull(),
+    createdByName: text("createdByName").notNull(),
+    deletedAt: integer("deletedAt", { mode: "timestamp" }),
   },
   (table) => [index("page_user_id").on(table.userId)],
 );
@@ -33,8 +50,8 @@ export const blocks = sqliteTable(
     id: integer("id").primaryKey({ autoIncrement: true }),
     pageId: integer("pageId")
       .notNull()
-      .references(() => pages.id),
-    index: integer("index").notNull(),
+      .references(() => pages.id, { onDelete: "cascade" }),
+    index: real("index").notNull(),
     type: text("type").notNull(),
     textContent: text("textContent").notNull(),
   },

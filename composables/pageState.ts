@@ -8,14 +8,18 @@ import {
 const DEBOUNCE_TIME = 2000;
 
 export function usePageState() {
-  const firebase = useFirebase();
   const snackbarStore = useSnackbar();
+  const auth = useAuth();
 
   // private state
   const lastUpdatedAt = useState("lastUpdatedAt", () => Date.now());
 
   // public state
   const pages = useState<PageItem[]>("pages", () => []);
+  const currentPageId = useState<number | undefined>(
+    "currentPageId",
+    () => undefined,
+  );
   const currentPage = useState<Page | undefined>(
     "currentPage",
     () => undefined,
@@ -35,28 +39,45 @@ export function usePageState() {
     () => undefined,
   );
 
-  const selectPage = async (pageId: string) => {
-    const page = await firebase.getPage(pageId);
-    if (!page) {
-      snackbarStore.enqueue("Failed to load page", "error");
-      return;
-    }
+  const { data: pageData, error: pageGetError } = useFetch(
+    "/api/private/pages/:id",
+    {
+      params: {
+        id: currentPageId.value,
+      },
+      watch: [currentPageId],
+      method: "get",
+    },
+  );
+
+  const selectPage = async (pageId: number) => {
+    currentPageId.value = pageId;
     if (currentPage.value && pageUpdateToSave.value) {
       lastUpdatedAt.value = Date.now();
       executePageUpdateDb();
     }
-    currentPage.value = page;
     navigateTo(`/edit/${pageId}`);
   };
 
   const createPage = async () => {
-    const newPage = await firebase.addPage();
-    if (!newPage) {
+    const { body } = await $fetch("/api/private/pages", {
+      method: "POST",
+      body: {
+        path: [],
+      },
+    });
+    if (!body) {
       snackbarStore.enqueue("Failed to create page", "error");
       return;
     }
-    pages.value = [...pages.value, newPage];
-    selectPage(newPage.id);
+    pages.value = [
+      ...pages.value,
+      {
+        ...body,
+        lastUpdatedAt: new Date(body.lastUpdatedAt).getTime(),
+      },
+    ];
+    selectPage(body.id);
     snackbarStore.enqueue("Page created", "success");
   };
 
@@ -66,8 +87,16 @@ export function usePageState() {
       snackbarStore.enqueue("No page update to save", "error");
       return;
     }
-    const success = await firebase.updatePage(pageUpdateToSave.value);
-    if (!success) {
+    const { body } = await $fetch("/api/private/pages/:id", {
+      params: {
+        id: pageUpdateToSave.value.id,
+      },
+      method: "patch",
+      body: {
+        ...pageUpdateToSave.value,
+      },
+    });
+    if (!body) {
       console.error(
         "[pageState]: Error updating page - ",
         pageUpdateToSave.value,
@@ -97,8 +126,16 @@ export function usePageState() {
       snackbarStore.enqueue("No page update to save", "error");
       return;
     }
-    const success = await firebase.updatePageBlock(update);
-    if (!success) {
+    const { statusCode, body } = await $fetch("/api/private/blocks/:id", {
+      params: {
+        id: update.blockId,
+      },
+      method: "patch",
+      body: {
+        textContent: update.textContent,
+      },
+    });
+    if (!body || statusCode !== 200) {
       console.error(
         "[pageState]: Error updating page block - ",
         blockUpdateToSave.value,
@@ -175,8 +212,8 @@ export function usePageState() {
   };
 
   const updateBlock = async (
-    pageId: string,
-    blockId: string,
+    pageId: number,
+    blockId: number,
     textContent: string,
     instantSave: boolean = false,
   ) => {
@@ -205,9 +242,14 @@ export function usePageState() {
     }, DEBOUNCE_TIME);
   };
 
-  const deletePage = async (pageId: string) => {
-    const success = await firebase.deletePage(pageId);
-    if (!success) {
+  const deletePage = async (pageId: number) => {
+    const { statusCode, body } = await $fetch("/api/private/pages/:id", {
+      params: {
+        id: pageId,
+      },
+      method: "delete",
+    });
+    if (!body || statusCode !== 200) {
       snackbarStore.enqueue("Failed to delete page", "error");
       return;
     }
@@ -218,17 +260,29 @@ export function usePageState() {
     snackbarStore.enqueue("Page deleted", "success");
   };
 
-  const getPages = async () => {
-    const newPages = await firebase.getPages();
-    if (!newPages.length) {
-      snackbarStore.enqueue("No pages found", "info");
+  const { data: pagesData, error: pagesGetError } = useFetch(
+    "/api/private/users/pages",
+    {
+      method: "get",
+    },
+  );
+
+  watch(pagesData, (newPagesData) => {
+    if (!newPagesData || pagesGetError.value) {
+      console.error("Error fetching page data", pageGetError.value);
+      snackbarStore.enqueue("Error fetching page data", "error");
       return;
     }
-    pages.value = newPages;
-    if (!currentPage.value && newPages.length) {
-      selectPage(newPages[0].id);
+    pages.value = newPagesData.body
+      .map((page) => ({
+        ...page,
+        lastUpdatedAt: new Date(page.lastUpdatedAt).getTime(),
+      }))
+      .sort((a: PageItem, b: PageItem) => b.lastUpdatedAt - a.lastUpdatedAt);
+    if (!currentPage.value && pages.value.length) {
+      selectPage(pages.value[0].id);
     }
-  };
+  });
 
   return {
     pages: computed(() =>
@@ -261,7 +315,6 @@ export function usePageState() {
       return !pageUpdateToSave.value;
     }),
     deletePage,
-    getPages,
     updateBlock,
   };
 }

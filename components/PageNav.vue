@@ -8,7 +8,7 @@ const props = defineProps<{
 }>();
 const emits = defineEmits<{
   favoritePage: [];
-  selectPage: [string];
+  selectPage: [number];
 }>();
 const tooltipStore = useTooltip();
 const pageState = usePageState();

@@ -13,14 +13,14 @@ const props = defineProps<{
 
 const emits = defineEmits<{
   updatePage: [page: PageUpdate, instantSave?: boolean];
-  updateBlock: [pageId: string, blockId: string, content: string];
+  updateBlock: [pageId: number, blockId: number, content: string];
 }>();
 
 const focusedBlockId = ref(
   props.page.blocks.length ? props.page.blocks[0].id : undefined,
 );
 const element = computed(() => {
-  return elements.value.find((el) => el.id === focusedBlockId.value);
+  return elements.value.find((el) => Number(el.id) === focusedBlockId.value);
 });
 const elements = ref<HTMLTextAreaElement[]>([]);
 
@@ -214,7 +214,7 @@ const insertFormating = (text: string, defaultTxt = "", text2 = "") => {
       <textarea
         v-for="block in page.blocks"
         ref="elements"
-        :id="block.id"
+        :id="`${block.id}`"
         :value="block.textContent"
         class="text-md mt-4 min-h-full w-8/12 resize-none border-none bg-transparent font-sans text-lg font-normal outline-none dark:text-white"
         @input="(event) => updateBlockTextarea(event, block)"

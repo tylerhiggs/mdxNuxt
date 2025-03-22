@@ -18,7 +18,7 @@ defineProps<{
     </button>
   </div>
   <div class="items-center-justify-center flex py-2 hover:bg-gray-100">
-    <div v-if="userStore.user.value?.hasPhoto"></div>
+    <div v-if="userStore.dbUser.value?.avatar"></div>
     <div
       class="ml-6 flex size-8 items-center justify-center rounded-md bg-gray-300 text-gray-500"
       v-else

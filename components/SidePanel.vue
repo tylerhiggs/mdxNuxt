@@ -10,18 +10,18 @@ import {
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
 import type { PageItem } from "@/types/page";
 
-const userStore = useAuth();
+const auth = useAuth();
 
 const props = defineProps<{
   pages: PageItem[];
-  currentPageId?: string;
+  currentPageId?: number;
 }>();
 
 const emit = defineEmits<{
   openSettings: [];
   openSearch: [];
   createPage: [];
-  deletePage: [string];
+  deletePage: [number];
 }>();
 
 const isOpen = ref(true);
@@ -34,14 +34,14 @@ const privatePages = computed(() =>
 
 const userFirstLetter = computed(() => {
   return (
-    userStore.user.value?.displayName?.charAt(0).toUpperCase() ||
-    userStore.user.value?.email?.charAt(0).toUpperCase() ||
+    auth.user.value?.name.charAt(0).toUpperCase() ||
+    auth.user.value?.email?.charAt(0).toUpperCase() ||
     "U"
   );
 });
 
 const workspaceTitle = computed(() => {
-  return `${userStore.user.value?.displayName || userStore.user.value?.email || "User"}'s Workspace`;
+  return `${auth.user.value?.name || auth.user.value?.email || "User"}'s Workspace`;
 });
 
 const ctrlOrCmd = navigator.userAgent.includes("Mac") ? "⌘" : "Ctrl";
@@ -51,17 +51,15 @@ const toggleSearchCommand = `${ctrlOrCmd}+K`;
 
 <template>
   <nav
-    v-if="userStore.user.value && isOpen"
+    v-if="auth.user.value && isOpen"
     class="group relative bottom-0 left-0 top-0 flex h-full w-64 flex-col bg-slate-50 px-1 py-0.5 dark:bg-stone-800"
   >
     <Popover class="relative w-full">
       <PopoverButton
         class="flex w-full items-center justify-between rounded-md border-transparent p-2 hover:bg-gray-200 focus:border-transparent focus:outline-none focus:ring-0 dark:hover:bg-stone-700"
       >
-        <div v-if="userStore.user.value.hasPhoto"></div>
         <div
           class="flex aspect-square size-6 items-center justify-center rounded-md bg-gray-300 text-xs text-gray-500 dark:bg-stone-700 dark:text-stone-300"
-          v-else
         >
           {{ userFirstLetter }}
         </div>

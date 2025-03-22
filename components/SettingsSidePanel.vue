@@ -26,7 +26,7 @@ const emit = defineEmits<{
 
 const userFirstLetter = computed(() => {
   return (
-    authStore.user.value?.displayName?.charAt(0).toUpperCase() ||
+    authStore.user.value?.name?.charAt(0).toUpperCase() ||
     authStore.user.value?.email?.charAt(0).toUpperCase() ||
     "U"
   );
@@ -40,7 +40,7 @@ const userFirstLetter = computed(() => {
     <p class="ml-3 text-sm font-medium text-gray-400">Account</p>
 
     <div class="ml-3 flex items-center">
-      <div v-if="authStore.user.value?.hasPhoto"></div>
+      <div v-if="authStore.dbUser.value?.avatar"></div>
       <div
         class="flex size-5 items-center justify-center rounded-full bg-white text-xs text-gray-500 shadow-sm"
         v-else
@@ -49,7 +49,7 @@ const userFirstLetter = computed(() => {
       </div>
       <div class="ml-3">
         <p class="text-sm font-medium text-gray-700">
-          {{ authStore.user.value?.displayName }}
+          {{ authStore.user.value?.name }}
         </p>
         <p class="text-xs font-normal text-gray-400">
           {{ authStore.user.value?.email }}

@@ -12,3 +12,6 @@ export function useDrizzle() {
 export type User = typeof schema.users.$inferSelect;
 export type Page = typeof schema.pages.$inferSelect;
 export type Block = typeof schema.blocks.$inferSelect;
+
+export type UserInsert = typeof schema.users.$inferInsert;
+export type PageInsert = typeof schema.pages.$inferInsert;

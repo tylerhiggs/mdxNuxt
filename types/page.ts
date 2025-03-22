@@ -1,14 +1,14 @@
 export type Page = {
-  id: string;
+  id: number;
   title: string;
   emoji: string;
   blocks: Block[];
   path: {
-    id: string;
+    id: number;
     title: string;
     emoji: string;
   }[];
-  parent?: string;
+  parentId?: number;
   children?: string[];
   lastUpdatedAt: number;
   lastUpdatedByName: string;
@@ -20,23 +20,23 @@ export type Page = {
 };
 
 export type Block = {
-  id: string;
+  id: number;
   index: number;
   type: BlockType;
   textContent: string;
 };
 
-export type BlockType = "text" | "table";
+export type BlockType = "text" | "table" | "callout" | "image" | "code";
 
-export type PageUpdate = { id: string } & Partial<Omit<Page, "blocks">>;
+export type PageUpdate = { id: number } & Partial<Omit<Page, "blocks">>;
 export type BlockUpdate = {
-  pageId: string;
-  blockId: string;
+  pageId: number;
+  blockId: number;
   textContent: string;
 };
 
 export type PageItem = {
-  id: string;
+  id: number;
   title: string;
   emoji: string;
   isPublic: boolean;

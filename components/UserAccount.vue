@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 
-const authStore = useAuth();
+const auth = useAuth();
 
 const userFirstLetter = computed(() => {
   return (
-    authStore.user.value?.displayName?.charAt(0).toUpperCase() ||
-    authStore.user.value?.email?.charAt(0).toUpperCase() ||
+    auth.user.value?.name?.charAt(0).toUpperCase() ||
+    auth.user.value?.email?.charAt(0).toUpperCase() ||
     "U"
   );
 });
@@ -48,7 +48,7 @@ const handleImageChange = (e: Event) => {
         </button>
         <label
           for="userImage"
-          v-if="!authStore.user.value?.hasPhoto"
+          v-if="!auth.dbUser.value?.avatar"
           class="mt-1 text-sm text-gray-400"
           >Add photo</label
         >
@@ -61,7 +61,7 @@ const handleImageChange = (e: Event) => {
           id="name"
           name="name"
           class="w-64 rounded-md border border-gray-200 bg-gray-50 px-2 py-1 text-sm text-gray-700"
-          :value="authStore.user.value?.displayName"
+          :value="auth.user.value?.name"
         />
       </div>
     </div>
@@ -72,7 +72,7 @@ const handleImageChange = (e: Event) => {
         <div class="flex flex-col">
           <p class="text-sm font-normal text-gray-700">Email</p>
           <p class="text-xs font-light text-gray-500">
-            {{ authStore.user.value?.email }}
+            {{ auth.user.value?.email }}
           </p>
         </div>
         <button

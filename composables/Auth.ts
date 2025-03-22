@@ -1,81 +1,77 @@
-import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
-
 // https://github.com/nuxt/nuxt/issues/14508
 
 export const useAuth = () => {
-  const { $db: db, $auth: auth } = useNuxtApp();
+  const { loggedIn, user, fetch: refreshSession, clear } = useUserSession();
   const snackbarStore = useSnackbar();
 
-  const isSignedIn = () => {
-    return !!auth.currentUser;
-  };
   const loading = useState<boolean>("loadingUser", () => true);
-  const userRef = useState<{
-    id: string;
-    displayName: string | null;
-    email: string | null;
-    hasPhoto: boolean;
-  } | null>("authUser", () => null);
+  const prevLink = useState<string | null>("prevLink", () => null);
 
-  const updateUser = async (user: {
-    uid: string;
-    displayName: string | null;
-    email: string | null;
-  }) => {
-    const success = await createUserIfNotExists({
-      id: user.uid,
-      displayName: user.displayName,
-      email: user.email,
-    });
-    if (!success) {
-      console.error("Failed to create user");
-      loading.value = false;
-      return;
-    }
-    console.log("User signed in:", user);
-    const { displayName, email, uid } = user;
-    loading.value = false;
-    userRef.value = { displayName, email, id: uid, hasPhoto: false };
-    snackbarStore.enqueue("Signed in", "success");
-  };
+  const { data: userData, error: userError } = useFetch("/api/private/users", {
+    method: "get",
+    watch: [loggedIn],
+  });
 
-  const createUserIfNotExists = async (user: {
-    id: string;
-    displayName: string | null;
-    email: string | null;
-  }) => {
+  const signup = async (name: string, email: string, password: string) => {
     try {
-      const userDoc = doc(db, "users", user.id);
-      await setDoc(userDoc, user, { merge: true });
-      return true;
+      await $fetch("api/signup", {
+        method: "POST",
+        body: { email, password, name },
+      });
+      snackbarStore.enqueue("Signed up successfully", "success");
+      await refreshSession();
+      const prevLinkValue = prevLink.value;
+      if (prevLinkValue) {
+        navigateTo(prevLinkValue);
+      } else {
+        navigateTo("/");
+      }
     } catch {
-      snackbarStore.enqueue("Failed to create user", "error");
+      snackbarStore.enqueue("Failed to sign up", "error");
       return false;
     }
   };
 
-  const signInWithGoogle = async () => {
-    const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider);
+  const login = async (credentials: { email: string; password: string }) => {
+    try {
+      await $fetch("/api/login", {
+        method: "POST",
+        body: credentials,
+      });
+      // Refresh the session on client-side and redirect to the home page
+      await refreshSession();
+      snackbarStore.enqueue("Logged in successfully", "success");
+      const prevLinkValue = prevLink.value;
+      if (prevLinkValue) {
+        navigateTo(prevLinkValue);
+      } else {
+        navigateTo("/");
+      }
+    } catch (e) {
+      snackbarStore.enqueue("Bad credentials", "error");
+      console.error("Login failed", e);
+    }
   };
 
-  const signOutInternal = () => {
-    signOut(auth)
-      .then(() => {
-        console.log("Signed out");
-      })
-      .catch((error) => {
-        console.error("Sign out error", error);
-      });
+  const signInWithGoogle = async () => {
+    console.error("not implemented");
   };
+
+  const signOut = () => {};
 
   return {
     signInWithGoogle,
-    signOut: signOutInternal,
-    isSignedIn,
-    user: computed(() => userRef.value),
-    updateUser,
+    signOut,
+    user: computed(() => user.value),
+    signup,
     loading,
+    loggedIn: computed(() => loggedIn.value),
+    login,
+    refreshSession,
+    prevLink: computed(() => prevLink.value),
+    setPrevLink: (link: string) => {
+      prevLink.value = link;
+    },
+    dbUser: computed(() => userData.value?.body || null),
   };
 };
