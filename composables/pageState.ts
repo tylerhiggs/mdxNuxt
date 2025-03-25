@@ -9,7 +9,6 @@ const DEBOUNCE_TIME = 2000;
 
 export function usePageState() {
   const snackbarStore = useSnackbar();
-  const auth = useAuth();
 
   // private state
   const lastUpdatedAt = useState("lastUpdatedAt", () => Date.now());
@@ -49,6 +48,10 @@ export function usePageState() {
       method: "get",
     },
   );
+
+  watch(pageData, (newPageData) => {
+    console.log("pageData changed", newPageData);
+  });
 
   const selectPage = async (pageId: number) => {
     currentPageId.value = pageId;
@@ -268,6 +271,7 @@ export function usePageState() {
   );
 
   watch(pagesData, (newPagesData) => {
+    console.log("pagesData changed", newPagesData);
     if (!newPagesData || pagesGetError.value) {
       console.error("Error fetching page data", pageGetError.value);
       snackbarStore.enqueue("Error fetching page data", "error");

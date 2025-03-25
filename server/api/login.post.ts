@@ -25,21 +25,22 @@ export default eventHandler(async (event) => {
       message: "Invalid email or password",
     });
   }
-  if (await verifyPassword(await hashPassword(password), user.password)) {
-    throw createError({
-      statusCode: 401,
-      message: "Invalid email or password",
+  console.log("User found", user);
+  if (await verifyPassword(user.password, password)) {
+    console.log("Password verified, setting user session");
+    const res = await setUserSession(event, {
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+      },
     });
+    console.log("User session set", res);
+    return {};
   }
-  await setUserSession(event, {
-    user: {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-    },
+  console.error("Invalid password");
+  throw createError({
+    statusCode: 401,
+    message: "Invalid email or password",
   });
-  return {
-    statusCode: 200,
-    body: { ...user },
-  };
 });

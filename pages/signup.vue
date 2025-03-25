@@ -23,8 +23,8 @@ const submit = () => {
     <div
       class="flex w-4/12 flex-col items-center rounded-lg bg-slate-50 pb-8 pt-4 shadow-lg"
     >
-      <div class="flex items-center justify-between">
-        <h1 class="mb-8 text-4xl font-bold text-slate-900">Sign Up</h1>
+      <div class="mb-8 flex flex-col items-center justify-center gap-3">
+        <h1 class="text-4xl font-bold text-slate-900">Sign Up</h1>
         <p class="text-sm text-slate-600">
           Already have an account?
           <NuxtLink to="/login" class="text-blue-500 hover:underline"
@@ -34,9 +34,26 @@ const submit = () => {
       </div>
       <form
         class="flex w-10/12 flex-col items-center justify-center"
-        @submit.prevent="() => submit()"
+        @submit.prevent="submit"
         v-if="!loggedIn"
       >
+        <div class="mb-4 w-full">
+          <label
+            for="name"
+            class="mb-2 block text-sm font-medium text-slate-900"
+            >Name</label
+          >
+          <input
+            v-model="credentials.name"
+            type="text"
+            id="name"
+            name="name"
+            class="block w-full rounded-lg border border-slate-300 bg-white p-2.5 text-sm text-slate-900 placeholder-slate-400 focus:border-blue-500 focus:ring-blue-500"
+            placeholder="Your name"
+            required
+            :disabled="loggedIn"
+          />
+        </div>
         <div class="mb-4 w-full">
           <label
             for="email"
@@ -71,6 +88,23 @@ const submit = () => {
             placeholder="••••••••"
             required
             autocomplete="current-password"
+            :disabled="loggedIn"
+          />
+        </div>
+        <div class="mb-4 w-full">
+          <label
+            for="password2"
+            class="mb-2 block text-sm font-medium text-slate-900"
+            >Confirm Password</label
+          >
+          <input
+            v-model="credentials.password2"
+            type="password"
+            id="password2"
+            name="password2"
+            class="block w-full rounded-lg border border-slate-300 bg-white p-2.5 text-sm text-slate-900 placeholder-slate-400 focus:border-blue-500 focus:ring-blue-500"
+            placeholder="••••••••"
+            required
             :disabled="loggedIn"
           />
         </div>

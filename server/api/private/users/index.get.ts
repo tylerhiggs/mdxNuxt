@@ -16,6 +16,12 @@ export default eventHandler(async (event) => {
   }
   return {
     statusCode: 200,
-    body: { ...dbUser },
+    body: {
+      id: dbUser.id,
+      name: dbUser.name,
+      email: dbUser.email,
+      avatar: dbUser.avatar,
+      createdAt: dbUser.createdAt,
+    },
   };
 });

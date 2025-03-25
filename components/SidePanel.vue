@@ -44,68 +44,78 @@ const workspaceTitle = computed(() => {
   return `${auth.user.value?.name || auth.user.value?.email || "User"}'s Workspace`;
 });
 
-const ctrlOrCmd = navigator.userAgent.includes("Mac") ? "⌘" : "Ctrl";
+const ctrlOrCmd = "⌘";
+
 const toggleSidePanelCommand = `${ctrlOrCmd}+\\`;
 const toggleSearchCommand = `${ctrlOrCmd}+K`;
 </script>
 
 <template>
   <nav
-    v-if="auth.user.value && isOpen"
+    v-if="
+      isOpen &&
+      auth.loggedIn &&
+      auth.dbUser.value &&
+      workspaceTitle &&
+      userFirstLetter
+    "
     class="group relative bottom-0 left-0 top-0 flex h-full w-64 flex-col bg-slate-50 px-1 py-0.5 dark:bg-stone-800"
   >
-    <Popover class="relative w-full">
-      <PopoverButton
-        class="flex w-full items-center justify-between rounded-md border-transparent p-2 hover:bg-gray-200 focus:border-transparent focus:outline-none focus:ring-0 dark:hover:bg-stone-700"
-      >
-        <div
-          class="flex aspect-square size-6 items-center justify-center rounded-md bg-gray-300 text-xs text-gray-500 dark:bg-stone-700 dark:text-stone-300"
+    <ClientOnly>
+      <Popover class="relative w-full">
+        <PopoverButton
+          v-if="userFirstLetter"
+          class="flex w-full items-center justify-between rounded-md border-transparent p-2 hover:bg-gray-200 focus:border-transparent focus:outline-none focus:ring-0 dark:hover:bg-stone-700"
         >
-          {{ userFirstLetter }}
-        </div>
-        <div
-          class="mx-2 overflow-hidden truncate text-ellipsis text-sm text-black dark:text-white"
-        >
-          {{ workspaceTitle }}
-        </div>
-        <ChevronDownIcon
-          class="size-4 font-bold text-gray-500 dark:text-stone-400"
-        />
-        <ToolTip
-          message="Close sidebar"
-          position="bottom"
-          :command="toggleSidePanelCommand"
-        >
-          <button
-            @click="isOpen = false"
-            class="invisible ml-0.5 flex items-center rounded-md p-0.5 text-2xl hover:bg-gray-300 group-hover:visible dark:hover:bg-stone-600"
+          <div
+            class="flex aspect-square size-6 items-center justify-center rounded-md bg-gray-300 text-xs text-gray-500 dark:bg-stone-700 dark:text-stone-300"
           >
-            <ChevronDoubleLeftIcon
-              class="size-5 font-bold text-gray-500 dark:text-stone-400 dark:hover:text-white"
-            />
-          </button>
-        </ToolTip>
-        <ToolTip message="Create a new page" position="right">
-          <button
-            @click.prevent="emit('createPage')"
-            class="flex items-center rounded-md p-1 text-2xl hover:bg-gray-300 dark:hover:bg-stone-600"
+            {{ userFirstLetter }}
+          </div>
+          <div
+            class="mx-2 overflow-hidden truncate text-ellipsis text-sm text-black dark:text-white"
           >
-            <PencilSquareIcon
-              class="size-5 font-bold text-gray-600 dark:text-stone-100"
-            />
-          </button>
-        </ToolTip>
-      </PopoverButton>
+            {{ workspaceTitle }}
+          </div>
+          <ChevronDownIcon
+            class="size-4 font-bold text-gray-500 dark:text-stone-400"
+          />
+          <ToolTip
+            message="Close sidebar"
+            position="bottom"
+            :command="toggleSidePanelCommand"
+          >
+            <button
+              @click="isOpen = false"
+              class="invisible ml-0.5 flex items-center rounded-md p-0.5 text-2xl hover:bg-gray-300 group-hover:visible dark:hover:bg-stone-600"
+            >
+              <ChevronDoubleLeftIcon
+                class="size-5 font-bold text-gray-500 dark:text-stone-400 dark:hover:text-white"
+              />
+            </button>
+          </ToolTip>
+          <ToolTip message="Create a new page" position="right">
+            <button
+              @click.prevent="emit('createPage')"
+              class="flex items-center rounded-md p-1 text-2xl hover:bg-gray-300 dark:hover:bg-stone-600"
+            >
+              <PencilSquareIcon
+                class="size-5 font-bold text-gray-600 dark:text-stone-100"
+              />
+            </button>
+          </ToolTip>
+        </PopoverButton>
 
-      <PopoverPanel
-        class="absolute left-8 z-10 w-64 rounded-lg bg-white shadow-xl"
-      >
-        <ProfilePopup
-          :workspaceTitle="workspaceTitle"
-          :userFirstLetter="userFirstLetter"
-        />
-      </PopoverPanel>
-    </Popover>
+        <PopoverPanel
+          class="absolute left-8 z-10 w-64 rounded-lg bg-white shadow-xl"
+        >
+          <ProfilePopup
+            :workspaceTitle="workspaceTitle"
+            :userFirstLetter="userFirstLetter"
+          />
+        </PopoverPanel>
+      </Popover>
+    </ClientOnly>
     <ToolTip
       message="Search and quickly jump to a page"
       position="right"

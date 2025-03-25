@@ -12,6 +12,19 @@ export default defineNuxtConfig({
   },
 
   modules: ["@nuxthub/core", "nuxt-auth-utils"],
+
+  devServer: {
+    https: {
+      key: "dev-server.key",
+      cert: "dev-server.crt",
+    },
+  },
+  runtimeConfig: {
+    session: {
+      maxAge: 60 * 60 * 24 * 365, // 1 year
+      password: process.env.SESSION_PASSWORD || "",
+    },
+  },
   hub: {
     blob: true,
     database: true,
