@@ -1,3 +1,4 @@
+import { relations } from "drizzle-orm";
 import {
   sqliteTable,
   text,
@@ -44,6 +45,15 @@ export const pages = sqliteTable(
   (table) => [index("page_user_id").on(table.userId)],
 );
 
+export const pagesRelations = relations(pages, ({ many, one }) => ({
+  blocks: many(blocks),
+  parent: one(pages, {
+    fields: [pages.parentId],
+    references: [pages.id],
+  }),
+  children: many(pages),
+}));
+
 export const blocks = sqliteTable(
   "blocks",
   {
@@ -52,8 +62,17 @@ export const blocks = sqliteTable(
       .notNull()
       .references(() => pages.id, { onDelete: "cascade" }),
     index: real("index").notNull(),
-    type: text("type").notNull(),
+    type: text("type", {
+      enum: ["text", "table", "callout", "image", "code"],
+    }).notNull(),
     textContent: text("textContent").notNull(),
   },
   (table) => [index("block_page_id").on(table.pageId)],
 );
+
+export const blocksRelations = relations(blocks, ({ one }) => ({
+  page: one(pages, {
+    fields: [blocks.pageId],
+    references: [pages.id],
+  }),
+}));

@@ -30,15 +30,6 @@ export const useAuth = () => {
   });
 
   watch(
-    userData,
-    (newValue) => {
-      console.log("userData changed", newValue);
-      loading.value = false;
-    },
-    { immediate: true },
-  );
-
-  watch(
     userError,
     (newValue) => {
       if (newValue) {

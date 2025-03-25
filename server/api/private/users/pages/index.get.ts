@@ -1,4 +1,5 @@
-import { eq, tables, useDrizzle } from "~/server/utils/drizzle";
+import { asc } from "drizzle-orm";
+import { useDrizzle } from "~/server/utils/drizzle";
 
 /**
  * Just returns the pages metadata for a given user id,
@@ -9,23 +10,15 @@ export default eventHandler(async (event) => {
   if (!user.id || isNaN(Number(user.id))) {
     throw createError({ statusCode: 400, message: "User ID is required" });
   }
-  const userPages = await useDrizzle()
-    .select()
-    .from(tables.pages)
-    .where(eq(tables.pages.userId, Number(user.id)));
+  const userPages = await useDrizzle().query.pages.findMany({
+    where: (pages, { eq }) => eq(pages.userId, Number(user.id)),
+    orderBy: (pages) => [asc(pages.createdAt)],
+  });
   if (!userPages) {
     throw createError({ statusCode: 404, message: "User not found" });
   }
   return {
     statusCode: 200,
-    body: userPages.map((page) => ({
-      id: page.id,
-      title: page.title,
-      emoji: page.emoji,
-      isPublic: page.isPublic,
-      isFavorite: page.isFavorite,
-      lastUpdatedAt: page.lastUpdatedAt,
-      lastUpdatedByName: page.lastUpdatedByName,
-    })),
+    body: [...userPages],
   };
 });

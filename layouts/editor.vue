@@ -12,7 +12,7 @@ const showSettings = ref(false);
   >
     <div class="relative m-0 flex h-full w-full overflow-hidden">
       <SidePanel
-        :pages="pages"
+        :pages="pages || []"
         :current-page-id="currentPage?.id"
         @openSearch="showSearch = true"
         @openSettings="showSettings = true"

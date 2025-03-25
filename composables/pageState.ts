@@ -39,14 +39,23 @@ export function usePageState() {
   );
 
   const { data: pageData, error: pageGetError } = useFetch(
-    "/api/private/pages/:id",
+    () => `/api/private/pages/${currentPageId.value}`,
     {
-      params: {
-        id: currentPageId.value,
-      },
       watch: [currentPageId],
       method: "get",
+      transform: (data) => ({
+        ...data.body,
+        path: JSON.parse(data.body.path) as {
+          id: number;
+          title: string;
+          emoji: string;
+        }[],
+      }),
     },
+  );
+
+  watch(currentPageId, (newValue) =>
+    console.log("currentPageId changed", newValue),
   );
 
   watch(pageData, (newPageData) => {
@@ -55,6 +64,7 @@ export function usePageState() {
 
   const selectPage = async (pageId: number) => {
     currentPageId.value = pageId;
+    console.log("pageId changed", pageId);
     if (currentPage.value && pageUpdateToSave.value) {
       lastUpdatedAt.value = Date.now();
       executePageUpdateDb();
@@ -173,17 +183,17 @@ export function usePageState() {
     update: PageUpdate,
     instantSave: boolean = false,
   ) => {
-    if (!currentPage.value) {
+    if (!pageData.value) {
       console.error("No current page to update");
       snackbarStore.enqueue("No current page to update", "error");
       return;
     }
-    if (update.id !== currentPage.value.id) {
+    if (update.id !== currentPageId.value) {
       console.error("Unable to update page due to mismatching ids");
       snackbarStore.enqueue("Unable to update page", "error");
     }
     if (update.title) {
-      const newPath = [...currentPage.value.path];
+      const newPath = pageData.value.path.map((p) => ({ ...p }));
       newPath[newPath.length - 1].title = update.title;
       pageUpdateToSave.value = {
         ...pageUpdateToSave.value,
@@ -193,7 +203,7 @@ export function usePageState() {
       };
     }
     if (update.emoji) {
-      const newPath = [...currentPage.value.path];
+      const newPath = pageData.value.path.map((p) => ({ ...p }));
       newPath[newPath.length - 1].emoji = update.emoji;
       pageUpdateToSave.value = {
         ...pageUpdateToSave.value,
@@ -267,43 +277,31 @@ export function usePageState() {
     "/api/private/users/pages",
     {
       method: "get",
+      transform: (data) => {
+        return data.body.map((p) => ({
+          ...p,
+          lastUpdatedAt: new Date(p.lastUpdatedAt).getTime(),
+        }));
+      },
     },
   );
-
-  watch(pagesData, (newPagesData) => {
-    console.log("pagesData changed", newPagesData);
-    if (!newPagesData || pagesGetError.value) {
-      console.error("Error fetching page data", pageGetError.value);
-      snackbarStore.enqueue("Error fetching page data", "error");
-      return;
-    }
-    pages.value = newPagesData.body
-      .map((page) => ({
-        ...page,
-        lastUpdatedAt: new Date(page.lastUpdatedAt).getTime(),
-      }))
-      .sort((a: PageItem, b: PageItem) => b.lastUpdatedAt - a.lastUpdatedAt);
-    if (!currentPage.value && pages.value.length) {
-      selectPage(pages.value[0].id);
-    }
-  });
 
   return {
     pages: computed(() =>
       pageUpdateToSave.value
-        ? pages.value.map((page) =>
+        ? pagesData.value?.map((page) =>
             page.id === pageUpdateToSave.value?.id
               ? { ...page, ...pageUpdateToSave.value }
               : page,
           )
-        : pages.value,
+        : pagesData.value,
     ),
     currentPage: computed(() => {
-      return currentPage.value
+      return pageData.value
         ? {
-            ...currentPage.value,
+            ...pageData.value,
             ...pageUpdateToSave.value,
-            blocks: currentPage.value.blocks.map((block) => {
+            blocks: pageData.value.blocks.map((block) => {
               return blockUpdateToSave.value &&
                 block.id === blockUpdateToSave.value.blockId
                 ? { ...block, textContent: blockUpdateToSave.value.textContent }
