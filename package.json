@@ -13,10 +13,10 @@
   "dependencies": {
     "@headlessui/vue": "latest",
     "@heroicons/vue": "^2.1.5",
-    "@nuxthub/core": "0.8.18",
+    "@nuxthub/core": "0.8.21",
     "drizzle-orm": "^0.40.0",
     "nuxt": "latest",
-    "nuxt-auth-utils": "0.5.16",
+    "nuxt-auth-utils": "0.5.17",
     "vue": "latest",
     "vue-router": "latest",
     "zod": "^3.24.2"

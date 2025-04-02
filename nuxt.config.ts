@@ -25,6 +25,21 @@ export default defineNuxtConfig({
       password:
         process.env.SESSION_PASSWORD || process.env.NUXT_SESSION_PASSWORD || "",
     },
+    oauth: {
+      google: {
+        clientId:
+          process.env.NUXT_OAUTH_GOOGLE_CLIENT_ID ||
+          process.env.OAUTH_GOOGLE_CLIENT_ID ||
+          "",
+        clientSecret:
+          process.env.NUXT_OAUTH_GOOGLE_CLIENT_SECRET ||
+          process.env.OAUTH_GOOGLE_CLIENT_SECRET ||
+          "",
+        redirectURL: `${
+          process.env.BASE_URL || "https://localhost:3000"
+        }/auth/google`,
+      },
+    },
   },
   hub: {
     blob: true,

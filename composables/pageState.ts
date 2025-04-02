@@ -100,15 +100,15 @@ export function usePageState() {
       snackbarStore.enqueue("No page update to save", "error");
       return;
     }
-    const { body } = await $fetch("/api/private/pages/:id", {
-      params: {
-        id: pageUpdateToSave.value.id,
+    const { body } = await $fetch(
+      `/api/private/pages/${pageUpdateToSave.value.id}`,
+      {
+        method: "patch",
+        body: {
+          ...pageUpdateToSave.value,
+        },
       },
-      method: "patch",
-      body: {
-        ...pageUpdateToSave.value,
-      },
-    });
+    );
     if (!body) {
       console.error(
         "[pageState]: Error updating page - ",
