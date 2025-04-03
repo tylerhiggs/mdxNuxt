@@ -38,21 +38,22 @@ export function usePageState() {
     () => undefined,
   );
 
-  const { data: pageData, error: pageGetError } = useFetch(
-    () => `/api/private/pages/${currentPageId.value}`,
-    {
-      watch: [currentPageId],
-      method: "get",
-      transform: (data) => ({
-        ...data.body,
-        path: JSON.parse(data.body.path) as {
-          id: number;
-          title: string;
-          emoji: string;
-        }[],
-      }),
-    },
-  );
+  const {
+    data: pageData,
+    error: _pageGetError,
+    refresh: fetchPageData,
+  } = useFetch(() => `/api/private/pages/${currentPageId.value}`, {
+    watch: [currentPageId],
+    method: "get",
+    transform: (data) => ({
+      ...data.body,
+      path: JSON.parse(data.body.path) as {
+        id: number;
+        title: string;
+        emoji: string;
+      }[],
+    }),
+  });
 
   watch(currentPageId, (newValue) =>
     console.log("currentPageId changed", newValue),
@@ -117,17 +118,7 @@ export function usePageState() {
       snackbarStore.enqueue("Error updating page", "error");
       return;
     }
-    pages.value = pages.value.map((page) =>
-      page.id === pageUpdateToSave.value?.id
-        ? { ...page, ...pageUpdateToSave.value }
-        : page,
-    );
-    if (
-      currentPage.value &&
-      currentPage.value.id === pageUpdateToSave.value.id
-    ) {
-      currentPage.value = { ...currentPage.value, ...pageUpdateToSave.value };
-    }
+    await Promise.all([fetchPageData(), fetchPagesData()]);
     pageUpdateToSave.value = undefined;
     snackbarStore.enqueue("Successfully updated page", "success");
   };
@@ -273,18 +264,19 @@ export function usePageState() {
     snackbarStore.enqueue("Page deleted", "success");
   };
 
-  const { data: pagesData, error: pagesGetError } = useFetch(
-    "/api/private/users/pages",
-    {
-      method: "get",
-      transform: (data) => {
-        return data.body.map((p) => ({
-          ...p,
-          lastUpdatedAt: new Date(p.lastUpdatedAt).getTime(),
-        }));
-      },
+  const {
+    data: pagesData,
+    error: _pagesGetError,
+    refresh: fetchPagesData,
+  } = useFetch("/api/private/users/pages", {
+    method: "get",
+    transform: (data) => {
+      return data.body.map((p) => ({
+        ...p,
+        lastUpdatedAt: new Date(p.lastUpdatedAt).getTime(),
+      }));
     },
-  );
+  });
 
   return {
     pages: computed(() =>

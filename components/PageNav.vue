@@ -6,6 +6,9 @@ const props = defineProps<{
   saved: boolean;
   page: Page;
 }>();
+
+console.log("Do we even set this up?");
+
 const emits = defineEmits<{
   favoritePage: [];
   selectPage: [number];
@@ -15,7 +18,7 @@ const pageState = usePageState();
 const snackbarStore = useSnackbar();
 
 const publicize = async () => {
-  const page = props.page;
+  const page = { ...props.page };
   if (page.isPublic) {
     console.warn("Page is already public");
     return;
@@ -56,14 +59,14 @@ const mouseleave = () => {
 <template>
   <header class="flex w-full flex-row items-center justify-between p-2">
     <button
-      v-for="(page, index) in props.page.path"
+      v-for="(page, index) in page.path"
       :key="page.id"
       class="flex items-center rounded-sm p-0.5 text-gray-700 hover:bg-gray-200 dark:text-stone-300 dark:hover:bg-stone-700"
       @click="() => emits('selectPage', page.id)"
     >
       <p v-if="index !== 0" class="mx-2 text-gray-500 dark:text-stone-400">/</p>
       <p class="text-sm">{{ page.emoji }}</p>
-      <p class="ml-2 text-sm">{{ page.title }}</p>
+      <p class="ml-2 text-sm">{{ page.title || "Untitled" }}</p>
     </button>
     <div class="flex items-center">
       <CheckIcon

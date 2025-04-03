@@ -4,11 +4,11 @@ export default eventHandler(async (event) => {
   const { user } = await requireUserSession(event);
   const { path, parentId } = await readBody<{
     path: {
-      id: string;
+      id: number;
       title: string;
       emoji: string;
     }[];
-    parentId?: string;
+    parentId?: number;
   }>(event);
   if (!user.id || !user.name || !path) {
     throw createError({ statusCode: 400, message: "Title is required" });
@@ -24,7 +24,7 @@ export default eventHandler(async (event) => {
     lastUpdatedByName: user.name,
     createdAt: new Date(),
     createdByName: user.name,
-    path: JSON.stringify(path),
+    path: JSON.stringify([...path, { id: -1, title: "", emoji: "📄" }]),
     parentId: parentId ? Number(parentId) : null,
   };
 
@@ -36,6 +36,15 @@ export default eventHandler(async (event) => {
   if (!page) {
     throw createError({ statusCode: 500, message: "Page creation failed" });
   }
+  // Update the path to include the correct page ID
+  const updatedPage = await useDrizzle()
+    .update(tables.pages)
+    .set({
+      path: JSON.stringify([...path, { id: page.id, title: "", emoji: "📄" }]),
+    })
+    .where(eq(tables.pages.id, page.id))
+    .returning()
+    .get();
   const block = await useDrizzle()
     .insert(tables.blocks)
     .values({
@@ -46,13 +55,13 @@ export default eventHandler(async (event) => {
     })
     .returning()
     .get();
-  if (!page) {
+  if (!updatedPage || !block) {
     throw createError({ statusCode: 500, message: "Page creation failed" });
   }
   return {
     statusCode: 201,
     body: {
-      ...page,
+      ...updatedPage,
       block: {
         ...block,
       },

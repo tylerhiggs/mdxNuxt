@@ -8,7 +8,7 @@ export type Page = {
     title: string;
     emoji: string;
   }[];
-  parentId?: number;
+  parentId: number | null;
   children?: string[];
   lastUpdatedAt: number;
   lastUpdatedByName: string;
@@ -16,7 +16,7 @@ export type Page = {
   createdByName: string;
   isPublic: boolean;
   isFavorite: boolean;
-  deletedAt: number | false;
+  deletedAt: string | null;
 };
 
 export type Block = {

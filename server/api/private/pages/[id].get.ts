@@ -28,6 +28,8 @@ export default eventHandler(async (event) => {
     statusCode: 200,
     body: {
       ...pages[0],
+      lastUpdatedAt: pages[0].lastUpdatedAt.getTime(),
+      createdAt: pages[0].createdAt.getTime(),
       blocks: pages[0].blocks,
     },
   };

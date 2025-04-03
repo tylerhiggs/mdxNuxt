@@ -48,6 +48,12 @@ const ctrlOrCmd = "⌘";
 
 const toggleSidePanelCommand = `${ctrlOrCmd}+\\`;
 const toggleSearchCommand = `${ctrlOrCmd}+K`;
+
+const avatarUrl = computed(() => {
+  return auth.dbUser.value?.avatar
+    ? `/api/private/avatars/${auth.dbUser.value?.avatar}`
+    : "";
+});
 </script>
 
 <template>
@@ -67,7 +73,14 @@ const toggleSearchCommand = `${ctrlOrCmd}+K`;
           v-if="userFirstLetter"
           class="flex w-full items-center justify-between rounded-md border-transparent p-2 hover:bg-gray-200 focus:border-transparent focus:outline-none focus:ring-0 dark:hover:bg-stone-700"
         >
+          <img
+            v-if="avatarUrl"
+            :src="'/api/private/avatars/' + auth.dbUser.value.avatar"
+            alt="Profile Picture"
+            class="h-8 w-8 rounded-full"
+          />
           <div
+            v-else
             class="flex aspect-square size-6 items-center justify-center rounded-md bg-gray-300 text-xs text-gray-500 dark:bg-stone-700 dark:text-stone-300"
           >
             {{ userFirstLetter }}

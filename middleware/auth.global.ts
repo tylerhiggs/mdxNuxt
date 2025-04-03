@@ -16,4 +16,10 @@ export default defineNuxtRouteMiddleware((to, from) => {
     );
     return navigateTo("/login");
   }
+  if (auth.prevLink.value) {
+    console.log("User logged in, redirecting to prevLink", auth.prevLink.value);
+    const prevLinkValue = auth.prevLink.value;
+    auth.setPrevLink("");
+    return navigateTo(prevLinkValue);
+  }
 });

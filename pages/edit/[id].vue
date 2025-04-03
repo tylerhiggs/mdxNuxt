@@ -9,6 +9,7 @@ const { selectPage, isSaved, currentPage, updatePage, updateBlock } =
   usePageState();
 const route = useRoute();
 const snackbar = useSnackbar();
+
 watch(
   () => route.params.id,
   (paramId) => {
