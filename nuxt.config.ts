@@ -11,7 +11,7 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: ["@nuxthub/core", "nuxt-auth-utils"],
+  modules: ["@nuxthub/core", "nuxt-auth-utils", "@nuxt/ui"],
 
   devServer: {
     https: {
@@ -44,6 +44,5 @@ export default defineNuxtConfig({
   hub: {
     blob: true,
     database: true,
-    kv: true,
   },
 });
