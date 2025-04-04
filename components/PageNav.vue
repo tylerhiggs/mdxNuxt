@@ -7,8 +7,6 @@ const props = defineProps<{
   page: Page;
 }>();
 
-console.log("Do we even set this up?");
-
 const emits = defineEmits<{
   favoritePage: [];
   selectPage: [number];

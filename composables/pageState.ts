@@ -130,15 +130,15 @@ export function usePageState() {
       snackbarStore.enqueue("No page update to save", "error");
       return;
     }
-    const { statusCode, body } = await $fetch("/api/private/blocks/:id", {
-      params: {
-        id: update.blockId,
+    const { statusCode, body } = await $fetch(
+      `/api/private/blocks/${update.blockId}`,
+      {
+        method: "patch",
+        body: {
+          textContent: update.textContent,
+        },
       },
-      method: "patch",
-      body: {
-        textContent: update.textContent,
-      },
-    });
+    );
     if (!body || statusCode !== 200) {
       console.error(
         "[pageState]: Error updating page block - ",
@@ -147,17 +147,7 @@ export function usePageState() {
       snackbarStore.enqueue("Error updating page block", "error");
       return;
     }
-    if (currentPage.value && currentPage.value.id === update.pageId) {
-      currentPage.value = {
-        ...currentPage.value,
-        blocks: currentPage.value.blocks.map((block) => {
-          if (block.id === update.blockId) {
-            return { ...block, textContent: update.textContent };
-          }
-          return block;
-        }),
-      };
-    }
+    await fetchPageData();
     blockUpdateToSave.value = undefined;
     snackbarStore.enqueue("Successfully updated page block", "success");
   };
@@ -221,12 +211,7 @@ export function usePageState() {
     textContent: string,
     instantSave: boolean = false,
   ) => {
-    if (!currentPage.value) {
-      console.error("No current page to update");
-      snackbarStore.enqueue("No current page to update", "error");
-      return;
-    }
-    if (pageId !== currentPage.value.id) {
+    if (pageId !== currentPageId.value) {
       console.error("Unable to update page due to mismatching ids");
       snackbarStore.enqueue("Unable to update page", "error");
     }
@@ -247,10 +232,7 @@ export function usePageState() {
   };
 
   const deletePage = async (pageId: number) => {
-    const { statusCode, body } = await $fetch("/api/private/pages/:id", {
-      params: {
-        id: pageId,
-      },
+    const { statusCode, body } = await $fetch(`/api/private/pages/${pageId}`, {
       method: "delete",
     });
     if (!body || statusCode !== 200) {
