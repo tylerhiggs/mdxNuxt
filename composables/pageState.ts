@@ -8,7 +8,6 @@ import {
 const DEBOUNCE_TIME = 2000;
 
 export function usePageState() {
-  const firebase = useFirebase();
   const snackbarStore = useSnackbar();
 
   // private state
@@ -16,6 +15,10 @@ export function usePageState() {
 
   // public state
   const pages = useState<PageItem[]>("pages", () => []);
+  const currentPageId = useState<number | undefined>(
+    "currentPageId",
+    () => undefined,
+  );
   const currentPage = useState<Page | undefined>(
     "currentPage",
     () => undefined,
@@ -35,28 +38,60 @@ export function usePageState() {
     () => undefined,
   );
 
-  const selectPage = async (pageId: string) => {
-    const page = await firebase.getPage(pageId);
-    if (!page) {
-      snackbarStore.enqueue("Failed to load page", "error");
-      return;
-    }
+  const {
+    data: pageData,
+    error: _pageGetError,
+    refresh: fetchPageData,
+  } = useFetch(() => `/api/private/pages/${currentPageId.value}`, {
+    watch: [currentPageId],
+    method: "get",
+    transform: (data) => ({
+      ...data.body,
+      path: JSON.parse(data.body.path) as {
+        id: number;
+        title: string;
+        emoji: string;
+      }[],
+    }),
+  });
+
+  watch(currentPageId, (newValue) =>
+    console.log("currentPageId changed", newValue),
+  );
+
+  watch(pageData, (newPageData) => {
+    console.log("pageData changed", newPageData);
+  });
+
+  const selectPage = async (pageId: number) => {
+    currentPageId.value = pageId;
+    console.log("pageId changed", pageId);
     if (currentPage.value && pageUpdateToSave.value) {
       lastUpdatedAt.value = Date.now();
       executePageUpdateDb();
     }
-    currentPage.value = page;
     navigateTo(`/edit/${pageId}`);
   };
 
   const createPage = async () => {
-    const newPage = await firebase.addPage();
-    if (!newPage) {
+    const { body } = await $fetch("/api/private/pages", {
+      method: "POST",
+      body: {
+        path: [],
+      },
+    });
+    if (!body) {
       snackbarStore.enqueue("Failed to create page", "error");
       return;
     }
-    pages.value = [...pages.value, newPage];
-    selectPage(newPage.id);
+    pages.value = [
+      ...pages.value,
+      {
+        ...body,
+        lastUpdatedAt: new Date(body.lastUpdatedAt).getTime(),
+      },
+    ];
+    selectPage(body.id);
     snackbarStore.enqueue("Page created", "success");
   };
 
@@ -66,8 +101,16 @@ export function usePageState() {
       snackbarStore.enqueue("No page update to save", "error");
       return;
     }
-    const success = await firebase.updatePage(pageUpdateToSave.value);
-    if (!success) {
+    const { body } = await $fetch(
+      `/api/private/pages/${pageUpdateToSave.value.id}`,
+      {
+        method: "patch",
+        body: {
+          ...pageUpdateToSave.value,
+        },
+      },
+    );
+    if (!body) {
       console.error(
         "[pageState]: Error updating page - ",
         pageUpdateToSave.value,
@@ -75,17 +118,7 @@ export function usePageState() {
       snackbarStore.enqueue("Error updating page", "error");
       return;
     }
-    pages.value = pages.value.map((page) =>
-      page.id === pageUpdateToSave.value?.id
-        ? { ...page, ...pageUpdateToSave.value }
-        : page,
-    );
-    if (
-      currentPage.value &&
-      currentPage.value.id === pageUpdateToSave.value.id
-    ) {
-      currentPage.value = { ...currentPage.value, ...pageUpdateToSave.value };
-    }
+    await Promise.all([fetchPageData(), fetchPagesData()]);
     pageUpdateToSave.value = undefined;
     snackbarStore.enqueue("Successfully updated page", "success");
   };
@@ -97,8 +130,16 @@ export function usePageState() {
       snackbarStore.enqueue("No page update to save", "error");
       return;
     }
-    const success = await firebase.updatePageBlock(update);
-    if (!success) {
+    const { statusCode, body } = await $fetch(
+      `/api/private/blocks/${update.blockId}`,
+      {
+        method: "patch",
+        body: {
+          textContent: update.textContent,
+        },
+      },
+    );
+    if (!body || statusCode !== 200) {
       console.error(
         "[pageState]: Error updating page block - ",
         blockUpdateToSave.value,
@@ -106,17 +147,7 @@ export function usePageState() {
       snackbarStore.enqueue("Error updating page block", "error");
       return;
     }
-    if (currentPage.value && currentPage.value.id === update.pageId) {
-      currentPage.value = {
-        ...currentPage.value,
-        blocks: currentPage.value.blocks.map((block) => {
-          if (block.id === update.blockId) {
-            return { ...block, textContent: update.textContent };
-          }
-          return block;
-        }),
-      };
-    }
+    await fetchPageData();
     blockUpdateToSave.value = undefined;
     snackbarStore.enqueue("Successfully updated page block", "success");
   };
@@ -133,17 +164,17 @@ export function usePageState() {
     update: PageUpdate,
     instantSave: boolean = false,
   ) => {
-    if (!currentPage.value) {
+    if (!pageData.value) {
       console.error("No current page to update");
       snackbarStore.enqueue("No current page to update", "error");
       return;
     }
-    if (update.id !== currentPage.value.id) {
+    if (update.id !== currentPageId.value) {
       console.error("Unable to update page due to mismatching ids");
       snackbarStore.enqueue("Unable to update page", "error");
     }
     if (update.title) {
-      const newPath = [...currentPage.value.path];
+      const newPath = pageData.value.path.map((p) => ({ ...p }));
       newPath[newPath.length - 1].title = update.title;
       pageUpdateToSave.value = {
         ...pageUpdateToSave.value,
@@ -153,7 +184,7 @@ export function usePageState() {
       };
     }
     if (update.emoji) {
-      const newPath = [...currentPage.value.path];
+      const newPath = pageData.value.path.map((p) => ({ ...p }));
       newPath[newPath.length - 1].emoji = update.emoji;
       pageUpdateToSave.value = {
         ...pageUpdateToSave.value,
@@ -175,17 +206,12 @@ export function usePageState() {
   };
 
   const updateBlock = async (
-    pageId: string,
-    blockId: string,
+    pageId: number,
+    blockId: number,
     textContent: string,
     instantSave: boolean = false,
   ) => {
-    if (!currentPage.value) {
-      console.error("No current page to update");
-      snackbarStore.enqueue("No current page to update", "error");
-      return;
-    }
-    if (pageId !== currentPage.value.id) {
+    if (pageId !== currentPageId.value) {
       console.error("Unable to update page due to mismatching ids");
       snackbarStore.enqueue("Unable to update page", "error");
     }
@@ -205,9 +231,11 @@ export function usePageState() {
     }, DEBOUNCE_TIME);
   };
 
-  const deletePage = async (pageId: string) => {
-    const success = await firebase.deletePage(pageId);
-    if (!success) {
+  const deletePage = async (pageId: number) => {
+    const { statusCode, body } = await $fetch(`/api/private/pages/${pageId}`, {
+      method: "delete",
+    });
+    if (!body || statusCode !== 200) {
       snackbarStore.enqueue("Failed to delete page", "error");
       return;
     }
@@ -218,34 +246,36 @@ export function usePageState() {
     snackbarStore.enqueue("Page deleted", "success");
   };
 
-  const getPages = async () => {
-    const newPages = await firebase.getPages();
-    if (!newPages.length) {
-      snackbarStore.enqueue("No pages found", "info");
-      return;
-    }
-    pages.value = newPages;
-    if (!currentPage.value && newPages.length) {
-      selectPage(newPages[0].id);
-    }
-  };
+  const {
+    data: pagesData,
+    error: _pagesGetError,
+    refresh: fetchPagesData,
+  } = useFetch("/api/private/users/pages", {
+    method: "get",
+    transform: (data) => {
+      return data.body.map((p) => ({
+        ...p,
+        lastUpdatedAt: new Date(p.lastUpdatedAt).getTime(),
+      }));
+    },
+  });
 
   return {
     pages: computed(() =>
       pageUpdateToSave.value
-        ? pages.value.map((page) =>
+        ? pagesData.value?.map((page) =>
             page.id === pageUpdateToSave.value?.id
               ? { ...page, ...pageUpdateToSave.value }
               : page,
           )
-        : pages.value,
+        : pagesData.value,
     ),
     currentPage: computed(() => {
-      return currentPage.value
+      return pageData.value
         ? {
-            ...currentPage.value,
+            ...pageData.value,
             ...pageUpdateToSave.value,
-            blocks: currentPage.value.blocks.map((block) => {
+            blocks: pageData.value.blocks.map((block) => {
               return blockUpdateToSave.value &&
                 block.id === blockUpdateToSave.value.blockId
                 ? { ...block, textContent: blockUpdateToSave.value.textContent }
@@ -261,7 +291,6 @@ export function usePageState() {
       return !pageUpdateToSave.value;
     }),
     deletePage,
-    getPages,
     updateBlock,
   };
 }

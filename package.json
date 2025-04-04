@@ -7,21 +7,27 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "db:generate": "drizzle-kit generate"
   },
   "dependencies": {
     "@headlessui/vue": "latest",
     "@heroicons/vue": "^2.1.5",
-    "firebase": "^11.0.1",
+    "@nuxthub/core": "0.8.21",
+    "drizzle-orm": "^0.40.0",
     "nuxt": "latest",
+    "nuxt-auth-utils": "0.5.17",
     "vue": "latest",
-    "vue-router": "latest"
+    "vue-router": "latest",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",
+    "drizzle-kit": "^0.30.5",
     "postcss": "^8.4.49",
     "prettier": "^3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.8",
-    "tailwindcss": "^3.4.14"
+    "tailwindcss": "^3.4.14",
+    "wrangler": "^3.114.1"
   }
 }

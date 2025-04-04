@@ -3,27 +3,35 @@ import { ArrowPathIcon } from "@heroicons/vue/24/outline";
 
 definePageMeta({
   layout: "editor",
-  validate({ params }) {
-    return typeof params.id === "string";
-  },
 });
 const emojiDataStore = useEmojiData();
 const { selectPage, isSaved, currentPage, updatePage, updateBlock } =
   usePageState();
 const route = useRoute();
+const snackbar = useSnackbar();
+
 watch(
   () => route.params.id,
   (paramId) => {
     console.log("paramId", paramId);
-    const strParamId = paramId as string;
-    if (currentPage.value?.id !== strParamId) {
-      selectPage(strParamId as string);
+    const numParamId = Number(paramId as string);
+    if (isNaN(numParamId)) {
+      snackbar.enqueue("Invalid page ID", "error");
+      return;
+    }
+    if (currentPage.value?.id !== numParamId) {
+      selectPage(numParamId);
     }
   },
 );
 onMounted(() => {
   emojiDataStore.getEmojiData();
-  selectPage(route.params.id as string);
+  const numParamId = Number(route.params.id as string);
+  if (isNaN(numParamId)) {
+    snackbar.enqueue("Invalid page ID", "error");
+    return;
+  }
+  selectPage(numParamId);
 });
 </script>
 

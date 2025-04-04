@@ -1,81 +1,61 @@
-import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
-
 // https://github.com/nuxt/nuxt/issues/14508
 
 export const useAuth = () => {
-  const { $db: db, $auth: auth } = useNuxtApp();
+  const { loggedIn, user, fetch: refreshSession, clear } = useUserSession();
   const snackbarStore = useSnackbar();
 
-  const isSignedIn = () => {
-    return !!auth.currentUser;
-  };
   const loading = useState<boolean>("loadingUser", () => true);
-  const userRef = useState<{
-    id: string;
-    displayName: string | null;
-    email: string | null;
-    hasPhoto: boolean;
-  } | null>("authUser", () => null);
+  const prevLink = useState<string | null>("prevLink", () => null);
 
-  const updateUser = async (user: {
-    uid: string;
-    displayName: string | null;
-    email: string | null;
-  }) => {
-    const success = await createUserIfNotExists({
-      id: user.uid,
-      displayName: user.displayName,
-      email: user.email,
-    });
-    if (!success) {
-      console.error("Failed to create user");
+  watch(
+    loggedIn,
+    (newValue) => {
+      console.log("loggedIn changed", newValue);
+    },
+    { immediate: true },
+  );
+
+  watch(
+    user,
+    (newValue) => {
+      console.log("user changed", newValue);
       loading.value = false;
-      return;
-    }
-    console.log("User signed in:", user);
-    const { displayName, email, uid } = user;
-    loading.value = false;
-    userRef.value = { displayName, email, id: uid, hasPhoto: false };
-    snackbarStore.enqueue("Signed in", "success");
-  };
+    },
+    { immediate: true },
+  );
 
-  const createUserIfNotExists = async (user: {
-    id: string;
-    displayName: string | null;
-    email: string | null;
-  }) => {
-    try {
-      const userDoc = doc(db, "users", user.id);
-      await setDoc(userDoc, user, { merge: true });
-      return true;
-    } catch {
-      snackbarStore.enqueue("Failed to create user", "error");
-      return false;
-    }
-  };
+  const { data: userData, error: userError } = useFetch("/api/private/users", {
+    method: "get",
+    watch: [loggedIn],
+  });
 
-  const signInWithGoogle = async () => {
-    const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider);
-  };
+  watch(
+    userError,
+    (newValue) => {
+      if (newValue) {
+        console.error("Error fetching user data", newValue);
+        snackbarStore.enqueue("Failed to fetch user data", "error");
+      }
+    },
+    { immediate: true },
+  );
 
-  const signOutInternal = () => {
-    signOut(auth)
-      .then(() => {
-        console.log("Signed out");
-      })
-      .catch((error) => {
-        console.error("Sign out error", error);
-      });
+  const signOut = () => {
+    clear();
+    snackbarStore.enqueue("Logged out successfully", "info");
+    return navigateTo("/login");
   };
-
   return {
-    signInWithGoogle,
-    signOut: signOutInternal,
-    isSignedIn,
-    user: computed(() => userRef.value),
-    updateUser,
+    signOut,
+    user,
     loading,
+    loggedIn,
+    refreshSession,
+    prevLink: computed(() => prevLink.value),
+    setPrevLink: (link: string) => {
+      prevLink.value = link;
+    },
+    dbUser: computed(() => userData.value?.body || null),
+    userError,
   };
 };

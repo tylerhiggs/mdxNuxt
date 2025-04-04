@@ -28,7 +28,7 @@ const copyLink = () => {
   console.log("Copy link");
 };
 
-const metaKey = navigator.userAgent.includes("Mac") ? "⌘" : "Ctrl";
+const metaKey = "⌘";
 
 const isOpen = ref(false);
 </script>
@@ -42,7 +42,7 @@ const isOpen = ref(false);
     <div class="flex">
       <button
         class="invisible absolute ml-3 rounded-md hover:bg-gray-200 group-hover/pageitem:visible dark:hover:bg-stone-600"
-        @click="(isOpen = !isOpen), $event.stopPropagation()"
+        @click="((isOpen = !isOpen), $event.stopPropagation())"
       >
         <ChevronRightIcon v-if="!isOpen" class="size-5 text-gray-400" />
         <ChevronDownIcon v-else class="size-5 text-gray-400" />
@@ -144,7 +144,7 @@ const isOpen = ref(false);
       <ToolTip message="Add a page inside" position="bottom">
         <button
           class="invisible flex items-center rounded-md p-0.5 hover:bg-gray-300 group-hover/pageitem:visible dark:hover:bg-stone-600"
-          @click="emit('addPage'), $event.stopPropagation()"
+          @click="(emit('addPage'), $event.stopPropagation())"
         >
           <PlusIcon class="size-5 text-gray-400" />
         </button>
