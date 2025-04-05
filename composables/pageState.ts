@@ -205,6 +205,19 @@ export function usePageState() {
     }, DEBOUNCE_TIME);
   };
 
+  const duplicatePage = async (pageId: number) => {
+    const { body } = await $fetch(`/api/private/pages/duplicate/${pageId}`, {
+      method: "post",
+    });
+    if (!body) {
+      snackbarStore.enqueue("Failed to duplicate page", "error");
+      return;
+    }
+    await Promise.all([fetchPageData(), fetchPagesData()]);
+    snackbarStore.enqueue("Page duplicated", "success");
+    selectPage(body.id);
+  };
+
   const updateBlock = async (
     pageId: number,
     blockId: number,
@@ -291,5 +304,6 @@ export function usePageState() {
     }),
     deletePage,
     updateBlock,
+    duplicatePage,
   };
 }

@@ -209,7 +209,7 @@ const insertFormating = (text: string, defaultTxt = "", text2 = "") => {
     </div>
 
     <div
-      class="field-sizing-content flex h-full w-full resize-y flex-col items-center"
+      class="flex field-sizing-content h-full w-full resize-y flex-col items-center"
     >
       <textarea
         v-for="block in page.blocks"

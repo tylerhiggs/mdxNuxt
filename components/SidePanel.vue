@@ -21,6 +21,8 @@ const emit = defineEmits<{
   openSettings: [];
   openSearch: [];
   createPage: [];
+  toggleFavorite: [number];
+  deletePage: [number];
 }>();
 
 const isOpen = ref(true);

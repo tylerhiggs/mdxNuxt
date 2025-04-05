@@ -14,9 +14,6 @@ const props = defineProps<{
 }>();
 const emit = defineEmits<{
   addPage: [];
-  toggleFavorite: [];
-  duplicatePrivate: [];
-  delete: [];
 }>();
 
 const copyLink = () => {
@@ -26,9 +23,12 @@ const copyLink = () => {
 const menuItems = computed<DropdownMenuItem[]>(() => [
   {
     label: props.page.isFavorite ? "Remove from favorites" : "Add to favorites",
-    icolor: props.page.isFavorite ? "text-amber-300" : "text-gray-400",
     icon: "i-heroicons-star",
-    onSelect: () => emit("toggleFavorite"),
+    onSelect: () =>
+      pageState.updatePage(
+        { id: props.page.id, isFavorite: !props.page.isFavorite },
+        true,
+      ),
   },
   {
     label: "Copy link",
@@ -38,7 +38,7 @@ const menuItems = computed<DropdownMenuItem[]>(() => [
   {
     label: "Duplicate",
     icon: "i-heroicons-document-duplicate",
-    onSelect: () => emit("duplicatePrivate"),
+    onSelect: () => pageState.duplicatePage(props.page.id),
   },
   {
     label: "Rename",
