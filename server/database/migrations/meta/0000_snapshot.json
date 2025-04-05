@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "870e6f09-3187-4495-ab35-ed02223c7fad",
+  "id": "c8ad7cd8-89f7-4c5d-a461-68b1631c8700",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "blocks": {
@@ -23,7 +23,7 @@
         },
         "index": {
           "name": "index",
-          "type": "integer",
+          "type": "real",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -41,6 +41,14 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
+        },
+        "userId": {
+          "name": "userId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": 0
         }
       },
       "indexes": {
@@ -63,7 +71,20 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "blocks_userId_users_id_fk": {
+          "name": "blocks_userId_users_id_fk",
+          "tableFrom": "blocks",
+          "tableTo": "users",
+          "columnsFrom": [
+            "userId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
@@ -102,11 +123,69 @@
           "notNull": true,
           "autoincrement": false
         },
-        "blocks": {
-          "name": "blocks",
+        "isPublic": {
+          "name": "isPublic",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": false
+        },
+        "isFavorite": {
+          "name": "isFavorite",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": false
+        },
+        "path": {
+          "name": "path",
           "type": "text",
           "primaryKey": false,
           "notNull": true,
+          "autoincrement": false
+        },
+        "parent_id": {
+          "name": "parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "lastUpdatedAt": {
+          "name": "lastUpdatedAt",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "lastUpdatedByName": {
+          "name": "lastUpdatedByName",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "createdByName": {
+          "name": "createdByName",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "deletedAt": {
+          "name": "deletedAt",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
           "autoincrement": false
         }
       },
@@ -126,6 +205,19 @@
           "tableTo": "users",
           "columnsFrom": [
             "userId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "pages_parent_id_pages_id_fk": {
+          "name": "pages_parent_id_pages_id_fk",
+          "tableFrom": "pages",
+          "tableTo": "pages",
+          "columnsFrom": [
+            "parent_id"
           ],
           "columnsTo": [
             "id"
@@ -157,13 +249,6 @@
         },
         "email": {
           "name": "email",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "password": {
-          "name": "password",
           "type": "text",
           "primaryKey": false,
           "notNull": true,

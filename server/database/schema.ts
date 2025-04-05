@@ -65,6 +65,10 @@ export const blocks = sqliteTable(
       enum: ["text", "table", "callout", "image", "code"],
     }).notNull(),
     textContent: text("textContent").notNull(),
+    userId: integer("userId")
+      .notNull()
+      .default(0)
+      .references(() => users.id, { onDelete: "cascade" }),
   },
   (table) => [index("block_page_id").on(table.pageId)],
 );

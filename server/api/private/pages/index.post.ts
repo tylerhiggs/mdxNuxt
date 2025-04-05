@@ -43,7 +43,7 @@ export default eventHandler(async (event) => {
     .set({
       path: JSON.stringify([...path, { id: page.id, title: "", emoji: "📄" }]),
     })
-    .where(eq(tables.pages.id, page.id))
+    .where(and(eq(tables.pages.id, page.id), eq(tables.pages.userId, user.id)))
     .returning()
     .get();
   const block = await useDrizzle()
@@ -53,6 +53,7 @@ export default eventHandler(async (event) => {
       index: 0,
       type: "text",
       textContent: "",
+      userId: Number(user.id),
     })
     .returning()
     .get();

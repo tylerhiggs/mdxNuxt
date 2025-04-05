@@ -4,7 +4,8 @@ export default eventHandler(async (event) => {
   if (!id || isNaN(Number(id))) {
     throw createError({ statusCode: 400, message: "Page ID is required" });
   }
-  const page = await useDrizzle().query.pages.findFirst({
+  const drizzle = useDrizzle();
+  const page = await drizzle.query.pages.findFirst({
     where: (pages, { eq }) =>
       and(eq(pages.id, Number(id)), eq(pages.userId, Number(user.id))),
     with: {
@@ -21,10 +22,11 @@ export default eventHandler(async (event) => {
     blocks,
     ...pageWithoutId
   } = page;
-  const newPage = await useDrizzle()
+  const newPage = await drizzle
     .insert(tables.pages)
     .values({
       ...pageWithoutId,
+      title: `${page.title} (copy)`,
       lastUpdatedAt: new Date(),
       createdAt: new Date(),
       lastUpdatedByName: user.name,
@@ -64,6 +66,6 @@ export default eventHandler(async (event) => {
   }
   return {
     statusCode: 200,
-    body: { ...newPage, blocks: newBlocks },
+    body: { ...newUpdatedPage, blocks: newBlocks },
   };
 });
