@@ -4,15 +4,10 @@ import {
   ChevronDownIcon,
   EllipsisHorizontalIcon,
   PlusIcon,
-  StarIcon,
-  LinkIcon,
-  DocumentDuplicateIcon,
-  PencilSquareIcon,
-  ArrowUturnLeftIcon,
-  TrashIcon,
 } from "@heroicons/vue/24/outline";
-import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
+import type { DropdownMenuItem } from "@nuxt/ui";
 import type { PageItem } from "@/types/page";
+const pageState = usePageState();
 const props = defineProps<{
   page: PageItem;
   selected: boolean;
@@ -28,20 +23,54 @@ const copyLink = () => {
   console.log("Copy link");
 };
 
-const metaKey = "⌘";
+const menuItems = computed<DropdownMenuItem[]>(() => [
+  {
+    label: props.page.isFavorite ? "Remove from favorites" : "Add to favorites",
+    icolor: props.page.isFavorite ? "text-amber-300" : "text-gray-400",
+    icon: "i-heroicons-star",
+    onSelect: () => emit("toggleFavorite"),
+  },
+  {
+    label: "Copy link",
+    icon: "i-heroicons-link",
+    onSelect: () => copyLink(),
+  },
+  {
+    label: "Duplicate",
+    icon: "i-heroicons-document-duplicate",
+    onSelect: () => emit("duplicatePrivate"),
+  },
+  {
+    label: "Rename",
+    icon: "i-heroicons-pencil-square",
+    onSelect: () => console.log("Rename"),
+    kbds: ["meta", "shift", "r"],
+  },
+  {
+    label: "Move to",
+    icon: "i-heroicons-arrow-uturn-left",
+    onSelect: () => console.log("Move to"),
+    kbds: ["meta", "shift", "p"],
+  },
+  {
+    label: "Delete",
+    icon: "i-heroicons-trash",
+    onSelect: () => pageState.deletePage(props.page.id),
+  },
+]);
 
 const isOpen = ref(false);
 </script>
 
 <template>
   <NuxtLink
-    class="group/pageitem flex items-center justify-between rounded-md py-1 hover:bg-gray-200 focus:border-transparent focus:outline-none focus:ring-0 dark:hover:bg-stone-700"
+    class="group/pageitem flex items-center justify-between rounded-md py-1 hover:bg-gray-200 focus:border-transparent focus:ring-0 focus:outline-hidden dark:hover:bg-stone-700"
     :class="{ 'bg-gray-200 font-semibold dark:bg-stone-700': props.selected }"
     :to="`/edit/${props.page.id}`"
   >
     <div class="flex">
       <button
-        class="invisible absolute ml-3 rounded-md hover:bg-gray-200 group-hover/pageitem:visible dark:hover:bg-stone-600"
+        class="invisible absolute ml-3 rounded-md group-hover/pageitem:visible hover:bg-gray-200 dark:hover:bg-stone-600"
         @click="((isOpen = !isOpen), $event.stopPropagation())"
       >
         <ChevronRightIcon v-if="!isOpen" class="size-5 text-gray-400" />
@@ -51,99 +80,26 @@ const isOpen = ref(false);
         {{ props.page.emoji }}
       </p>
       <p
-        class="ml-3 overflow-hidden truncate text-ellipsis text-sm text-black dark:text-gray-400"
+        class="ml-3 truncate overflow-hidden text-sm text-ellipsis text-black dark:text-gray-400"
       >
         {{ props.page.title || "Untitled" }}
       </p>
     </div>
     <div class="flex items-center">
-      <Popover class="relative" v-slot="{ open }">
-        <ToolTip
-          message="Delete, duplicate, and more..."
-          position="bottom"
-          :disabled="open"
-        >
-          <PopoverButton
-            class="invisible flex items-center rounded-md p-0.5 hover:bg-gray-300 group-hover/pageitem:visible dark:hover:bg-stone-600"
+      <UDropdownMenu :items="menuItems">
+        <ToolTip message="Delete, duplicate, and more..." position="bottom">
+          <UButton
+            class="invisible flex items-center rounded-md p-0.5 group-hover/pageitem:visible hover:bg-gray-300 dark:hover:bg-stone-600"
+            variant="ghost"
           >
             <EllipsisHorizontalIcon class="size-5 text-gray-400" />
-          </PopoverButton>
+          </UButton>
         </ToolTip>
-        <PopoverPanel
-          class="absolute flex w-56 flex-col text-nowrap rounded-lg bg-white dark:bg-stone-700 dark:text-stone-300"
-        >
-          <button
-            @click="emit('toggleFavorite')"
-            class="mx-0.5 mt-0.5 flex items-center text-nowrap rounded-md p-0.5 text-xs hover:bg-gray-200 dark:hover:bg-stone-700"
-          >
-            <StarIcon
-              v-if="!page.isFavorite"
-              class="mr-2 size-5 text-gray-400"
-            />
-            <StarIcon v-else class="mr-2 size-5 fill-amber-300" />
-
-            <span v-if="page.isFavorite">Add to Favorites</span>
-            <span v-else>Remove from Favorites</span>
-          </button>
-          <hr class="my-1 border-gray-200" />
-          <button
-            @click="copyLink"
-            class="mx-0.5 flex items-center rounded-md p-0.5 text-xs hover:bg-gray-300"
-          >
-            <LinkIcon class="mr-2 size-5 text-gray-400" />
-            <span>Copy link</span>
-          </button>
-          <button
-            @click="emit('duplicatePrivate')"
-            class="flex items-center rounded-md p-0.5 text-xs hover:bg-gray-300"
-          >
-            <DocumentDuplicateIcon class="mr-2 size-5 text-gray-400" />
-            <span>Duplicate</span>
-          </button>
-          <button
-            class="flex items-center justify-between rounded-md p-0.5 text-xs hover:bg-gray-300"
-          >
-            <div class="flex items-center">
-              <PencilSquareIcon class="mr-2 size-5 text-gray-400" />
-              <span>Rename</span>
-            </div>
-            <div class="mr-2 font-mono text-gray-400">
-              {{ metaKey }}+Shift+R
-            </div>
-          </button>
-          <button
-            class="flex items-center justify-between rounded-md p-0.5 text-xs hover:bg-gray-300"
-          >
-            <div class="flex items-center">
-              <ArrowUturnLeftIcon class="mr-2 size-5 text-gray-400" />
-              <span>Move to</span>
-            </div>
-            <div class="mr-2 font-mono text-gray-400">
-              {{ metaKey }}+Shift+P
-            </div>
-          </button>
-          <button
-            @click="emit('delete')"
-            class="flex items-center rounded-md p-0.5 text-xs hover:bg-gray-300"
-          >
-            <TrashIcon class="mr-2 size-5 text-gray-400" />
-            <span>Delete</span>
-          </button>
-          <hr class="my-1 border-gray-200" />
-          <div>
-            <p class="flex text-xs text-gray-400">
-              Last edited by {{ page.lastUpdatedByName }}
-            </p>
-            <p class="mb-2 flex text-xs text-gray-400">
-              {{ new Date(page.lastUpdatedAt).toLocaleString() }}
-            </p>
-          </div>
-        </PopoverPanel>
-      </Popover>
+      </UDropdownMenu>
 
       <ToolTip message="Add a page inside" position="bottom">
         <button
-          class="invisible flex items-center rounded-md p-0.5 hover:bg-gray-300 group-hover/pageitem:visible dark:hover:bg-stone-600"
+          class="invisible flex items-center rounded-md p-0.5 group-hover/pageitem:visible hover:bg-gray-300 dark:hover:bg-stone-600"
           @click="(emit('addPage'), $event.stopPropagation())"
         >
           <PlusIcon class="size-5 text-gray-400" />

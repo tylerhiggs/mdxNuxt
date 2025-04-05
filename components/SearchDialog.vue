@@ -56,7 +56,7 @@ const selectCreatedByOptions = (value: string) => {
         <MagnifyingGlassIcon class="mx-2 size-5 text-gray-400" />
         <input
           type="text"
-          class="h-10 w-full bg-transparent px-3 py-2 text-sm text-gray-700 placeholder-gray-400 focus:border-transparent focus:outline-none"
+          class="h-10 w-full bg-transparent px-3 py-2 text-sm text-gray-700 placeholder-gray-400 focus:border-transparent focus:outline-hidden"
           placeholder="Search..."
           v-model="search"
         />

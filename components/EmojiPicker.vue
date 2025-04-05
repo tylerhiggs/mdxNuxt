@@ -150,14 +150,14 @@ const tones: { tone: Tone | null; char: string }[] = [
   <div class="w-80 rounded-lg bg-white shadow-lg">
     <div class="flex items-center p-1">
       <div
-        class="m-1 flex w-full cursor-text items-center justify-between rounded border border-gray-300 bg-gray-100 p-1 focus-within:border-blue-200"
+        class="m-1 flex w-full cursor-text items-center justify-between rounded-sm border border-gray-300 bg-gray-100 p-1 focus-within:border-blue-200"
         @click="searchHtmlInput?.focus()"
       >
         <MagnifyingGlassIcon class="size-4 text-gray-500" />
         <input
           ref="searchHtmlInput"
           type="text"
-          class="ml-1 w-full border-none bg-transparent text-sm text-gray-700 focus:outline-none"
+          class="ml-1 w-full border-none bg-transparent text-sm text-gray-700 focus:outline-hidden"
           placeholder="Filter..."
           v-model="search"
         />
@@ -172,7 +172,7 @@ const tones: { tone: Tone | null; char: string }[] = [
       <ToolTip message="Select a random emoji" position="bottom">
         <button
           @click="selectRandomEmoji"
-          class="flex size-7 items-center justify-center rounded border border-gray-300 hover:bg-gray-300"
+          class="flex size-7 items-center justify-center rounded-sm border border-gray-300 hover:bg-gray-300"
         >
           <SwatchIcon class="size-4 text-gray-500" />
         </button>
@@ -180,7 +180,7 @@ const tones: { tone: Tone | null; char: string }[] = [
       <Listbox v-slot="{ open }" as="div" class="relative">
         <ListboxButton
           as="button"
-          class="relative mx-1 flex size-7 items-center justify-center rounded border border-gray-300 hover:bg-gray-300"
+          class="relative mx-1 flex size-7 items-center justify-center rounded-sm border border-gray-300 hover:bg-gray-300"
         >
           <ToolTip
             message="Select skin tone"
@@ -192,7 +192,7 @@ const tones: { tone: Tone | null; char: string }[] = [
         </ListboxButton>
         <ListboxOptions
           as="div"
-          class="absolute z-50 flex origin-top-right rounded-lg bg-white p-1 shadow"
+          class="absolute z-50 flex origin-top-right rounded-lg bg-white p-1 shadow-sm"
         >
           <ListboxOption
             v-for="tone in tones"

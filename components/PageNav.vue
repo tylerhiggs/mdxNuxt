@@ -59,7 +59,7 @@ const mouseleave = () => {
     <button
       v-for="(page, index) in page.path"
       :key="page.id"
-      class="flex items-center rounded-sm p-0.5 text-gray-700 hover:bg-gray-200 dark:text-stone-300 dark:hover:bg-stone-700"
+      class="flex items-center rounded-xs p-0.5 text-gray-700 hover:bg-gray-200 dark:text-stone-300 dark:hover:bg-stone-700"
       @click="() => emits('selectPage', page.id)"
     >
       <p v-if="index !== 0" class="mx-2 text-gray-500 dark:text-stone-400">/</p>
@@ -93,7 +93,7 @@ const mouseleave = () => {
           Share
         </PopoverButton>
         <PopoverPanel
-          class="absolute right-0 z-10 mt-3 w-96 transform rounded-md bg-white px-4 shadow"
+          class="absolute right-0 z-10 mt-3 w-96 transform rounded-md bg-white px-4 shadow-sm"
         >
           <div v-if="!props.page.isPublic">
             <div class="text-md font-bold">Publish to web</div>
@@ -122,7 +122,7 @@ const mouseleave = () => {
                       {{ props.page.blocks[0].textContent }}
                     </p>
                     <div
-                      class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white to-transparent"
+                      class="absolute bottom-0 left-0 right-0 h-16 bg-linear-to-t from-white to-transparent"
                     ></div>
                   </div>
                 </div>

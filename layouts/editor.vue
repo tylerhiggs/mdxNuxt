@@ -8,7 +8,7 @@ const showSettings = ref(false);
 <template>
   <div
     v-if="auth.loggedIn && auth.dbUser.value"
-    class="fixed bottom-0 left-0 right-0 top-0 m-0 overflow-hidden"
+    class="fixed top-0 right-0 bottom-0 left-0 m-0 overflow-hidden"
   >
     <div class="relative m-0 flex h-full w-full overflow-hidden">
       <SidePanel

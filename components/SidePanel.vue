@@ -21,7 +21,6 @@ const emit = defineEmits<{
   openSettings: [];
   openSearch: [];
   createPage: [];
-  deletePage: [number];
 }>();
 
 const isOpen = ref(true);
@@ -65,13 +64,13 @@ const avatarUrl = computed(() => {
       workspaceTitle &&
       userFirstLetter
     "
-    class="group relative bottom-0 left-0 top-0 flex h-full w-64 flex-col bg-slate-50 px-1 py-0.5 dark:bg-stone-800"
+    class="group relative top-0 bottom-0 left-0 flex h-full w-64 flex-col bg-slate-50 px-1 py-0.5 dark:bg-stone-800"
   >
     <ClientOnly>
       <Popover class="relative w-full">
         <PopoverButton
           v-if="userFirstLetter"
-          class="flex w-full items-center justify-between rounded-md border-transparent p-2 hover:bg-gray-200 focus:border-transparent focus:outline-none focus:ring-0 dark:hover:bg-stone-700"
+          class="flex w-full items-center justify-between rounded-md border-transparent p-2 hover:bg-gray-200 focus:border-transparent focus:ring-0 focus:outline-hidden dark:hover:bg-stone-700"
         >
           <img
             v-if="avatarUrl"
@@ -86,7 +85,7 @@ const avatarUrl = computed(() => {
             {{ userFirstLetter }}
           </div>
           <div
-            class="mx-2 overflow-hidden truncate text-ellipsis text-sm text-black dark:text-white"
+            class="mx-2 truncate overflow-hidden text-sm text-ellipsis text-black dark:text-white"
           >
             {{ workspaceTitle }}
           </div>
@@ -100,7 +99,7 @@ const avatarUrl = computed(() => {
           >
             <button
               @click="isOpen = false"
-              class="invisible ml-0.5 flex items-center rounded-md p-0.5 text-2xl hover:bg-gray-300 group-hover:visible dark:hover:bg-stone-600"
+              class="invisible ml-0.5 flex items-center rounded-md p-0.5 text-2xl group-hover:visible hover:bg-gray-300 dark:hover:bg-stone-600"
             >
               <ChevronDoubleLeftIcon
                 class="size-5 font-bold text-gray-500 dark:text-stone-400 dark:hover:text-white"
@@ -170,7 +169,6 @@ const avatarUrl = computed(() => {
       :key="page.id"
       :page="page"
       :selected="page.id === currentPageId"
-      @delete="() => emit('deletePage', page.id)"
     />
     <p class="my-0.5 ml-3 text-xs font-normal text-gray-400">Private</p>
     <PagePanelItem

@@ -168,7 +168,7 @@ const insertFormating = (text: string, defaultTxt = "", text2 = "") => {
         <div class="group pt-12">
           <Popover class="relative">
             <PopoverButton
-              class="flex rounded-md border-none text-7xl hover:bg-gray-100 focus:outline-none dark:hover:bg-stone-600"
+              class="flex rounded-md border-none text-7xl hover:bg-gray-100 focus:outline-hidden dark:hover:bg-stone-600"
             >
               {{ page.emoji }}
             </PopoverButton>
@@ -201,7 +201,7 @@ const insertFormating = (text: string, defaultTxt = "", text2 = "") => {
               :value="page.title"
               @input="updateTitle"
               placeholder="Untitled"
-              class="w-full outline-none dark:bg-inherit"
+              class="w-full outline-hidden dark:bg-inherit"
             />
           </h1>
         </div>
@@ -216,7 +216,7 @@ const insertFormating = (text: string, defaultTxt = "", text2 = "") => {
         ref="elements"
         :id="`${block.id}`"
         :value="block.textContent"
-        class="text-md mt-4 min-h-full w-8/12 resize-none border-none bg-transparent font-sans text-lg font-normal outline-none dark:text-white"
+        class="text-md mt-4 min-h-full w-8/12 resize-none border-none bg-transparent font-sans text-lg font-normal outline-hidden dark:text-white"
         @input="(event) => updateBlockTextarea(event, block)"
         @keydown.meta.b="(event) => bold(event, block)"
         @keydown.ctrl.b="(event) => bold(event, block)"

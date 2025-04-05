@@ -239,10 +239,9 @@ export function usePageState() {
       snackbarStore.enqueue("Failed to delete page", "error");
       return;
     }
-    pages.value = pages.value.filter((page) => page.id !== pageId);
-    if (currentPage.value?.id === pageId) {
-      currentPage.value = undefined;
-    }
+    await fetchPagesData();
+    if (pagesData.value && pagesData.value.length)
+      selectPage(pagesData.value[0].id);
     snackbarStore.enqueue("Page deleted", "success");
   };
 

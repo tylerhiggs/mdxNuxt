@@ -11,7 +11,8 @@ export default eventHandler(async (event) => {
     throw createError({ statusCode: 400, message: "User ID is required" });
   }
   const userPages = await useDrizzle().query.pages.findMany({
-    where: (pages, { eq }) => eq(pages.userId, Number(user.id)),
+    where: (pages, { eq, not, isNull }) =>
+      eq(pages.userId, Number(user.id)) && isNull(pages.deletedAt),
     orderBy: (pages) => [asc(pages.createdAt)],
   });
   if (!userPages) {

@@ -112,7 +112,7 @@ const buttonText = computed(() => {
 
 .gsi-material-button .gsi-material-button-contents {
   -webkit-flex-grow: 1;
-  flex-grow: 1;
+  grow: 1;
   font-family: "Roboto", arial, sans-serif;
   font-weight: 500;
   overflow: hidden;

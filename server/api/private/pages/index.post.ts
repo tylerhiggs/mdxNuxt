@@ -26,6 +26,7 @@ export default eventHandler(async (event) => {
     createdByName: user.name,
     path: JSON.stringify([...path, { id: -1, title: "", emoji: "📄" }]),
     parentId: parentId ? Number(parentId) : null,
+    deletedAt: null,
   };
 
   const page = await useDrizzle()

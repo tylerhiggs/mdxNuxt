@@ -32,14 +32,14 @@ const mouseover = (event: MouseEvent) => {
   <Listbox v-if="props.emoji.altColors" class="relative" as="div">
     <ListboxButton
       as="button"
-      class="rounded-sm p-1 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none"
+      class="rounded-xs p-1 hover:bg-gray-100 focus:bg-gray-100 focus:outline-hidden"
       @mouseover="mouseover"
       @mouseleave="tooltipStore.hide"
     >
       {{ skinTone ? props.emoji.altColors[skinTone] : props.emoji.char }}
     </ListboxButton>
     <ListboxOptions class="absolute">
-      <div class="absolute z-50 flex flex-col rounded-lg bg-white p-1 shadow">
+      <div class="absolute z-50 flex flex-col rounded-lg bg-white p-1 shadow-sm">
         <ListboxOption
           as="button"
           v-for="e in chars"
@@ -53,7 +53,7 @@ const mouseover = (event: MouseEvent) => {
     </ListboxOptions>
   </Listbox>
   <button
-    class="rounded-sm p-1 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none"
+    class="rounded-xs p-1 hover:bg-gray-100 focus:bg-gray-100 focus:outline-hidden"
     @click="() => emits('select', props.emoji.char)"
     @mouseenter="mouseover"
     @mouseleave="tooltipStore.hide"

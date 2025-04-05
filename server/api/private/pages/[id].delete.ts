@@ -1,13 +1,14 @@
 import { eq, tables, useDrizzle } from "~/server/utils/drizzle";
 
 export default eventHandler(async (event) => {
-  const { pageId } = getRouterParams(event);
-  if (!pageId || isNaN(Number(pageId))) {
+  const { id } = getRouterParams(event);
+  if (!id || isNaN(Number(id))) {
     throw createError({ statusCode: 400, message: "Page ID is required" });
   }
   const page = await useDrizzle()
-    .delete(tables.pages)
-    .where(eq(tables.pages.id, Number(pageId)))
+    .update(tables.pages)
+    .set({ deletedAt: new Date() })
+    .where(eq(tables.pages.id, Number(id)))
     .returning()
     .get();
   if (!page) {
