@@ -42,6 +42,7 @@ export function usePageState() {
     data: pageData,
     error: _pageGetError,
     refresh: fetchPageData,
+    status: pageStatus,
   } = useFetch(() => `/api/private/pages/${currentPageId.value}`, {
     watch: [currentPageId],
     method: "get",
@@ -53,14 +54,6 @@ export function usePageState() {
         emoji: string;
       }[],
     }),
-  });
-
-  watch(currentPageId, (newValue) =>
-    console.log("currentPageId changed", newValue),
-  );
-
-  watch(pageData, (newPageData) => {
-    console.log("pageData changed", newPageData);
   });
 
   const selectPage = async (pageId: number) => {
@@ -149,6 +142,7 @@ export function usePageState() {
     }
     await fetchPageData();
     blockUpdateToSave.value = undefined;
+    pageUpdateToSave.value = undefined;
     snackbarStore.enqueue("Successfully updated page block", "success");
   };
 
@@ -233,6 +227,11 @@ export function usePageState() {
       pageId,
       textContent,
     };
+    pageUpdateToSave.value = {
+      ...pageUpdateToSave.value,
+      id: pageId,
+      lastUpdatedAt: Date.now(),
+    };
     lastUpdatedAt.value = Date.now();
     if (instantSave) {
       executeBlockUpdateDb();
@@ -262,6 +261,7 @@ export function usePageState() {
     data: pagesData,
     error: _pagesGetError,
     refresh: fetchPagesData,
+    status: pagesStatus,
   } = useFetch("/api/private/users/pages", {
     method: "get",
     transform: (data) => {

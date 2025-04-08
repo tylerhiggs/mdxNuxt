@@ -85,7 +85,7 @@ const mouseleave = () => {
       <Popover as="div" class="relative">
         <PopoverButton
           as="button"
-          class="ml-2 flex items-center rounded-md px-1 py-0.5 text-xs font-semibold text-gray-700 hover:bg-gray-200"
+          class="ml-2 flex items-center rounded-md px-1 py-0.5 text-xs font-semibold text-gray-700 hover:bg-gray-200 dark:text-gray-200 dark:hover:bg-gray-700"
           @mouseover="mouseover"
           @mouseleave="mouseleave"
           @click="mouseleave"
@@ -122,7 +122,7 @@ const mouseleave = () => {
                       {{ props.page.blocks[0].textContent }}
                     </p>
                     <div
-                      class="absolute bottom-0 left-0 right-0 h-16 bg-linear-to-t from-white to-transparent"
+                      class="absolute right-0 bottom-0 left-0 h-16 bg-linear-to-t from-white to-transparent"
                     ></div>
                   </div>
                 </div>
@@ -159,7 +159,7 @@ const mouseleave = () => {
         </PopoverPanel>
       </Popover>
       <button
-        class="ml-2 flex items-center text-gray-500 hover:text-gray-700"
+        class="ml-2 flex items-center text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
         @click="() => emits('favoritePage')"
       >
         <StarIcon

@@ -19,11 +19,18 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   openSettings: [];
-  openSearch: [];
+  toggleSearch: [];
   createPage: [];
   toggleFavorite: [number];
   deletePage: [number];
 }>();
+
+defineShortcuts({
+  meta_k: {
+    handler: () => emit("toggleSearch"),
+    usingInput: true,
+  },
+});
 
 const isOpen = ref(true);
 const favoritePages = computed(() =>
@@ -136,7 +143,7 @@ const avatarUrl = computed(() => {
       :command="toggleSearchCommand"
     >
       <DefaultPanelItem
-        @click="emit('openSearch')"
+        @click="emit('toggleSearch')"
         class="w-full pl-3 font-medium text-gray-400"
         title="Search"
       >

@@ -14,7 +14,7 @@ const showSettings = ref(false);
       <SidePanel
         :pages="pages || []"
         :current-page-id="currentPage?.id"
-        @openSearch="showSearch = true"
+        @toggle-search="showSearch = !showSearch"
         @openSettings="showSettings = true"
         @createPage="createPage"
         @delete-page="deletePage"

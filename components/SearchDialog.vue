@@ -17,17 +17,18 @@ const search = ref("");
 const filtersOpen = ref(true);
 
 const sortOptions = [
-  { id: "Best Matches" },
-  { id: "Last Edited: Newest First" },
-  { id: "Last Edited: Oldest First" },
-  { id: "Created: Newest First" },
-  { id: "Created: Oldest First" },
+  { name: "Best Matches", id: "bestMatches" },
+  { name: "Last Edited: Newest First", id: "last-updated" },
+  { name: "Last Edited: Oldest First", id: "oldest-updated" },
+  { name: "Created: Newest First", id: "newest-created" },
+  { name: "Created: Oldest First", id: "oldest-created" },
 ];
 const selectedSort = ref(sortOptions[0]);
 const selectSortId = (value: string) => {
   selectedSort.value =
     sortOptions.find((option) => option.id === value) || sortOptions[0];
 };
+const selectedPageIndex = ref(0);
 
 const isTitleOnly = ref(true);
 const toggleTitleOnly = () => {
@@ -42,21 +43,82 @@ const selectCreatedByOptions = (value: string) => {
       createdByOptions[0],
   );
 };
+
+const closeDialog = () => {
+  search.value = "";
+  selectedPageIndex.value = 0;
+  emit("close");
+};
+
+const { data: searchResults } = useFetch("/api/private/pages/search", {
+  method: "GET",
+  query: {
+    search,
+    titleOnly: isTitleOnly,
+    sort: selectedSort.value.id,
+  },
+  watch: [isTitleOnly, selectedSort, search],
+  transform: (response) => [...response.body],
+  immediate: false,
+});
+
+const toShortDate = (date: number) => {
+  const d = new Date(date);
+  return d.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "2-digit",
+  });
+};
+const dateIsToday = (date: number) => {
+  const d = new Date(date);
+  const today = new Date();
+  return (
+    d.getDate() === today.getDate() &&
+    d.getMonth() === today.getMonth() &&
+    d.getFullYear() === today.getFullYear()
+  );
+};
+
+const handleKeyDown = (event: KeyboardEvent) => {
+  if (!props.open) return;
+  const resultsLength = searchResults.value?.length;
+  if (!resultsLength) return;
+  if (event.key === "ArrowUp") {
+    selectedPageIndex.value =
+      (selectedPageIndex.value - 1 + resultsLength) % resultsLength;
+  } else if (event.key === "ArrowDown") {
+    selectedPageIndex.value = (selectedPageIndex.value + 1) % resultsLength;
+  } else if (
+    event.key === "Enter" &&
+    searchResults.value &&
+    resultsLength > selectedPageIndex.value
+  ) {
+    const selectedResult = searchResults.value[selectedPageIndex.value];
+    navigateTo(`/edit/${selectedResult.id}`);
+    closeDialog();
+    event.preventDefault();
+    event.stopPropagation();
+  }
+};
 </script>
 
 <template>
   <Dialog
     as="div"
     :open="props.open"
-    @close="() => emit('close')"
-    class="fixed inset-0 z-10 flex justify-center overflow-y-auto bg-black bg-opacity-20 pt-12"
+    @close="closeDialog"
+    class="fixed inset-0 z-10 flex justify-center overflow-y-auto bg-gray-900/50 pt-12 backdrop-blur-sm"
   >
-    <DialogPanel class="flex h-3/6 w-6/12 flex-col rounded-xl bg-gray-50">
+    <DialogPanel
+      class="flex h-3/6 w-6/12 flex-col rounded-xl bg-gray-50 shadow-lg dark:bg-stone-700"
+      @keydown="handleKeyDown"
+    >
       <div class="mt-0 flex items-center">
         <MagnifyingGlassIcon class="mx-2 size-5 text-gray-400" />
         <input
           type="text"
-          class="h-10 w-full bg-transparent px-3 py-2 text-sm text-gray-700 placeholder-gray-400 focus:border-transparent focus:outline-hidden"
+          class="h-10 w-full bg-transparent px-3 py-2 text-sm text-gray-700 placeholder-gray-400 focus:border-transparent focus:outline-hidden dark:text-stone-100 dark:placeholder-stone-300"
           placeholder="Search..."
           v-model="search"
         />
@@ -78,22 +140,57 @@ const selectCreatedByOptions = (value: string) => {
         <PillListBox
           :items="sortOptions"
           :selected="selectedSort"
-          :getTitle="(item) => item.id"
+          :getTitle="(item) => item.name"
           @select="selectSortId"
         >
           <ArrowsUpDownIcon class="mr-1 size-4" />
           {{ selectedSort.id === sortOptions[0].id ? "Sort" : selectedSort.id }}
         </PillListBox>
         <button
-          class="ml-2 flex items-center rounded-full border border-gray-200 px-2 py-0.5 text-sm text-gray-400 hover:bg-gray-100"
-          :class="[
-            isTitleOnly ? 'border-blue-400 text-blue-400 hover:bg-blue-50' : '',
-          ]"
+          class="ml-2 flex items-center rounded-full border border-gray-200 px-2 py-0.5 text-sm"
+          :class="{
+            'bg-blue-500 text-white hover:bg-blue-700': isTitleOnly,
+            'text-gray-500 hover:bg-gray-100': !isTitleOnly,
+          }"
           @click="toggleTitleOnly"
         >
           <p class="mr-1 font-medium">Aa</p>
           Title only
         </button>
+      </div>
+      {{ selectedPageIndex }}
+      {{ searchResults?.length || "nothing" }}
+      <div class="flex h-3/6 w-full flex-col overflow-y-auto p-2">
+        <div
+          v-for="(result, index) in searchResults"
+          :key="result.id"
+          :class="{
+            'bg-gray-200 dark:bg-stone-600': selectedPageIndex === index,
+          }"
+          class="flex items-center justify-between rounded-lg p-2 hover:bg-gray-100 dark:hover:bg-stone-600"
+        >
+          <NuxtLink
+            :to="`/edit/${result.id}`"
+            class="flex w-full items-center justify-between"
+          >
+            <p class="text-sm text-gray-700 dark:text-white">
+              {{ result.title || "Untitled" }}
+            </p>
+            <p class="text-xs text-gray-500 dark:text-stone-400">
+              {{
+                dateIsToday(result.lastUpdatedAt)
+                  ? "Today"
+                  : toShortDate(result.lastUpdatedAt)
+              }}
+            </p>
+          </NuxtLink>
+        </div>
+        <div
+          v-if="searchResults?.length === 0"
+          class="flex h-full items-center justify-center text-gray-500"
+        >
+          <p class="text-sm">No results found</p>
+        </div>
       </div>
     </DialogPanel>
   </Dialog>
