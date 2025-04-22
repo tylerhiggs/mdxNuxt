@@ -1,5 +1,6 @@
 import { asc } from "drizzle-orm";
 import { useDrizzle } from "~/server/utils/drizzle";
+import { parseMd } from "~/server/utils/parseMd";
 
 export default eventHandler(async (event) => {
   const { id } = getRouterParams(event);
@@ -30,7 +31,14 @@ export default eventHandler(async (event) => {
       ...pages[0],
       lastUpdatedAt: pages[0].lastUpdatedAt.getTime(),
       createdAt: pages[0].createdAt.getTime(),
-      blocks: pages[0].blocks,
+      blocks: pages[0].blocks.map((block) =>
+        block.type === "text"
+          ? {
+              ...block,
+              renderedMd: parseMd(block.textContent),
+            }
+          : block,
+      ),
     },
   };
 });

@@ -10,7 +10,12 @@ export default defineNuxtConfig({
     plugins: [tailwindcss()],
   },
 
-  modules: ["@nuxthub/core", "nuxt-auth-utils", "@nuxt/ui"],
+  modules: [
+    "@nuxthub/core",
+    "nuxt-auth-utils",
+    "@nuxt/ui",
+    "@nuxt/test-utils/module",
+  ],
 
   devServer: {
     https: {
