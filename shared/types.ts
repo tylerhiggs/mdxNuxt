@@ -6,7 +6,8 @@ export type MdNode = {
     | "link"
     | "inline-code"
     | "bold"
-    | "italic";
+    | "italic"
+    | "text";
   raw: string;
   text?: string;
   depth?: number;

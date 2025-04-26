@@ -1,6 +1,5 @@
 import { desc } from "drizzle-orm";
-import { parseMd } from "~/server/utils/parseMd";
-
+import { parseMd } from "~/shared/parseMd";
 export default defineEventHandler(async (event) => {
   const { id } = getRouterParams(event);
   if (!id || isNaN(Number(id))) {

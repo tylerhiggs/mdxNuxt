@@ -7,9 +7,11 @@ const props = defineProps<{
 
 <template>
   <div v-if="node.items && node.items.length">
-    <div v-for="(item, index) in props.node.items" :key="index">
-      <MdNode :node="item" />
-    </div>
+    <MdNode
+      v-for="(item, index) in props.node.items"
+      :key="index"
+      :node="item"
+    />
   </div>
   <h1
     v-if="node.type === 'heading' && node.depth === 1"
@@ -29,12 +31,15 @@ const props = defineProps<{
   >
     {{ node.text }}
   </h3>
-  <p v-if="node.type === 'paragraph'">{{ node.text }}</p>
+  <p v-if="node.type === 'text'" class="inline">{{ node.text }}</p>
+  <p v-if="node.type === 'paragraph'" class="inline">{{ node.text }}</p>
   <code
     v-if="node.type === 'inline-code'"
-    class="rounded bg-gray-100 px-1 py-0.5 text-red-500"
+    class="inline rounded bg-gray-100 px-1 py-0.5 text-red-500"
     >{{ node.text }}</code
   >
-  <b v-if="node.type === 'bold'" class="font-extrabold">{{ node.text }}</b>
-  <i v-if="node.type === 'italic'" class="italic">{{ node.text }}</i>
+  <b v-if="node.type === 'bold'" class="inline font-extrabold">{{
+    node.text
+  }}</b>
+  <i v-if="node.type === 'italic'" class="inline italic">{{ node.text }}</i>
 </template>

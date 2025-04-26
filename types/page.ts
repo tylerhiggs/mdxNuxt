@@ -1,3 +1,5 @@
+import type { MdNode } from "~/shared/types";
+
 export type Page = {
   id: number;
   title: string;
@@ -24,6 +26,7 @@ export type Block = {
   index: number;
   type: BlockType;
   textContent: string;
+  renderedMd?: MdNode[];
 };
 
 export type BlockType = "text" | "table" | "callout" | "image" | "code";

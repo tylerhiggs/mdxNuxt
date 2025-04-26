@@ -5,11 +5,13 @@ import type { Page } from "@/types/page";
 const props = defineProps<{
   saved: boolean;
   page: Page;
+  previewPage: boolean;
 }>();
 
 const emits = defineEmits<{
   favoritePage: [];
   selectPage: [number];
+  togglePreview: [];
 }>();
 const tooltipStore = useTooltip();
 const pageState = usePageState();
@@ -82,6 +84,18 @@ const mouseleave = () => {
           })
         }}
       </p>
+      <button
+        :class="{
+          'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200':
+            !props.previewPage,
+          'text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300':
+            props.previewPage,
+        }"
+        class="ml-2 flex cursor-pointer items-center rounded-md px-1 py-0.5 text-xs font-semibold"
+        @click="() => emits('togglePreview')"
+      >
+        <span>Preview</span>
+      </button>
       <Popover as="div" class="relative">
         <PopoverButton
           as="button"

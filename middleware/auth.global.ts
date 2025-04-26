@@ -6,6 +6,8 @@ export default defineNuxtRouteMiddleware((to, from) => {
     return;
   }
 
+  const unauthenticatedRoutes = ["/public"];
+
   const { loggedIn } = useUserSession();
   const auth = useAuth();
   if (!loggedIn.value) {

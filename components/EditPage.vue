@@ -5,6 +5,8 @@ import {
 } from "@heroicons/vue/24/solid";
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
 import type { Page, PageUpdate, Block } from "@/types/page";
+import { parseMd } from "~/shared/parseMd";
+import type { MdNode } from "~/shared/types";
 const snackbarStore = useSnackbar();
 const props = defineProps<{
   page: Page;
@@ -16,6 +18,7 @@ const emits = defineEmits<{
   updateBlock: [pageId: number, blockId: number, content: string];
 }>();
 
+const previewPage = ref(false);
 const focusedBlockId = ref(
   props.page.blocks.length ? props.page.blocks[0].id : undefined,
 );
@@ -157,73 +160,121 @@ const insertFormating = (text: string, defaultTxt = "", text2 = "") => {
   txtarea.focus();
   txtarea.scrollTop = scrollPos;
 };
+
+const mdNodes = (text: string): MdNode[] => {
+  return parseMd(text);
+};
 </script>
 
 <template>
   <div class="absolute inset-0 left-64 z-0 dark:bg-stone-900 dark:text-white">
-    <PageNav :page="page" :saved="isSaved" @favoritePage="favoritePage" />
+    <div class="flex flex-initial flex-col">
+      <PageNav
+        :page="page"
+        :saved="isSaved"
+        :previewPage="previewPage"
+        @favoritePage="favoritePage"
+        @togglePreview="previewPage = !previewPage"
+      />
+    </div>
+    <div class="flex h-full w-full flex-auto">
+      <div
+        class="flex h-full flex-col overflow-y-auto"
+        :class="{
+          'w-full': !previewPage,
+          'w-10/12': previewPage,
+        }"
+      >
+        <div class="relative z-0 flex flex-initial justify-center">
+          <div class="flex h-full w-8/12 flex-col">
+            <div class="group pt-12">
+              <Popover class="relative">
+                <PopoverButton
+                  class="flex rounded-md border-none text-7xl hover:bg-gray-100 focus:outline-hidden dark:hover:bg-stone-600"
+                >
+                  {{ page.emoji }}
+                </PopoverButton>
+                <PopoverPanel class="fixed z-50">
+                  <LazyEmojiPicker @select="selectEmoji" />
+                </PopoverPanel>
+              </Popover>
+              <div
+                class="invisible my-1 flex items-center text-xs text-gray-400 group-hover:visible"
+              >
+                <button
+                  class="mr-1 flex items-center rounded-md p-1 hover:bg-gray-100 dark:hover:bg-stone-600"
+                  @click="
+                    () => snackbarStore.enqueue('Not implemented', 'warning')
+                  "
+                >
+                  <PhotoIcon class="mr-2 size-5" />
+                  Add cover
+                </button>
+                <button
+                  class="flex items-center rounded-md p-1 hover:bg-gray-100 dark:hover:bg-stone-600"
+                  @click="
+                    () => snackbarStore.enqueue('Not implemented', 'warning')
+                  "
+                >
+                  <ChatBubbleBottomCenterTextIcon class="mr-2 size-5" />
+                  Add comment
+                </button>
+              </div>
 
-    <div class="relative z-0 flex w-full justify-center overflow-y-auto">
-      <div class="flex h-full w-8/12 flex-col">
-        <div class="group pt-12">
-          <Popover class="relative">
-            <PopoverButton
-              class="flex rounded-md border-none text-7xl hover:bg-gray-100 focus:outline-hidden dark:hover:bg-stone-600"
-            >
-              {{ page.emoji }}
-            </PopoverButton>
-            <PopoverPanel class="fixed z-50">
-              <LazyEmojiPicker @select="selectEmoji" />
-            </PopoverPanel>
-          </Popover>
-          <div
-            class="invisible my-1 flex items-center text-xs text-gray-400 group-hover:visible"
-          >
-            <button
-              class="mr-1 flex items-center rounded-md p-1 hover:bg-gray-100 dark:hover:bg-stone-600"
-              @click="() => snackbarStore.enqueue('Not implemented', 'warning')"
-            >
-              <PhotoIcon class="mr-2 size-5" />
-              Add cover
-            </button>
-            <button
-              class="flex items-center rounded-md p-1 hover:bg-gray-100 dark:hover:bg-stone-600"
-              @click="() => snackbarStore.enqueue('Not implemented', 'warning')"
-            >
-              <ChatBubbleBottomCenterTextIcon class="mr-2 size-5" />
-              Add comment
-            </button>
+              <h1 class="mt-1 w-full text-4xl font-bold">
+                <input
+                  type="text"
+                  :value="page.title"
+                  @input="updateTitle"
+                  placeholder="Untitled"
+                  class="w-full outline-hidden dark:bg-inherit"
+                />
+              </h1>
+            </div>
           </div>
+        </div>
 
-          <h1 class="mt-1 w-full text-4xl font-bold">
-            <input
-              type="text"
-              :value="page.title"
-              @input="updateTitle"
-              placeholder="Untitled"
-              class="w-full outline-hidden dark:bg-inherit"
-            />
-          </h1>
+        <div
+          class="flex field-sizing-content h-full w-full flex-auto resize-y flex-col items-center"
+        >
+          <textarea
+            v-for="block in page.blocks"
+            ref="elements"
+            :id="`${block.id}`"
+            :value="block.textContent"
+            class="text-md mt-4 min-h-full w-8/12 resize-none border-none bg-transparent font-sans text-lg font-normal outline-hidden dark:text-white"
+            @input="(event) => updateBlockTextarea(event, block)"
+            @keydown.meta.b="(event) => bold(event, block)"
+            @keydown.ctrl.b="(event) => bold(event, block)"
+            @keydown.meta.i="(event) => italic(event, block)"
+            @keydown.ctrl.i="(event) => italic(event, block)"
+            @keydown="(event) => openParen(event, block)"
+          />
         </div>
       </div>
-    </div>
-
-    <div
-      class="flex field-sizing-content h-full w-full resize-y flex-col items-center"
-    >
-      <textarea
-        v-for="block in page.blocks"
-        ref="elements"
-        :id="`${block.id}`"
-        :value="block.textContent"
-        class="text-md mt-4 min-h-full w-8/12 resize-none border-none bg-transparent font-sans text-lg font-normal outline-hidden dark:text-white"
-        @input="(event) => updateBlockTextarea(event, block)"
-        @keydown.meta.b="(event) => bold(event, block)"
-        @keydown.ctrl.b="(event) => bold(event, block)"
-        @keydown.meta.i="(event) => italic(event, block)"
-        @keydown.ctrl.i="(event) => italic(event, block)"
-        @keydown="(event) => openParen(event, block)"
-      />
+      <div
+        v-if="previewPage"
+        class="flex w-2/12 flex-col overflow-y-auto border-l border-l-stone-300"
+      >
+        <div class="flex flex-initial items-center gap-2 p-4">
+          <p class="text-5xl">{{ page.emoji }}</p>
+          <p class="text-lg font-semibold">{{ page.title }}</p>
+        </div>
+        <div class="flex flex-auto flex-col p-4">
+          <div
+            v-for="block in page.blocks"
+            :key="block.id"
+            class="mb-4 text-lg"
+          >
+            <div
+              v-if="block.type === 'text' && block.renderedMd"
+              v-for="node in mdNodes(block.textContent)"
+            >
+              <MdNode :node="node" />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
