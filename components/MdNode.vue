@@ -35,7 +35,7 @@ const props = defineProps<{
   <p v-if="node.type === 'paragraph'" class="inline">{{ node.text }}</p>
   <code
     v-if="node.type === 'inline-code'"
-    class="inline rounded bg-gray-100 px-1 py-0.5 text-red-500"
+    class="inline rounded bg-gray-100 px-1 py-0.5 font-mono text-xs text-red-500"
     >{{ node.text }}</code
   >
   <b v-if="node.type === 'bold'" class="inline font-extrabold">{{
