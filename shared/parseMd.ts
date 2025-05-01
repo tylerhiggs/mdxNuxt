@@ -1,12 +1,54 @@
 import type { MdNode } from "~/shared/types";
-export function parseMd(markdown: string): MdNode[] {
+import { codeToTokens, type ThemedToken } from "shiki";
+
+export async function parseMd(markdown: string): Promise<MdNode[]> {
   const lines = markdown.split("\n");
   const tokens: MdNode[] = [];
+  let inCodeBlock = false;
+  let codeBlockLanguage = "";
+  let codeBlockContent: string[] = [];
 
-  lines.forEach((line) => {
+  for (const line of lines) {
     const trimmed = line.trim();
 
-    if (trimmed.startsWith("#")) {
+    if (trimmed.startsWith("```")) {
+      if (inCodeBlock) {
+        // End of code block
+        try {
+          const { tokens: codeTokens } = await codeToTokens(
+            codeBlockContent.join("\n"),
+            {
+              lang: "typescript",
+              theme: "vitesse-dark",
+            },
+          );
+          tokens.push({
+            type: "code-block",
+            raw: codeBlockContent.join("\n"),
+            language: codeBlockLanguage,
+            text: codeBlockContent.join("\n"),
+            syntaxHighlightedTokens: codeTokens,
+          });
+        } catch (error) {
+          console.error("Error parsing code block:", error);
+          tokens.push({
+            type: "code-block",
+            raw: codeBlockContent.join("\n"),
+            language: codeBlockLanguage,
+            text: codeBlockContent.join("\n"),
+          });
+        }
+        inCodeBlock = false;
+        codeBlockLanguage = "";
+        codeBlockContent = [];
+      } else {
+        // Start of code block
+        inCodeBlock = true;
+        codeBlockLanguage = trimmed.slice(3).trim();
+      }
+    } else if (inCodeBlock) {
+      codeBlockContent.push(line);
+    } else if (trimmed.startsWith("#")) {
       const depth = trimmed.match(/^#+/)?.[0].length || 0;
       tokens.push({
         type: "heading",
@@ -27,7 +69,7 @@ export function parseMd(markdown: string): MdNode[] {
         items: parseLine(trimmed),
       });
     }
-  });
+  }
 
   return tokens;
 }

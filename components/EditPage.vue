@@ -161,9 +161,26 @@ const insertFormating = (text: string, defaultTxt = "", text2 = "") => {
   txtarea.scrollTop = scrollPos;
 };
 
-const mdNodes = (text: string): MdNode[] => {
-  return parseMd(text);
-};
+const mdNodes = ref<(MdNode[] | undefined)[]>([]);
+watch(
+  () => props.page.blocks,
+  async (blocks) => {
+    if (!blocks || blocks.length === 0) {
+      mdNodes.value = [];
+      return;
+    }
+    mdNodes.value = await Promise.all(
+      blocks.map(async (block) => {
+        if (block.type !== "text") {
+          return undefined;
+        }
+        const parsed = await parseMd(block.textContent);
+        return parsed;
+      }),
+    );
+  },
+  { immediate: true, deep: true },
+);
 </script>
 
 <template>
@@ -182,7 +199,7 @@ const mdNodes = (text: string): MdNode[] => {
         class="flex h-full flex-col overflow-y-auto"
         :class="{
           'w-full': !previewPage,
-          'w-10/12': previewPage,
+          'w-7/12': previewPage,
         }"
       >
         <div class="relative z-0 flex flex-initial justify-center">
@@ -254,7 +271,7 @@ const mdNodes = (text: string): MdNode[] => {
       </div>
       <div
         v-if="previewPage"
-        class="flex w-2/12 flex-col overflow-y-auto border-l border-l-stone-300"
+        class="flex w-5/12 flex-col overflow-y-auto border-l border-l-stone-300"
       >
         <div class="flex flex-initial items-center gap-2 p-4">
           <p class="text-5xl">{{ page.emoji }}</p>
@@ -262,13 +279,17 @@ const mdNodes = (text: string): MdNode[] => {
         </div>
         <div class="flex flex-auto flex-col p-4">
           <div
-            v-for="block in page.blocks"
+            v-for="(block, index) in page.blocks"
             :key="block.id"
             class="mb-4 text-lg"
           >
             <div
-              v-if="block.type === 'text' && block.renderedMd"
-              v-for="node in mdNodes(block.textContent)"
+              v-if="
+                block.type === 'text' &&
+                block.renderedMd &&
+                mdNodes.length === page.blocks.length
+              "
+              v-for="node in mdNodes[index] || []"
             >
               <MdNode :node="node" />
             </div>

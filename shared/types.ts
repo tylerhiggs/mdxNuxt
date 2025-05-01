@@ -1,3 +1,4 @@
+import type { ThemedToken } from "shiki";
 export type MdNode = {
   type:
     | "heading"
@@ -5,6 +6,9 @@ export type MdNode = {
     | "list-item"
     | "link"
     | "inline-code"
+    | "image"
+    | "callout"
+    | "code-block"
     | "bold"
     | "italic"
     | "text";
@@ -13,5 +17,7 @@ export type MdNode = {
   depth?: number;
   href?: string;
   title?: string;
+  language?: string;
+  syntaxHighlightedTokens?: ThemedToken[][];
   items?: MdNode[];
 };

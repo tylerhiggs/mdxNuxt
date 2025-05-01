@@ -42,4 +42,23 @@ const props = defineProps<{
     node.text
   }}</b>
   <i v-if="node.type === 'italic'" class="inline italic">{{ node.text }}</i>
+  <a
+    v-if="node.type === 'link'"
+    :href="node.href"
+    class="text-blue-500 hover:underline"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    {{ node.text }}
+  </a>
+  <ul v-if="node.type === 'list-item'" class="list-disc pl-5">
+    <li v-for="(item, index) in node.items" :key="index">{{ item.text }}</li>
+  </ul>
+  <CodeBlock
+    v-if="node.type === 'code-block' && node.text"
+    :code="node.text"
+    :language="node.language"
+    :syntaxHighlightedTokens="node.syntaxHighlightedTokens"
+    :showlineNumbers="false"
+  />
 </template>

@@ -2,13 +2,13 @@ import { expect, test } from "vitest";
 import { parseMd } from "./parseMd";
 import type { MdNode } from "./types";
 
-test("parseMd - empty input", () => {
+test("parseMd - empty input", async () => {
   const input = "";
   const expectedOutput = [] as MdNode[];
-  const output = parseMd(input);
+  const output = await parseMd(input);
   expect(output).toEqual(expectedOutput);
 });
-test("parseMd - single line input", () => {
+test("parseMd - single line input", async () => {
   const input = "This is a single line of text.";
   const expectedOutput = [
     {
@@ -23,10 +23,10 @@ test("parseMd - single line input", () => {
       ],
     },
   ];
-  const output = parseMd(input);
+  const output = await parseMd(input);
   expect(output).toEqual(expectedOutput);
 });
-test("parseMd - headings and paragraphs", () => {
+test("parseMd - headings and paragraphs", async () => {
   const input = `# Heading 1
 ## Heading 2
 ### Heading 3
@@ -62,11 +62,11 @@ This is a paragraph with some text.`;
       ],
     },
   ];
-  const output = parseMd(input);
+  const output = await parseMd(input);
   expect(output).toEqual(expectedOutput);
 });
 
-test("parseMd - basic markdown parsing", () => {
+test("parseMd - basic markdown parsing", async () => {
   const input = `# Heading 1
 ## Heading 2
 ### Heading 3
@@ -160,12 +160,12 @@ This is a paragraph with **bold text** and *italic text*.
       ],
     },
   ];
-  const output = parseMd(input);
+  const output = await parseMd(input);
   expect(output).toEqual(expectedOutput);
 });
 
-test("parseMd - link XXS safety", () => {
+test("parseMd - link XXS safety", async () => {
   const input = `[Link text](javascript:alert('XSS'))`;
-  const output = parseMd(input);
+  const output = await parseMd(input);
   expect(output[0].href).not.toEqual("javascript:alert('XSS')");
 });

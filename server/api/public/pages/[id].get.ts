@@ -21,13 +21,15 @@ export default defineEventHandler(async (event) => {
     statusCode: 200,
     body: {
       ...page,
-      blocks: page.blocks.map((block) =>
-        block.type === "text"
-          ? {
-              ...block,
-              renderedMd: parseMd(block.textContent),
-            }
-          : { ...block, renderedMd: null },
+      blocks: await Promise.all(
+        page.blocks.map(async (block) =>
+          block.type === "text"
+            ? {
+                ...block,
+                renderedMd: await parseMd(block.textContent),
+              }
+            : { ...block, renderedMd: null },
+        ),
       ),
     },
   };
