@@ -7,7 +7,7 @@ export default defineNuxtConfig({
   css: ["~/assets/css/main.css"],
 
   nitro: {
-    preset: "cloudflare-worker",
+    preset: "cloudflare-pages",
   },
 
   vite: {
