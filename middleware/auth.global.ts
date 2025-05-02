@@ -6,7 +6,11 @@ export default defineNuxtRouteMiddleware((to, from) => {
     return;
   }
 
-  const unauthenticatedRoutes = ["/public"];
+  const unauthenticatedRoutes = ["/public", "/auth/google"];
+  if (unauthenticatedRoutes.some((route) => to.path.startsWith(route))) {
+    console.log("Unauthenticated route, no auth needed");
+    return;
+  }
 
   const { loggedIn } = useUserSession();
   const auth = useAuth();

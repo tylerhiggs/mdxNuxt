@@ -46,7 +46,7 @@ export default defineNuxtConfig({
         redirectURL: `${
           process.env.BASE_URL ||
           process.env.NUXT_BASE_URL ||
-          "https://localhost:3000"
+          "https://md-me-dot-dev.nuxt.dev"
         }/auth/google`,
       },
     },
