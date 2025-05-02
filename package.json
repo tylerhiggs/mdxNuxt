@@ -15,7 +15,7 @@
     "@headlessui/vue": "latest",
     "@heroicons/vue": "^2.1.5",
     "@nuxt/ui": "^3.0.2",
-    "@nuxthub/core": "0.8.21",
+    "@nuxthub/core": "0.8.9",
     "drizzle-orm": "^0.40.0",
     "nuxt": "latest",
     "nuxt-auth-utils": "0.5.17",
