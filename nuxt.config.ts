@@ -6,6 +6,10 @@ export default defineNuxtConfig({
   devtools: { enabled: false },
   css: ["~/assets/css/main.css"],
 
+  nitro: {
+    preset: "cloudflare-worker",
+  },
+
   vite: {
     plugins: [tailwindcss()],
   },
