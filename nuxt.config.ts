@@ -44,7 +44,9 @@ export default defineNuxtConfig({
           process.env.OAUTH_GOOGLE_CLIENT_SECRET ||
           "",
         redirectURL: `${
-          process.env.BASE_URL || "https://localhost:3000"
+          process.env.BASE_URL ||
+          process.env.NUXT_BASE_URL ||
+          "https://localhost:3000"
         }/auth/google`,
       },
     },
