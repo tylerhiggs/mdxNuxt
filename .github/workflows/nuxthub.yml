@@ -30,4 +30,4 @@ jobs:
         uses: nuxt-hub/action@v1
         id: deploy
         with:
-          project-key: me-dot-dev-5h1a
+          project-key: md-me-dot-dev-jtm8
