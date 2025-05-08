@@ -1,4 +1,4 @@
-# [MeDotDev](https://medotdev-nuxt.netlify.app/)
+# [MeDotDev](https://md-me-dot-dev.nuxt.dev/)
 
 Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
@@ -13,7 +13,7 @@ bun install
 
 ## Development Server
 
-Start the development server on `http://localhost:3000`:
+Start the development server on `https://localhost:3000`:
 
 ```bash
 # bun
@@ -81,6 +81,6 @@ import { BeakerIcon } from "@heroicons/vue/24/solid"; // or `/24/outline` or `/2
 </script>
 ```
 
-## Netlify
+## Deployed on NuxtHub
 
-This project is deployed on [Netlify](https://app.netlify.com/sites/medotdev-nuxt/overview) and automatically redeploys on every push to the `main` branch.
+This project is deployed on [NuxtHub](https://nuxt.dev/hub) and can be found at [md-me-dot-dev](https://md-me-dot-dev.nuxt.dev/).
