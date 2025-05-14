@@ -15,19 +15,19 @@ const props = defineProps<{
   </div>
   <h1
     v-if="node.type === 'heading' && node.depth === 1"
-    class="text-2xl font-bold"
+    class="mb-4 text-2xl font-bold"
   >
     {{ node.text }}
   </h1>
   <h2
     v-if="node.type === 'heading' && node.depth === 2"
-    class="text-xl font-bold"
+    class="mb-4 text-xl font-bold"
   >
     {{ node.text }}
   </h2>
   <h3
     v-if="node.type === 'heading' && node.depth === 3"
-    class="text-lg font-bold"
+    class="mb-4 text-lg font-bold"
   >
     {{ node.text }}
   </h3>

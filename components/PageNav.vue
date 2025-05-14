@@ -2,6 +2,7 @@
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
 import { CheckIcon, StarIcon } from "@heroicons/vue/24/outline";
 import type { Page } from "@/types/page";
+import { parseMd } from "~/shared/parseMd";
 const props = defineProps<{
   saved: boolean;
   page: Page;
@@ -54,6 +55,18 @@ const mouseover = (event: MouseEvent) => {
 const mouseleave = () => {
   tooltipStore.hide();
 };
+
+const { data: nodes } = useAsyncData(
+  computed(() => props.page.blocks[0]?.textContent),
+  async () => {
+    const { blocks } = props.page;
+    if (!blocks || !blocks.length) {
+      return [];
+    }
+    const nodes = await parseMd(blocks[0].textContent);
+    return nodes;
+  },
+);
 </script>
 
 <template>
@@ -132,9 +145,13 @@ const mouseleave = () => {
                     </p>
                   </div>
                   <div class="text-sm text-gray-700">
-                    <p v-if="page.blocks.length">
-                      {{ props.page.blocks[0].textContent }}
-                    </p>
+                    <MdNode
+                      v-for="(node, i) in nodes"
+                      :key="i"
+                      :node="node"
+                      v-if="props.page.blocks.length"
+                    >
+                    </MdNode>
                     <div
                       class="absolute right-0 bottom-0 left-0 h-16 bg-linear-to-t from-white to-transparent"
                     ></div>

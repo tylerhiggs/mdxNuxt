@@ -6,7 +6,6 @@ import {
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
 import type { Page, PageUpdate, Block } from "@/types/page";
 import { parseMd } from "~/shared/parseMd";
-import type { MdNode } from "~/shared/types";
 const snackbarStore = useSnackbar();
 const props = defineProps<{
   page: Page;
@@ -161,25 +160,20 @@ const insertFormating = (text: string, defaultTxt = "", text2 = "") => {
   txtarea.scrollTop = scrollPos;
 };
 
-const mdNodes = ref<(MdNode[] | undefined)[]>([]);
-watch(
-  () => props.page.blocks,
-  async (blocks) => {
-    if (!blocks || blocks.length === 0) {
-      mdNodes.value = [];
-      return;
+const { data: mdNodes } = useAsyncData(
+  computed(() =>
+    props.page.blocks.reduce((acc, block) => acc + block.textContent, ""),
+  ),
+  async () => {
+    const { blocks } = props.page;
+    if (!blocks || !blocks.length) {
+      return [];
     }
-    mdNodes.value = await Promise.all(
-      blocks.map(async (block) => {
-        if (block.type !== "text") {
-          return undefined;
-        }
-        const parsed = await parseMd(block.textContent);
-        return parsed;
-      }),
+    const nodes = await Promise.all(
+      blocks.map((block) => parseMd(block.textContent)),
     );
+    return nodes;
   },
-  { immediate: true, deep: true },
 );
 </script>
 
@@ -287,7 +281,7 @@ watch(
               v-if="
                 block.type === 'text' &&
                 block.renderedMd &&
-                mdNodes.length === page.blocks.length
+                mdNodes?.length === page.blocks.length
               "
               v-for="node in mdNodes[index] || []"
             >
