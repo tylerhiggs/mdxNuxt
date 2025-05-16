@@ -1,5 +1,6 @@
 import type { MdNode } from "~/shared/types";
 import { codeToTokens, type ThemedToken } from "shiki";
+import { sanitizeUrl } from "@braintree/sanitize-url";
 
 export async function parseMd(markdown: string): Promise<MdNode[]> {
   const lines = markdown.split("\n");
@@ -134,7 +135,7 @@ export function parseLine(mdLine: string): MdNode[] {
           type: "link",
           raw: part,
           text: match[1],
-          href: encodeURIComponent(match[2]),
+          href: sanitizeUrl(match[2]),
         });
       }
     } else {

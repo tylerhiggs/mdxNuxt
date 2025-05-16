@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
-import { CheckIcon, StarIcon } from "@heroicons/vue/24/outline";
 import type { Page } from "@/types/page";
-import { parseMd } from "~/shared/parseMd";
+import { UIcon } from "#components";
+import type { MdNode } from "~/shared/types";
 const props = defineProps<{
   saved: boolean;
   page: Page;
   previewPage: boolean;
+  nodes: MdNode[][];
 }>();
 
 const emits = defineEmits<{
@@ -55,18 +55,6 @@ const mouseover = (event: MouseEvent) => {
 const mouseleave = () => {
   tooltipStore.hide();
 };
-
-const { data: nodes } = useAsyncData(
-  computed(() => props.page.blocks[0]?.textContent),
-  async () => {
-    const { blocks } = props.page;
-    if (!blocks || !blocks.length) {
-      return [];
-    }
-    const nodes = await parseMd(blocks[0].textContent);
-    return nodes;
-  },
-);
 </script>
 
 <template>
@@ -82,7 +70,8 @@ const { data: nodes } = useAsyncData(
       <p class="ml-2 text-sm">{{ page.title || "Untitled" }}</p>
     </button>
     <div class="flex items-center">
-      <CheckIcon
+      <UIcon
+        name="i-heroicons-check"
         v-if="props.saved"
         class="size-5 text-emerald-400"
         aria-label="Saved"
@@ -109,20 +98,19 @@ const { data: nodes } = useAsyncData(
       >
         <span>Preview</span>
       </button>
-      <Popover as="div" class="relative">
-        <PopoverButton
-          as="button"
+      <UPopover class="relative">
+        <UButton
+          variant="ghost"
+          color="neutral"
           class="ml-2 flex items-center rounded-md px-1 py-0.5 text-xs font-semibold text-gray-700 hover:bg-gray-200 dark:text-gray-200 dark:hover:bg-gray-700"
           @mouseover="mouseover"
           @mouseleave="mouseleave"
           @click="mouseleave"
         >
           Share
-        </PopoverButton>
-        <PopoverPanel
-          class="absolute right-0 z-10 mt-3 w-96 transform rounded-md bg-white px-4 shadow-sm"
-        >
-          <div v-if="!props.page.isPublic">
+        </UButton>
+        <template #content>
+          <div v-if="!props.page.isPublic" class="w-96 p-4">
             <div class="text-md font-bold">Publish to web</div>
             <div class="text-sm text-gray-500">
               Share your page with anyone by publishing it to the web.
@@ -137,23 +125,22 @@ const { data: nodes } = useAsyncData(
                   <span class="h-2 w-2 rounded-full bg-yellow-500"></span>
                   <span class="h-2 w-2 rounded-full bg-green-500"></span>
                 </div>
-                <div class="p-4">
+                <div class="bg-white p-4 dark:bg-stone-800">
                   <div class="mb-2 flex items-center">
                     <p class="text-sm">{{ props.page.emoji }}</p>
                     <p class="ml-2 text-sm font-semibold">
                       {{ props.page.title }}
                     </p>
                   </div>
-                  <div class="text-sm text-gray-700">
+                  <div class="h-32 text-sm text-gray-700">
                     <MdNode
-                      v-for="(node, i) in nodes"
+                      v-for="(node, i) in props.nodes[0] || []"
                       :key="i"
                       :node="node"
                       v-if="props.page.blocks.length"
-                    >
-                    </MdNode>
+                    />
                     <div
-                      class="absolute right-0 bottom-0 left-0 h-16 bg-linear-to-t from-white to-transparent"
+                      class="absolute right-0 bottom-0 left-0 h-16 bg-linear-to-t from-white to-transparent dark:from-stone-800"
                     ></div>
                   </div>
                 </div>
@@ -187,13 +174,14 @@ const { data: nodes } = useAsyncData(
               </button>
             </div>
           </div>
-        </PopoverPanel>
-      </Popover>
+        </template>
+      </UPopover>
       <button
         class="ml-2 flex items-center text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
         @click="() => emits('favoritePage')"
       >
-        <StarIcon
+        <UIcon
+          name="i-heroicons-star"
           class="size-5"
           :class="{ 'fill-yellow-200': page.isFavorite }"
           aria-label="Favorite"

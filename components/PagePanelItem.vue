@@ -1,12 +1,7 @@
 <script setup lang="ts">
-import {
-  ChevronRightIcon,
-  ChevronDownIcon,
-  EllipsisHorizontalIcon,
-  PlusIcon,
-} from "@heroicons/vue/24/outline";
 import type { DropdownMenuItem } from "@nuxt/ui";
 import type { PageItem } from "@/types/page";
+import { UIcon } from "#components";
 const pageState = usePageState();
 const props = defineProps<{
   page: PageItem;
@@ -73,8 +68,16 @@ const isOpen = ref(false);
         class="invisible absolute ml-3 rounded-md group-hover/pageitem:visible hover:bg-gray-200 dark:hover:bg-stone-600"
         @click="((isOpen = !isOpen), $event.stopPropagation())"
       >
-        <ChevronRightIcon v-if="!isOpen" class="size-5 text-gray-400" />
-        <ChevronDownIcon v-else class="size-5 text-gray-400" />
+        <UIcon
+          name="i-heroicons-chevron-right"
+          v-if="!isOpen"
+          class="size-5 text-gray-400"
+        />
+        <UIcon
+          name="i-heroicons-chevron-down"
+          v-else
+          class="size-5 text-gray-400"
+        />
       </button>
       <p class="ml-3 text-sm group-hover/pageitem:invisible">
         {{ props.page.emoji }}
@@ -91,8 +94,12 @@ const isOpen = ref(false);
           <UButton
             class="invisible flex items-center rounded-md p-0.5 group-hover/pageitem:visible hover:bg-gray-300 dark:hover:bg-stone-600"
             variant="ghost"
+            color="neutral"
           >
-            <EllipsisHorizontalIcon class="size-5 text-gray-400" />
+            <UIcon
+              name="i-heroicons-ellipsis-horizontal"
+              class="size-5 text-gray-400"
+            />
           </UButton>
         </ToolTip>
       </UDropdownMenu>
@@ -102,7 +109,7 @@ const isOpen = ref(false);
           class="invisible flex items-center rounded-md p-0.5 group-hover/pageitem:visible hover:bg-gray-300 dark:hover:bg-stone-600"
           @click="(emit('addPage'), $event.stopPropagation())"
         >
-          <PlusIcon class="size-5 text-gray-400" />
+          <UIcon name="i-heroicons-plus" class="size-5 text-gray-400" />
         </button>
       </ToolTip>
     </div>

@@ -1,13 +1,8 @@
 <script setup lang="ts">
 import type { EmojiData, Tone } from "#build/imports";
-import {
-  Listbox,
-  ListboxButton,
-  ListboxOptions,
-  ListboxOption,
-} from "@headlessui/vue";
-import { MagnifyingGlassIcon, SwatchIcon } from "@heroicons/vue/24/outline";
-import { XCircleIcon } from "@heroicons/vue/24/solid";
+import { UDropdownMenu, UIcon } from "#components";
+import type { DropdownMenuItem } from "@nuxt/ui";
+import EmojiButton from "./EmojiButton.vue";
 
 const PAGE_SIZE = 120;
 
@@ -144,6 +139,18 @@ const tones: { tone: Tone | null; char: string }[] = [
     char: "🖐🏿",
   },
 ];
+
+const items = tones.map((tone) => ({
+  label: tone.char,
+  type: "checkbox" as const,
+  checked: tone.tone === skinTone.value,
+  onUpdateChecked: (_: boolean) => {
+    skinTone.value = tone.tone;
+  },
+  onSelect: (e: Event) => {
+    e.preventDefault();
+  },
+})) satisfies DropdownMenuItem[];
 </script>
 
 <template>
@@ -153,7 +160,10 @@ const tones: { tone: Tone | null; char: string }[] = [
         class="m-1 flex w-full cursor-text items-center justify-between rounded-sm border border-gray-300 bg-gray-100 p-1 focus-within:border-blue-200"
         @click="searchHtmlInput?.focus()"
       >
-        <MagnifyingGlassIcon class="size-4 text-gray-500" />
+        <UIcon
+          name="i-heroicons-magnifying-glass"
+          class="size-4 text-gray-500"
+        />
         <input
           ref="searchHtmlInput"
           type="text"
@@ -166,7 +176,10 @@ const tones: { tone: Tone | null; char: string }[] = [
           class="flex items-center justify-center"
           @click="search = ''"
         >
-          <XCircleIcon class="size-4 text-gray-400 hover:text-gray-500" />
+          <UIcon
+            name="i-heroicons-x-circle-20-solid"
+            class="size-4 text-gray-400 hover:text-gray-500"
+          />
         </button>
       </div>
       <ToolTip message="Select a random emoji" position="bottom">
@@ -174,12 +187,13 @@ const tones: { tone: Tone | null; char: string }[] = [
           @click="selectRandomEmoji"
           class="flex size-7 items-center justify-center rounded-sm border border-gray-300 hover:bg-gray-300"
         >
-          <SwatchIcon class="size-4 text-gray-500" />
+          <UIcon name="i-heroicons-swatch" class="size-4 text-gray-500" />
         </button>
       </ToolTip>
-      <Listbox v-slot="{ open }" as="div" class="relative">
-        <ListboxButton
-          as="button"
+      <UDropdownMenu :items="items">
+        <UButton
+          variant="ghost"
+          color="neutral"
           class="relative mx-1 flex size-7 items-center justify-center rounded-sm border border-gray-300 hover:bg-gray-300"
         >
           <ToolTip
@@ -189,23 +203,8 @@ const tones: { tone: Tone | null; char: string }[] = [
           >
             {{ skinToneEmoji }}
           </ToolTip>
-        </ListboxButton>
-        <ListboxOptions
-          as="div"
-          class="absolute z-50 flex origin-top-right rounded-lg bg-white p-1 shadow-sm"
-        >
-          <ListboxOption
-            v-for="tone in tones"
-            :key="tone.char"
-            as="button"
-            @click="skinTone = tone.tone"
-            class="rounded-md p-0.5 hover:bg-gray-100"
-            :class="{ 'bg-gray-200': skinTone === tone.tone }"
-          >
-            {{ tone.char }}
-          </ListboxOption>
-        </ListboxOptions>
-      </Listbox>
+        </UButton>
+      </UDropdownMenu>
     </div>
     <div
       @scroll="handleScroll"

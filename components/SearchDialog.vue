@@ -1,10 +1,4 @@
 <script setup lang="ts">
-import { Dialog, DialogPanel } from "@headlessui/vue";
-import {
-  MagnifyingGlassIcon,
-  AdjustmentsHorizontalIcon,
-  ArrowsUpDownIcon,
-} from "@heroicons/vue/24/outline";
 const props = defineProps<{
   open: boolean;
 }>();
@@ -104,18 +98,21 @@ const handleKeyDown = (event: KeyboardEvent) => {
 </script>
 
 <template>
-  <Dialog
-    as="div"
+  <UModal
     :open="props.open"
     @close="closeDialog"
     class="fixed inset-0 z-10 flex justify-center overflow-y-auto bg-gray-900/50 pt-12 backdrop-blur-sm"
   >
-    <DialogPanel
+    <template
+      #content
       class="flex h-3/6 w-6/12 flex-col rounded-xl bg-gray-50 shadow-lg dark:bg-stone-700"
       @keydown="handleKeyDown"
     >
       <div class="mt-0 flex items-center">
-        <MagnifyingGlassIcon class="mx-2 size-5 text-gray-400" />
+        <UIcon
+          name="i-heroicons-magnifying-glass"
+          class="mx-2 size-5 text-gray-400"
+        />
         <input
           type="text"
           class="h-10 w-full bg-transparent px-3 py-2 text-sm text-gray-700 placeholder-gray-400 focus:border-transparent focus:outline-hidden dark:text-stone-100 dark:placeholder-stone-300"
@@ -131,7 +128,10 @@ const handleKeyDown = (event: KeyboardEvent) => {
             class="mx-2 rounded-md p-1 hover:bg-gray-100"
             @click="() => (filtersOpen = !filtersOpen)"
           >
-            <AdjustmentsHorizontalIcon class="size-5 text-gray-400" />
+            <UIcon
+              name="i-heroicons-adjustments-horizontal"
+              class="size-5 text-gray-400"
+            />
           </button>
         </ToolTip>
       </div>
@@ -141,11 +141,9 @@ const handleKeyDown = (event: KeyboardEvent) => {
           :items="sortOptions"
           :selected="selectedSort"
           :getTitle="(item) => item.name"
+          iconName="i-heroicons-arrow-up-down"
           @select="selectSortId"
-        >
-          <ArrowsUpDownIcon class="mr-1 size-4" />
-          {{ selectedSort.id === sortOptions[0].id ? "Sort" : selectedSort.id }}
-        </PillListBox>
+        />
         <button
           class="ml-2 flex items-center rounded-full border border-gray-200 px-2 py-0.5 text-sm"
           :class="{
@@ -192,6 +190,6 @@ const handleKeyDown = (event: KeyboardEvent) => {
           <p class="text-sm">No results found</p>
         </div>
       </div>
-    </DialogPanel>
-  </Dialog>
+    </template>
+  </UModal>
 </template>

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ArrowPathIcon } from "@heroicons/vue/24/outline";
 definePageMeta({
   layout: "default",
   validate({ params }) {
@@ -67,6 +66,11 @@ useHead({
     </div>
   </div>
   <div v-else>
-    <div><ArrowPathIcon class="h-5 w-5 animate-spin text-white" /></div>
+    <div>
+      <UIcon
+        name="i-heroicons-arrow-path"
+        class="h-5 w-5 animate-spin text-white"
+      />
+    </div>
   </div>
 </template>

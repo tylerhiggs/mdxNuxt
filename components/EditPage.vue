@@ -1,9 +1,4 @@
 <script setup lang="ts">
-import {
-  PhotoIcon,
-  ChatBubbleBottomCenterTextIcon,
-} from "@heroicons/vue/24/solid";
-import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
 import type { Page, PageUpdate, Block } from "@/types/page";
 import { parseMd } from "~/shared/parseMd";
 const snackbarStore = useSnackbar();
@@ -184,6 +179,7 @@ const { data: mdNodes } = useAsyncData(
         :page="page"
         :saved="isSaved"
         :previewPage="previewPage"
+        :nodes="mdNodes || []"
         @favoritePage="favoritePage"
         @togglePreview="previewPage = !previewPage"
       />
@@ -199,16 +195,18 @@ const { data: mdNodes } = useAsyncData(
         <div class="relative z-0 flex flex-initial justify-center">
           <div class="flex h-full w-8/12 flex-col">
             <div class="group pt-12">
-              <Popover class="relative">
-                <PopoverButton
+              <UPopover class="relative">
+                <UButton
+                  variant="ghost"
+                  color="neutral"
                   class="flex rounded-md border-none text-7xl hover:bg-gray-100 focus:outline-hidden dark:hover:bg-stone-600"
                 >
                   {{ page.emoji }}
-                </PopoverButton>
-                <PopoverPanel class="fixed z-50">
+                </UButton>
+                <template #content>
                   <LazyEmojiPicker @select="selectEmoji" />
-                </PopoverPanel>
-              </Popover>
+                </template>
+              </UPopover>
               <div
                 class="invisible my-1 flex items-center text-xs text-gray-400 group-hover:visible"
               >
@@ -218,7 +216,7 @@ const { data: mdNodes } = useAsyncData(
                     () => snackbarStore.enqueue('Not implemented', 'warning')
                   "
                 >
-                  <PhotoIcon class="mr-2 size-5" />
+                  <UIcon name="i-heroicons-photo" class="mr-2 size-5" />
                   Add cover
                 </button>
                 <button
@@ -227,7 +225,10 @@ const { data: mdNodes } = useAsyncData(
                     () => snackbarStore.enqueue('Not implemented', 'warning')
                   "
                 >
-                  <ChatBubbleBottomCenterTextIcon class="mr-2 size-5" />
+                  <UIcon
+                    name="i-heroicons-chat-bubble-bottom-center-text"
+                    class="mr-2 size-5"
+                  />
                   Add comment
                 </button>
               </div>

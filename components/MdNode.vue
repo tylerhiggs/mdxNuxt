@@ -15,24 +15,28 @@ const props = defineProps<{
   </div>
   <h1
     v-if="node.type === 'heading' && node.depth === 1"
-    class="mb-4 text-2xl font-bold"
+    class="text-highlighted mb-8 text-4xl font-bold"
   >
     {{ node.text }}
   </h1>
   <h2
     v-if="node.type === 'heading' && node.depth === 2"
-    class="mb-4 text-xl font-bold"
+    class="text-highlighted relative mt-12 mb-6 text-2xl font-bold"
   >
     {{ node.text }}
   </h2>
   <h3
     v-if="node.type === 'heading' && node.depth === 3"
-    class="mb-4 text-lg font-bold"
+    class="text-highlighted relative mt-8 mb-3 text-xl font-bold"
   >
     {{ node.text }}
   </h3>
-  <p v-if="node.type === 'text'" class="inline">{{ node.text }}</p>
-  <p v-if="node.type === 'paragraph'" class="inline">{{ node.text }}</p>
+  <p v-if="node.type === 'text'" class="my-5 inline leading-7 text-pretty">
+    {{ node.text }}
+  </p>
+  <p v-if="node.type === 'paragraph'" class="my-5 inline leading-7 text-pretty">
+    {{ node.text }}
+  </p>
   <code
     v-if="node.type === 'inline-code'"
     class="inline rounded bg-gray-100 px-1 py-0.5 font-mono text-xs text-red-500"
@@ -45,7 +49,7 @@ const props = defineProps<{
   <a
     v-if="node.type === 'link'"
     :href="node.href"
-    class="text-blue-500 hover:underline"
+    class="text-primary hover:border-primary focus-visible:outline-primary hover:[&>code]:border-primary hover:[&>code]:text-primary border-b border-transparent font-medium [&>code]:border-dashed"
     target="_blank"
     rel="noopener noreferrer"
   >

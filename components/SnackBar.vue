@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { XCircleIcon } from "@heroicons/vue/24/outline";
 const snackbarStore = useSnackbar();
 </script>
 
 <template>
   <div
-    class="absolute bottom-4 left-4 right-4 flex w-full flex-col items-center"
+    class="absolute right-4 bottom-4 left-4 flex w-full flex-col items-center"
   >
     <div
       class="group m-2 flex items-center justify-between rounded-lg px-2 py-0.5 text-white shadow-md"
@@ -24,7 +23,8 @@ const snackbarStore = useSnackbar();
       :key="snackbar.id"
     >
       <p class="mr-0.5">{{ snackbar.message }}</p>
-      <XCircleIcon
+      <UIcon
+        name="i-heroicons-x-circle"
         class="hidden size-5 cursor-pointer group-hover:block"
         @click="snackbarStore.dequeue(snackbar.id)"
       />

@@ -1,10 +1,5 @@
 <script setup lang="ts">
-import {
-  Listbox,
-  ListboxButton,
-  ListboxOptions,
-  ListboxOption,
-} from "@headlessui/vue";
+import type { DropdownMenuItem } from "@nuxt/ui";
 import type { EmojiData, Tone } from "#build/imports";
 
 const tooltipStore = useTooltip();
@@ -26,32 +21,49 @@ const mouseover = (event: MouseEvent) => {
   const rect = target.getBoundingClientRect();
   tooltipStore.show(props.emoji.name, rect.right, rect.top, "top");
 };
+
+const items = computed(() => {
+  chars.value.map((label) => ({
+    label,
+    value: label,
+    type: "checkbox" as const,
+    checked: label === props.emoji.char,
+    onUpdateChecked: (_: boolean) => {
+      label && emits("select", label);
+    },
+    onSelect: (e: Event) => {
+      e.preventDefault();
+    },
+  })) satisfies DropdownMenuItem[];
+});
 </script>
 
 <template>
-  <Listbox v-if="props.emoji.altColors" class="relative" as="div">
-    <ListboxButton
-      as="button"
+  <UDropdownMenu v-if="props.emoji.altColors" class="relative" :items="items">
+    <UButton
+      variant="ghost"
+      color="neutral"
       class="rounded-xs p-1 hover:bg-gray-100 focus:bg-gray-100 focus:outline-hidden"
       @mouseover="mouseover"
       @mouseleave="tooltipStore.hide"
     >
-      {{ skinTone ? props.emoji.altColors[skinTone] : props.emoji.char }}
-    </ListboxButton>
-    <ListboxOptions class="absolute">
-      <div class="absolute z-50 flex flex-col rounded-lg bg-white p-1 shadow-sm">
-        <ListboxOption
-          as="button"
-          v-for="e in chars"
-          :key="e"
-          @click="() => e && emits('select', e)"
-          class="rounded-md p-0.5 hover:bg-gray-100"
-        >
-          {{ e }}
-        </ListboxOption>
-      </div>
-    </ListboxOptions>
-  </Listbox>
+      {{
+        props.skinTone
+          ? props.emoji.altColors[props.skinTone]
+          : props.emoji.char
+      }}
+    </UButton>
+    <template #content class="absolute">
+      <UCommandPalette
+        v-for="e in chars"
+        :key="e"
+        @click="() => e && emits('select', e)"
+        class="rounded-md p-0.5 hover:bg-gray-100"
+      >
+        {{ e }}
+      </UCommandPalette>
+    </template>
+  </UDropdownMenu>
   <button
     class="rounded-xs p-1 hover:bg-gray-100 focus:bg-gray-100 focus:outline-hidden"
     @click="() => emits('select', props.emoji.char)"
@@ -59,8 +71,8 @@ const mouseover = (event: MouseEvent) => {
     @mouseleave="tooltipStore.hide"
   >
     {{
-      props.emoji.altColors && skinTone
-        ? props.emoji.altColors[skinTone]
+      props.emoji.altColors && props.skinTone
+        ? props.emoji.altColors[props.skinTone]
         : props.emoji.char
     }}
   </button>

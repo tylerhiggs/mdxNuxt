@@ -1,20 +1,4 @@
 <script setup lang="ts">
-import {
-  UserCircleIcon,
-  AdjustmentsHorizontalIcon,
-  BellIcon,
-  AtSymbolIcon,
-  GlobeAltIcon,
-  Cog8ToothIcon,
-  UsersIcon,
-  ArrowUpCircleIcon,
-  CursorArrowRaysIcon,
-  KeyIcon,
-  ShieldCheckIcon,
-  Squares2X2Icon,
-  ArrowDownTrayIcon,
-} from "@heroicons/vue/24/outline";
-
 const authStore = useAuth();
 
 const props = defineProps<{
@@ -35,7 +19,7 @@ const userFirstLetter = computed(() => {
 
 <template>
   <div
-    class="absolute bottom-0 left-0 top-0 flex w-64 flex-col rounded-l-xl bg-slate-50 px-0.5 py-3"
+    class="absolute top-0 bottom-0 left-0 flex w-64 flex-col rounded-l-xl bg-slate-50 px-0.5 py-3"
   >
     <p class="ml-3 text-sm font-medium text-gray-400">Account</p>
 
@@ -63,7 +47,7 @@ const userFirstLetter = computed(() => {
         :selected="props.selectedIndex === 0"
         @click="emit('select', 0)"
       >
-        <UserCircleIcon class="size-5" />
+        <UIcon name="i-heroicons-user-circle" class="size-5" />
       </DefaultPanelItem>
       <DefaultPanelItem
         title="My Settings"
@@ -71,7 +55,7 @@ const userFirstLetter = computed(() => {
         :selected="selectedIndex === 1"
         @click="emit('select', 1)"
       >
-        <AdjustmentsHorizontalIcon class="size-5" />
+        <UIcon name="i-heroicons-adjustments-horizontal" class="size-5" />
       </DefaultPanelItem>
       <DefaultPanelItem
         title="My Notifications"
@@ -79,7 +63,7 @@ const userFirstLetter = computed(() => {
         :selected="props.selectedIndex === 2"
         @click="emit('select', 2)"
       >
-        <BellIcon class="size-5" />
+        <UIcon name="i-heroicons-bell" class="size-5" />
       </DefaultPanelItem>
       <DefaultPanelItem
         title="My Connections"
@@ -87,7 +71,7 @@ const userFirstLetter = computed(() => {
         :selected="props.selectedIndex === 3"
         @click="emit('select', 3)"
       >
-        <AtSymbolIcon class="size-5" />
+        <UIcon name="i-heroicons-at-symbol" class="size-5" />
       </DefaultPanelItem>
       <DefaultPanelItem
         title="My Workspaces"
@@ -95,7 +79,7 @@ const userFirstLetter = computed(() => {
         :selected="props.selectedIndex === 4"
         @click="emit('select', 4)"
       >
-        <GlobeAltIcon class="size-5" />
+        <UIcon name="i-heroicons-globe-alt" class="size-5" />
       </DefaultPanelItem>
     </div>
     <p class="mb-1 ml-3 text-sm font-medium text-gray-400">Workspace</p>

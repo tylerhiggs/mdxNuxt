@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { EllipsisHorizontalIcon } from "@heroicons/vue/24/outline";
 const userStore = useAuth();
 defineProps<{
   workspaceTitle: string;
@@ -14,7 +13,7 @@ defineProps<{
   >
     <p class="text-xs">{{ userStore.user.value?.email }}</p>
     <button class="rounded-md p-1 hover:bg-gray-200">
-      <EllipsisHorizontalIcon class="size-4" />
+      <UIcon name="i-heroicons-ellipsis-horizontal" class="size-4" />
     </button>
   </div>
   <div class="items-center-justify-center flex py-2 hover:bg-gray-100">

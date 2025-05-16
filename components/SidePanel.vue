@@ -1,13 +1,4 @@
 <script setup lang="ts">
-import {
-  ChevronDoubleLeftIcon,
-  ChevronDownIcon,
-  MagnifyingGlassIcon,
-  Cog6ToothIcon,
-  PencilSquareIcon,
-  InboxIcon,
-} from "@heroicons/vue/24/outline";
-import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
 import type { PageItem } from "@/types/page";
 
 const auth = useAuth();
@@ -76,9 +67,11 @@ const avatarUrl = computed(() => {
     class="group relative top-0 bottom-0 left-0 flex h-full w-64 flex-col bg-slate-50 px-1 py-0.5 dark:bg-stone-800"
   >
     <ClientOnly>
-      <Popover class="relative w-full">
-        <PopoverButton
+      <UPopover class="relative w-full">
+        <UButton
           v-if="userFirstLetter"
+          variant="ghost"
+          color="neutral"
           class="flex w-full items-center justify-between rounded-md border-transparent p-2 hover:bg-gray-200 focus:border-transparent focus:ring-0 focus:outline-hidden dark:hover:bg-stone-700"
         >
           <img
@@ -98,7 +91,8 @@ const avatarUrl = computed(() => {
           >
             {{ workspaceTitle }}
           </div>
-          <ChevronDownIcon
+          <UIcon
+            name="i-heroicons-chevron-left"
             class="size-4 font-bold text-gray-500 dark:text-stone-400"
           />
           <ToolTip
@@ -106,36 +100,41 @@ const avatarUrl = computed(() => {
             position="bottom"
             :command="toggleSidePanelCommand"
           >
-            <button
+            <UButton
+              variant="ghost"
+              color="neutral"
               @click="isOpen = false"
               class="invisible ml-0.5 flex items-center rounded-md p-0.5 text-2xl group-hover:visible hover:bg-gray-300 dark:hover:bg-stone-600"
             >
-              <ChevronDoubleLeftIcon
+              <UIcon
+                name="i-heroicons-x-mark"
                 class="size-5 font-bold text-gray-500 dark:text-stone-400 dark:hover:text-white"
               />
-            </button>
+            </UButton>
           </ToolTip>
           <ToolTip message="Create a new page" position="right">
             <button
               @click.prevent="emit('createPage')"
               class="flex items-center rounded-md p-1 text-2xl hover:bg-gray-300 dark:hover:bg-stone-600"
             >
-              <PencilSquareIcon
+              <UIcon
+                name="i-heroicons-pencil-square"
                 class="size-5 font-bold text-gray-600 dark:text-stone-100"
               />
             </button>
           </ToolTip>
-        </PopoverButton>
+        </UButton>
 
-        <PopoverPanel
+        <template
+          #content
           class="absolute left-8 z-10 w-64 rounded-lg bg-white shadow-xl"
         >
           <ProfilePopup
             :workspaceTitle="workspaceTitle"
             :userFirstLetter="userFirstLetter"
           />
-        </PopoverPanel>
-      </Popover>
+        </template>
+      </UPopover>
     </ClientOnly>
     <ToolTip
       message="Search and quickly jump to a page"
@@ -147,7 +146,7 @@ const avatarUrl = computed(() => {
         class="w-full pl-3 font-medium text-gray-400"
         title="Search"
       >
-        <MagnifyingGlassIcon class="size-4" />
+        <UIcon name="i-heroicons-magnifying-glass" class="size-4" />
       </DefaultPanelItem>
     </ToolTip>
     <ToolTip message="View recent updates and notifications" position="right">
@@ -155,7 +154,7 @@ const avatarUrl = computed(() => {
         class="w-full pl-3 font-medium text-gray-400"
         title="Inbox"
       >
-        <InboxIcon class="size-4" />
+        <UIcon name="i-heroicons-inbox" class="size-4" />
       </DefaultPanelItem>
     </ToolTip>
     <ToolTip message="Manage your account and settings" position="right">
@@ -164,7 +163,7 @@ const avatarUrl = computed(() => {
         title="Settings"
         @click="emit('openSettings')"
       >
-        <Cog6ToothIcon class="size-4" />
+        <UIcon name="i-heroicons-cog-6-tooth" class="size-4" />
       </DefaultPanelItem>
     </ToolTip>
     <p
