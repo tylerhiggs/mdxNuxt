@@ -2,6 +2,9 @@
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineNuxtConfig({
+  build: {
+    transpile: ["vue"],
+  },
   compatibilityDate: "2024-04-03",
   devtools: { enabled: false },
   css: ["~/assets/css/main.css"],

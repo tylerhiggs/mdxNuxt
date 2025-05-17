@@ -195,7 +195,7 @@ const { data: mdNodes } = useAsyncData(
         <div class="relative z-0 flex flex-initial justify-center">
           <div class="flex h-full w-8/12 flex-col">
             <div class="group pt-12">
-              <UPopover class="relative">
+              <UPopover>
                 <UButton
                   variant="ghost"
                   color="neutral"
