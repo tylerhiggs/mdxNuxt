@@ -18,23 +18,23 @@ const props = defineProps<{
         'white-space-collapse': 'preserve',
       }"
     >
-        <code class="flex flex-col">
-          <div
-            v-if="props.syntaxHighlightedTokens"
-            v-for="(line, lineIndex) in props.syntaxHighlightedTokens"
-            :key="lineIndex"
-            class="line flex"
-          >
-            <span
-              v-for="(token, tokenIndex) in line"
-              :key="tokenIndex"
-              :style="{
-                color: token.color,
-              }"
-            >{{token.content}}</span>
-          </div>
-          <span v-else>{{ props.code }}</span>
-        </code>
-      </pre>
+      <code class="flex flex-col">
+        <div
+          v-if="props.syntaxHighlightedTokens"
+          v-for="(line, lineIndex) in props.syntaxHighlightedTokens"
+          :key="lineIndex"
+          class="line flex"
+        >
+          <span
+            v-for="(token, tokenIndex) in line"
+            :key="tokenIndex"
+            :style="{
+              color: token.color,
+            }"
+          >{{token.content}}</span>
+        </div>
+        <span v-else>{{ props.code }}</span>
+      </code>
+    </pre>
   </div>
 </template>

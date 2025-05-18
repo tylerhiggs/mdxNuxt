@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Page, PageUpdate, Block } from "@/types/page";
+import { codeToTokens } from "shiki";
 import { parseMd } from "~/shared/parseMd";
 const snackbarStore = useSnackbar();
 const props = defineProps<{
@@ -170,14 +171,37 @@ const { data: mdNodes } = useAsyncData(
     return nodes;
   },
 );
+
+const { data: syntaxHighlightedTokens } = useAsyncData(
+  computed(
+    () =>
+      "syntaxTokens-" +
+      props.page.blocks.reduce((acc, block) => acc + block.textContent, ""),
+  ),
+  async () => {
+    const { blocks } = props.page;
+    if (!blocks || !blocks.length) {
+      return [];
+    }
+    const tokens = await Promise.all(
+      blocks.map((block) =>
+        codeToTokens(block.textContent, {
+          lang: "markdown",
+          theme: "vitesse-dark",
+        }),
+      ),
+    );
+    return tokens;
+  },
+);
 </script>
 
 <template>
   <div class="absolute inset-0 left-64 z-0 dark:bg-stone-900 dark:text-white">
     <div class="flex flex-initial flex-col">
       <PageNav
-        :page="page"
-        :saved="isSaved"
+        :page="props.page"
+        :saved="props.isSaved"
         :previewPage="previewPage"
         :nodes="mdNodes || []"
         @favoritePage="favoritePage"
@@ -247,14 +271,42 @@ const { data: mdNodes } = useAsyncData(
         </div>
 
         <div
-          class="flex field-sizing-content h-full w-full flex-auto resize-y flex-col items-center"
+          v-for="(block, i) in props.page.blocks"
+          :key="block.id"
+          class="relative flex field-sizing-content h-full w-full flex-auto resize-y flex-col items-center"
         >
+          <span>
+            <pre
+              class="relative flex p-5"
+              :style="{
+                'white-space-collapse': 'preserve',
+              }"
+            >
+              <code class="flex flex-col">
+                <div
+                  v-if="syntaxHighlightedTokens[i]"
+                  v-for="(line, lineIndex) in syntaxHighlightedTokens[i]"
+                  :key="lineIndex"
+                  class="line flex"
+                >
+                  <span
+                    v-for="(token, tokenIndex) in line"
+                    :key="tokenIndex"
+                    :style="{
+                      color: token.color,
+                    }"
+                  >{{token.content}}</span>
+                </div>
+                <span v-else>{{ block.textContent }}</span>
+              </code>
+            </pre>
+          </span>
           <textarea
-            v-for="block in page.blocks"
             ref="elements"
             :id="`${block.id}`"
             :value="block.textContent"
-            class="text-md mt-4 min-h-full w-8/12 resize-none border-none bg-transparent font-sans text-lg font-normal outline-hidden dark:text-white"
+            :style.caretColor="'grey'"
+            class="text-md absolute inset-0 mt-4 min-h-full resize-none border-none bg-transparent font-mono text-lg font-normal whitespace-pre opacity-20 outline-hidden dark:text-white"
             @input="(event) => updateBlockTextarea(event, block)"
             @keydown.meta.b="(event) => bold(event, block)"
             @keydown.ctrl.b="(event) => bold(event, block)"
