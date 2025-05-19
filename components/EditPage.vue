@@ -79,6 +79,14 @@ const italic = (event: KeyboardEvent, block: Block) => {
   emits("updateBlock", props.page.id, block.id, element.value.value);
 };
 
+const tab = (block: Block) => {
+  insertFormating("  ");
+  if (!element.value) {
+    return;
+  }
+  emits("updateBlock", props.page.id, block.id, element.value.value);
+};
+
 const openParen = (event: KeyboardEvent, block: Block) => {
   if (event.key !== "(") {
     return;
@@ -187,7 +195,12 @@ const { data: syntaxHighlightedTokens } = useAsyncData(
       blocks.map((block) =>
         codeToTokens(block.textContent, {
           lang: "markdown",
-          theme: "vitesse-dark",
+          theme: import.meta.client
+            ? window.matchMedia &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches
+              ? "vitesse-dark"
+              : "vitesse-light"
+            : "vitesse-light",
         }),
       ),
     );
@@ -275,45 +288,45 @@ const { data: syntaxHighlightedTokens } = useAsyncData(
           :key="block.id"
           class="relative flex field-sizing-content h-full w-full flex-auto resize-y flex-col items-center"
         >
-          <span>
-            <pre
-              class="relative flex p-5"
-              :style="{
-                'white-space-collapse': 'preserve',
-              }"
+          <div class="relative mt-4 w-8/12">
+            <span
+              class="w-full pt-4 text-lg *:overflow-auto dark:bg-stone-800 **:[.line]:isolate **:[.line]:not-last:min-h-[1lh]"
             >
-              <code class="flex flex-col">
-                <div
-                  v-if="syntaxHighlightedTokens[i]"
-                  v-for="(line, lineIndex) in syntaxHighlightedTokens[i]"
-                  :key="lineIndex"
-                  class="line flex"
-                >
-                  <span
-                    v-for="(token, tokenIndex) in line"
-                    :key="tokenIndex"
-                    :style="{
-                      color: token.color,
-                    }"
-                  >{{token.content}}</span>
-                </div>
-                <span v-else>{{ block.textContent }}</span>
-              </code>
-            </pre>
-          </span>
-          <textarea
-            ref="elements"
-            :id="`${block.id}`"
-            :value="block.textContent"
-            :style.caretColor="'grey'"
-            class="text-md absolute inset-0 mt-4 min-h-full resize-none border-none bg-transparent font-mono text-lg font-normal whitespace-pre opacity-20 outline-hidden dark:text-white"
-            @input="(event) => updateBlockTextarea(event, block)"
-            @keydown.meta.b="(event) => bold(event, block)"
-            @keydown.ctrl.b="(event) => bold(event, block)"
-            @keydown.meta.i="(event) => italic(event, block)"
-            @keydown.ctrl.i="(event) => italic(event, block)"
-            @keydown="(event) => openParen(event, block)"
-          />
+              <pre class="relative flex">
+                <code class="flex flex-col">
+                  <div
+                    v-if="syntaxHighlightedTokens?.[i]?.tokens"
+                    v-for="(line, lineIndex) in syntaxHighlightedTokens[i].tokens"
+                    :key="lineIndex"
+                    class="line flex"
+                  >
+                    <span
+                      v-for="(token, tokenIndex) in line"
+                      :key="tokenIndex"
+                      :style="{
+                        color: token.color,
+                      }"
+                    >{{token.content}}</span>
+                  </div>
+                  <span v-else>{{ block.textContent }}</span>
+                </code>
+              </pre>
+            </span>
+            <textarea
+              ref="elements"
+              :id="`${block.id}`"
+              :value="block.textContent"
+              :style.caretColor="'grey'"
+              class="absolute inset-0 min-h-full resize-none border-none bg-transparent font-mono text-lg font-normal whitespace-pre opacity-20 outline-hidden dark:text-white"
+              @input="(event) => updateBlockTextarea(event, block)"
+              @keydown.meta.b="(event) => bold(event, block)"
+              @keydown.ctrl.b="(event) => bold(event, block)"
+              @keydown.meta.i="(event) => italic(event, block)"
+              @keydown.ctrl.i="(event) => italic(event, block)"
+              @keydown.tab.prevent="() => tab(block)"
+              @keydown="(event) => openParen(event, block)"
+            />
+          </div>
         </div>
       </div>
       <div
