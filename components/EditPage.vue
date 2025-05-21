@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { Page, PageUpdate, Block } from "@/types/page";
-import { codeToTokens } from "shiki";
+import { codeToTokens, type TokensResult } from "shiki";
 import { parseMd } from "~/shared/parseMd";
+import type { MdNode } from "~/shared/types";
 const snackbarStore = useSnackbar();
 const props = defineProps<{
   page: Page;
@@ -176,34 +177,29 @@ const insertFormating = (text: string, defaultTxt = "", text2 = "") => {
   txtarea.focus();
 };
 
-const { data: mdNodes } = useAsyncData(
-  computed(() =>
-    props.page.blocks.reduce((acc, block) => acc + block.textContent, ""),
-  ),
-  async () => {
-    const { blocks } = props.page;
+const mdNodes = ref<MdNode[][]>([]);
+watch(
+  () => props.page.blocks,
+  async (blocks) => {
     if (!blocks || !blocks.length) {
-      return [];
+      return;
     }
     const nodes = await Promise.all(
       blocks.map((block) => parseMd(block.textContent)),
     );
-    return nodes;
+    mdNodes.value = nodes;
   },
 );
 
-const { data: syntaxHighlightedTokens } = useAsyncData(
-  computed(
-    () =>
-      "syntaxTokens-" +
-      props.page.blocks.reduce((acc, block) => acc + block.textContent, ""),
-  ),
+const syntaxHighlightedTokens = ref<TokensResult[]>([]);
+watch(
+  () => props.page.blocks,
   async () => {
     const { blocks } = props.page;
     if (!blocks || !blocks.length) {
-      return [];
+      return;
     }
-    const tokens = await Promise.all(
+    syntaxHighlightedTokens.value = await Promise.all(
       blocks.map((block) =>
         codeToTokens(block.textContent, {
           lang: "markdown",
@@ -216,17 +212,8 @@ const { data: syntaxHighlightedTokens } = useAsyncData(
         }),
       ),
     );
-    return tokens;
   },
 );
-const prevSyntaxTokens = ref(syntaxHighlightedTokens.value);
-watch(syntaxHighlightedTokens, (newTokens) => {
-  if (newTokens && newTokens !== prevSyntaxTokens.value) {
-    prevSyntaxTokens.value = newTokens.map((tokens) => ({
-      tokens: tokens.tokens.map((line) => ({ ...line })),
-    }));
-  }
-});
 </script>
 
 <template>
@@ -317,25 +304,13 @@ watch(syntaxHighlightedTokens, (newTokens) => {
                     v-if="syntaxHighlightedTokens?.[i]?.tokens"
                     v-for="(line, lineIndex) in syntaxHighlightedTokens[i].tokens"
                     :key="lineIndex"
-                    class="line w-full block indent-0 h-[1lh] relative"
+                    class="line block indent-0 relative min-h-[1lh]"
                   ><span
-                      v-for="(token, tokenIndex) in line"
-                      :key="tokenIndex"
-                      :style="{
-                        color: token.color,
-                      }"
-                    >{{token.content}}</span></span><span
-                    v-else-if="prevSyntaxTokens?.[i]?.tokens"
-                    v-for="(line) in prevSyntaxTokens[i].tokens"
-                    class="line w-full block indent-0 h-[1lh] relative"
-                  ><span
-                      v-for="(token, tokenIndex) in line"
-                      :key="tokenIndex"
+                      v-for="(token) in line"
                       :style="{
                         color: token.color,
                       }"
                     >{{token.content}}</span></span></code>
-                
               </pre>
             </div>
             <textarea
