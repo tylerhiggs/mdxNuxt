@@ -87,12 +87,26 @@ const tab = (block: Block) => {
   emits("updateBlock", props.page.id, block.id, element.value.value);
 };
 
-const openParen = (event: KeyboardEvent, block: Block) => {
-  if (event.key !== "(") {
+const paren = (event: KeyboardEvent, block: Block) => {
+  if (event.key !== "(" && event.key !== ")") {
     return;
   }
-  event.preventDefault(); // Prevent the default browser action
-  insertFormating("(", "", ")");
+  if (event.key === "(") {
+    event.preventDefault();
+    insertFormating("(", "", ")");
+  } else if (event.key === ")" && element.value) {
+    const textarea = element.value;
+    const caretPos = textarea.selectionStart;
+    const text = textarea.value;
+    const charAfterCaret = text.charAt(caretPos);
+
+    if (charAfterCaret === ")") {
+      event.preventDefault();
+      // Move the caret after the existing closing parenthesis
+      textarea.setSelectionRange(caretPos + 1, caretPos + 1);
+      textarea.focus();
+    }
+  }
   if (!element.value) {
     return;
   }
@@ -110,7 +124,6 @@ const insertFormating = (text: string, defaultTxt = "", text2 = "") => {
   }
   const selectStart = txtarea.selectionStart;
   const selectEnd = txtarea.selectionEnd;
-  const scrollPos = txtarea.scrollTop;
   const caretPos = txtarea.selectionStart;
   let mode = 0;
   let front = txtarea.value.substring(0, caretPos);
@@ -161,7 +174,6 @@ const insertFormating = (text: string, defaultTxt = "", text2 = "") => {
     txtarea.selectionEnd = txtarea.selectionStart + middle.length;
   }
   txtarea.focus();
-  txtarea.scrollTop = scrollPos;
 };
 
 const { data: mdNodes } = useAsyncData(
@@ -207,6 +219,14 @@ const { data: syntaxHighlightedTokens } = useAsyncData(
     return tokens;
   },
 );
+const prevSyntaxTokens = ref(syntaxHighlightedTokens.value);
+watch(syntaxHighlightedTokens, (newTokens) => {
+  if (newTokens && newTokens !== prevSyntaxTokens.value) {
+    prevSyntaxTokens.value = newTokens.map((tokens) => ({
+      tokens: tokens.tokens.map((line) => ({ ...line })),
+    }));
+  }
+});
 </script>
 
 <template>
@@ -221,15 +241,15 @@ const { data: syntaxHighlightedTokens } = useAsyncData(
         @togglePreview="previewPage = !previewPage"
       />
     </div>
-    <div class="flex h-full w-full flex-auto">
+    <div class="flex min-h-full w-full flex-auto">
       <div
-        class="flex h-full flex-col overflow-y-auto"
+        class="flex min-h-full flex-col overflow-y-auto"
         :class="{
           'w-full': !previewPage,
           'w-7/12': previewPage,
         }"
       >
-        <div class="relative z-0 flex flex-initial justify-center">
+        <div class="z-0 flex flex-initial justify-center">
           <div class="flex h-full w-8/12 flex-col">
             <div class="group pt-12">
               <UPopover>
@@ -286,45 +306,50 @@ const { data: syntaxHighlightedTokens } = useAsyncData(
         <div
           v-for="(block, i) in props.page.blocks"
           :key="block.id"
-          class="relative flex field-sizing-content h-full w-full flex-auto resize-y flex-col items-center"
+          class="relative flex h-full w-full flex-auto flex-col items-center overflow-y-auto"
         >
-          <div class="relative mt-4 w-8/12">
-            <span
-              class="w-full pt-4 text-lg *:overflow-auto dark:bg-stone-800 **:[.line]:isolate **:[.line]:not-last:min-h-[1lh]"
-            >
-              <pre class="relative flex">
-                <code class="flex flex-col">
-                  <div
+          <div class="relative mt-4 flex min-h-full w-8/12">
+            <div class="flex text-lg">
+              <pre
+                class="relative flex flex-col overflow-x-auto text-lg break-words whitespace-pre-wrap"
+              >
+                <code class="relative flex flex-col"><span
                     v-if="syntaxHighlightedTokens?.[i]?.tokens"
                     v-for="(line, lineIndex) in syntaxHighlightedTokens[i].tokens"
                     :key="lineIndex"
-                    class="line flex"
-                  >
-                    <span
+                    class="line w-full block indent-0 h-[1lh] relative"
+                  ><span
                       v-for="(token, tokenIndex) in line"
                       :key="tokenIndex"
                       :style="{
                         color: token.color,
                       }"
-                    >{{token.content}}</span>
-                  </div>
-                  <span v-else>{{ block.textContent }}</span>
-                </code>
+                    >{{token.content}}</span></span><span
+                    v-else-if="prevSyntaxTokens?.[i]?.tokens"
+                    v-for="(line) in prevSyntaxTokens[i].tokens"
+                    class="line w-full block indent-0 h-[1lh] relative"
+                  ><span
+                      v-for="(token, tokenIndex) in line"
+                      :key="tokenIndex"
+                      :style="{
+                        color: token.color,
+                      }"
+                    >{{token.content}}</span></span></code>
+                
               </pre>
-            </span>
+            </div>
             <textarea
               ref="elements"
               :id="`${block.id}`"
               :value="block.textContent"
-              :style.caretColor="'grey'"
-              class="absolute inset-0 min-h-full resize-none border-none bg-transparent font-mono text-lg font-normal whitespace-pre opacity-20 outline-hidden dark:text-white"
+              class="absolute inset-0 min-h-full resize-none border-none bg-transparent font-mono text-lg font-normal whitespace-pre-wrap opacity-20 outline-hidden dark:text-white"
               @input="(event) => updateBlockTextarea(event, block)"
               @keydown.meta.b="(event) => bold(event, block)"
               @keydown.ctrl.b="(event) => bold(event, block)"
               @keydown.meta.i="(event) => italic(event, block)"
               @keydown.ctrl.i="(event) => italic(event, block)"
               @keydown.tab.prevent="() => tab(block)"
-              @keydown="(event) => openParen(event, block)"
+              @keydown="(event) => paren(event, block)"
             />
           </div>
         </div>

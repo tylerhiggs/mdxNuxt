@@ -42,15 +42,16 @@ const props = defineProps<{
     class="inline rounded bg-gray-100 px-1 py-0.5 font-mono text-xs text-red-500"
     >{{ node.text }}</code
   >
-  <b v-if="node.type === 'bold'" class="inline font-extrabold">{{
+  <strong v-if="node.type === 'bold'" class="inline font-extrabold">{{
     node.text
-  }}</b>
-  <i v-if="node.type === 'italic'" class="inline italic">{{ node.text }}</i>
+  }}</strong>
+  <em v-if="node.type === 'italic'" class="inline italic">{{ node.text }}</em>
   <a
     v-if="node.type === 'link'"
     :href="node.href"
     class="text-primary hover:border-primary focus-visible:outline-primary hover:[&>code]:border-primary hover:[&>code]:text-primary border-b border-transparent font-medium [&>code]:border-dashed"
     target="_blank"
+    :external="true"
     rel="noopener noreferrer"
   >
     {{ node.text }}

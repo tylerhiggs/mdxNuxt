@@ -8,6 +8,7 @@ export type MdNode = {
     | "inline-code"
     | "image"
     | "callout"
+    | "blockquote"
     | "code-block"
     | "bold"
     | "italic"

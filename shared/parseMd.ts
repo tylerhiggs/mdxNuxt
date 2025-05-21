@@ -63,6 +63,12 @@ export async function parseMd(markdown: string): Promise<MdNode[]> {
         raw: line,
         items: parseLine(trimmed.slice(2).trim()),
       });
+    } else if (trimmed.startsWith("> ")) {
+      tokens.push({
+        type: "blockquote",
+        raw: line,
+        items: parseLine(trimmed.slice(2).trim()),
+      });
     } else if (trimmed) {
       tokens.push({
         type: "paragraph",
