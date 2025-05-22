@@ -351,7 +351,7 @@ watch(
               "
               v-for="node in mdNodes[index] || []"
             >
-              <MdNode :node="node" />
+              <MdNode :node="node" :preview="true" />
             </div>
           </div>
         </div>

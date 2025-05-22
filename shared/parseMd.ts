@@ -1,5 +1,10 @@
-import type { MdNode } from "~/shared/types";
-import { codeToTokens, type ThemedToken } from "shiki";
+import type { MdNode, ThemeColor } from "~/shared/types";
+import {
+  bundledLanguages,
+  codeToTokens,
+  type BundledLanguage,
+  type ThemedToken,
+} from "shiki";
 import { sanitizeUrl } from "@braintree/sanitize-url";
 
 export async function parseMd(markdown: string): Promise<MdNode[]> {
@@ -14,12 +19,13 @@ export async function parseMd(markdown: string): Promise<MdNode[]> {
 
     if (trimmed.startsWith("```")) {
       if (inCodeBlock) {
-        // End of code block
+        const lang = trimmed.slice(3) as BundledLanguage;
+        const langIsValid = lang in bundledLanguages;
         try {
           const { tokens: codeTokens } = await codeToTokens(
             codeBlockContent.join("\n"),
             {
-              lang: "typescript",
+              lang: langIsValid ? lang : "typescript",
               theme: "vitesse-dark",
             },
           );
@@ -61,19 +67,19 @@ export async function parseMd(markdown: string): Promise<MdNode[]> {
       tokens.push({
         type: "list-item",
         raw: line,
-        items: parseLine(trimmed.slice(2).trim()),
+        items: await parseLine(trimmed.slice(2).trim()),
       });
     } else if (trimmed.startsWith("> ")) {
       tokens.push({
         type: "blockquote",
         raw: line,
-        items: parseLine(trimmed.slice(2).trim()),
+        items: await parseLine(trimmed.slice(2).trim()),
       });
     } else if (trimmed) {
       tokens.push({
         type: "paragraph",
         raw: line,
-        items: parseLine(trimmed),
+        items: await parseLine(trimmed),
       });
     }
   }
@@ -99,13 +105,13 @@ export async function parseMd(markdown: string): Promise<MdNode[]> {
  *   { type: "text", raw: ".", text: "." }
  * ])
  */
-export function parseLine(mdLine: string): MdNode[] {
+export async function parseLine(mdLine: string): Promise<MdNode[]> {
   const tokens: MdNode[] = [];
   const parts = mdLine
-    .split(/(\*\*.*?\*\*|\*.*?\*|__.*?__|`.*?`|\[.*?\]\(.*?\))/g)
+    .split(/(\*\*.*?\*\*|\*.*?\*|__.*?__|`.*?`\{.*?\}|`.*?`|\[.*?\]\(.*?\))/g)
     .filter(Boolean);
 
-  parts.forEach((part) => {
+  for (const part of parts) {
     if (part.startsWith("**") && part.endsWith("**")) {
       tokens.push({
         type: "bold",
@@ -123,6 +129,36 @@ export function parseLine(mdLine: string): MdNode[] {
         type: "italic",
         raw: part,
         text: part.slice(2, -2),
+      });
+    } else if (
+      part.startsWith("`") &&
+      part.includes("`{") &&
+      part.endsWith("}")
+    ) {
+      const match = part.match(/`(.*?)`\{(.*?)\}/);
+      let language: string | undefined;
+      let color: ThemeColor | undefined;
+      let syntaxHighlightedTokens: ThemedToken[][] | undefined;
+      if (part.includes("lang")) {
+        language = match?.[2].match(/lang=['"](\w+)['"]/)?.[1];
+        if (language && bundledLanguages[language as BundledLanguage]) {
+          const { tokens: codeTokens } = await codeToTokens(match?.[1] || "", {
+            lang: language as BundledLanguage,
+            theme: "vitesse-dark",
+          });
+          syntaxHighlightedTokens = codeTokens;
+        }
+      }
+      if (part.includes("color")) {
+        color = match?.[2].match(/color=['"](\w+)['"]/)?.[1] as ThemeColor;
+      }
+      tokens.push({
+        type: "inline-code",
+        raw: part,
+        text: match?.[1],
+        language,
+        color,
+        syntaxHighlightedTokens,
       });
     } else if (part.startsWith("`") && part.endsWith("`")) {
       tokens.push({
@@ -151,7 +187,7 @@ export function parseLine(mdLine: string): MdNode[] {
         text: part,
       });
     }
-  });
+  }
 
   return tokens;
 }

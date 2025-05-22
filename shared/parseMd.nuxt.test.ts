@@ -1,6 +1,8 @@
 import { expect, test } from "vitest";
 import { parseMd } from "./parseMd";
 import type { MdNode } from "./types";
+import { sanitizeUrl } from "@braintree/sanitize-url";
+import { language } from "happy-dom/lib/PropertySymbol.js";
 
 test("parseMd - empty input", async () => {
   const input = "";
@@ -155,7 +157,7 @@ This is a paragraph with **bold text** and *italic text*.
           type: "link",
           raw: "[Link text](https://example.com)",
           text: "Link text",
-          href: encodeURIComponent("https://example.com"),
+          href: sanitizeUrl("https://example.com"),
         },
       ],
     },
@@ -168,4 +170,64 @@ test("parseMd - link XXS safety", async () => {
   const input = `[Link text](javascript:alert('XSS'))`;
   const output = await parseMd(input);
   expect(output[0].href).not.toEqual("javascript:alert('XSS')");
+});
+
+test("parseMd - inline code", async () => {
+  const input = `This is a paragraph with \`inline code\`.`;
+  const expectedOutput = [
+    {
+      type: "paragraph",
+      raw: "This is a paragraph with `inline code`.",
+      items: [
+        {
+          type: "text",
+          raw: "This is a paragraph with ",
+          text: "This is a paragraph with ",
+        },
+        {
+          type: "inline-code",
+          raw: "`inline code`",
+          text: "inline code",
+        },
+        {
+          type: "text",
+          raw: ".",
+          text: ".",
+        },
+      ],
+    },
+  ];
+  const output = await parseMd(input);
+  expect(output).toEqual(expectedOutput);
+});
+
+test("parseMd - inline code with options", async () => {
+  const input = `This is a paragraph with \`inline code\`{lang='typescript', color='primary'}.`;
+  const expectedOutput = [
+    {
+      type: "paragraph",
+      raw: "This is a paragraph with \`inline code\`{lang='typescript', color='primary'}.",
+      items: [
+        {
+          type: "text",
+          raw: "This is a paragraph with ",
+          text: "This is a paragraph with ",
+        },
+        {
+          type: "inline-code",
+          raw: "`inline code`{lang='typescript', color='primary'}",
+          text: "inline code",
+          language: "typescript",
+          color: "primary",
+        },
+        {
+          type: "text",
+          raw: ".",
+          text: ".",
+        },
+      ],
+    },
+  ];
+  const output = await parseMd(input);
+  expect(output).toEqual(expectedOutput);
 });

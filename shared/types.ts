@@ -19,6 +19,16 @@ export type MdNode = {
   href?: string;
   title?: string;
   language?: string;
+  color?: ThemeColor;
   syntaxHighlightedTokens?: ThemedToken[][];
   items?: MdNode[];
 };
+
+export type ThemeColor =
+  | "neutral"
+  | "error"
+  | "warning"
+  | "info"
+  | "success"
+  | "primary"
+  | "secondary";

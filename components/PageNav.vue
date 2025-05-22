@@ -137,6 +137,7 @@ const mouseleave = () => {
                       v-for="(node, i) in props.nodes[0] || []"
                       :key="i"
                       :node="node"
+                      :preview="true"
                       v-if="props.page.blocks.length"
                     />
                     <div
