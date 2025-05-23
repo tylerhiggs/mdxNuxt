@@ -7,7 +7,30 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div v-if="node.items && node.items.length">
+  <blockquote
+    v-if="node.type === 'blockquote'"
+    class="border-accented border-s-4 ps-4 italic"
+  >
+    <MdNode
+      v-for="(item, index) in node.items"
+      :key="index"
+      :node="item"
+      :preview="props.preview"
+    />
+  </blockquote>
+  <ul
+    v-else-if="node.type === 'list-item'"
+    class="my-5 list-disc ps-6 marker:text-(--ui-border-accented)"
+  >
+    <li class="my-1.5 ps-1.5 leading-7 [&>ul]:my-0">
+      <MdNode
+        v-for="item in node.items"
+        :node="item"
+        :preview="props.preview"
+      />
+    </li>
+  </ul>
+  <div v-else-if="node.items && node.items.length">
     <MdNode
       v-for="(item, index) in props.node.items"
       :key="index"
@@ -16,37 +39,37 @@ const props = defineProps<{
     />
   </div>
   <h1
-    v-if="node.type === 'heading' && node.depth === 1"
+    v-else-if="node.type === 'heading' && node.depth === 1"
     class="text-highlighted mb-8 text-4xl font-bold"
   >
     {{ node.text }}
   </h1>
   <h2
-    v-if="node.type === 'heading' && node.depth === 2"
+    v-else-if="node.type === 'heading' && node.depth === 2"
     class="text-highlighted relative mt-12 mb-6 text-2xl font-bold"
   >
     {{ node.text }}
   </h2>
   <h3
-    v-if="node.type === 'heading' && node.depth === 3"
+    v-else-if="node.type === 'heading' && node.depth === 3"
     class="text-highlighted relative mt-8 mb-3 text-xl font-bold"
   >
     {{ node.text }}
   </h3>
   <h4
-    v-if="node.type === 'heading' && node.depth === 4"
+    v-else-if="node.type === 'heading' && node.depth === 4"
     class="text-highlighted relative mt-6 mb-2 text-lg font-bold"
   >
     {{ node.text }}
   </h4>
   <h5
-    v-if="node.type === 'heading' && node.depth === 5"
+    v-else-if="node.type === 'heading' && node.depth === 5"
     class="text-highlighted relative mt-4 mb-1 text-base font-bold"
   >
     {{ node.text }}
   </h5>
   <h6
-    v-if="node.type === 'heading' && node.depth === 6"
+    v-else-if="node.type === 'heading' && node.depth === 6"
     class="text-highlighted relative mt-2 mb-1 text-sm font-bold"
   >
     {{ node.text }}
@@ -106,33 +129,6 @@ const props = defineProps<{
       {{ node.text }}
     </template>
   </code>
-  <!-- <code
-    v-if="
-      node.type === 'inline-code' &&
-      node.language &&
-      node.syntaxHighlightedTokens &&
-      node.syntaxHighlightedTokens.length === 1
-    "
-    class="inline rounded-md border px-1.5 py-0.5 font-mono text-sm font-medium"
-    :class="{
-      'border-error/25 bg-error/10': node.color === 'error',
-      'border-warning/25 bg-warning/10': node.color === 'warning',
-      'border-info/25 bg-info/10': node.color === 'info',
-      'border-success/25 bg-success/10': node.color === 'success',
-      'border-primary/25 bg-primary/10': node.color === 'primary',
-      'border-secondary/25 bg-secondary/10': node.color === 'secondary',
-      'border-muted text-highlighted bg-muted': node.color === 'neutral',
-    }"
-  >
-    <span
-      v-for="token in node.syntaxHighlightedTokens[0]"
-      :style="{
-        color: token.color,
-      }"
-    >
-      {{ token.content }}
-    </span>
-  </code> -->
   <strong v-if="node.type === 'bold'" class="inline font-extrabold">{{
     node.text
   }}</strong>
@@ -147,9 +143,6 @@ const props = defineProps<{
   >
     {{ node.text }}
   </a>
-  <ul v-if="node.type === 'list-item'" class="list-disc pl-5">
-    <li v-for="(item, index) in node.items" :key="index">{{ item.text }}</li>
-  </ul>
   <CodeBlock
     v-if="node.type === 'code-block' && node.text"
     :code="node.text"
