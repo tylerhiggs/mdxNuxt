@@ -3,6 +3,7 @@ export type MdNode = {
   type:
     | "heading"
     | "paragraph"
+    | "list-items"
     | "list-item"
     | "link"
     | "inline-code"
