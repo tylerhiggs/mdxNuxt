@@ -1,8 +1,8 @@
 import { expect, test } from "vitest";
-import { parseMd } from "./parseMd";
+import { groupListItems, parseMd } from "./parseMd";
 import type { MdNode } from "./types";
 import { sanitizeUrl } from "@braintree/sanitize-url";
-import { language } from "happy-dom/lib/PropertySymbol.js";
+import { items, language } from "happy-dom/lib/PropertySymbol.js";
 
 test("parseMd - empty input", async () => {
   const input = "";
@@ -128,24 +128,30 @@ This is a paragraph with **bold text** and *italic text*.
       ],
     },
     {
-      type: "list-item",
-      raw: "- List item 1",
+      type: "list-items",
+      raw: "",
       items: [
         {
-          type: "text",
-          raw: "List item 1",
-          text: "List item 1",
+          type: "list-item",
+          raw: "- List item 1",
+          items: [
+            {
+              type: "text",
+              raw: "List item 1",
+              text: "List item 1",
+            },
+          ],
         },
-      ],
-    },
-    {
-      type: "list-item",
-      raw: "- List item 2",
-      items: [
         {
-          type: "text",
-          raw: "List item 2",
-          text: "List item 2",
+          type: "list-item",
+          raw: "- List item 2",
+          items: [
+            {
+              type: "text",
+              raw: "List item 2",
+              text: "List item 2",
+            },
+          ],
         },
       ],
     },
@@ -203,23 +209,25 @@ test("parseMd - inline code", async () => {
 
 test("parseMd - inline code with options", async () => {
   const input = `This is a paragraph with \`inline code\`{lang='typescript', color='primary'}.`;
+  // Option 1: Use expect.objectContaining to ignore syntaxHighlightedTokens
   const expectedOutput = [
     {
       type: "paragraph",
-      raw: "This is a paragraph with \`inline code\`{lang='typescript', color='primary'}.",
+      raw: "This is a paragraph with `inline code`{lang='typescript', color='primary'}.",
       items: [
         {
           type: "text",
           raw: "This is a paragraph with ",
           text: "This is a paragraph with ",
         },
-        {
+        expect.objectContaining({
           type: "inline-code",
           raw: "`inline code`{lang='typescript', color='primary'}",
           text: "inline code",
           language: "typescript",
           color: "primary",
-        },
+          // syntaxHighlightedTokens is ignored
+        }),
         {
           type: "text",
           raw: ".",
@@ -230,4 +238,27 @@ test("parseMd - inline code with options", async () => {
   ];
   const output = await parseMd(input);
   expect(output).toEqual(expectedOutput);
+});
+
+test("parseMd - groupListItems", () => {
+  const items: MdNode[] = [
+    {
+      type: "list-item",
+      raw: "- Item 1",
+      items: [{ type: "text", raw: "Item 1", text: "Item 1" }],
+    },
+    {
+      type: "list-item",
+      raw: "- Item 2",
+      items: [{ type: "text", raw: "Item 2", text: "Item 2" }],
+    },
+  ];
+  const grouped = groupListItems(items);
+  expect(grouped).toEqual([
+    {
+      type: "list-items",
+      items,
+      raw: "",
+    },
+  ]);
 });

@@ -84,7 +84,7 @@ export async function parseMd(markdown: string): Promise<MdNode[]> {
     }
   }
 
-  return tokens;
+  return groupListItems(tokens);
 }
 
 /**
@@ -190,4 +190,22 @@ export async function parseLine(mdLine: string): Promise<MdNode[]> {
   }
 
   return tokens;
+}
+
+export function groupListItems(items: MdNode[]): MdNode[] {
+  return items.reduce((acc, node) => {
+    if (node.type === "list-item") {
+      if (!acc.length || acc[acc.length - 1]?.type !== "list-items") {
+        acc.push({
+          type: "list-items",
+          raw: "",
+          items: [],
+        });
+      }
+      acc[acc.length - 1]?.items?.push(node);
+    } else {
+      acc.push(node);
+    }
+    return acc;
+  }, [] as MdNode[]);
 }
