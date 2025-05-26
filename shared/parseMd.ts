@@ -69,6 +69,12 @@ export async function parseMd(markdown: string): Promise<MdNode[]> {
         raw: line,
         items: await parseLine(trimmed.slice(2).trim()),
       });
+    } else if (/^\d+\.\s/.test(trimmed)) {
+      tokens.push({
+        type: "ordered-list-item",
+        raw: line,
+        items: await parseLine(trimmed.replace(/^\d+\.\s/, "")),
+      });
     } else if (trimmed.startsWith("> ")) {
       tokens.push({
         type: "blockquote",
@@ -200,6 +206,18 @@ export function groupListItems(items: MdNode[]): MdNode[] {
           type: "list-items",
           raw: "",
           items: [],
+        });
+      }
+      acc[acc.length - 1]?.items?.push(node);
+    } else if (node.type === "ordered-list-item") {
+      if (!acc.length || acc[acc.length - 1]?.type !== "ordered-list-items") {
+        acc.push({
+          type: "ordered-list-items",
+          raw: "",
+          items: [],
+          orderedListStartIndex: node.raw.match(/^\d+/)
+            ? parseInt(node.raw.match(/^\d+/)![0], 10)
+            : 1,
         });
       }
       acc[acc.length - 1]?.items?.push(node);

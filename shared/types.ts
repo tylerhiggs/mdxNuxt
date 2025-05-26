@@ -5,6 +5,8 @@ export type MdNode = {
     | "paragraph"
     | "list-items"
     | "list-item"
+    | "ordered-list-items"
+    | "ordered-list-item"
     | "link"
     | "inline-code"
     | "image"
@@ -23,6 +25,7 @@ export type MdNode = {
   color?: ThemeColor;
   syntaxHighlightedTokens?: ThemedToken[][];
   items?: MdNode[];
+  orderedListStartIndex?: number;
 };
 
 export type ThemeColor =

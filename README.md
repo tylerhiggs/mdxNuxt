@@ -72,13 +72,9 @@ Example:
 ```vue
 <template>
   <div>
-    <BeakerIcon class="h-6 w-6 text-blue-500" />
+    <UIcon name="i-heroicons-magnifying-glass" class="size-4 text-gray-500" />
   </div>
 </template>
-
-<script setup>
-import { BeakerIcon } from "@heroicons/vue/24/solid"; // or `/24/outline` or `/20/solid` or `/16/solid`
-</script>
 ```
 
 ## Deployed on NuxtHub

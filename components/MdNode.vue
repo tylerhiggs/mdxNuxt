@@ -19,17 +19,30 @@ const props = defineProps<{
     />
   </blockquote>
   <ul
-    v-else-if="node.type === 'list-item'"
+    v-else-if="node.type === 'list-items'"
     class="my-5 list-disc ps-6 marker:text-(--ui-border-accented)"
   >
-    <li class="my-1.5 ps-1.5 leading-7 [&>ul]:my-0">
+    <li v-for="item in node.items" class="my-1.5 ps-1.5 leading-7 [&>ul]:my-0">
       <MdNode
-        v-for="item in node.items"
-        :node="item"
+        v-for="node in item.items"
+        :node="node"
         :preview="props.preview"
       />
     </li>
   </ul>
+  <ol
+    v-else-if="node.type === 'ordered-list-items'"
+    class="marker:text-muted my-5 list-decimal ps-6"
+    :start="node.orderedListStartIndex"
+  >
+    <li v-for="item in node.items" class="my-1.5 ps-1.5 leading-7 [&>ul]:my-0">
+      <MdNode
+        v-for="node in item.items"
+        :node="node"
+        :preview="props.preview"
+      />
+    </li>
+  </ol>
   <div v-else-if="node.items && node.items.length">
     <MdNode
       v-for="(item, index) in props.node.items"

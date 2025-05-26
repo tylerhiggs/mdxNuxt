@@ -262,3 +262,51 @@ test("parseMd - groupListItems", () => {
     },
   ]);
 });
+
+test("parseMd - groupListItems with ordered list", () => {
+  const items: MdNode[] = [
+    {
+      type: "ordered-list-item",
+      raw: "1. Item 1",
+      items: [{ type: "text", raw: "Item 1", text: "Item 1" }],
+    },
+    {
+      type: "ordered-list-item",
+      raw: "2. Item 2",
+      items: [{ type: "text", raw: "Item 2", text: "Item 2" }],
+    },
+  ];
+  const grouped = groupListItems(items);
+  expect(grouped).toEqual([
+    {
+      type: "ordered-list-items",
+      items,
+      orderedListStartIndex: 1,
+      raw: "",
+    },
+  ]);
+});
+
+test("parseMd - groupListItems with ordered list - start number 2", () => {
+  const items: MdNode[] = [
+    {
+      type: "ordered-list-item",
+      raw: "2. Item 1",
+      items: [{ type: "text", raw: "Item 1", text: "Item 1" }],
+    },
+    {
+      type: "ordered-list-item",
+      raw: "1. Item 2",
+      items: [{ type: "text", raw: "Item 2", text: "Item 2" }],
+    },
+  ];
+  const grouped = groupListItems(items);
+  expect(grouped).toEqual([
+    {
+      type: "ordered-list-items",
+      items,
+      raw: "",
+      orderedListStartIndex: 2,
+    },
+  ]);
+});

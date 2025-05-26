@@ -289,11 +289,7 @@ const select = (emoji: string) => {
           color="neutral"
           class="relative mx-1 flex size-7 items-center justify-center rounded-sm border border-gray-300 hover:bg-gray-300 focus:bg-gray-300"
         >
-          <ToolTip
-            message="Select skin tone"
-            position="bottom"
-            :disabled="open"
-          >
+          <ToolTip message="Select skin tone" position="bottom">
             {{ skinToneEmoji }}
           </ToolTip>
         </UButton>
@@ -303,7 +299,7 @@ const select = (emoji: string) => {
       @scroll="handleScroll"
       class="relative h-80 overflow-x-visible overflow-y-scroll"
     >
-      <div v-if="filteredEmojis?.filteredEmojiData?.length > 120">
+      <div v-if="(filteredEmojis?.filteredEmojiData?.length || 0) > 120">
         <div
           v-for="group in Object.keys(
             filteredEmojis?.groupedFilteredEmojiData || {},
