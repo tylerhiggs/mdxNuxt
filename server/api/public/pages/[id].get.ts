@@ -5,9 +5,10 @@ export default defineEventHandler(async (event) => {
   if (!id || isNaN(Number(id))) {
     throw createError({ statusCode: 400, message: "Page ID is required" });
   }
+  const darkMode = getCookie(event, "isDark");
   const page = await useDrizzle().query.pages.findFirst({
-    where: (pages, { eq, isNull }) =>
-      eq(pages.id, Number(id)) && isNull(pages.deletedAt),
+    where: (pages, { eq, isNull, and }) =>
+      and(eq(pages.id, Number(id)), isNull(pages.deletedAt)),
     with: {
       blocks: {
         orderBy: (blocks) => desc(blocks.index),
@@ -26,7 +27,10 @@ export default defineEventHandler(async (event) => {
           block.type === "text"
             ? {
                 ...block,
-                renderedMd: await parseMd(block.textContent),
+                renderedMd: await parseMd(
+                  block.textContent,
+                  darkMode !== "true",
+                ),
               }
             : { ...block, renderedMd: null },
         ),

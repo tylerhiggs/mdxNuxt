@@ -64,7 +64,7 @@ const avatarUrl = computed(() => {
       workspaceTitle &&
       userFirstLetter
     "
-    class="group relative top-0 bottom-0 left-0 flex h-full w-64 flex-col bg-slate-50 px-1 py-0.5 dark:bg-stone-800"
+    class="group relative flex h-full w-64 flex-initial flex-col bg-slate-50 px-1 py-0.5 dark:bg-stone-800"
   >
     <ClientOnly>
       <UPopover class="relative w-full">
@@ -114,7 +114,7 @@ const avatarUrl = computed(() => {
           </ToolTip>
           <ToolTip message="Create a new page" position="right">
             <button
-              @click.prevent="emit('createPage')"
+              @click.prevent.stop="emit('createPage')"
               class="flex items-center rounded-md p-1 text-2xl hover:bg-gray-300 dark:hover:bg-stone-600"
             >
               <UIcon

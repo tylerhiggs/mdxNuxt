@@ -7,26 +7,26 @@ import {
 } from "shiki";
 import { sanitizeUrl } from "@braintree/sanitize-url";
 
-export async function parseMd(markdown: string): Promise<MdNode[]> {
+export async function parseMd(
+  markdown: string,
+  lightMode = true,
+): Promise<MdNode[]> {
   const lines = markdown.split("\n");
   const tokens: MdNode[] = [];
   let inCodeBlock = false;
-  let codeBlockLanguage = "";
+  let codeBlockLanguage = "text" as BundledLanguage;
   let codeBlockContent: string[] = [];
 
   for (const line of lines) {
     const trimmed = line.trim();
-
     if (trimmed.startsWith("```")) {
       if (inCodeBlock) {
-        const lang = trimmed.slice(3) as BundledLanguage;
-        const langIsValid = lang in bundledLanguages;
         try {
           const { tokens: codeTokens } = await codeToTokens(
             codeBlockContent.join("\n"),
             {
-              lang: langIsValid ? lang : "typescript",
-              theme: "vitesse-dark",
+              lang: codeBlockLanguage,
+              theme: lightMode ? "vitesse-light" : "vitesse-dark",
             },
           );
           tokens.push({
@@ -46,12 +46,14 @@ export async function parseMd(markdown: string): Promise<MdNode[]> {
           });
         }
         inCodeBlock = false;
-        codeBlockLanguage = "";
+        codeBlockLanguage = "text" as BundledLanguage;
         codeBlockContent = [];
       } else {
         // Start of code block
         inCodeBlock = true;
-        codeBlockLanguage = trimmed.slice(3).trim();
+        const lang = trimmed.slice(3) as BundledLanguage;
+        const langIsValid = lang in bundledLanguages;
+        codeBlockLanguage = langIsValid ? lang : ("text" as BundledLanguage);
       }
     } else if (inCodeBlock) {
       codeBlockContent.push(line);
@@ -67,12 +69,14 @@ export async function parseMd(markdown: string): Promise<MdNode[]> {
       tokens.push({
         type: "list-item",
         raw: line,
+        depth: Math.floor((line.match(/^\s*/)?.[0].length || 0) / 2),
         items: await parseLine(trimmed.slice(2).trim()),
       });
     } else if (/^\d+\.\s/.test(trimmed)) {
       tokens.push({
         type: "ordered-list-item",
         raw: line,
+        depth: Math.floor((line.match(/^\s*/)?.[0].length || 0) / 2),
         items: await parseLine(trimmed.replace(/^\d+\.\s/, "")),
       });
     } else if (trimmed.startsWith("> ")) {

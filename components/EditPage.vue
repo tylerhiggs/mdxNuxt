@@ -177,6 +177,7 @@ const insertFormating = (text: string, defaultTxt = "", text2 = "") => {
   txtarea.focus();
 };
 
+const colorMode = useColorMode();
 const mdNodes = ref<MdNode[][]>([]);
 watch(
   () => props.page.blocks,
@@ -185,7 +186,9 @@ watch(
       return;
     }
     const nodes = await Promise.all(
-      blocks.map((block) => parseMd(block.textContent)),
+      blocks.map((block) =>
+        parseMd(block.textContent, colorMode.value === "light"),
+      ),
     );
     mdNodes.value = nodes;
   },
@@ -217,8 +220,10 @@ watch(
 </script>
 
 <template>
-  <div class="absolute inset-0 left-64 z-0 dark:bg-stone-900 dark:text-white">
-    <div class="flex flex-initial flex-col">
+  <div
+    class="z-0 flex h-full flex-auto flex-col dark:bg-stone-900 dark:text-white"
+  >
+    <div class="relative flex flex-initial flex-col">
       <PageNav
         :page="props.page"
         :saved="props.isSaved"
@@ -228,16 +233,16 @@ watch(
         @togglePreview="previewPage = !previewPage"
       />
     </div>
-    <div class="flex min-h-full w-full flex-auto">
+    <div class="relative flex w-full flex-auto overflow-y-auto">
       <div
-        class="flex min-h-full flex-col overflow-y-auto"
+        class="flex flex-col"
         :class="{
           'w-full': !previewPage,
           'w-7/12': previewPage,
         }"
       >
         <div class="z-0 flex flex-initial justify-center">
-          <div class="flex h-full w-8/12 flex-col">
+          <div class="flex w-8/12 flex-col">
             <div class="group pt-12">
               <UPopover>
                 <UButton
@@ -293,9 +298,9 @@ watch(
         <div
           v-for="(block, i) in props.page.blocks"
           :key="block.id"
-          class="relative flex h-full w-full flex-auto flex-col items-center overflow-y-auto"
+          class="relative flex w-full flex-auto flex-col items-center"
         >
-          <div class="relative mt-4 flex min-h-full w-8/12">
+          <div class="relative mt-4 flex w-8/12">
             <div class="flex text-lg">
               <pre
                 class="relative flex flex-col overflow-x-auto text-lg break-words whitespace-pre-wrap"
@@ -317,7 +322,7 @@ watch(
               ref="elements"
               :id="`${block.id}`"
               :value="block.textContent"
-              class="absolute inset-0 min-h-full resize-none border-none bg-transparent font-mono text-lg font-normal whitespace-pre-wrap opacity-20 outline-hidden dark:text-white"
+              class="absolute inset-0 h-full w-full resize-none border-none bg-transparent font-mono text-lg font-normal whitespace-pre-wrap opacity-20 outline-hidden dark:text-white"
               @input="(event) => updateBlockTextarea(event, block)"
               @keydown.meta.b="(event) => bold(event, block)"
               @keydown.ctrl.b="(event) => bold(event, block)"
@@ -331,7 +336,7 @@ watch(
       </div>
       <div
         v-if="previewPage"
-        class="flex w-5/12 flex-col overflow-y-auto border-l border-l-stone-300"
+        class="flex w-5/12 flex-col border-l border-l-stone-300"
       >
         <div class="flex flex-initial items-center gap-2 p-4">
           <p class="text-5xl">{{ page.emoji }}</p>

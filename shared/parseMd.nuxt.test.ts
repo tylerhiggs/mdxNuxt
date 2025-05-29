@@ -2,7 +2,6 @@ import { expect, test } from "vitest";
 import { groupListItems, parseMd } from "./parseMd";
 import type { MdNode } from "./types";
 import { sanitizeUrl } from "@braintree/sanitize-url";
-import { items, language } from "happy-dom/lib/PropertySymbol.js";
 
 test("parseMd - empty input", async () => {
   const input = "";
@@ -134,6 +133,7 @@ This is a paragraph with **bold text** and *italic text*.
         {
           type: "list-item",
           raw: "- List item 1",
+          depth: 0,
           items: [
             {
               type: "text",
@@ -145,6 +145,7 @@ This is a paragraph with **bold text** and *italic text*.
         {
           type: "list-item",
           raw: "- List item 2",
+          depth: 0,
           items: [
             {
               type: "text",
@@ -232,6 +233,90 @@ test("parseMd - inline code with options", async () => {
           type: "text",
           raw: ".",
           text: ".",
+        },
+      ],
+    },
+  ];
+  const output = await parseMd(input);
+  expect(output).toEqual(expectedOutput);
+});
+
+test("parseMd - nested lists", async () => {
+  const input = `- List item 1
+- List item 2
+  - Nested item 1
+  - Nested item 2
+- List item 3`;
+  const expectedOutput = [
+    {
+      type: "list-items",
+      raw: "",
+      items: [
+        {
+          type: "list-item",
+          raw: "- List item 1",
+          depth: 0,
+          items: [
+            {
+              type: "text",
+              raw: "List item 1",
+              text: "List item 1",
+            },
+          ],
+        },
+        {
+          type: "list-item",
+          raw: "- List item 2",
+          depth: 0,
+          items: [
+            {
+              type: "text",
+              raw: "List item 2",
+              text: "List item 2",
+            },
+            {
+              type: "list-items",
+              raw: "",
+              items: [
+                {
+                  type: "list-item",
+                  raw: "  - Nested item 1",
+                  depth: 1,
+                  items: [
+                    {
+                      type: "text",
+                      raw: "Nested item 1",
+                      text: "Nested item 1",
+                    },
+                  ],
+                },
+                {
+                  type: "list-item",
+                  raw: "  - Nested item 2",
+                  depth: 1,
+                  items: [
+                    {
+                      type: "text",
+                      raw: "Nested item 2",
+                      text: "Nested item 2",
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          type: "list-item",
+          raw: "- List item 3",
+          depth: 0,
+          items: [
+            {
+              type: "text",
+              raw: "List item 3",
+              text: "List item 3",
+            },
+          ],
         },
       ],
     },

@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { render } from "vue";
+import { parseMd } from "~/shared/parseMd";
+import { type MdNode } from "~/shared/types";
+
 definePageMeta({
   layout: "default",
   validate({ params }) {
@@ -46,6 +50,34 @@ useHead({
     },
   ],
 });
+
+const colorMode = useColorMode();
+const isDarkMode = computed(() => colorMode.value === "dark");
+/**
+ * This is the re-computed array of rendered Markdown nodes that
+ * replaces the original `renderedMd` in the page blocks that
+ * are hydrated from the server and present on first render.
+ *
+ * We need to re-render the Markdown nodes when the system color
+ * mode changes (dark/light mode) because of syntax highlighting
+ * and other styles that depend on the color mode.
+ */
+const renderedMdNodes = ref<MdNode[][]>([]);
+
+watch(
+  isDarkMode,
+  async (isDark) => {
+    renderedMdNodes.value = await Promise.all(
+      page.value?.blocks.map(async (block) => {
+        if (block.type === "text" && block.renderedMd) {
+          return await parseMd(block.textContent, !isDark);
+        }
+        return [];
+      }) || [],
+    );
+  },
+  { immediate: true },
+);
 </script>
 
 <template>
@@ -55,12 +87,21 @@ useHead({
         <div class="text-5xl">{{ page.emoji }}</div>
         <h1 class="text-4xl font-bold">{{ page.title }}</h1>
       </div>
-      <div v-for="block in page.blocks" :key="block.id">
+      <div v-for="(block, blockIndex) in page.blocks" :key="block.id">
         <div
           v-if="block.type === 'text' && block.renderedMd"
-          v-for="node in block.renderedMd"
+          v-for="(node, nodeIndex) in block.renderedMd"
         >
-          <MdNode :node="node" />
+          <MdNode
+            v-if="!renderedMdNodes.length"
+            :node="node"
+            :preview="false"
+          />
+          <MdNode
+            v-else
+            :node="renderedMdNodes[blockIndex][nodeIndex]"
+            :preview="false"
+          />
         </div>
       </div>
     </div>

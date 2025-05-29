@@ -82,9 +82,7 @@ const isOpen = ref(false);
       <p class="ml-3 text-sm group-hover/pageitem:invisible">
         {{ props.page.emoji }}
       </p>
-      <p
-        class="ml-3 truncate overflow-hidden text-sm text-ellipsis text-black dark:text-gray-400"
-      >
+      <p class="ml-3 text-sm text-ellipsis text-black dark:text-gray-400">
         {{ props.page.title || "Untitled" }}
       </p>
     </div>
@@ -107,7 +105,7 @@ const isOpen = ref(false);
       <ToolTip message="Add a page inside" position="bottom">
         <button
           class="invisible flex items-center rounded-md p-0.5 group-hover/pageitem:visible hover:bg-gray-300 dark:hover:bg-stone-600"
-          @click="(emit('addPage'), $event.stopPropagation())"
+          @click.prevent.stop="emit('addPage')"
         >
           <UIcon name="i-heroicons-plus" class="size-5 text-gray-400" />
         </button>
