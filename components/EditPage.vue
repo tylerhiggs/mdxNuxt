@@ -61,7 +61,7 @@ const bold = (event: KeyboardEvent, block: Block) => {
   if (!platformConsistent(event)) {
     return;
   }
-  insertFormating("**");
+  insertFormating("**", "", "**");
   if (!element.value) {
     return;
   }
@@ -73,15 +73,15 @@ const italic = (event: KeyboardEvent, block: Block) => {
   if (!platformConsistent(event)) {
     return;
   }
-  insertFormating("__");
+  insertFormating("__", "", "__");
   if (!element.value) {
     return;
   }
   emits("updateBlock", props.page.id, block.id, element.value.value);
 };
 
-const tab = (block: Block) => {
-  insertFormating("  ");
+const tab = (block: Block, remove = false) => {
+  insertFormating("  ", "", "", remove);
   if (!element.value) {
     return;
   }
@@ -121,7 +121,12 @@ const paren = (event: KeyboardEvent, block: Block) => {
 };
 
 //https://dev.to/shivams136/simple-markdown-insertion-in-the-text-using-pure-javascript-pl4
-const insertFormating = (text: string, defaultTxt = "", text2 = "") => {
+const insertFormating = (
+  text: string,
+  defaultTxt = "",
+  text2 = "",
+  remove = false,
+) => {
   const txtarea = element.value;
   if (!txtarea) {
     console.error(
@@ -138,9 +143,7 @@ const insertFormating = (text: string, defaultTxt = "", text2 = "") => {
   let middle = txtarea.value.substring(caretPos, selectEnd);
 
   // Sets ending tag as opening tag if empty
-  if (text2 == "") {
-    text2 = text;
-  }
+
   const textLen = text.length;
   const text2Len = text2.length;
 
@@ -181,6 +184,13 @@ const insertFormating = (text: string, defaultTxt = "", text2 = "") => {
     txtarea.selectionEnd = txtarea.selectionStart + middle.length;
   }
   txtarea.focus();
+
+  // Manually dispatch input event so undo works
+  const event =
+    typeof InputEvent === "function"
+      ? new InputEvent("input", { bubbles: true, inputType: "insertText" })
+      : new Event("input", { bubbles: true });
+  txtarea.dispatchEvent(event);
 };
 
 const colorMode = useColorMode();
@@ -296,7 +306,7 @@ watch([() => props.page.blocks, () => colorMode.value], async ([blocks]) => {
         <div
           v-for="(block, i) in props.page.blocks"
           :key="block.id"
-          class="relative flex w-full flex-auto flex-col items-center"
+          class="relative flex w-full flex-auto flex-col items-center pb-8"
         >
           <div class="relative mt-4 flex w-8/12">
             <div class="flex text-lg">
@@ -327,6 +337,7 @@ watch([() => props.page.blocks, () => colorMode.value], async ([blocks]) => {
               @keydown.meta.i="(event) => italic(event, block)"
               @keydown.ctrl.i="(event) => italic(event, block)"
               @keydown.tab.prevent="() => tab(block)"
+              @keydown.shift.tab.prevent="() => tab(block, true)"
               @keydown="(event) => paren(event, block)"
             />
           </div>
