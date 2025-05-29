@@ -89,19 +89,25 @@ const tab = (block: Block) => {
 };
 
 const paren = (event: KeyboardEvent, block: Block) => {
-  if (event.key !== "(" && event.key !== ")") {
+  const parens: Record<string, string> = {
+    "(": ")",
+    "{": "}",
+    "[": "]",
+    "<": ">",
+  };
+  if (!(event.key in parens) && !Object.values(parens).includes(event.key)) {
     return;
   }
-  if (event.key === "(") {
+  if (event.key in parens) {
     event.preventDefault();
-    insertFormating("(", "", ")");
-  } else if (event.key === ")" && element.value) {
+    insertFormating(event.key, "", parens[event.key]);
+  } else if (Object.values(parens).includes(event.key) && element.value) {
     const textarea = element.value;
     const caretPos = textarea.selectionStart;
     const text = textarea.value;
     const charAfterCaret = text.charAt(caretPos);
 
-    if (charAfterCaret === ")") {
+    if (charAfterCaret === event.key) {
       event.preventDefault();
       // Move the caret after the existing closing parenthesis
       textarea.setSelectionRange(caretPos + 1, caretPos + 1);
@@ -179,44 +185,36 @@ const insertFormating = (text: string, defaultTxt = "", text2 = "") => {
 
 const colorMode = useColorMode();
 const mdNodes = ref<MdNode[][]>([]);
-watch(
-  () => props.page.blocks,
-  async (blocks) => {
-    if (!blocks || !blocks.length) {
-      return;
-    }
-    const nodes = await Promise.all(
-      blocks.map((block) =>
-        parseMd(block.textContent, colorMode.value === "light"),
-      ),
-    );
-    mdNodes.value = nodes;
-  },
-);
+watch([() => props.page.blocks, () => colorMode.value], async ([blocks]) => {
+  if (!blocks || !blocks.length) {
+    return;
+  }
+  const nodes = await Promise.all(
+    blocks.map((block) =>
+      parseMd(block.textContent, colorMode.value === "light"),
+    ),
+  );
+  mdNodes.value = nodes;
+});
 
 const syntaxHighlightedTokens = ref<TokensResult[]>([]);
-watch(
-  () => props.page.blocks,
-  async () => {
-    const { blocks } = props.page;
-    if (!blocks || !blocks.length) {
-      return;
-    }
-    syntaxHighlightedTokens.value = await Promise.all(
-      blocks.map((block) =>
-        codeToTokens(block.textContent, {
-          lang: "markdown",
-          theme: import.meta.client
-            ? window.matchMedia &&
-              window.matchMedia("(prefers-color-scheme: dark)").matches
-              ? "vitesse-dark"
-              : "vitesse-light"
-            : "vitesse-light",
-        }),
-      ),
-    );
-  },
-);
+watch([() => props.page.blocks, () => colorMode.value], async ([blocks]) => {
+  if (!blocks || !blocks.length) {
+    return;
+  }
+  syntaxHighlightedTokens.value = await Promise.all(
+    blocks.map((block) =>
+      codeToTokens(block.textContent, {
+        lang: "markdown",
+        theme: import.meta.client
+          ? colorMode.value === "dark"
+            ? "vitesse-dark"
+            : "vitesse-light"
+          : "vitesse-light",
+      }),
+    ),
+  );
+});
 </script>
 
 <template>
