@@ -15,6 +15,7 @@ export type MdNode = {
     | "code-block"
     | "bold"
     | "italic"
+    | "hr"
     | "text";
   raw: string;
   text?: string;

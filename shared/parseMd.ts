@@ -57,6 +57,12 @@ export async function parseMd(
       }
     } else if (inCodeBlock) {
       codeBlockContent.push(line);
+    } else if (trimmed.startsWith("---")) {
+      // Horizontal rule
+      tokens.push({
+        type: "hr",
+        raw: line,
+      });
     } else if (trimmed.startsWith("#")) {
       const depth = trimmed.match(/^#+/)?.[0].length || 0;
       tokens.push({

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { OlHTMLAttributes } from "vue";
 import type { MdNode } from "~/shared/types";
 const props = defineProps<{
   node: MdNode;
@@ -32,8 +33,16 @@ const props = defineProps<{
   </ul>
   <ol
     v-else-if="node.type === 'ordered-list-items'"
-    class="marker:text-muted my-5 list-decimal ps-6"
+    class="marker:text-muted ps-6"
     :start="node.orderedListStartIndex"
+    :class="{
+      'list-decimal': (node.depth || 0) % 5 === 0,
+      'list-[lower-alpha]': (node.depth || 0) % 5 === 1,
+      'list-[upper-alpha]': (node.depth || 0) % 5 === 2,
+      'list-[lower-roman]': (node.depth || 0) % 5 === 3,
+      'list-[upper-roman]': (node.depth || 0) % 5 === 4,
+      'my-6': node.depth === 0,
+    }"
   >
     <li v-for="item in node.items" class="my-1.5 ps-1.5 leading-7 [&>ul]:my-0">
       <MdNode
@@ -163,4 +172,5 @@ const props = defineProps<{
     :syntaxHighlightedTokens="node.syntaxHighlightedTokens"
     :showlineNumbers="false"
   />
+  <hr v-if="node.type === 'hr'" class="border-default my-12 border-t" />
 </template>
