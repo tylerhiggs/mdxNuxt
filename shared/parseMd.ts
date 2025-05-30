@@ -203,15 +203,106 @@ export async function parseLine(mdLine: string): Promise<MdNode[]> {
 }
 
 export function groupListItems(items: MdNode[]): MdNode[] {
-  return items.reduce((acc, node) => {
+  /**
+   * If (so far in the computation) we have processed the following list:
+   * ```html
+   * <ul id="ul-1">
+   *  <li>List item 1</li>
+   *  <li>List item 2</li>
+   *  <ul id="ul-2">
+   *    <li>Nested item 1</li>
+   *    <li>Nested item 2</li>
+   *  </ul>
+   * </ul>
+   * ```
+   * Then `prevListNodeStack === [Node(ul-1), Node(ul-2)]`
+   */
+  let prevListNodeStack: MdNode[] = [];
+  return items.reduce((acc, node, i, arr) => {
+    if (node.type !== "list-item" && node.type !== "ordered-list-item") {
+      console.log("resetting");
+      prevListNodeStack = []; // Reset stack if not a list item
+      acc.push(node);
+      return acc;
+    }
     if (node.type === "list-item") {
-      if (!acc.length || acc[acc.length - 1]?.type !== "list-items") {
+      if (
+        acc.length &&
+        prevListNodeStack.length &&
+        node.type === arr.at(i - 1)?.type &&
+        (prevListNodeStack.at(-1)?.depth || 0) === (node.depth || 0)
+      ) {
+        console.log(
+          "equal depth, pushing to previous list node",
+          node,
+          prevListNodeStack,
+        );
+        if (prevListNodeStack.at(-1) && !prevListNodeStack.at(-1)?.items) {
+          prevListNodeStack.at(-1)!.items = [];
+        }
+        prevListNodeStack.at(-1)?.items?.push(node);
+        return acc;
+      }
+      if (
+        acc.length &&
+        prevListNodeStack.length &&
+        node.type === arr.at(i - 1)?.type &&
+        (prevListNodeStack.at(-1)?.depth || 0) > (node.depth || 0)
+      ) {
+        console.log("deeper depth, popping stack", node, prevListNodeStack);
+        prevListNodeStack = prevListNodeStack.filter(
+          (n) =>
+            (n.depth || n.depth === 0) &&
+            (node.depth || node.depth === 0) &&
+            n.depth <= node.depth,
+        );
+        prevListNodeStack.at(-1)?.items?.push(node);
+        console.log("do i make it here?", prevListNodeStack);
+        return acc;
+      }
+      if (
+        prevListNodeStack.length &&
+        node.type === arr.at(i - 1)?.type &&
+        (prevListNodeStack.at(-1)?.depth || 0) < (node.depth || 0)
+      ) {
+        // If the last item is a list-item and the current node is deeper, we need to push it into the last list-items node
+        const previousListItem = arr.at(i - 1);
+        if (!previousListItem) {
+          console.warn(
+            "Unexpected state: No previous list item found when trying to push a nested list item.",
+          );
+          return acc;
+        }
+        const newNode = {
+          type: prevListNodeStack.at(-1)?.type || "list-items",
+          raw: "",
+          items: [node],
+          depth: node.depth,
+        };
+        if (previousListItem.items) {
+          console.log(
+            "Pushing new node to previous list node",
+            previousListItem,
+            newNode,
+          );
+          previousListItem.items.push(newNode);
+        } else {
+          previousListItem.items = [newNode];
+        }
+        prevListNodeStack.push(newNode);
+        return acc;
+      }
+      if (!acc.length || acc.at(-1)?.type !== "list-items") {
         acc.push({
           type: "list-items",
           raw: "",
           items: [],
+          depth: 0,
         });
+        console.log("Pushing new list-items node to accumulator", acc.at(-1));
+        prevListNodeStack.push(acc.at(-1)!);
       }
+      console.log("made it to the end of list item block");
       acc[acc.length - 1]?.items?.push(node);
     } else if (node.type === "ordered-list-item") {
       if (!acc.length || acc[acc.length - 1]?.type !== "ordered-list-items") {
@@ -219,6 +310,7 @@ export function groupListItems(items: MdNode[]): MdNode[] {
           type: "ordered-list-items",
           raw: "",
           items: [],
+          depth: 0,
           orderedListStartIndex: node.raw.match(/^\d+/)
             ? parseInt(node.raw.match(/^\d+/)![0], 10)
             : 1,

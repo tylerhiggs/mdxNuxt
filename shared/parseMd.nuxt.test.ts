@@ -2,6 +2,7 @@ import { expect, test } from "vitest";
 import { groupListItems, parseMd } from "./parseMd";
 import type { MdNode } from "./types";
 import { sanitizeUrl } from "@braintree/sanitize-url";
+import { de } from "@nuxt/ui/runtime/locale/index.js";
 
 test("parseMd - empty input", async () => {
   const input = "";
@@ -128,6 +129,7 @@ This is a paragraph with **bold text** and *italic text*.
     },
     {
       type: "list-items",
+      depth: 0,
       raw: "",
       items: [
         {
@@ -250,6 +252,7 @@ test("parseMd - nested lists", async () => {
   const expectedOutput = [
     {
       type: "list-items",
+      depth: 0,
       raw: "",
       items: [
         {
@@ -276,6 +279,7 @@ test("parseMd - nested lists", async () => {
             },
             {
               type: "list-items",
+              depth: 1,
               raw: "",
               items: [
                 {
@@ -344,6 +348,7 @@ test("parseMd - groupListItems", () => {
       type: "list-items",
       items,
       raw: "",
+      depth: 0,
     },
   ]);
 });
@@ -353,11 +358,13 @@ test("parseMd - groupListItems with ordered list", () => {
     {
       type: "ordered-list-item",
       raw: "1. Item 1",
+      depth: 0,
       items: [{ type: "text", raw: "Item 1", text: "Item 1" }],
     },
     {
       type: "ordered-list-item",
       raw: "2. Item 2",
+      depth: 0,
       items: [{ type: "text", raw: "Item 2", text: "Item 2" }],
     },
   ];
@@ -366,6 +373,7 @@ test("parseMd - groupListItems with ordered list", () => {
     {
       type: "ordered-list-items",
       items,
+      depth: 0,
       orderedListStartIndex: 1,
       raw: "",
     },
@@ -377,11 +385,13 @@ test("parseMd - groupListItems with ordered list - start number 2", () => {
     {
       type: "ordered-list-item",
       raw: "2. Item 1",
+      depth: 0,
       items: [{ type: "text", raw: "Item 1", text: "Item 1" }],
     },
     {
       type: "ordered-list-item",
       raw: "1. Item 2",
+      depth: 0,
       items: [{ type: "text", raw: "Item 2", text: "Item 2" }],
     },
   ];
@@ -391,6 +401,7 @@ test("parseMd - groupListItems with ordered list - start number 2", () => {
       type: "ordered-list-items",
       items,
       raw: "",
+      depth: 0,
       orderedListStartIndex: 2,
     },
   ]);
