@@ -220,23 +220,17 @@ export function groupListItems(items: MdNode[]): MdNode[] {
   let prevListNodeStack: MdNode[] = [];
   return items.reduce((acc, node, i, arr) => {
     if (node.type !== "list-item" && node.type !== "ordered-list-item") {
-      console.log("resetting");
       prevListNodeStack = []; // Reset stack if not a list item
       acc.push(node);
       return acc;
     }
-    if (node.type === "list-item") {
+    if (node.type === "list-item" || node.type === "ordered-list-item") {
       if (
         acc.length &&
         prevListNodeStack.length &&
         node.type === arr.at(i - 1)?.type &&
         (prevListNodeStack.at(-1)?.depth || 0) === (node.depth || 0)
       ) {
-        console.log(
-          "equal depth, pushing to previous list node",
-          node,
-          prevListNodeStack,
-        );
         if (prevListNodeStack.at(-1) && !prevListNodeStack.at(-1)?.items) {
           prevListNodeStack.at(-1)!.items = [];
         }
@@ -249,7 +243,6 @@ export function groupListItems(items: MdNode[]): MdNode[] {
         node.type === arr.at(i - 1)?.type &&
         (prevListNodeStack.at(-1)?.depth || 0) > (node.depth || 0)
       ) {
-        console.log("deeper depth, popping stack", node, prevListNodeStack);
         prevListNodeStack = prevListNodeStack.filter(
           (n) =>
             (n.depth || n.depth === 0) &&
@@ -257,7 +250,6 @@ export function groupListItems(items: MdNode[]): MdNode[] {
             n.depth <= node.depth,
         );
         prevListNodeStack.at(-1)?.items?.push(node);
-        console.log("do i make it here?", prevListNodeStack);
         return acc;
       }
       if (
@@ -280,11 +272,6 @@ export function groupListItems(items: MdNode[]): MdNode[] {
           depth: node.depth,
         };
         if (previousListItem.items) {
-          console.log(
-            "Pushing new node to previous list node",
-            previousListItem,
-            newNode,
-          );
           previousListItem.items.push(newNode);
         } else {
           previousListItem.items = [newNode];
@@ -292,29 +279,30 @@ export function groupListItems(items: MdNode[]): MdNode[] {
         prevListNodeStack.push(newNode);
         return acc;
       }
-      if (!acc.length || acc.at(-1)?.type !== "list-items") {
-        acc.push({
-          type: "list-items",
-          raw: "",
-          items: [],
-          depth: 0,
-        });
-        console.log("Pushing new list-items node to accumulator", acc.at(-1));
+      if (
+        !acc.length ||
+        (acc.at(-1)?.type !== "list-items" &&
+          acc.at(-1)?.type !== "ordered-list-items")
+      ) {
+        acc.push(
+          node?.type === "list-item"
+            ? {
+                type: "list-items",
+                raw: "",
+                items: [],
+                depth: 0,
+              }
+            : {
+                type: "ordered-list-items",
+                raw: "",
+                items: [],
+                depth: 0,
+                orderedListStartIndex: node.raw.match(/^\d+/)
+                  ? parseInt(node.raw.match(/^\d+/)![0], 10)
+                  : 1,
+              },
+        );
         prevListNodeStack.push(acc.at(-1)!);
-      }
-      console.log("made it to the end of list item block");
-      acc[acc.length - 1]?.items?.push(node);
-    } else if (node.type === "ordered-list-item") {
-      if (!acc.length || acc[acc.length - 1]?.type !== "ordered-list-items") {
-        acc.push({
-          type: "ordered-list-items",
-          raw: "",
-          items: [],
-          depth: 0,
-          orderedListStartIndex: node.raw.match(/^\d+/)
-            ? parseInt(node.raw.match(/^\d+/)![0], 10)
-            : 1,
-        });
       }
       acc[acc.length - 1]?.items?.push(node);
     } else {
