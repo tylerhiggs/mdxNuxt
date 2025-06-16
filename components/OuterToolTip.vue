@@ -10,7 +10,6 @@ const xCoord = computed(() => `${adjustedX.value}px`);
 const yCoord = computed(() => `${tooltipStore.y.value}px`);
 
 const adjustedX = computed(() => {
-  console.log("tooltipStore.x.value", tooltipStore.x.value);
   const tooltip = tooltipRef.value;
   if (!tooltip) return { x: 0, y: 0 };
 
@@ -61,7 +60,7 @@ const adjustedX = computed(() => {
 <template>
   <div
     ref="tooltipRef"
-    class="absolute z-50 text-nowrap rounded-md bg-black px-2 py-1 text-xs text-white"
+    class="absolute z-50 rounded-md bg-black px-2 py-1 text-xs text-nowrap text-white"
     :class="[tooltipStore.position.value]"
     v-if="tooltipStore.x.value"
   >

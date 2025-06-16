@@ -8,7 +8,11 @@ export default defineEventHandler(async (event) => {
   const darkMode = getCookie(event, "isDark");
   const page = await useDrizzle().query.pages.findFirst({
     where: (pages, { eq, isNull, and }) =>
-      and(eq(pages.id, Number(id)), isNull(pages.deletedAt)),
+      and(
+        eq(pages.id, Number(id)),
+        isNull(pages.deletedAt),
+        eq(pages.isPublic, true),
+      ),
     with: {
       blocks: {
         orderBy: (blocks) => desc(blocks.index),

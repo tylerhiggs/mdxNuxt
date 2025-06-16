@@ -124,7 +124,9 @@ export async function parseMd(
 export async function parseLine(mdLine: string): Promise<MdNode[]> {
   const tokens: MdNode[] = [];
   const parts = mdLine
-    .split(/(\*\*.*?\*\*|\*.*?\*|__.*?__|`.*?`\{.*?\}|`.*?`|\[.*?\]\(.*?\))/g)
+    .split(
+      /(\*\*.*?\*\*|\*.*?\*|__.*?__|`.*?`\{.*?\}|`.*?`|!\[.*?\]\(.*?\)|\[.*?\]\(.*?\))/g,
+    )
     .filter(Boolean);
 
   for (const part of parts) {
@@ -182,6 +184,20 @@ export async function parseLine(mdLine: string): Promise<MdNode[]> {
         raw: part,
         text: part.slice(1, -1),
       });
+    } else if (
+      part.startsWith("![") &&
+      part.includes("](") &&
+      part.endsWith(")")
+    ) {
+      const match = part.match(/!\[(.*?)\]\((.*?)\)/);
+      if (match) {
+        tokens.push({
+          type: "image",
+          raw: part,
+          text: match[1],
+          href: sanitizeUrl(match[2]),
+        });
+      }
     } else if (
       part.startsWith("[") &&
       part.includes("](") &&

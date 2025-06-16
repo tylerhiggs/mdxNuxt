@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Page, PageUpdate, Block } from "@/types/page";
+import type { Page, PageUpdate, Block, Command } from "@/types/page";
 import { codeToTokens, type TokensResult } from "shiki";
 import { parseMd } from "~/shared/parseMd";
 import type { MdNode } from "~/shared/types";
@@ -225,12 +225,91 @@ watch([() => props.page.blocks, () => colorMode.value], async ([blocks]) => {
     ),
   );
 });
+
+const editMenuOpen = ref(false);
+const fileUploadOpen = ref(false);
+const slash = (event: KeyboardEvent, block: Block) => {
+  if (event.key !== "/") {
+    return;
+  }
+  event.preventDefault();
+  event.stopPropagation();
+  editMenuOpen.value = true;
+};
+
+const onEditMenuSelect = (command: Command | undefined) => {
+  editMenuOpen.value = false;
+  setTimeout(() => {
+    element.value?.focus();
+  }, 0);
+
+  switch (command) {
+    case "Bold":
+      insertFormating("**", "bold", "**");
+      break;
+    case "Italic":
+      insertFormating("__", "italic", "__");
+      break;
+    case "Link":
+      insertFormating("[link text](", "url", ")");
+      break;
+    case "Inline Code":
+      insertFormating("`", "inline code", "`");
+      break;
+    case "Code Block":
+      insertFormating("```ts\n", "const isFalse = (b: boolean) => !b", "\n```");
+      break;
+    case "Blockquote":
+      insertFormating("> ", "", "");
+      break;
+    case "Image":
+      fileUploadOpen.value = true;
+      break;
+    default:
+      insertFormating("/", "", "");
+      break;
+  }
+};
+
+const uploadImage = (file: File) => {
+  const form = new FormData();
+  form.append("file", file);
+  $fetch("/api/private/photos", {
+    method: "POST",
+    body: form,
+    query: {
+      pageId: props.page.id,
+    },
+  })
+    .then((res) => {
+      if (res && res.pathname) {
+        const fileName = file.name;
+        fileUploadOpen.value = false;
+        snackbarStore.enqueue("Image uploaded successfully", "success");
+        setTimeout(() => {
+          element.value?.focus();
+        }, 0);
+        insertFormating("![", fileName, `](${res.pathname})`);
+      } else {
+        snackbarStore.enqueue("Failed to upload image", "error");
+      }
+    })
+    .catch(() => {
+      snackbarStore.enqueue("Failed to upload image", "error");
+    });
+};
 </script>
 
 <template>
   <div
     class="z-0 flex h-full flex-auto flex-col dark:bg-stone-900 dark:text-white"
   >
+    <EditMenu v-model:open="editMenuOpen" @optionSelected="onEditMenuSelect" />
+    <FileUploadModal
+      v-model:open="fileUploadOpen"
+      @save="uploadImage"
+      accept="image/*"
+    />
     <div class="relative flex flex-initial flex-col">
       <PageNav
         :page="props.page"
@@ -326,11 +405,18 @@ watch([() => props.page.blocks, () => colorMode.value], async ([blocks]) => {
                     >{{token.content}}</span></span></code>
               </pre>
             </div>
+            <input
+              id="editor-file-input"
+              type="file"
+              class="absolute inset-0 opacity-0"
+            />
             <textarea
               ref="elements"
               :id="`${block.id}`"
+              :spellcheck="false"
               :value="block.textContent"
-              class="absolute inset-0 h-full w-full resize-none border-none bg-transparent font-mono text-lg font-normal whitespace-pre-wrap opacity-20 outline-hidden dark:text-white"
+              style="caret-color: var(--color-neutral-900)"
+              class="absolute inset-0 h-full w-full resize-none border-none bg-transparent font-mono text-lg font-normal whitespace-pre-wrap text-transparent outline-hidden dark:text-white"
               @input="(event) => updateBlockTextarea(event, block)"
               @keydown.meta.b="(event) => bold(event, block)"
               @keydown.ctrl.b="(event) => bold(event, block)"
@@ -338,7 +424,12 @@ watch([() => props.page.blocks, () => colorMode.value], async ([blocks]) => {
               @keydown.ctrl.i="(event) => italic(event, block)"
               @keydown.tab.prevent="() => tab(block)"
               @keydown.shift.tab.prevent="() => tab(block, true)"
-              @keydown="(event) => paren(event, block)"
+              @keydown="
+                (event) => {
+                  paren(event, block);
+                  slash(event, block);
+                }
+              "
             />
           </div>
         </div>

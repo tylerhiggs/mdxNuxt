@@ -47,3 +47,16 @@ export type PageItem = {
   lastUpdatedAt: number;
   lastUpdatedByName: string;
 };
+
+export type Command =
+  | "Image"
+  | "Bold"
+  | "Italic"
+  | "Link"
+  | "Inline Code"
+  | "Code Block"
+  | "Blockquote"
+  | "Divider"
+  | "Heading 1"
+  | "Heading 2"
+  | "Heading 3";

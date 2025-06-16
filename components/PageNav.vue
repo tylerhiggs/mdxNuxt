@@ -55,6 +55,7 @@ const mouseover = (event: MouseEvent) => {
 const mouseleave = () => {
   tooltipStore.hide();
 };
+const hostname = useRequestURL().origin;
 </script>
 
 <template>
@@ -159,13 +160,11 @@ const mouseleave = () => {
             <div class="mt-2 border-t pt-2"></div>
             <div class="flex items-center justify-between">
               <a
-                :href="`https://medotdev-nuxt.netlify.app/public/${props.page.id}`"
+                :href="`${hostname}/public/${props.page.id}`"
                 target="_blank"
                 class="w-full rounded-md px-2 py-1 text-sm text-blue-500 hover:underline"
               >
-                {{
-                  `https://medotdev-nuxt.netlify.app/public/${props.page.id}`
-                }}
+                {{ `${hostname}/public/${props.page.id}` }}
               </a>
               <button
                 class="ml-2 rounded-md bg-blue-500 px-2 py-1 text-sm font-semibold text-white hover:bg-blue-600"

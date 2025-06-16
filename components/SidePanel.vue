@@ -28,7 +28,10 @@ const favoritePages = computed(() =>
   props.pages.filter((page) => page.isFavorite),
 );
 const privatePages = computed(() =>
-  props.pages.filter((page) => !page.isFavorite),
+  props.pages.filter((page) => !page.isFavorite && !page.isPublic),
+);
+const publicPages = computed(() =>
+  props.pages.filter((page) => page.isPublic && !page.isFavorite),
 );
 
 const userFirstLetter = computed(() => {
@@ -178,8 +181,27 @@ const avatarUrl = computed(() => {
       :page="page"
       :selected="page.id === currentPageId"
     />
-    <p class="my-0.5 ml-3 text-xs font-normal text-gray-400">Private</p>
+    <p
+      class="my-0.5 ml-3 text-xs font-normal text-gray-400"
+      v-if="publicPages.length"
+    >
+      Public
+    </p>
     <PagePanelItem
+      v-if="publicPages.length"
+      v-for="page in publicPages"
+      :key="page.id"
+      :page="page"
+      :selected="page.id === currentPageId"
+    />
+    <p
+      class="my-0.5 ml-3 text-xs font-normal text-gray-400"
+      v-if="privatePages.length || props.pages.length === 0"
+    >
+      Private
+    </p>
+    <PagePanelItem
+      v-if="privatePages.length || props.pages.length === 0"
       v-for="page in privatePages"
       :key="page.id"
       :page="page"

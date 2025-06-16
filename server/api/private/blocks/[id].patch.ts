@@ -10,6 +10,7 @@ export default eventHandler(async (event) => {
   const { textContent } = await readBody<{
     textContent: string;
   }>(event);
+
   const drizzle = useDrizzle();
   const block = await drizzle
     .update(tables.blocks)
@@ -27,6 +28,26 @@ export default eventHandler(async (event) => {
   if (!block) {
     throw createError({ statusCode: 500, message: "Block update failed" });
   }
+  const pageImages = await hubBlob().list({
+    prefix: `images/${user.email}/${block.pageId}`,
+  });
+  const imgMatches = textContent.match(/!\[.*?\]\((.*?)\)/g) || [];
+  const imageUrls = imgMatches
+    .map((match) => {
+      const urlMatch = match.match(/\((.*?)\)/);
+      return urlMatch ? urlMatch[1] : null;
+    })
+    .filter(Boolean);
+  const missingImages = imageUrls.filter(
+    (url) => !pageImages.blobs.some((item) => item.pathname === url),
+  );
+  missingImages.forEach((url) => {
+    if (url?.startsWith("https://") || url?.startsWith("http://") || !url) {
+      return;
+    }
+    console.warn(`Deleting missing image: ${url}`);
+    hubBlob().del(url);
+  });
   return {
     statusCode: 200,
     body: { ...block },

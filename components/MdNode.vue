@@ -19,6 +19,16 @@ const props = defineProps<{
       :preview="props.preview"
     />
   </blockquote>
+  <img
+    v-else-if="node.type === 'image'"
+    :src="
+      preview
+        ? `/api/private/avatars/${node.href}`
+        : `/api/public/pages/images/${node.href}`
+    "
+    :alt="node.text"
+    class="m-4"
+  />
   <ul
     v-else-if="node.type === 'list-items'"
     class="my-5 list-disc ps-6 marker:text-(--ui-border-accented)"
