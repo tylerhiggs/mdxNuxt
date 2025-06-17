@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { render } from "vue";
 import { parseMd } from "~/shared/parseMd";
 import { type MdNode } from "~/shared/types";
 
@@ -20,8 +19,8 @@ watch(
 
 const { data: page } = useFetch(() => `/api/public/pages/${route.params.id}`, {
   method: "GET",
-  transform: (res) => {
-    return res.body;
+  transform: (data) => {
+    return "body" in data ? data.body : null;
   },
 });
 

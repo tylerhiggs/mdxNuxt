@@ -1,22 +1,23 @@
 import type { ThemedToken } from "shiki";
+export type MdNodeType =
+  | "heading"
+  | "paragraph"
+  | "list-items"
+  | "list-item"
+  | "ordered-list-items"
+  | "ordered-list-item"
+  | "link"
+  | "inline-code"
+  | "image"
+  | "callout"
+  | "blockquote"
+  | "code-block"
+  | "bold"
+  | "italic"
+  | "hr"
+  | "text";
 export type MdNode = {
-  type:
-    | "heading"
-    | "paragraph"
-    | "list-items"
-    | "list-item"
-    | "ordered-list-items"
-    | "ordered-list-item"
-    | "link"
-    | "inline-code"
-    | "image"
-    | "callout"
-    | "blockquote"
-    | "code-block"
-    | "bold"
-    | "italic"
-    | "hr"
-    | "text";
+  type: MdNodeType;
   raw: string;
   text?: string;
   depth?: number;

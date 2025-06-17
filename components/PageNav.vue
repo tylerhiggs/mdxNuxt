@@ -32,11 +32,10 @@ const publicize = async () => {
     true,
   );
 };
+const hostname = useRequestURL().origin;
 
 const copyLink = () => {
-  navigator.clipboard.writeText(
-    `https://medotdev-nuxt.netlify.app/public/${props.page.id}`,
-  );
+  navigator.clipboard.writeText(`${hostname}/public/${props.page.id}`);
   snackbarStore.enqueue("Link copied to clipboard", "success");
 };
 
@@ -55,7 +54,6 @@ const mouseover = (event: MouseEvent) => {
 const mouseleave = () => {
   tooltipStore.hide();
 };
-const hostname = useRequestURL().origin;
 </script>
 
 <template>
@@ -155,7 +153,7 @@ const hostname = useRequestURL().origin;
               Publish
             </button>
           </div>
-          <div v-else>
+          <div v-else class="p-3">
             <div class="text-md font-bold">Share link</div>
             <div class="mt-2 border-t pt-2"></div>
             <div class="flex items-center justify-between">

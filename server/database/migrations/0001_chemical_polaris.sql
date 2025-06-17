@@ -1,0 +1,1 @@
+ALTER TABLE `blocks` ADD `renderedMd` text DEFAULT '[]' NOT NULL;

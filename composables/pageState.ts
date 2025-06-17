@@ -4,6 +4,7 @@ import {
   type PageUpdate,
   type BlockUpdate,
 } from "@/types/page";
+import { parseMd } from "~/shared/parseMd";
 
 const DEBOUNCE_TIME = 2000;
 
@@ -129,6 +130,7 @@ export function usePageState() {
         method: "patch",
         body: {
           textContent: update.textContent,
+          renderedMd: await parseMd(update.textContent),
         },
       },
     );

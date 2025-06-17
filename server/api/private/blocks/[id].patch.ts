@@ -1,4 +1,5 @@
 import { eq, tables, useDrizzle } from "~/server/utils/drizzle";
+import { MdNode } from "~/shared/types";
 
 export default eventHandler(async (event) => {
   const { id } = getRouterParams(event);
@@ -7,14 +8,15 @@ export default eventHandler(async (event) => {
     console.error("Invalid block ID:", id);
     throw createError({ statusCode: 400, message: "Block ID is required" });
   }
-  const { textContent } = await readBody<{
+  const { textContent, renderedMd } = await readBody<{
     textContent: string;
+    renderedMd?: MdNode[];
   }>(event);
 
   const drizzle = useDrizzle();
   const block = await drizzle
     .update(tables.blocks)
-    .set({ textContent })
+    .set({ textContent, renderedMd: JSON.stringify(renderedMd) })
     .where(eq(tables.blocks.id, Number(id)))
     .returning()
     .get();

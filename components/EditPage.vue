@@ -301,97 +301,101 @@ const uploadImage = (file: File) => {
 </script>
 
 <template>
-  <div
-    class="z-0 flex h-full flex-auto flex-col dark:bg-stone-900 dark:text-white"
-  >
-    <EditMenu v-model:open="editMenuOpen" @optionSelected="onEditMenuSelect" />
-    <FileUploadModal
-      v-model:open="fileUploadOpen"
-      @save="uploadImage"
-      accept="image/*"
-    />
-    <div class="relative flex flex-initial flex-col">
-      <PageNav
-        :page="props.page"
-        :saved="props.isSaved"
-        :previewPage="previewPage"
-        :nodes="mdNodes || []"
-        @favoritePage="favoritePage"
-        @togglePreview="previewPage = !previewPage"
+  <ClientOnly>
+    <div
+      class="z-0 flex h-full flex-auto flex-col dark:bg-stone-900 dark:text-white"
+    >
+      <EditMenu
+        v-model:open="editMenuOpen"
+        @optionSelected="onEditMenuSelect"
       />
-    </div>
-    <div class="relative flex w-full flex-auto overflow-y-auto">
-      <div
-        class="flex flex-col"
-        :class="{
-          'w-full': !previewPage,
-          'w-7/12': previewPage,
-        }"
-      >
-        <div class="z-0 flex flex-initial justify-center">
-          <div class="flex w-8/12 flex-col">
-            <div class="group pt-12">
-              <UPopover>
-                <UButton
-                  variant="ghost"
-                  color="neutral"
-                  class="flex rounded-md border-none text-7xl hover:bg-gray-100 focus:outline-hidden dark:hover:bg-stone-600"
+      <FileUploadModal
+        v-model:open="fileUploadOpen"
+        @save="uploadImage"
+        accept="image/*"
+      />
+      <div class="relative flex flex-initial flex-col">
+        <PageNav
+          :page="props.page"
+          :saved="props.isSaved"
+          :previewPage="previewPage"
+          :nodes="mdNodes || []"
+          @favoritePage="favoritePage"
+          @togglePreview="previewPage = !previewPage"
+        />
+      </div>
+      <div class="relative flex w-full flex-auto overflow-y-auto">
+        <div
+          class="flex flex-col"
+          :class="{
+            'w-full': !previewPage,
+            'w-7/12': previewPage,
+          }"
+        >
+          <div class="z-0 flex flex-initial justify-center">
+            <div class="flex w-8/12 flex-col">
+              <div class="group pt-12">
+                <UPopover>
+                  <UButton
+                    variant="ghost"
+                    color="neutral"
+                    class="flex rounded-md border-none text-7xl hover:bg-gray-100 focus:outline-hidden dark:hover:bg-stone-600"
+                  >
+                    {{ page.emoji }}
+                  </UButton>
+                  <template #content>
+                    <LazyEmojiPicker @select="selectEmoji" />
+                  </template>
+                </UPopover>
+                <div
+                  class="invisible my-1 flex items-center text-xs text-gray-400 group-hover:visible"
                 >
-                  {{ page.emoji }}
-                </UButton>
-                <template #content>
-                  <LazyEmojiPicker @select="selectEmoji" />
-                </template>
-              </UPopover>
-              <div
-                class="invisible my-1 flex items-center text-xs text-gray-400 group-hover:visible"
-              >
-                <button
-                  class="mr-1 flex items-center rounded-md p-1 hover:bg-gray-100 dark:hover:bg-stone-600"
-                  @click="
-                    () => snackbarStore.enqueue('Not implemented', 'warning')
-                  "
-                >
-                  <UIcon name="i-heroicons-photo" class="mr-2 size-5" />
-                  Add cover
-                </button>
-                <button
-                  class="flex items-center rounded-md p-1 hover:bg-gray-100 dark:hover:bg-stone-600"
-                  @click="
-                    () => snackbarStore.enqueue('Not implemented', 'warning')
-                  "
-                >
-                  <UIcon
-                    name="i-heroicons-chat-bubble-bottom-center-text"
-                    class="mr-2 size-5"
-                  />
-                  Add comment
-                </button>
-              </div>
+                  <button
+                    class="mr-1 flex items-center rounded-md p-1 hover:bg-gray-100 dark:hover:bg-stone-600"
+                    @click="
+                      () => snackbarStore.enqueue('Not implemented', 'warning')
+                    "
+                  >
+                    <UIcon name="i-heroicons-photo" class="mr-2 size-5" />
+                    Add cover
+                  </button>
+                  <button
+                    class="flex items-center rounded-md p-1 hover:bg-gray-100 dark:hover:bg-stone-600"
+                    @click="
+                      () => snackbarStore.enqueue('Not implemented', 'warning')
+                    "
+                  >
+                    <UIcon
+                      name="i-heroicons-chat-bubble-bottom-center-text"
+                      class="mr-2 size-5"
+                    />
+                    Add comment
+                  </button>
+                </div>
 
-              <h1 class="mt-1 w-full text-4xl font-bold">
-                <input
-                  type="text"
-                  :value="page.title"
-                  @input="updateTitle"
-                  placeholder="Untitled"
-                  class="w-full outline-hidden dark:bg-inherit"
-                />
-              </h1>
+                <h1 class="mt-1 w-full text-4xl font-bold">
+                  <input
+                    type="text"
+                    :value="page.title"
+                    @input="updateTitle"
+                    placeholder="Untitled"
+                    class="w-full outline-hidden dark:bg-inherit"
+                  />
+                </h1>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div
-          v-for="(block, i) in props.page.blocks"
-          :key="block.id"
-          class="relative flex w-full flex-auto flex-col items-center pb-8"
-        >
-          <div class="relative mt-4 flex w-8/12">
-            <div class="flex text-lg">
-              <pre
-                class="relative flex flex-col overflow-x-auto text-lg break-words whitespace-pre-wrap"
-              >
+          <div
+            v-for="(block, i) in props.page.blocks"
+            :key="block.id"
+            class="relative flex w-full flex-auto flex-col items-center pb-8"
+          >
+            <div class="relative mt-4 flex w-8/12">
+              <div class="flex text-lg">
+                <pre
+                  class="relative flex flex-col overflow-x-auto text-lg break-words whitespace-pre-wrap"
+                >
                 <code class="relative flex flex-col"><span
                     v-if="syntaxHighlightedTokens?.[i]?.tokens"
                     v-for="(line, lineIndex) in syntaxHighlightedTokens[i].tokens"
@@ -404,63 +408,64 @@ const uploadImage = (file: File) => {
                       }"
                     >{{token.content}}</span></span></code>
               </pre>
+              </div>
+              <input
+                id="editor-file-input"
+                type="file"
+                class="absolute inset-0 opacity-0"
+              />
+              <textarea
+                ref="elements"
+                :id="`${block.id}`"
+                :spellcheck="false"
+                :value="block.textContent"
+                style="caret-color: var(--color-neutral-900)"
+                class="absolute inset-0 h-full w-full resize-none border-none bg-transparent font-mono text-lg font-normal whitespace-pre-wrap text-transparent outline-hidden dark:text-white"
+                @input="(event) => updateBlockTextarea(event, block)"
+                @keydown.meta.b="(event) => bold(event, block)"
+                @keydown.ctrl.b="(event) => bold(event, block)"
+                @keydown.meta.i="(event) => italic(event, block)"
+                @keydown.ctrl.i="(event) => italic(event, block)"
+                @keydown.tab.prevent="() => tab(block)"
+                @keydown.shift.tab.prevent="() => tab(block, true)"
+                @keydown="
+                  (event) => {
+                    paren(event, block);
+                    slash(event, block);
+                  }
+                "
+              />
             </div>
-            <input
-              id="editor-file-input"
-              type="file"
-              class="absolute inset-0 opacity-0"
-            />
-            <textarea
-              ref="elements"
-              :id="`${block.id}`"
-              :spellcheck="false"
-              :value="block.textContent"
-              style="caret-color: var(--color-neutral-900)"
-              class="absolute inset-0 h-full w-full resize-none border-none bg-transparent font-mono text-lg font-normal whitespace-pre-wrap text-transparent outline-hidden dark:text-white"
-              @input="(event) => updateBlockTextarea(event, block)"
-              @keydown.meta.b="(event) => bold(event, block)"
-              @keydown.ctrl.b="(event) => bold(event, block)"
-              @keydown.meta.i="(event) => italic(event, block)"
-              @keydown.ctrl.i="(event) => italic(event, block)"
-              @keydown.tab.prevent="() => tab(block)"
-              @keydown.shift.tab.prevent="() => tab(block, true)"
-              @keydown="
-                (event) => {
-                  paren(event, block);
-                  slash(event, block);
-                }
-              "
-            />
           </div>
         </div>
-      </div>
-      <div
-        v-if="previewPage"
-        class="flex w-5/12 flex-col border-l border-l-stone-300"
-      >
-        <div class="flex flex-initial items-center gap-2 p-4">
-          <p class="text-5xl">{{ page.emoji }}</p>
-          <p class="text-lg font-semibold">{{ page.title }}</p>
-        </div>
-        <div class="flex flex-auto flex-col p-4">
-          <div
-            v-for="(block, index) in page.blocks"
-            :key="block.id"
-            class="mb-4 text-lg"
-          >
+        <div
+          v-if="previewPage"
+          class="flex w-5/12 flex-col border-l border-l-stone-300"
+        >
+          <div class="flex flex-initial items-center gap-2 p-4">
+            <p class="text-5xl">{{ page.emoji }}</p>
+            <p class="text-lg font-semibold">{{ page.title }}</p>
+          </div>
+          <div class="flex flex-auto flex-col p-4">
             <div
-              v-if="
-                block.type === 'text' &&
-                block.renderedMd &&
-                mdNodes?.length === page.blocks.length
-              "
-              v-for="node in mdNodes[index] || []"
+              v-for="(block, index) in page.blocks"
+              :key="block.id"
+              class="mb-4 text-lg"
             >
-              <MdNode :node="node" :preview="true" />
+              <div
+                v-if="
+                  block.type === 'text' &&
+                  block.renderedMd &&
+                  mdNodes?.length === page.blocks.length
+                "
+                v-for="node in mdNodes[index] || []"
+              >
+                <MdNode :node="node" :preview="true" />
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </ClientOnly>
 </template>

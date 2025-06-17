@@ -52,7 +52,6 @@ export const pagesRelations = relations(pages, ({ many, one }) => ({
   }),
   children: many(pages),
 }));
-
 export const blocks = sqliteTable(
   "blocks",
   {
@@ -62,9 +61,27 @@ export const blocks = sqliteTable(
       .references(() => pages.id, { onDelete: "cascade" }),
     index: real("index").notNull(),
     type: text("type", {
-      enum: ["text", "table", "callout", "image", "code"],
+      enum: [
+        "heading",
+        "paragraph",
+        "list-items",
+        "list-item",
+        "ordered-list-items",
+        "ordered-list-item",
+        "link",
+        "inline-code",
+        "image",
+        "callout",
+        "blockquote",
+        "code-block",
+        "bold",
+        "italic",
+        "hr",
+        "text",
+      ],
     }).notNull(),
     textContent: text("textContent").notNull(),
+    renderedMd: text("renderedMd").notNull().default("[]"),
     userId: integer("userId")
       .notNull()
       .default(0)
