@@ -7,10 +7,24 @@ import {
 } from "shiki";
 import { sanitizeUrl } from "@braintree/sanitize-url";
 
+/**
+ *
+ * Only run this on the client side, as it uses shiki to parse code blocks.
+ *
+ * @param markdown
+ * @param lightMode
+ * @returns
+ */
 export async function parseMd(
   markdown: string,
   lightMode = true,
 ): Promise<MdNode[]> {
+  if (!import.meta.client) {
+    console.error(
+      "parseMd should only be called on the client side, as it uses shiki to parse code blocks.",
+    );
+    return [];
+  }
   const lines = markdown.split("\n");
   const tokens: MdNode[] = [];
   let inCodeBlock = false;

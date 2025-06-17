@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ClientOnly } from "#components";
+
 definePageMeta({
   layout: "editor",
 });
@@ -34,20 +36,22 @@ onMounted(() => {
 </script>
 
 <template>
-  <EditPage
-    v-if="currentPage"
-    :page="currentPage"
-    :isSaved="isSaved"
-    @updatePage="updatePage"
-    @updateBlock="updateBlock"
-  />
+  <ClientOnly>
+    <EditPage
+      v-if="currentPage"
+      :page="currentPage"
+      :isSaved="isSaved"
+      @updatePage="updatePage"
+      @updateBlock="updateBlock"
+    />
 
-  <div v-else>
-    <div>
-      <UIcon
-        name="i-heroicons-arrow-path"
-        class="h-5 w-5 animate-spin text-white"
-      />
+    <div v-else>
+      <div>
+        <UIcon
+          name="i-heroicons-arrow-path"
+          class="h-5 w-5 animate-spin text-white"
+        />
+      </div>
     </div>
-  </div>
+  </ClientOnly>
 </template>

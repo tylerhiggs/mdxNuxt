@@ -1,6 +1,7 @@
 import { asc } from "drizzle-orm";
 import { useDrizzle } from "~/server/utils/drizzle";
 import { parseMd } from "~/shared/parseMd";
+import { MdNode } from "~/shared/types";
 export default eventHandler(async (event) => {
   const { id } = getRouterParams(event);
   if (!id || isNaN(Number(id))) {
@@ -35,7 +36,7 @@ export default eventHandler(async (event) => {
           block.type === "text"
             ? {
                 ...block,
-                renderedMd: await parseMd(block.textContent),
+                renderedMd: JSON.parse(block.renderedMd) as MdNode[],
               }
             : block,
         ),

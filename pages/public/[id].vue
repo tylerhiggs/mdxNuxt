@@ -68,7 +68,7 @@ watch(
   async (isDark) => {
     renderedMdNodes.value = await Promise.all(
       page.value?.blocks.map(async (block) => {
-        if (block.type === "text" && block.renderedMd) {
+        if (block.type === "text" && block.renderedMd && import.meta.client) {
           return await parseMd(block.textContent, !isDark);
         }
         return [];
