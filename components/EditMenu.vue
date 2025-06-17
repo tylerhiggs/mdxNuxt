@@ -29,13 +29,11 @@ const options = computed(
             label: "Bold",
             suffix: "Insert bold text",
             icon: "i-heroicons-bold",
-            kbds: ["meta", "b"],
           },
           {
             label: "Italic",
             suffix: "Insert italic text",
             icon: "i-heroicons-italic",
-            kbds: ["meta", "i"],
           },
           {
             label: "Link",
@@ -46,6 +44,41 @@ const options = computed(
             label: "Inline Code",
             suffix: "Insert inline code",
             icon: "i-heroicons-code-bracket",
+          },
+          {
+            label: "Inline Code - Syntax Highlighted",
+            suffix: "Insert inline code with syntax highlighting",
+            icon: "i-heroicons-code-bracket",
+          },
+          {
+            label: "Inline Code - Success",
+            suffix: "Insert inline code with success style",
+            icon: "i-heroicons-code-bracket",
+          },
+          {
+            label: "Inline Code - Warning",
+            suffix: "Insert inline code with warning style",
+            icon: "i-heroicons-code-bracket",
+          },
+          {
+            label: "Inline Code - Error",
+            suffix: "Insert inline code with error style",
+            icon: "i-heroicons-code-bracket",
+          },
+          {
+            label: "Inline Code - Info",
+            suffix: "Insert inline code with info style",
+            icon: "i-heroicons-code-bracket",
+          },
+          {
+            label: "Ordered List",
+            suffix: "Insert an ordered list",
+            icon: "i-heroicons-numbered-list",
+          },
+          {
+            label: "Unordered List",
+            suffix: "Insert an unordered list",
+            icon: "i-heroicons-list-bullet",
           },
           {
             label: "Code Block",
@@ -84,7 +117,7 @@ const options = computed(
 </script>
 
 <template>
-  <UModal v-model:open="open" @close="emits('optionSelected', undefined)">
+  <UModal v-model:open="open">
     <template #content>
       <UCommandPalette
         :groups="options"

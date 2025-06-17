@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { OlHTMLAttributes } from "vue";
 import type { MdNode } from "~/shared/types";
 const props = defineProps<{
   node: MdNode;
@@ -133,7 +132,7 @@ const props = defineProps<{
         node.color === 'secondary',
       'border-muted text-highlighted bg-muted':
         !node.color ||
-        [
+        ![
           'error',
           'warning',
           'info',

@@ -265,6 +265,27 @@ const onEditMenuSelect = (command: Command | undefined) => {
     case "Image":
       fileUploadOpen.value = true;
       break;
+    case "Inline Code - Syntax Highlighted":
+      insertFormating("`", "inline code", "`{lang='ts'}");
+      break;
+    case "Inline Code - Success":
+      insertFormating("`", "inline code", "`{color='success'}");
+      break;
+    case "Inline Code - Warning":
+      insertFormating("`", "inline code", "`{color='warning'}");
+      break;
+    case "Inline Code - Error":
+      insertFormating("`", "inline code", "`{color='error'}");
+      break;
+    case "Inline Code - Info":
+      insertFormating("`", "inline code", "`{color='info'}");
+      break;
+    case "Ordered List":
+      insertFormating("\n1. ", "List item", "");
+      break;
+    case "Unordered List":
+      insertFormating("\n- ", "List item", "");
+      break;
     default:
       insertFormating("/", "", "");
       break;
