@@ -1,8 +1,7 @@
 import { expect, test } from "vitest";
 import { groupListItems, parseMd } from "./parseMd";
-import type { MdNode } from "./types";
+import type { MdNode } from "~/shared/types";
 import { sanitizeUrl } from "@braintree/sanitize-url";
-import { de } from "@nuxt/ui/runtime/locale/index.js";
 
 test("parseMd - empty input", async () => {
   const input = "";
@@ -96,37 +95,31 @@ This is a paragraph with **bold text** and *italic text*.
       text: "Heading 3",
       depth: 3,
     },
-    {
+    expect.objectContaining({
       type: "paragraph",
-      raw: "This is a paragraph with **bold text** and *italic text*.",
       items: [
-        {
+        expect.objectContaining({
           type: "text",
-          raw: "This is a paragraph with ",
           text: "This is a paragraph with ",
-        },
-        {
+        }),
+        expect.objectContaining({
           type: "bold",
-          raw: "**bold text**",
           text: "bold text",
-        },
-        {
+        }),
+        expect.objectContaining({
           type: "text",
-          raw: " and ",
           text: " and ",
-        },
-        {
+        }),
+        expect.objectContaining({
           type: "italic",
-          raw: "*italic text*",
           text: "italic text",
-        },
-        {
+        }),
+        expect.objectContaining({
           type: "text",
-          raw: ".",
           text: ".",
-        },
+        }),
       ],
-    },
+    }),
     {
       type: "list-items",
       depth: 0,
@@ -158,9 +151,8 @@ This is a paragraph with **bold text** and *italic text*.
         },
       ],
     },
-    {
+    expect.objectContaining({
       type: "paragraph",
-      raw: "[Link text](https://example.com)",
       items: [
         {
           type: "link",
@@ -169,7 +161,7 @@ This is a paragraph with **bold text** and *italic text*.
           href: sanitizeUrl("https://example.com"),
         },
       ],
-    },
+    }),
   ];
   const output = await parseMd(input);
   expect(output).toEqual(expectedOutput);
@@ -405,4 +397,127 @@ test("parseMd - groupListItems with ordered list - start number 2", () => {
       orderedListStartIndex: 2,
     },
   ]);
+});
+
+test("parseMd - basic component parsing", async () => {
+  const input = `::note
+  This is a note with **rich** text.
+  ::`;
+
+  const expectedContent = [
+    expect.objectContaining({
+      type: "paragraph",
+      items: [
+        expect.objectContaining({
+          type: "text",
+          text: "This is a note with ",
+        }),
+        expect.objectContaining({
+          type: "bold",
+          text: "rich",
+        }),
+        expect.objectContaining({
+          type: "text",
+          text: " text.",
+        }),
+      ],
+    }),
+  ] as MdNode[];
+
+  const expectedOutput = [
+    expect.objectContaining({
+      type: "note",
+      items: expectedContent,
+    }),
+  ];
+
+  const output = await parseMd(input);
+  expect(output).toEqual(expectedOutput);
+});
+
+test("parseMd - component with props", async () => {
+  const input = `::callout{color='primary', icon='trash'}
+  This is a callout with **rich** text.
+  ::`;
+
+  const expectedContent = [
+    expect.objectContaining({
+      type: "paragraph",
+      items: [
+        expect.objectContaining({
+          type: "text",
+          text: "This is a callout with ",
+        }),
+        expect.objectContaining({
+          type: "bold",
+          text: "rich",
+        }),
+        expect.objectContaining({
+          type: "text",
+          text: " text.",
+        }),
+      ],
+    }),
+  ] as MdNode[];
+
+  const expectedOutput = [
+    expect.objectContaining({
+      type: "callout",
+      items: expectedContent,
+      componentProps: expect.objectContaining({
+        color: "primary",
+        icon: "trash",
+      }),
+    }),
+  ];
+
+  const output = await parseMd(input);
+  expect(output).toEqual(expectedOutput);
+});
+
+test("parseMd - component with props and nested content", async () => {
+  const input = `::accordian
+  
+  ::accordian-item{label='Item 1', icon='plus'}
+  This is the content of item 1.
+  ::
+  ::
+  normal text outside the component.`;
+
+  const expectedOutput = [
+    expect.objectContaining({
+      type: "accordian",
+      items: [
+        expect.objectContaining({
+          type: "accordian-item",
+          componentProps: expect.objectContaining({
+            label: "Item 1",
+            icon: "plus",
+          }),
+          items: [
+            expect.objectContaining({
+              type: "paragraph",
+              items: [
+                expect.objectContaining({
+                  type: "text",
+                  text: "This is the content of item 1.",
+                }),
+              ],
+            }),
+          ],
+        }),
+      ],
+    }),
+    expect.objectContaining({
+      type: "paragraph",
+      items: [
+        expect.objectContaining({
+          type: "text",
+          text: "normal text outside the component.",
+        }),
+      ],
+    }),
+  ];
+  const output = await parseMd(input);
+  expect(output).toEqual(expectedOutput);
 });

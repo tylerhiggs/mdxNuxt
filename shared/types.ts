@@ -1,4 +1,16 @@
 import type { ThemedToken } from "shiki";
+export type AccordianItemProps = {
+  label: string;
+  icon: string;
+};
+export type ComponentProps = AccordianItemProps;
+export type ComponentType =
+  | "accordian"
+  | "callout"
+  | "note"
+  | "tip"
+  | "warning"
+  | "caution";
 export type MdNodeType =
   | "heading"
   | "paragraph"
@@ -9,7 +21,6 @@ export type MdNodeType =
   | "link"
   | "inline-code"
   | "image"
-  | "callout"
   | "blockquote"
   | "code-block"
   | "bold"
@@ -17,7 +28,7 @@ export type MdNodeType =
   | "hr"
   | "text";
 export type MdNode = {
-  type: MdNodeType;
+  type: MdNodeType | ComponentType;
   raw: string;
   text?: string;
   depth?: number;
@@ -28,6 +39,7 @@ export type MdNode = {
   syntaxHighlightedTokens?: ThemedToken[][];
   items?: MdNode[];
   orderedListStartIndex?: number;
+  componentProps?: ComponentProps;
 };
 
 export type ThemeColor =

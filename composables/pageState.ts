@@ -4,9 +4,8 @@ import {
   type PageUpdate,
   type BlockUpdate,
 } from "@/types/page";
-import { parseMd } from "~/shared/parseMd";
 
-const DEBOUNCE_TIME = 2000;
+const DEBOUNCE_TIME = 5000;
 
 export function usePageState() {
   const snackbarStore = useSnackbar();

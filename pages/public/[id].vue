@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { parseMd } from "~/shared/parseMd";
 import { type MdNode } from "~/shared/types";
 
 definePageMeta({

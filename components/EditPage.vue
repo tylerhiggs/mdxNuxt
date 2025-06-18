@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { Page, PageUpdate, Block, Command } from "@/types/page";
 import { codeToTokens, type TokensResult } from "shiki";
-import { parseMd } from "~/shared/parseMd";
 import type { MdNode } from "~/shared/types";
 const snackbarStore = useSnackbar();
 const props = defineProps<{
@@ -215,12 +214,12 @@ watch([() => props.page.blocks, () => colorMode.value], async ([blocks]) => {
   syntaxHighlightedTokens.value = await Promise.all(
     blocks.map((block) =>
       codeToTokens(block.textContent, {
-        lang: "markdown",
+        lang: "mdc",
         theme: import.meta.client
           ? colorMode.value === "dark"
             ? "vitesse-dark"
-            : "vitesse-light"
-          : "vitesse-light",
+            : "material-theme-lighter"
+          : "material-theme-lighter",
       }),
     ),
   );

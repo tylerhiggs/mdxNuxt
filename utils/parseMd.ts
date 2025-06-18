@@ -1,4 +1,9 @@
-import type { MdNode, ThemeColor } from "~/shared/types";
+import type {
+  ComponentProps,
+  ComponentType,
+  MdNode,
+  ThemeColor,
+} from "~/shared/types";
 import {
   bundledLanguages,
   codeToTokens,
@@ -11,6 +16,10 @@ import { sanitizeUrl } from "@braintree/sanitize-url";
  *
  * Only run this on the client side, as it uses shiki to parse code blocks.
  *
+ * Parses a markdown + component string into a structured array of MdNode objects.
+ * * Markdown is parsed into headings, paragraphs, lists, code blocks, etc.
+ * * Components such as accordions, notes, tips, warnings, and cautions are parsed into their respective MdNode types.
+ *
  * @param markdown
  * @param lightMode
  * @returns
@@ -19,20 +28,60 @@ export async function parseMd(
   markdown: string,
   lightMode = true,
 ): Promise<MdNode[]> {
-  if (!import.meta.client) {
+  if (import.meta.server) {
     console.error(
       "parseMd should only be called on the client side, as it uses shiki to parse code blocks.",
     );
     return [];
   }
-  const lines = markdown.split("\n");
   const tokens: MdNode[] = [];
+  // Stack to keep track of nested components
+  const componentStack: MdNode[] = [];
+  const lines = markdown.split("\n");
   let inCodeBlock = false;
   let codeBlockLanguage = "text" as BundledLanguage;
   let codeBlockContent: string[] = [];
 
   for (const line of lines) {
     const trimmed = line.trim();
+    if (trimmed === "::") {
+      // End of component
+      componentStack.pop();
+      continue;
+    }
+    const lastComponent = componentStack.at(-1);
+    const listToPushTo =
+      lastComponent && lastComponent.items ? lastComponent.items : tokens;
+    if (trimmed.startsWith("::")) {
+      // Component start
+      const match = trimmed.match(/^::([\w-]+)(?:\{(.*?)\})?$/);
+      if (match) {
+        const componentType = match[1] as ComponentType;
+        const componentProps = match[2]
+          ? Object.fromEntries(
+              match[2]
+                .split(",")
+                .map((pair) => pair.split("=").map((s) => s.trim()))
+                .map(([key, value]) => [
+                  key,
+                  value === undefined
+                    ? true
+                    : value.match(/^['"](.*)['"]$/)?.[1] || value,
+                ]),
+            )
+          : {};
+        const componentNode: MdNode = {
+          type: componentType,
+          raw: "",
+          items: [],
+          componentProps: componentProps as ComponentProps,
+        };
+        listToPushTo.push(componentNode);
+        componentStack.push(componentNode);
+      }
+      continue;
+    }
+
     if (trimmed.startsWith("```")) {
       if (inCodeBlock) {
         try {
@@ -43,7 +92,7 @@ export async function parseMd(
               theme: lightMode ? "vitesse-light" : "vitesse-dark",
             },
           );
-          tokens.push({
+          listToPushTo.push({
             type: "code-block",
             raw: codeBlockContent.join("\n"),
             language: codeBlockLanguage,
@@ -52,7 +101,7 @@ export async function parseMd(
           });
         } catch (error) {
           console.error("Error parsing code block:", error);
-          tokens.push({
+          listToPushTo.push({
             type: "code-block",
             raw: codeBlockContent.join("\n"),
             language: codeBlockLanguage,
@@ -79,34 +128,34 @@ export async function parseMd(
       });
     } else if (trimmed.startsWith("#")) {
       const depth = trimmed.match(/^#+/)?.[0].length || 0;
-      tokens.push({
+      listToPushTo.push({
         type: "heading",
         raw: line,
         text: trimmed.slice(depth).trim(),
         depth,
       });
     } else if (trimmed.startsWith("- ") || trimmed.startsWith("* ")) {
-      tokens.push({
+      listToPushTo.push({
         type: "list-item",
         raw: line,
         depth: Math.floor((line.match(/^\s*/)?.[0].length || 0) / 2),
         items: await parseLine(trimmed.slice(2).trim()),
       });
     } else if (/^\d+\.\s/.test(trimmed)) {
-      tokens.push({
+      listToPushTo.push({
         type: "ordered-list-item",
         raw: line,
         depth: Math.floor((line.match(/^\s*/)?.[0].length || 0) / 2),
         items: await parseLine(trimmed.replace(/^\d+\.\s/, "")),
       });
     } else if (trimmed.startsWith("> ")) {
-      tokens.push({
+      listToPushTo.push({
         type: "blockquote",
         raw: line,
         items: await parseLine(trimmed.slice(2).trim()),
       });
     } else if (trimmed) {
-      tokens.push({
+      listToPushTo.push({
         type: "paragraph",
         raw: line,
         items: await parseLine(trimmed),

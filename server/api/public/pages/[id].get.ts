@@ -1,5 +1,4 @@
 import { desc } from "drizzle-orm";
-import { parseMd } from "~/shared/parseMd";
 import { MdNode } from "~/shared/types";
 export default defineEventHandler(async (event) => {
   const { id } = getRouterParams(event);
