@@ -24,10 +24,7 @@ import { sanitizeUrl } from "@braintree/sanitize-url";
  * @param lightMode
  * @returns
  */
-export async function parseMd(
-  markdown: string,
-  lightMode = true,
-): Promise<MdNode[]> {
+export async function parseMd(markdown: string): Promise<MdNode[]> {
   if (import.meta.server) {
     console.error(
       "parseMd should only be called on the client side, as it uses shiki to parse code blocks.",
@@ -57,19 +54,7 @@ export async function parseMd(
       const match = trimmed.match(/^::([\w-]+)(?:\{(.*?)\})?$/);
       if (match) {
         const componentType = match[1] as ComponentType;
-        const componentProps = match[2]
-          ? Object.fromEntries(
-              match[2]
-                .split(",")
-                .map((pair) => pair.split("=").map((s) => s.trim()))
-                .map(([key, value]) => [
-                  key,
-                  value === undefined
-                    ? true
-                    : value.match(/^['"](.*)['"]$/)?.[1] || value,
-                ]),
-            )
-          : {};
+        const componentProps = match[2] ? getProps(match[2]) : {};
         const componentNode: MdNode = {
           type: componentType,
           raw: "",
@@ -89,7 +74,14 @@ export async function parseMd(
             codeBlockContent.join("\n"),
             {
               lang: codeBlockLanguage,
-              theme: lightMode ? "vitesse-light" : "vitesse-dark",
+              theme: "material-theme-lighter",
+            },
+          );
+          const { tokens: darkCodeTokens } = await codeToTokens(
+            codeBlockContent.join("\n"),
+            {
+              lang: codeBlockLanguage,
+              theme: "material-theme-darker",
             },
           );
           listToPushTo.push({
@@ -98,6 +90,7 @@ export async function parseMd(
             language: codeBlockLanguage,
             text: codeBlockContent.join("\n"),
             syntaxHighlightedTokens: codeTokens,
+            darkSyntaxHighlightedTokens: darkCodeTokens,
           });
         } catch (error) {
           console.error("Error parsing code block:", error);
@@ -220,14 +213,23 @@ export async function parseLine(mdLine: string): Promise<MdNode[]> {
       let language: string | undefined;
       let color: ThemeColor | undefined;
       let syntaxHighlightedTokens: ThemedToken[][] | undefined;
+      let darkSyntaxHighlightedTokens: ThemedToken[][] | undefined;
       if (part.includes("lang")) {
         language = match?.[2].match(/lang=['"](\w+)['"]/)?.[1];
         if (language && bundledLanguages[language as BundledLanguage]) {
           const { tokens: codeTokens } = await codeToTokens(match?.[1] || "", {
             lang: language as BundledLanguage,
-            theme: "vitesse-dark",
+            theme: "material-theme-lighter",
           });
+          const { tokens: darkCodeTokens } = await codeToTokens(
+            match?.[1] || "",
+            {
+              lang: language as BundledLanguage,
+              theme: "material-theme-darker",
+            },
+          );
           syntaxHighlightedTokens = codeTokens;
+          darkSyntaxHighlightedTokens = darkCodeTokens;
         }
       }
       if (part.includes("color")) {
@@ -240,6 +242,7 @@ export async function parseLine(mdLine: string): Promise<MdNode[]> {
         language,
         color,
         syntaxHighlightedTokens,
+        darkSyntaxHighlightedTokens,
       });
     } else if (part.startsWith("`") && part.endsWith("`")) {
       tokens.push({
@@ -396,3 +399,16 @@ export function groupListItems(items: MdNode[]): MdNode[] {
     return acc;
   }, [] as MdNode[]);
 }
+
+const getProps = (props: string) =>
+  Object.fromEntries(
+    props
+      .split(",")
+      .map((pair) => pair.split("=").map((s) => s.trim()))
+      .map(([key, value]) => [
+        key,
+        value === undefined
+          ? true
+          : (JSON.parse(value.replace(/'/g, '"')) as string | number | boolean),
+      ]),
+  );

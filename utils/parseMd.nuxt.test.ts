@@ -476,9 +476,9 @@ test("parseMd - component with props", async () => {
 });
 
 test("parseMd - component with props and nested content", async () => {
-  const input = `::accordian
-  
-  ::accordian-item{label='Item 1', icon='plus'}
+  const input = `::accordion
+
+  ::accordion-item{label='Item 1', icon='plus'}
   This is the content of item 1.
   ::
   ::
@@ -486,10 +486,10 @@ test("parseMd - component with props and nested content", async () => {
 
   const expectedOutput = [
     expect.objectContaining({
-      type: "accordian",
+      type: "accordion",
       items: [
         expect.objectContaining({
-          type: "accordian-item",
+          type: "accordion-item",
           componentProps: expect.objectContaining({
             label: "Item 1",
             icon: "plus",

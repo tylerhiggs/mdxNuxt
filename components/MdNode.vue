@@ -1,9 +1,15 @@
 <script setup lang="ts">
-import type { MdNode } from "~/shared/types";
+import type {
+  BadgeProps,
+  CalloutProps,
+  CardProps,
+  MdNode,
+} from "~/shared/types";
 const props = defineProps<{
   node: MdNode;
   preview?: boolean;
 }>();
+const colorMode = useColorMode();
 </script>
 
 <template>
@@ -18,6 +24,74 @@ const props = defineProps<{
       :preview="props.preview"
     />
   </blockquote>
+  <Accordion v-else-if="node.type === 'accordion'" :node="node" />
+  <Badge
+    v-else-if="node.type === 'badge'"
+    :componentProps="(node.componentProps as BadgeProps | undefined) || {}"
+  >
+    <MdNode
+      v-for="(item, index) in node.items"
+      :key="index"
+      :node="item"
+      :preview="props.preview"
+    />
+  </Badge>
+  <Callout
+    v-else-if="node.type === 'callout'"
+    :componentProps="(node.componentProps as CalloutProps | undefined) || {}"
+  >
+    <MdNode
+      v-for="(item, index) in node.items"
+      :key="index"
+      :node="item"
+      :preview="props.preview"
+    />
+  </Callout>
+  <Callout
+    v-else-if="
+      node.type === 'note' ||
+      node.type === 'tip' ||
+      node.type === 'warning' ||
+      node.type === 'caution'
+    "
+    :componentProps="{
+      color:
+        node.type === 'note'
+          ? 'info'
+          : node.type === 'tip'
+            ? 'success'
+            : node.type === 'warning'
+              ? 'warning'
+              : 'error',
+      icon:
+        node.type === 'note'
+          ? 'information-circle'
+          : node.type === 'tip'
+            ? 'light-bulb'
+            : node.type === 'warning'
+              ? 'exclamation-triangle'
+              : 'exclamation-circle',
+    }"
+  >
+    <MdNode
+      v-for="(item, index) in node.items"
+      :key="index"
+      :node="item"
+      :preview="props.preview"
+    />
+  </Callout>
+  <Card
+    v-else-if="node.type === 'card'"
+    :componentProps="(node.componentProps as CardProps | undefined) || {}"
+  >
+    <MdNode
+      v-for="(item, index) in node.items"
+      :key="index"
+      :node="item"
+      :preview="props.preview"
+    />
+  </Card>
+  <CardGroup v-else-if="node.type === 'card-group'" :node="node" />
   <img
     v-else-if="node.type === 'image'"
     :src="
@@ -113,10 +187,13 @@ const props = defineProps<{
   >
     Warning: Heading levels greater than 3 are not recommended.
   </div>
-  <p v-if="node.type === 'text'" class="my-5 inline leading-7 text-pretty">
+  <template v-if="node.type === 'text'">
     {{ node.text }}
-  </p>
-  <p v-if="node.type === 'paragraph'" class="my-5 inline leading-7 text-pretty">
+  </template>
+  <p
+    v-if="node.type === 'paragraph' && node.text"
+    class="my-5 inline leading-7 text-pretty"
+  >
     {{ node.text }}
   </p>
   <code
@@ -152,6 +229,7 @@ const props = defineProps<{
       v-for="token in node.syntaxHighlightedTokens[0]"
       :style="{
         color: token.color,
+        backgroundColor: token.bgColor,
       }"
     >
       {{ token.content }}
@@ -178,7 +256,11 @@ const props = defineProps<{
     v-if="node.type === 'code-block' && node.text"
     :code="node.text"
     :language="node.language"
-    :syntaxHighlightedTokens="node.syntaxHighlightedTokens"
+    :syntaxHighlightedTokens="
+      colorMode.value === 'light'
+        ? node.syntaxHighlightedTokens
+        : node.darkSyntaxHighlightedTokens
+    "
     :showlineNumbers="false"
   />
   <hr v-if="node.type === 'hr'" class="border-default my-12 border-t" />

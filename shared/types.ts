@@ -1,12 +1,36 @@
+import type { BadgeProps as UIBadgeProps } from "@nuxt/ui";
 import type { ThemedToken } from "shiki";
-export type AccordianItemProps = {
-  label: string;
-  icon: string;
+export type AccordionProps = {
+  type?: "single" | "multiple";
 };
-export type ComponentProps = AccordianItemProps;
+export type AccordionItemProps = {
+  label?: string;
+  icon?: string;
+};
+export type BadgeProps = UIBadgeProps;
+export type CalloutProps = {
+  icon?: string;
+  color?: ThemeColor;
+  link?: string;
+};
+export type CardProps = {
+  title?: string;
+  icon?: string;
+  color?: ThemeColor;
+  link?: string;
+};
+export type ComponentProps =
+  | AccordionItemProps
+  | AccordionProps
+  | CalloutProps
+  | CardProps;
 export type ComponentType =
-  | "accordian"
+  | "accordion"
+  | "accordion-item"
+  | "badge"
   | "callout"
+  | "card"
+  | "card-group"
   | "note"
   | "tip"
   | "warning"
@@ -37,6 +61,7 @@ export type MdNode = {
   language?: string;
   color?: ThemeColor;
   syntaxHighlightedTokens?: ThemedToken[][];
+  darkSyntaxHighlightedTokens?: ThemedToken[][];
   items?: MdNode[];
   orderedListStartIndex?: number;
   componentProps?: ComponentProps;

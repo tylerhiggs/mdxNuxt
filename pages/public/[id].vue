@@ -49,8 +49,6 @@ useHead({
   ],
 });
 
-const colorMode = useColorMode();
-const isDarkMode = computed(() => colorMode.value === "dark");
 /**
  * This is the re-computed array of rendered Markdown nodes that
  * replaces the original `renderedMd` in the page blocks that
@@ -61,21 +59,6 @@ const isDarkMode = computed(() => colorMode.value === "dark");
  * and other styles that depend on the color mode.
  */
 const renderedMdNodes = ref<MdNode[][]>([]);
-
-watch(
-  isDarkMode,
-  async (isDark) => {
-    renderedMdNodes.value = await Promise.all(
-      page.value?.blocks.map(async (block) => {
-        if (block.type === "text" && block.renderedMd && import.meta.client) {
-          return await parseMd(block.textContent, !isDark);
-        }
-        return [];
-      }) || [],
-    );
-  },
-  { immediate: true },
-);
 </script>
 
 <template>

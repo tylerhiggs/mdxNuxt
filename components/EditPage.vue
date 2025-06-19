@@ -199,9 +199,7 @@ watch([() => props.page.blocks, () => colorMode.value], async ([blocks]) => {
     return;
   }
   const nodes = await Promise.all(
-    blocks.map((block) =>
-      parseMd(block.textContent, colorMode.value === "light"),
-    ),
+    blocks.map((block) => parseMd(block.textContent)),
   );
   mdNodes.value = nodes;
 });
@@ -215,11 +213,10 @@ watch([() => props.page.blocks, () => colorMode.value], async ([blocks]) => {
     blocks.map((block) =>
       codeToTokens(block.textContent, {
         lang: "mdc",
-        theme: import.meta.client
-          ? colorMode.value === "dark"
-            ? "vitesse-dark"
-            : "material-theme-lighter"
-          : "material-theme-lighter",
+        theme:
+          colorMode.value === "light"
+            ? "material-theme-lighter"
+            : "material-theme-darker",
       }),
     ),
   );
@@ -421,6 +418,7 @@ const uploadImage = (file: File) => {
                       v-for="(token) in line"
                       :style="{
                         color: token.color,
+                        backgroundColor: token.bgColor,
                       }"
                     >{{token.content}}</span></span></code>
               </pre>
@@ -436,7 +434,7 @@ const uploadImage = (file: File) => {
               :spellcheck="false"
               :value="block.textContent"
               style="caret-color: var(--color-neutral-900)"
-              class="absolute inset-0 h-full w-full resize-none border-none bg-transparent font-mono text-lg font-normal whitespace-pre-wrap text-transparent outline-hidden dark:text-white"
+              class="absolute inset-0 h-full w-full resize-none border-none bg-transparent font-mono text-lg font-normal whitespace-pre-wrap text-transparent outline-hidden"
               @input="(event) => updateBlockTextarea(event, block)"
               @keydown.meta.b="(event) => bold(event, block)"
               @keydown.ctrl.b="(event) => bold(event, block)"
