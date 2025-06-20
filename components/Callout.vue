@@ -10,7 +10,7 @@ defineProps<{
   <div
     class="my-2 rounded p-3"
     :class="{
-      'border border-neutral-400 bg-neutral-100 text-neutral-600 dark:text-neutral-300 [&_a]:text-neutral-700 [&_a]:hover:border-neutral-600':
+      'border border-neutral-400 bg-neutral-100 text-neutral-600 dark:bg-neutral-900 dark:text-neutral-100':
         componentProps.color === 'neutral',
       'border-error/25 bg-error/10 text-error-600 dark:text-error-300 [&_a]:text-error [&_a]:hover:border-error border':
         componentProps.color === 'error',

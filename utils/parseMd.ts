@@ -37,6 +37,7 @@ export async function parseMd(markdown: string): Promise<MdNode[]> {
   const lines = markdown.split("\n");
   let inCodeBlock = false;
   let codeBlockLanguage = "text" as BundledLanguage;
+  let name: string | undefined;
   let codeBlockContent: string[] = [];
 
   for (const line of lines) {
@@ -88,6 +89,7 @@ export async function parseMd(markdown: string): Promise<MdNode[]> {
             type: "code-block",
             raw: codeBlockContent.join("\n"),
             language: codeBlockLanguage,
+            name,
             text: codeBlockContent.join("\n"),
             syntaxHighlightedTokens: codeTokens,
             darkSyntaxHighlightedTokens: darkCodeTokens,
@@ -98,6 +100,7 @@ export async function parseMd(markdown: string): Promise<MdNode[]> {
             type: "code-block",
             raw: codeBlockContent.join("\n"),
             language: codeBlockLanguage,
+            name,
             text: codeBlockContent.join("\n"),
           });
         }
@@ -107,7 +110,10 @@ export async function parseMd(markdown: string): Promise<MdNode[]> {
       } else {
         // Start of code block
         inCodeBlock = true;
-        const lang = trimmed.slice(3) as BundledLanguage;
+        const match = trimmed.match(/^```([\w-]+)?(?:\s*\[([^\]]+)\])?/);
+        const lang =
+          (match?.[1] as BundledLanguage) || ("text" as BundledLanguage);
+        name = match?.[2];
         const langIsValid = lang in bundledLanguages;
         codeBlockLanguage = langIsValid ? lang : ("text" as BundledLanguage);
       }

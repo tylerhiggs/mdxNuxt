@@ -40,7 +40,7 @@ defineProps<{
     }"
   >
     <a
-      class="flex justify-between text-neutral-500 dark:text-neutral-500"
+      class="flex justify-between text-neutral-500 dark:text-neutral-300"
       v-if="componentProps.link"
       :href="componentProps.link"
       target="_blank"
@@ -61,7 +61,7 @@ defineProps<{
         />
         <p
           v-if="componentProps.title"
-          class="text-lg font-semibold text-neutral-900"
+          class="text-lg font-semibold text-neutral-900 dark:text-neutral-100"
         >
           {{ componentProps.title }}
         </p>
@@ -81,7 +81,10 @@ defineProps<{
         />
       </div>
     </a>
-    <div v-else class="flex flex-col justify-center gap-1 text-neutral-500">
+    <div
+      v-else
+      class="flex flex-col justify-center gap-1 text-neutral-500 dark:text-neutral-300"
+    >
       <UIcon
         v-if="componentProps.icon"
         :name="`i-heroicons-${componentProps.icon}`"

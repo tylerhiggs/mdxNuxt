@@ -19,6 +19,13 @@ export type CardProps = {
   color?: ThemeColor;
   link?: string;
 };
+export type CodeCollapseProps = {
+  icon?: string;
+  open?: boolean;
+  openText?: string;
+  closeText?: string;
+  name?: string;
+};
 export type ComponentProps =
   | AccordionItemProps
   | AccordionProps
@@ -31,6 +38,7 @@ export type ComponentType =
   | "callout"
   | "card"
   | "card-group"
+  | "code-collapse"
   | "note"
   | "tip"
   | "warning"
@@ -59,6 +67,7 @@ export type MdNode = {
   href?: string;
   title?: string;
   language?: string;
+  name?: string;
   color?: ThemeColor;
   syntaxHighlightedTokens?: ThemedToken[][];
   darkSyntaxHighlightedTokens?: ThemedToken[][];

@@ -337,9 +337,9 @@ const uploadImage = (file: File) => {
         @togglePreview="previewPage = !previewPage"
       />
     </div>
-    <div class="relative flex w-full flex-auto overflow-y-auto">
+    <div class="relative flex w-full flex-auto overflow-hidden">
       <div
-        class="flex flex-col"
+        class="flex h-full flex-col overflow-y-auto"
         :class="{
           'w-full': !previewPage,
           'w-7/12': previewPage,
@@ -423,17 +423,17 @@ const uploadImage = (file: File) => {
                     >{{token.content}}</span></span></code>
               </pre>
             </div>
-            <input
-              id="editor-file-input"
-              type="file"
-              class="absolute inset-0 opacity-0"
-            />
             <textarea
               ref="elements"
               :id="`${block.id}`"
               :spellcheck="false"
               :value="block.textContent"
-              style="caret-color: var(--color-neutral-900)"
+              :style="{
+                caretColor:
+                  colorMode.value === 'dark'
+                    ? 'var(--color-neutral-100)'
+                    : 'var(--color-neutral-900)',
+              }"
               class="absolute inset-0 h-full w-full resize-none border-none bg-transparent font-mono text-lg font-normal whitespace-pre-wrap text-transparent outline-hidden"
               @input="(event) => updateBlockTextarea(event, block)"
               @keydown.meta.b="(event) => bold(event, block)"
@@ -454,7 +454,7 @@ const uploadImage = (file: File) => {
       </div>
       <div
         v-if="previewPage"
-        class="flex w-5/12 flex-col border-l border-l-stone-300"
+        class="flex w-5/12 flex-col overflow-y-auto border-l border-l-stone-300"
       >
         <div class="flex flex-initial items-center gap-2 p-4">
           <p class="text-5xl">{{ page.emoji }}</p>

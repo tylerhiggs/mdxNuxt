@@ -10,6 +10,22 @@ const props = defineProps<{
   preview?: boolean;
 }>();
 const colorMode = useColorMode();
+const snackbar = useSnackbar();
+const copyCode = (code: string) => {
+  navigator.clipboard
+    .writeText(code)
+    .then(() => {
+      snackbar.enqueue("Code copied to clipboard", "success");
+      copied.value = true;
+      setTimeout(() => {
+        copied.value = false;
+      }, 5000);
+    })
+    .catch(() => {
+      snackbar.enqueue("Failed to copy code", "error");
+    });
+};
+const copied = ref(false);
 </script>
 
 <template>
@@ -92,12 +108,15 @@ const colorMode = useColorMode();
     />
   </Card>
   <CardGroup v-else-if="node.type === 'card-group'" :node="node" />
+  <CodeCollapse v-else-if="node.type === 'code-collapse'" :node="node" />
   <img
     v-else-if="node.type === 'image'"
     :src="
-      preview
-        ? `/api/private/avatars/${node.href}`
-        : `/api/public/pages/images/${node.href}`
+      !node.href?.includes('https://')
+        ? preview
+          ? `/api/private/avatars/${node.href}`
+          : `/api/public/pages/images/${node.href}`
+        : node.href
     "
     :alt="node.text"
     class="m-4"
@@ -252,16 +271,31 @@ const colorMode = useColorMode();
   >
     {{ node.text }}
   </a>
-  <CodeBlock
+  <div
     v-if="node.type === 'code-block' && node.text"
-    :code="node.text"
-    :language="node.language"
-    :syntaxHighlightedTokens="
-      colorMode.value === 'light'
-        ? node.syntaxHighlightedTokens
-        : node.darkSyntaxHighlightedTokens
-    "
-    :showlineNumbers="false"
-  />
+    class="group relative my-2 rounded-lg bg-stone-50 p-3 text-sm shadow-sm *:overflow-auto dark:bg-stone-800 **:[.line]:isolate **:[.line]:not-last:min-h-[1lh]"
+  >
+    <UButton
+      class="invisible absolute top-2 right-2 z-10 group-hover:visible"
+      size="sm"
+      variant="ghost"
+      color="neutral"
+      :icon="
+        copied
+          ? 'i-heroicons-clipboard-document-check'
+          : 'i-heroicons-clipboard-document'
+      "
+      @click="() => copyCode(node.text || '')"
+    />
+    <CodeBlock
+      :code="node.text"
+      :language="node.language"
+      :syntaxHighlightedTokens="
+        colorMode.value === 'light'
+          ? node.syntaxHighlightedTokens
+          : node.darkSyntaxHighlightedTokens
+      "
+    />
+  </div>
   <hr v-if="node.type === 'hr'" class="border-default my-12 border-t" />
 </template>
