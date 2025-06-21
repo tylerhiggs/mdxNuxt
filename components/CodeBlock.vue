@@ -21,7 +21,7 @@ const props = defineProps<{
         v-if="props.syntaxHighlightedTokens"
         v-for="(line, lineIndex) in props.syntaxHighlightedTokens"
         :key="lineIndex"
-        class="line flex"
+        class="line min-h-[1lh] flex"
       >
         <span
           v-for="(token, tokenIndex) in line"

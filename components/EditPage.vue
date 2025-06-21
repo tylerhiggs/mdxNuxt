@@ -405,7 +405,7 @@ const uploadImage = (file: File) => {
           class="relative flex w-full flex-auto flex-col items-center pb-8"
         >
           <div class="relative mt-4 flex w-8/12">
-            <div class="flex text-lg">
+            <div class="flex w-full text-lg">
               <pre
                 class="relative flex flex-col overflow-x-auto text-lg break-words whitespace-pre-wrap"
               >
@@ -434,7 +434,7 @@ const uploadImage = (file: File) => {
                     ? 'var(--color-neutral-100)'
                     : 'var(--color-neutral-900)',
               }"
-              class="absolute inset-0 h-full w-full resize-none border-none bg-transparent font-mono text-lg font-normal whitespace-pre-wrap text-transparent outline-hidden"
+              class="absolute inset-0 field-sizing-content h-full w-full resize-none overflow-visible border-none bg-transparent font-mono text-lg font-normal whitespace-pre-wrap text-transparent outline-hidden"
               @input="(event) => updateBlockTextarea(event, block)"
               @keydown.meta.b="(event) => bold(event, block)"
               @keydown.ctrl.b="(event) => bold(event, block)"

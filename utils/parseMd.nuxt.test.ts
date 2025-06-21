@@ -2,6 +2,7 @@ import { expect, test } from "vitest";
 import { groupListItems, parseMd } from "./parseMd";
 import type { MdNode } from "~/shared/types";
 import { sanitizeUrl } from "@braintree/sanitize-url";
+import { language } from "happy-dom/lib/PropertySymbol.js";
 
 test("parseMd - empty input", async () => {
   const input = "";
@@ -516,6 +517,23 @@ test("parseMd - component with props and nested content", async () => {
           text: "normal text outside the component.",
         }),
       ],
+    }),
+  ];
+  const output = await parseMd(input);
+  expect(output).toEqual(expectedOutput);
+});
+
+test("parseMd - MD code block - inner md should be rendered as text", async () => {
+  const input = `\`\`\`\`md
+\`\`\`
+const f = false
+\`\`\`
+\`\`\`\``;
+  const expectedOutput = [
+    expect.objectContaining({
+      type: "code-block",
+      language: "md",
+      text: "```\nconst f = false\n```",
     }),
   ];
   const output = await parseMd(input);

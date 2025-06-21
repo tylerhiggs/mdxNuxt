@@ -110,6 +110,7 @@ const copied = ref(false);
   <CardGroup v-else-if="node.type === 'card-group'" :node="node" />
   <CodeCollapse v-else-if="node.type === 'code-collapse'" :node="node" />
   <CodeGroup v-else-if="node.type === 'code-group'" :node="node" />
+  <CodeTree v-else-if="node.type === 'code-tree'" :node="node" />
   <img
     v-else-if="node.type === 'image'"
     :src="

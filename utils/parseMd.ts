@@ -39,6 +39,7 @@ export async function parseMd(markdown: string): Promise<MdNode[]> {
   let codeBlockLanguage = "text" as BundledLanguage;
   let name: string | undefined;
   let codeBlockContent: string[] = [];
+  let codeBlockFence: string | null = null; // Track the current fence (``` or ````)
 
   for (const line of lines) {
     const trimmed = line.trim();
@@ -50,26 +51,12 @@ export async function parseMd(markdown: string): Promise<MdNode[]> {
     const lastComponent = componentStack.at(-1);
     const listToPushTo =
       lastComponent && lastComponent.items ? lastComponent.items : tokens;
-    if (trimmed.startsWith("::")) {
-      // Component start
-      const match = trimmed.match(/^::([\w-]+)(?:\{(.*?)\})?$/);
-      if (match) {
-        const componentType = match[1] as ComponentType;
-        const componentProps = match[2] ? getProps(match[2]) : {};
-        const componentNode: MdNode = {
-          type: componentType,
-          raw: "",
-          items: [],
-          componentProps: componentProps as ComponentProps,
-        };
-        listToPushTo.push(componentNode);
-        componentStack.push(componentNode);
-      }
-      continue;
-    }
-
-    if (trimmed.startsWith("```")) {
-      if (inCodeBlock) {
+    // Detect code block start/end (support both ``` and ````)
+    const fenceMatch = trimmed.match(/^(`{3,4})([\w-]+)?(?:\s*\[([^\]]+)\])?/);
+    if (fenceMatch) {
+      const fence = fenceMatch[1];
+      if (inCodeBlock && codeBlockFence === fence) {
+        // End of code block
         try {
           const { tokens: codeTokens } = await codeToTokens(
             codeBlockContent.join("\n"),
@@ -107,19 +94,45 @@ export async function parseMd(markdown: string): Promise<MdNode[]> {
         inCodeBlock = false;
         codeBlockLanguage = "text" as BundledLanguage;
         codeBlockContent = [];
-      } else {
+        codeBlockFence = null;
+      } else if (!inCodeBlock) {
         // Start of code block
         inCodeBlock = true;
-        const match = trimmed.match(/^```([\w-]+)?(?:\s*\[([^\]]+)\])?/);
+        codeBlockFence = fence;
         const lang =
-          (match?.[1] as BundledLanguage) || ("text" as BundledLanguage);
-        name = match?.[2];
+          (fenceMatch?.[2] as BundledLanguage) || ("text" as BundledLanguage);
+        name = fenceMatch?.[3];
         const langIsValid = lang in bundledLanguages;
         codeBlockLanguage = langIsValid ? lang : ("text" as BundledLanguage);
+        codeBlockContent = [];
+      } else {
+        codeBlockContent.push(line);
       }
-    } else if (inCodeBlock) {
+      continue;
+    }
+    if (inCodeBlock) {
       codeBlockContent.push(line);
-    } else if (trimmed.startsWith("---")) {
+      continue;
+    }
+    if (trimmed.startsWith("::")) {
+      // Component start
+      const match = trimmed.match(/^::([\w-]+)(?:\{(.*?)\})?$/);
+      if (match) {
+        const componentType = match[1] as ComponentType;
+        const componentProps = match[2] ? getProps(match[2]) : {};
+        const componentNode: MdNode = {
+          type: componentType,
+          raw: "",
+          items: [],
+          componentProps: componentProps as ComponentProps,
+        };
+        listToPushTo.push(componentNode);
+        componentStack.push(componentNode);
+      }
+      continue;
+    }
+
+    if (trimmed.startsWith("---")) {
       // Horizontal rule
       tokens.push({
         type: "hr",
