@@ -41,10 +41,7 @@ const copyCode = () => {
       class="flex items-center justify-between border-b border-neutral-300 px-2 py-1 dark:border-neutral-600"
     >
       <div class="flex items-center gap-1">
-        <UIcon
-          :name="`i-vscode-icons:file-type-${fileExtension}`"
-          class="text-accented"
-        />
+        <UIcon :name="`i-vscode-icons:file-type-${fileExtension}`" />
         <h3>{{ filename }}</h3>
       </div>
       <UButton
