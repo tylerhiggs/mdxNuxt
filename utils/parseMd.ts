@@ -419,15 +419,21 @@ export function groupListItems(items: MdNode[]): MdNode[] {
   }, [] as MdNode[]);
 }
 
-const getProps = (props: string) =>
-  Object.fromEntries(
-    props
-      .split(",")
-      .map((pair) => pair.split("=").map((s) => s.trim()))
-      .map(([key, value]) => [
-        key,
-        value === undefined
-          ? true
-          : (JSON.parse(value.replace(/'/g, '"')) as string | number | boolean),
-      ]),
-  );
+const getProps = (props: string) => {
+  // Match key="value", key='value', key=value (unquoted), or key (no value)
+  const regex = /(\w+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s,]+)))?/g;
+  const result: Record<string, string | boolean | number> = {};
+  let match: RegExpExecArray | null;
+  while ((match = regex.exec(props))) {
+    const key = match[1];
+    const value = match[2] ?? match[3] ?? match[4];
+    // If value is undefined, treat as boolean true
+    let parsed: string | boolean | number = value;
+    if (parsed === undefined) parsed = true;
+    else if (parsed === "true") parsed = true;
+    else if (parsed === "false") parsed = false;
+    else if (!isNaN(Number(parsed))) parsed = Number(parsed);
+    result[key] = parsed;
+  }
+  return result;
+};

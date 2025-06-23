@@ -4,6 +4,7 @@ import type {
   CalloutProps,
   CardProps,
   CollapsibleProps,
+  FieldProps,
   MdNode,
 } from "~/shared/types";
 const props = defineProps<{
@@ -125,6 +126,17 @@ const copied = ref(false);
       :preview="props.preview"
     />
   </Collapsible>
+  <Field
+    v-else-if="node.type === 'field'"
+    :componentProps="(node.componentProps as FieldProps | undefined) || {}"
+  >
+    <MdNode
+      v-for="(item, index) in node.items"
+      :key="index"
+      :node="item"
+      :preview="props.preview"
+    />
+  </Field>
   <img
     v-else-if="node.type === 'image'"
     :src="

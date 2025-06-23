@@ -39,6 +39,11 @@ export type CollapsibleProps = {
   openText?: string;
   closeText?: string;
 };
+export type FieldProps = {
+  name?: string;
+  type?: string;
+  required?: boolean;
+};
 export type ComponentProps =
   | AccordionItemProps
   | AccordionProps
@@ -48,7 +53,8 @@ export type ComponentProps =
   | CodeCollapseProps
   | CodeGroupProps
   | CodeTreeProps
-  | CollapsibleProps;
+  | CollapsibleProps
+  | FieldProps;
 export type ComponentType =
   | "accordion"
   | "accordion-item"
@@ -60,6 +66,7 @@ export type ComponentType =
   | "code-group"
   | "code-tree"
   | "collapsible"
+  | "field"
   | "note"
   | "tip"
   | "warning"
