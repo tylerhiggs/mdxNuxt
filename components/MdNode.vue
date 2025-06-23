@@ -3,6 +3,7 @@ import type {
   BadgeProps,
   CalloutProps,
   CardProps,
+  CollapsibleProps,
   MdNode,
 } from "~/shared/types";
 const props = defineProps<{
@@ -111,6 +112,19 @@ const copied = ref(false);
   <CodeCollapse v-else-if="node.type === 'code-collapse'" :node="node" />
   <CodeGroup v-else-if="node.type === 'code-group'" :node="node" />
   <CodeTree v-else-if="node.type === 'code-tree'" :node="node" />
+  <Collapsible
+    v-else-if="node.type === 'collapsible'"
+    :componentProps="
+      (node.componentProps as CollapsibleProps | undefined) || {}
+    "
+  >
+    <MdNode
+      v-for="(item, index) in node.items"
+      :key="index"
+      :node="item"
+      :preview="props.preview"
+    />
+  </Collapsible>
   <img
     v-else-if="node.type === 'image'"
     :src="

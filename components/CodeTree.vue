@@ -6,6 +6,12 @@ const props = defineProps<{
   node: MdNode;
 }>();
 
+const expandAll = computed(() => {
+  return (
+    (props.node.componentProps as CodeTreeProps | undefined)?.expandAll ?? false
+  );
+});
+
 const codeBlocks = computed(() => {
   return props.node.items?.filter((item) => item.type === "code-block") || [];
 });
@@ -34,6 +40,7 @@ const treeItems = computed(() =>
             currentNodesChildren.push({
               label: `${part}/`,
               children,
+              defaultExpanded: expandAll.value,
             } satisfies TreeItem);
             currentNodesChildren = children;
           } else {
@@ -50,7 +57,11 @@ const treeItems = computed(() =>
 );
 
 const sortTree = (items: TreeItem[]) => {
-  items.sort((a, b) => a.label?.localeCompare(b.label || "") || 0);
+  items.sort((a, b) => {
+    if (a.children && !b.children) return -1;
+    if (!a.children && b.children) return 1;
+    return a.label?.localeCompare(b.label || "") || 0;
+  });
   items.forEach((item) => {
     if (item.children) {
       sortTree(item.children);
@@ -84,7 +95,7 @@ const fileExtension = (name: string | undefined) => {
   const ext = name ? name.split(".").pop() : "";
   if (!ext) return "text";
   if (name === "nuxt.config.ts" || name === "nuxt.config.js") return "nuxt";
-  if (name === "ts.config.json") return "nuxt";
+  if (name === "tsconfig.json") return "tsconfig";
   if (name === "package.json") return "node";
   if (ext === "ts" || ext === "type-ts") return "typescript";
   if (ext === "js") return "javascript";
@@ -107,14 +118,14 @@ const copyCode = () => {
 </script>
 
 <template>
-  <div class="m-2 flex h-64 w-full">
+  <div class="flex h-64 w-full">
     <div
-      class="rounded-l border border-neutral-200 bg-neutral-50 dark:border-neutral-700 dark:bg-neutral-900"
+      class="min-w-4/12 overflow-auto rounded-l border border-neutral-200 bg-neutral-50 dark:border-neutral-700 dark:bg-neutral-900"
     >
-      <UTree :items="treeItems" class="overflow-y-auto" />
+      <UTree :items="treeItems" />
     </div>
     <div
-      class="group h-full overflow-auto rounded-r border border-neutral-200 bg-neutral-50 dark:border-neutral-700 dark:bg-neutral-900"
+      class="group h-full min-w-8/12 overflow-auto rounded-r border border-neutral-200 bg-neutral-50 dark:border-neutral-700 dark:bg-neutral-900"
     >
       <div
         class="flex items-center justify-between border-b border-neutral-300 px-2 py-1 dark:border-neutral-600"

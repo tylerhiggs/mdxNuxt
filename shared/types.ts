@@ -31,6 +31,13 @@ export type CodeGroupProps = {
 };
 export type CodeTreeProps = {
   defaultValue?: string;
+  expandAll?: boolean;
+};
+export type CollapsibleProps = {
+  icon?: string;
+  name?: string;
+  openText?: string;
+  closeText?: string;
 };
 export type ComponentProps =
   | AccordionItemProps
@@ -40,7 +47,8 @@ export type ComponentProps =
   | CardProps
   | CodeCollapseProps
   | CodeGroupProps
-  | CodeTreeProps;
+  | CodeTreeProps
+  | CollapsibleProps;
 export type ComponentType =
   | "accordion"
   | "accordion-item"
@@ -51,6 +59,7 @@ export type ComponentType =
   | "code-collapse"
   | "code-group"
   | "code-tree"
+  | "collapsible"
   | "note"
   | "tip"
   | "warning"
