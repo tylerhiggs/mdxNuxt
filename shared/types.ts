@@ -44,6 +44,9 @@ export type FieldProps = {
   type?: string;
   required?: boolean;
 };
+export type IconProps = {
+  name: string;
+};
 export type ComponentProps =
   | AccordionItemProps
   | AccordionProps
@@ -54,7 +57,8 @@ export type ComponentProps =
   | CodeGroupProps
   | CodeTreeProps
   | CollapsibleProps
-  | FieldProps;
+  | FieldProps
+  | IconProps;
 export type ComponentType =
   | "accordion"
   | "accordion-item"
@@ -67,6 +71,8 @@ export type ComponentType =
   | "code-tree"
   | "collapsible"
   | "field"
+  | "field-group"
+  | "icon"
   | "note"
   | "tip"
   | "warning"

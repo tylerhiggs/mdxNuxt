@@ -539,3 +539,32 @@ const f = false
   const output = await parseMd(input);
   expect(output).toEqual(expectedOutput);
 });
+
+test("parseMd - inline component with props", async () => {
+  const input = `This is a paragraph with :icon{name='plus'} inline component.`;
+  const expectedOutput = [
+    expect.objectContaining({
+      type: "paragraph",
+      items: [
+        {
+          type: "text",
+          raw: "This is a paragraph with ",
+          text: "This is a paragraph with ",
+        },
+        expect.objectContaining({
+          type: "icon",
+          componentProps: {
+            name: "plus",
+          },
+        }),
+        {
+          type: "text",
+          raw: " inline component.",
+          text: " inline component.",
+        },
+      ],
+    }),
+  ];
+  const output = await parseMd(input);
+  expect(output).toEqual(expectedOutput);
+});

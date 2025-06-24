@@ -5,6 +5,7 @@ import type {
   CardProps,
   CollapsibleProps,
   FieldProps,
+  IconProps,
   MdNode,
 } from "~/shared/types";
 const props = defineProps<{
@@ -137,6 +138,21 @@ const copied = ref(false);
       :preview="props.preview"
     />
   </Field>
+  <div
+    v-else-if="node.type === 'field-group'"
+    class="divide-default my-5 divide-y *:not-last:pb-5"
+  >
+    <MdNode
+      v-for="(item, index) in node.items"
+      :key="index"
+      :node="item"
+      :preview="props.preview"
+    />
+  </div>
+  <UIcon
+    v-else-if="node.type === 'icon'"
+    :name="`i-heroicons-${(node.componentProps as IconProps | undefined)?.name || 'question-mark-circle'}`"
+  />
   <img
     v-else-if="node.type === 'image'"
     :src="

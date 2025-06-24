@@ -200,7 +200,7 @@ export async function parseLine(mdLine: string): Promise<MdNode[]> {
   const tokens: MdNode[] = [];
   const parts = mdLine
     .split(
-      /(\*\*.*?\*\*|\*.*?\*|__.*?__|`.*?`\{.*?\}|`.*?`|!\[.*?\]\(.*?\)|\[.*?\]\(.*?\))/g,
+      /(\*\*.*?\*\*|\*.*?\*|__.*?__|`.*?`\{.*?\}|`.*?`|!\[.*?\]\(.*?\)|\[.*?\]\(.*?\)|:[\w-]+\{.*?\})/g,
     )
     .filter(Boolean);
 
@@ -269,6 +269,22 @@ export async function parseLine(mdLine: string): Promise<MdNode[]> {
         raw: part,
         text: part.slice(1, -1),
       });
+    } else if (part.startsWith(":")) {
+      // inline component without child items
+      const match = part.match(/:(\w+)(?:\{(.*?)\})?/);
+      if (match) {
+        const componentType = match[1] as ComponentType;
+        // Check if the component type is valid
+        const componentProps = match[2] ? getProps(match[2]) : {};
+        const componentNode: MdNode = {
+          type: componentType,
+          raw: part,
+          items: [],
+          componentProps: componentProps as ComponentProps,
+        };
+        tokens.push(componentNode);
+        continue;
+      }
     } else if (
       part.startsWith("![") &&
       part.includes("](") &&

@@ -404,7 +404,10 @@ const uploadImage = (file: File) => {
           :key="block.id"
           class="relative flex w-full flex-auto flex-col items-center pb-8"
         >
-          <div class="relative mt-4 flex w-8/12">
+          <div
+            class="relative mt-4 flex w-full px-2 sm:w-8/12 lg:px-0"
+            :class="{ 'sm:w-11/12': previewPage }"
+          >
             <div class="flex w-full text-lg">
               <pre
                 class="relative flex flex-col overflow-x-auto text-lg break-words whitespace-pre-wrap"
