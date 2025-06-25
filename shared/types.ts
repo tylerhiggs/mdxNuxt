@@ -47,6 +47,16 @@ export type FieldProps = {
 export type IconProps = {
   name: string;
 };
+export type KbdProps = {
+  value: string;
+};
+export type TabItemProps = {
+  label: string;
+  icon?: string;
+};
+export type StepperProps = {
+  level?: number | string;
+};
 export type ComponentProps =
   | AccordionItemProps
   | AccordionProps
@@ -58,7 +68,8 @@ export type ComponentProps =
   | CodeTreeProps
   | CollapsibleProps
   | FieldProps
-  | IconProps;
+  | IconProps
+  | KbdProps;
 export type ComponentType =
   | "accordion"
   | "accordion-item"
@@ -73,6 +84,10 @@ export type ComponentType =
   | "field"
   | "field-group"
   | "icon"
+  | "kbd"
+  | "tabs"
+  | "tabs-item"
+  | "steps"
   | "note"
   | "tip"
   | "warning"

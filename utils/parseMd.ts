@@ -43,11 +43,7 @@ export async function parseMd(markdown: string): Promise<MdNode[]> {
 
   for (const line of lines) {
     const trimmed = line.trim();
-    if (trimmed === "::") {
-      // End of component
-      componentStack.pop();
-      continue;
-    }
+
     const lastComponent = componentStack.at(-1);
     const listToPushTo =
       lastComponent && lastComponent.items ? lastComponent.items : tokens;
@@ -112,6 +108,11 @@ export async function parseMd(markdown: string): Promise<MdNode[]> {
     }
     if (inCodeBlock) {
       codeBlockContent.push(line);
+      continue;
+    }
+    if (trimmed === "::") {
+      // End of component
+      componentStack.pop();
       continue;
     }
     if (trimmed.startsWith("::")) {

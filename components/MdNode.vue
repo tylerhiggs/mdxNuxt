@@ -6,6 +6,7 @@ import type {
   CollapsibleProps,
   FieldProps,
   IconProps,
+  KbdProps,
   MdNode,
 } from "~/shared/types";
 const props = defineProps<{
@@ -152,6 +153,20 @@ const copied = ref(false);
   <UIcon
     v-else-if="node.type === 'icon'"
     :name="`i-heroicons-${(node.componentProps as IconProps | undefined)?.name || 'question-mark-circle'}`"
+  />
+  <UKbd
+    v-else-if="node.type === 'kbd'"
+    :value="(node.componentProps as KbdProps | undefined)?.value || ''"
+  />
+  <Tabs
+    v-else-if="node.type === 'tabs'"
+    :node="node"
+    :preview="props.preview"
+  />
+  <Stepper
+    v-else-if="node.type === 'steps'"
+    :node="node"
+    :preview="props.preview"
   />
   <img
     v-else-if="node.type === 'image'"
