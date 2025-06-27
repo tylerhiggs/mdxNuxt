@@ -35,6 +35,7 @@ const items = computed(() => {
     orientation="vertical"
     :ui="{
       root: 'w-full',
+      title: '*:mt-0',
     }"
   >
     <template #title="{ item }">

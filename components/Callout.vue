@@ -44,7 +44,9 @@ defineProps<{
             :name="`i-heroicons-${componentProps.icon}`"
             class="h-5 w-5 text-current"
           />
-          <slot />
+          <div class="flex flex-col">
+            <slot />
+          </div>
         </div>
       </a>
     </template>
@@ -55,7 +57,9 @@ defineProps<{
           :name="`i-heroicons-${componentProps.icon}`"
           class="h-5 w-5 text-current"
         />
-        <slot />
+        <div class="flex flex-col">
+          <slot />
+        </div>
       </div>
     </template>
   </div>

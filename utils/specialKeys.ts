@@ -1,0 +1,23 @@
+export const specialKeys = [
+  "meta", // Command key on Mac
+  "win",
+  "command",
+  "shift",
+  "ctrl",
+  "option",
+  "alt",
+  "enter",
+  "delete",
+  "backspace",
+  "escape",
+  "tab",
+  "capslock",
+  "arrowup",
+  "arrowdown",
+  "arrowleft",
+  "arrowright",
+  "pageup",
+  "pagedown",
+  "home",
+  "end",
+];

@@ -146,6 +146,7 @@ export async function parseMd(markdown: string): Promise<MdNode[]> {
         raw: line,
         text: trimmed.slice(depth).trim(),
         depth,
+        items: await parseLine(trimmed.slice(depth).trim()),
       });
     } else if (trimmed.startsWith("- ") || trimmed.startsWith("* ")) {
       listToPushTo.push({

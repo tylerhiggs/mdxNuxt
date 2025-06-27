@@ -168,6 +168,80 @@ const copied = ref(false);
     :node="node"
     :preview="props.preview"
   />
+  <template v-else-if="node.type === 'heading'">
+    <h1
+      v-if="node.depth === 1"
+      class="text-highlighted mb-8 text-4xl font-bold *:text-4xl"
+    >
+      <MdNode
+        v-for="(item, index) in node.items"
+        :key="index"
+        :node="item"
+        :preview="props.preview"
+      />
+    </h1>
+    <h2
+      v-else-if="node.depth === 2"
+      class="text-highlighted relative mt-12 mb-6 text-2xl font-bold *:text-2xl"
+    >
+      <MdNode
+        v-for="(item, index) in node.items"
+        :key="index"
+        :node="item"
+        :preview="props.preview"
+      />
+    </h2>
+    <h3
+      v-else-if="node.depth === 3"
+      class="text-highlighted relative mt-8 mb-3 text-xl font-bold *:text-xl"
+    >
+      <MdNode
+        v-for="(item, index) in node.items"
+        :key="index"
+        :node="item"
+        :preview="props.preview"
+      />
+    </h3>
+    <h4
+      v-else-if="node.depth === 4"
+      class="text-highlighted relative mt-6 mb-2 text-lg font-bold *:text-lg"
+    >
+      <MdNode
+        v-for="(item, index) in node.items"
+        :key="index"
+        :node="item"
+        :preview="props.preview"
+      />
+    </h4>
+    <h5
+      v-else-if="node.depth === 5"
+      class="text-highlighted relative mt-4 mb-1 text-base font-bold *:text-base"
+    >
+      <MdNode
+        v-for="(item, index) in node.items"
+        :key="index"
+        :node="item"
+        :preview="props.preview"
+      />
+    </h5>
+    <h6
+      v-else-if="node.depth === 6"
+      class="text-highlighted relative mt-2 mb-1 text-sm font-bold *:text-sm"
+    >
+      <MdNode
+        v-for="(item, index) in node.items"
+        :key="index"
+        :node="item"
+        :preview="props.preview"
+      />
+    </h6>
+    <div
+      v-if="node.depth && node.depth > 3 && props.preview"
+      class="mb-2 rounded border border-yellow-300 bg-yellow-100 px-3 py-2 text-sm text-yellow-800"
+    >
+      Warning: Heading levels greater than 3 are not recommended.
+    </div>
+  </template>
   <img
     v-else-if="node.type === 'image'"
     :src="
@@ -220,50 +294,6 @@ const copied = ref(false);
       :node="item"
       :preview="props.preview"
     />
-  </div>
-  <h1
-    v-else-if="node.type === 'heading' && node.depth === 1"
-    class="text-highlighted mb-8 text-4xl font-bold"
-  >
-    {{ node.text }}
-  </h1>
-  <h2
-    v-else-if="node.type === 'heading' && node.depth === 2"
-    class="text-highlighted relative mt-12 mb-6 text-2xl font-bold"
-  >
-    {{ node.text }}
-  </h2>
-  <h3
-    v-else-if="node.type === 'heading' && node.depth === 3"
-    class="text-highlighted relative mt-8 mb-3 text-xl font-bold"
-  >
-    {{ node.text }}
-  </h3>
-  <h4
-    v-else-if="node.type === 'heading' && node.depth === 4"
-    class="text-highlighted relative mt-6 mb-2 text-lg font-bold"
-  >
-    {{ node.text }}
-  </h4>
-  <h5
-    v-else-if="node.type === 'heading' && node.depth === 5"
-    class="text-highlighted relative mt-4 mb-1 text-base font-bold"
-  >
-    {{ node.text }}
-  </h5>
-  <h6
-    v-else-if="node.type === 'heading' && node.depth === 6"
-    class="text-highlighted relative mt-2 mb-1 text-sm font-bold"
-  >
-    {{ node.text }}
-  </h6>
-  <div
-    v-if="
-      node.type === 'heading' && node.depth && node.depth > 3 && props.preview
-    "
-    class="mb-2 rounded border border-yellow-300 bg-yellow-100 px-3 py-2 text-sm text-yellow-800"
-  >
-    Warning: Heading levels greater than 3 are not recommended.
   </div>
   <template v-if="node.type === 'text'">
     {{ node.text }}

@@ -2,7 +2,6 @@ import { expect, test } from "vitest";
 import { groupListItems, parseMd } from "./parseMd";
 import type { MdNode } from "~/shared/types";
 import { sanitizeUrl } from "@braintree/sanitize-url";
-import { language } from "happy-dom/lib/PropertySymbol.js";
 
 test("parseMd - empty input", async () => {
   const input = "";
@@ -34,24 +33,36 @@ test("parseMd - headings and paragraphs", async () => {
 ### Heading 3
 This is a paragraph with some text.`;
   const expectedOutput = [
-    {
+    expect.objectContaining({
       type: "heading",
-      raw: "# Heading 1",
-      text: "Heading 1",
       depth: 1,
-    },
-    {
+      items: [
+        expect.objectContaining({
+          type: "text",
+          text: "Heading 1",
+        }),
+      ],
+    }),
+    expect.objectContaining({
       type: "heading",
-      raw: "## Heading 2",
-      text: "Heading 2",
       depth: 2,
-    },
-    {
+      items: [
+        expect.objectContaining({
+          type: "text",
+          text: "Heading 2",
+        }),
+      ],
+    }),
+    expect.objectContaining({
       type: "heading",
-      raw: "### Heading 3",
-      text: "Heading 3",
       depth: 3,
-    },
+      items: [
+        expect.objectContaining({
+          type: "text",
+          text: "Heading 3",
+        }),
+      ],
+    }),
     {
       type: "paragraph",
       raw: "This is a paragraph with some text.",
@@ -78,24 +89,36 @@ This is a paragraph with **bold text** and *italic text*.
 [Link text](https://example.com)
 `;
   const expectedOutput = [
-    {
+    expect.objectContaining({
       type: "heading",
-      raw: "# Heading 1",
-      text: "Heading 1",
       depth: 1,
-    },
-    {
+      items: [
+        expect.objectContaining({
+          type: "text",
+          text: "Heading 1",
+        }),
+      ],
+    }),
+    expect.objectContaining({
       type: "heading",
-      raw: "## Heading 2",
-      text: "Heading 2",
       depth: 2,
-    },
-    {
+      items: [
+        expect.objectContaining({
+          type: "text",
+          text: "Heading 2",
+        }),
+      ],
+    }),
+    expect.objectContaining({
       type: "heading",
-      raw: "### Heading 3",
-      text: "Heading 3",
       depth: 3,
-    },
+      items: [
+        expect.objectContaining({
+          type: "text",
+          text: "Heading 3",
+        }),
+      ],
+    }),
     expect.objectContaining({
       type: "paragraph",
       items: [

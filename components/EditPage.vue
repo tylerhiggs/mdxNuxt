@@ -1,5 +1,11 @@
 <script setup lang="ts">
-import type { Page, PageUpdate, Block, Command } from "@/types/page";
+import type {
+  Page,
+  PageUpdate,
+  Block,
+  Command,
+  CommandOptions,
+} from "@/types/page";
 import { codeToTokens, type TokensResult } from "shiki";
 import type { MdNode } from "~/shared/types";
 const snackbarStore = useSnackbar();
@@ -233,13 +239,82 @@ const slash = (event: KeyboardEvent, block: Block) => {
   editMenuOpen.value = true;
 };
 
-const onEditMenuSelect = (command: Command | undefined) => {
+const onEditMenuSelect = (
+  command: Command | undefined,
+  commandOptions: CommandOptions | undefined,
+) => {
   editMenuOpen.value = false;
   setTimeout(() => {
     element.value?.focus();
   }, 0);
 
   switch (command) {
+    case "Accordion":
+      insertFormating(
+        "::accordion{type='multiple'}\n::accordion-item{label='First Item' icon='question-mark-circle'}\n",
+        "Add **markdown** content here",
+        "\n::\n::",
+      );
+      break;
+    case "Badge":
+      insertFormating(
+        "::badge{color='secondary'}\n",
+        "Label **here**",
+        "\n::\nColor: `primary`, `secondary`, `success`, `warning`, `error`, `info`, `neutral`",
+      );
+      break;
+    case "Callout":
+      insertFormating(
+        "::callout{icon='play-circle' color='info' link='https://heroicons.com'}\n",
+        "Click to see list of icons\nColor: `primary`, `secondary`, `success`, `warning`, `error`, `info`, `neutral`",
+        "\n::",
+      );
+      break;
+    case "Note":
+      insertFormating(
+        "::note\n",
+        "Here's some **additional information** for you.",
+        "\n::",
+      );
+      break;
+    case "Tip":
+      insertFormating(
+        "::tip\n",
+        "Here's a **helpful suggestion** for you.",
+        "\n::",
+      );
+      break;
+    case "Warning":
+      insertFormating(
+        "::warning\n",
+        "Be **careful** with this action as it might have unexpected results.",
+        "\n::",
+      );
+      break;
+    case "Caution":
+      insertFormating(
+        "::caution\n",
+        "This action **cannot** be undone.",
+        "\n::",
+      );
+      break;
+    case "Card":
+      insertFormating(
+        '::card{title="Startup" icon="users" color="secondary" link="https://heroicons.com"}\n',
+        "Click here to see __icons__.\nColors: `primary`, `secondary`, `success`, `warning`, `error`, `info`, `neutral`",
+        "\n::",
+      );
+      break;
+    case "Key Binding":
+      insertFormating(
+        ':kbd{name="',
+        commandOptions?.name || "add key here",
+        '"}',
+      );
+      break;
+    case "Icon":
+      insertFormating(':icon{name="', commandOptions?.name, '"}');
+      break;
     case "Bold":
       insertFormating("**", "bold", "**");
       break;
@@ -253,7 +328,11 @@ const onEditMenuSelect = (command: Command | undefined) => {
       insertFormating("`", "inline code", "`");
       break;
     case "Code Block":
-      insertFormating("```ts\n", "const isFalse = (b: boolean) => !b", "\n```");
+      insertFormating(
+        "```ts [isFalse.ts]\n",
+        "const isFalse = (b: boolean) => !b",
+        "\n```",
+      );
       break;
     case "Blockquote":
       insertFormating("> ", "", "");

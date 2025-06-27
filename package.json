@@ -13,10 +13,10 @@
   },
   "dependencies": {
     "@braintree/sanitize-url": "^7.1.1",
-    "@nuxt/ui": "latest",
+    "@nuxt/ui": "3.2.0",
     "@nuxthub/core": "latest",
     "drizzle-orm": "^0.40.0",
-    "nuxt": "latest",
+    "nuxt": "3.17.5",
     "nuxt-auth-utils": "0.5.17",
     "vue": "latest",
     "vue-router": "latest",

@@ -1,4 +1,4 @@
-import type { MdNode } from "~/shared/types";
+import type { ComponentProps, MdNode } from "~/shared/types";
 
 export type Page = {
   id: number;
@@ -66,4 +66,19 @@ export type Command =
   | "Divider"
   | "Heading 1"
   | "Heading 2"
-  | "Heading 3";
+  | "Heading 3"
+  | "Icon"
+  | "Key Binding"
+  | "Accordion"
+  | "Badge"
+  | "Callout"
+  | "Note"
+  | "Tip"
+  | "Warning"
+  | "Caution"
+  | "Card"
+  | "Card Group";
+
+export type CommandOptions = {
+  name?: string;
+};
