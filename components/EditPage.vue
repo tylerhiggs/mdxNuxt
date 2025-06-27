@@ -8,6 +8,7 @@ import type {
 } from "@/types/page";
 import { codeToTokens, type TokensResult } from "shiki";
 import type { MdNode } from "~/shared/types";
+import { getDefaultCommandItems } from "~/utils/getDefaultCommandItems";
 const snackbarStore = useSnackbar();
 const props = defineProps<{
   page: Page;
@@ -247,124 +248,11 @@ const onEditMenuSelect = (
   setTimeout(() => {
     element.value?.focus();
   }, 0);
-
-  switch (command) {
-    case "Accordion":
-      insertFormating(
-        "::accordion{type='multiple'}\n::accordion-item{label='First Item' icon='question-mark-circle'}\n",
-        "Add **markdown** content here",
-        "\n::\n::",
-      );
-      break;
-    case "Badge":
-      insertFormating(
-        "::badge{color='secondary'}\n",
-        "Label **here**",
-        "\n::\nColor: `primary`, `secondary`, `success`, `warning`, `error`, `info`, `neutral`",
-      );
-      break;
-    case "Callout":
-      insertFormating(
-        "::callout{icon='play-circle' color='info' link='https://heroicons.com'}\n",
-        "Click to see list of icons\nColor: `primary`, `secondary`, `success`, `warning`, `error`, `info`, `neutral`",
-        "\n::",
-      );
-      break;
-    case "Note":
-      insertFormating(
-        "::note\n",
-        "Here's some **additional information** for you.",
-        "\n::",
-      );
-      break;
-    case "Tip":
-      insertFormating(
-        "::tip\n",
-        "Here's a **helpful suggestion** for you.",
-        "\n::",
-      );
-      break;
-    case "Warning":
-      insertFormating(
-        "::warning\n",
-        "Be **careful** with this action as it might have unexpected results.",
-        "\n::",
-      );
-      break;
-    case "Caution":
-      insertFormating(
-        "::caution\n",
-        "This action **cannot** be undone.",
-        "\n::",
-      );
-      break;
-    case "Card":
-      insertFormating(
-        '::card{title="Startup" icon="users" color="secondary" link="https://heroicons.com"}\n',
-        "Click here to see __icons__.\nColors: `primary`, `secondary`, `success`, `warning`, `error`, `info`, `neutral`",
-        "\n::",
-      );
-      break;
-    case "Key Binding":
-      insertFormating(
-        ':kbd{name="',
-        commandOptions?.name || "add key here",
-        '"}',
-      );
-      break;
-    case "Icon":
-      insertFormating(':icon{name="', commandOptions?.name, '"}');
-      break;
-    case "Bold":
-      insertFormating("**", "bold", "**");
-      break;
-    case "Italic":
-      insertFormating("__", "italic", "__");
-      break;
-    case "Link":
-      insertFormating("[link text](", "url", ")");
-      break;
-    case "Inline Code":
-      insertFormating("`", "inline code", "`");
-      break;
-    case "Code Block":
-      insertFormating(
-        "```ts [isFalse.ts]\n",
-        "const isFalse = (b: boolean) => !b",
-        "\n```",
-      );
-      break;
-    case "Blockquote":
-      insertFormating("> ", "", "");
-      break;
-    case "Image":
-      fileUploadOpen.value = true;
-      break;
-    case "Inline Code - Syntax Highlighted":
-      insertFormating("`", "inline code", "`{lang='ts'}");
-      break;
-    case "Inline Code - Success":
-      insertFormating("`", "inline code", "`{color='success'}");
-      break;
-    case "Inline Code - Warning":
-      insertFormating("`", "inline code", "`{color='warning'}");
-      break;
-    case "Inline Code - Error":
-      insertFormating("`", "inline code", "`{color='error'}");
-      break;
-    case "Inline Code - Info":
-      insertFormating("`", "inline code", "`{color='info'}");
-      break;
-    case "Ordered List":
-      insertFormating("\n1. ", "List item", "");
-      break;
-    case "Unordered List":
-      insertFormating("\n- ", "List item", "");
-      break;
-    default:
-      insertFormating("/", "", "");
-      break;
+  if (command === "Image") {
+    fileUploadOpen.value = true;
+    return;
   }
+  insertFormating(...getDefaultCommandItems(command, commandOptions));
 };
 
 const uploadImage = (file: File) => {

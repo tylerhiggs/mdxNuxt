@@ -77,7 +77,15 @@ export type Command =
   | "Warning"
   | "Caution"
   | "Card"
-  | "Card Group";
+  | "Card Group"
+  | "Code Collapse"
+  | "Code Group"
+  | "Code Tree"
+  | "Collapsible"
+  | "Field"
+  | "Field Group"
+  | "Tabs"
+  | "Steps";
 
 export type CommandOptions = {
   name?: string;

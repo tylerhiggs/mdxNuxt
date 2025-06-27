@@ -18,10 +18,6 @@ const codeBlock = computed(() => {
 const filename = computed(() => {
   return codeBlock.value?.name || "";
 });
-const fileExtension = computed(() => {
-  const name = filename.value;
-  return name ? name.split(".").pop() : "";
-});
 const colorMode = useColorMode();
 const snackbar = useSnackbar();
 const copyCode = () => {
@@ -41,8 +37,8 @@ const copyCode = () => {
       class="flex items-center justify-between border-b border-neutral-300 px-2 py-1 dark:border-neutral-600"
     >
       <div class="flex items-center gap-1">
-        <UIcon :name="`i-vscode-icons:file-type-${fileExtension}`" />
-        <h3>{{ filename }}</h3>
+        <UIcon :name="`i-vscode-icons:file-type-${fileExtension(filename)}`" />
+        <h3 class="text-sm">{{ filename }}</h3>
       </div>
       <UButton
         class="invisible group-hover:visible"

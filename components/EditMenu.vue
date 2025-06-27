@@ -156,6 +156,51 @@ const options = computed(
             suffix: "Insert a card component",
             icon: "i-heroicons-credit-card",
           },
+          {
+            label: "Card Group",
+            suffix: "Insert a card group component",
+            icon: "i-heroicons-credit-card",
+          },
+          {
+            label: "Code Collapse",
+            suffix: "Insert a collapsible code block component",
+            icon: "i-heroicons-code-bracket-square",
+          },
+          {
+            label: "Code Group",
+            suffix: "Insert a code group component",
+            icon: "i-heroicons-code-bracket-square",
+          },
+          {
+            label: "Code Tree",
+            suffix: "Insert a code tree component",
+            icon: "i-heroicons-code-bracket-square",
+          },
+          {
+            label: "Collapsible",
+            suffix: "Insert a collapsible component",
+            icon: "i-heroicons-chevron-down",
+          },
+          {
+            label: "Field",
+            suffix: "Insert a field component",
+            icon: "i-heroicons-bars-3-center-left",
+          },
+          {
+            label: "Field Group",
+            suffix: "Insert a field group component",
+            icon: "i-heroicons-bars-3-center-left",
+          },
+          {
+            label: "Tabs",
+            suffix: "Insert a tabs component",
+            icon: "i-heroicons-square-2-stack",
+          },
+          {
+            label: "Steps",
+            suffix: "Insert a steps component",
+            icon: "i-heroicons-numbered-list",
+          },
         ],
       },
       {
