@@ -6,10 +6,24 @@ const open = defineModel<boolean>("open");
 const emits = defineEmits<{
   optionSelected: [Command | undefined, CommandOptions | undefined];
 }>();
+const searchTerm = ref("");
 
 const options = computed(
   () =>
     [
+      {
+        id: "custom-input",
+        items: [
+          {
+            label: "Custom Input",
+            suffix: `Insert '/${searchTerm.value}'`,
+            icon: "i-heroicons-cursor-arrow-rays",
+            commandOptions: {
+              name: `/${searchTerm.value}`,
+            },
+          },
+        ],
+      },
       {
         id: "media",
         label: "Media",
@@ -242,6 +256,7 @@ const options = computed(
     <template #content>
       <UCommandPalette
         :groups="options"
+        v-model:search-term="searchTerm"
         @update:model-value="
           (value) =>
             emits(

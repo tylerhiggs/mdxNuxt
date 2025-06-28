@@ -1,10 +1,11 @@
-import type { ComponentProps, MdNode } from "~/shared/types";
+import type { MdNode } from "~/shared/types";
 
 export type Page = {
   id: number;
   title: string;
   emoji: string;
   blocks: Block[];
+  coverUrl?: string;
   path: {
     id: number;
     title: string;
@@ -85,7 +86,8 @@ export type Command =
   | "Field"
   | "Field Group"
   | "Tabs"
-  | "Steps";
+  | "Steps"
+  | "Custom Input";
 
 export type CommandOptions = {
   name?: string;

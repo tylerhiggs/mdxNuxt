@@ -202,7 +202,7 @@ export async function parseLine(mdLine: string): Promise<MdNode[]> {
   const tokens: MdNode[] = [];
   const parts = mdLine
     .split(
-      /(\*\*.*?\*\*|\*.*?\*|__.*?__|`.*?`\{.*?\}|`.*?`|!\[.*?\]\(.*?\)|\[.*?\]\(.*?\)|:[\w-]+\{.*?\})/g,
+      /(\*\*.*?\*\*|\*.*?\*|__.*?__|`.*?`\{.*?\}|`.*?`|!\[.*?\]\(.*?\)|\[.*?\]\(.*?\)|:[\w-]+\{.*?\}|https?:\/\/[^\s<>"'`]*[^\s<>"'`.,;:!?)]?)/g,
     )
     .filter(Boolean);
 
@@ -315,6 +315,14 @@ export async function parseLine(mdLine: string): Promise<MdNode[]> {
           href: sanitizeUrl(match[2]),
         });
       }
+    } else if (part.startsWith("http://") || part.startsWith("https://")) {
+      // Handle plain URLs
+      tokens.push({
+        type: "link",
+        raw: part,
+        text: part,
+        href: sanitizeUrl(part),
+      });
     } else {
       tokens.push({
         type: "text",

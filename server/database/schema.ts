@@ -29,6 +29,7 @@ export const pages = sqliteTable(
       .references(() => users.id, { onDelete: "cascade" }),
     title: text("title").notNull(),
     emoji: text("emoji").notNull(),
+    coverUrl: text("coverUrl").notNull().default(""),
     isPublic: integer("isPublic", { mode: "boolean" }).notNull().default(false),
     isFavorite: integer("isFavorite", { mode: "boolean" })
       .notNull()

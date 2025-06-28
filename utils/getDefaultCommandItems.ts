@@ -5,6 +5,8 @@ export const getDefaultCommandItems = (
   commandOptions?: CommandOptions,
 ): [string, string | undefined, string] => {
   switch (command) {
+    case "Custom Input":
+      return ["", commandOptions?.name || "", ""];
     case "Accordion":
       return [
         `::accordion{type='multiple'}

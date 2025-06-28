@@ -7,12 +7,13 @@ export default eventHandler(async (event) => {
     console.error("Invalid page ID:", id);
     throw createError({ statusCode: 400, message: "Page ID is required" });
   }
-  const { title, emoji, isPublic, isFavorite } = await readBody<
+  const { title, emoji, isPublic, isFavorite, coverUrl } = await readBody<
     Partial<{
       title: string;
       emoji: string;
       isPublic: boolean;
       isFavorite: boolean;
+      coverUrl: string;
     }>
   >(event);
   const drizzle = useDrizzle();
@@ -22,6 +23,7 @@ export default eventHandler(async (event) => {
     .select({
       id: tables.pages.id,
       path: tables.pages.path,
+      coverUrl: tables.pages.coverUrl,
     })
     .from(tables.pages)
     .where(eq(tables.pages.id, Number(id)))
@@ -29,6 +31,9 @@ export default eventHandler(async (event) => {
 
   if (!previousPage) {
     throw createError({ statusCode: 404, message: "Page not found" });
+  }
+  if (coverUrl === "" && previousPage.coverUrl) {
+    await hubBlob().delete(previousPage.coverUrl);
   }
 
   const prevPath = JSON.parse(previousPage.path) as {
@@ -57,6 +62,7 @@ export default eventHandler(async (event) => {
       emoji,
       isPublic,
       isFavorite,
+      coverUrl,
       lastUpdatedAt: new Date(),
       lastUpdatedByName: user.name,
       path,

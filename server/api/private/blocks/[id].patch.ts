@@ -30,26 +30,24 @@ export default eventHandler(async (event) => {
   if (!block) {
     throw createError({ statusCode: 500, message: "Block update failed" });
   }
-  const pageImages = await hubBlob().list({
+  const storedPageImages = await hubBlob().list({
     prefix: `images/${user.email}/${block.pageId}`,
   });
   const imgMatches = textContent.match(/!\[.*?\]\((.*?)\)/g) || [];
-  const imageUrls = imgMatches
+  const imageUrlsFromText = imgMatches
     .map((match) => {
       const urlMatch = match.match(/\((.*?)\)/);
       return urlMatch ? urlMatch[1] : null;
     })
     .filter(Boolean);
-  const missingImages = imageUrls.filter(
-    (url) => !pageImages.blobs.some((item) => item.pathname === url),
+  const storedImagesNotInText = storedPageImages.blobs.filter(
+    ({ pathname: url }) =>
+      !imageUrlsFromText.includes(url) &&
+      !url.startsWith(`images/${user.email}/${block.pageId}/cover/cover-`) &&
+      !url?.startsWith("https://") &&
+      !url?.startsWith("http://"),
   );
-  missingImages.forEach((url) => {
-    if (url?.startsWith("https://") || url?.startsWith("http://") || !url) {
-      return;
-    }
-    console.warn(`Deleting missing image: ${url}`);
-    hubBlob().del(url);
-  });
+  hubBlob().delete(storedImagesNotInText.map((item) => item.pathname));
   return {
     statusCode: 200,
     body: { ...block },

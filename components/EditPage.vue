@@ -231,6 +231,7 @@ watch([() => props.page.blocks, () => colorMode.value], async ([blocks]) => {
 
 const editMenuOpen = ref(false);
 const fileUploadOpen = ref(false);
+const isFileUploadCover = ref(false);
 const slash = (event: KeyboardEvent, block: Block) => {
   if (event.key !== "/") {
     return;
@@ -250,6 +251,7 @@ const onEditMenuSelect = (
   }, 0);
   if (command === "Image") {
     fileUploadOpen.value = true;
+    isFileUploadCover.value = false;
     return;
   }
   insertFormating(...getDefaultCommandItems(command, commandOptions));
@@ -263,24 +265,34 @@ const uploadImage = (file: File) => {
     body: form,
     query: {
       pageId: props.page.id,
+      isCover: isFileUploadCover.value,
     },
   })
     .then((res) => {
-      if (res && res.pathname) {
-        const fileName = file.name;
-        fileUploadOpen.value = false;
-        snackbarStore.enqueue("Image uploaded successfully", "success");
-        setTimeout(() => {
-          element.value?.focus();
-        }, 0);
-        insertFormating("![", fileName, `](${res.pathname})`);
-      } else {
+      if (!res || !res.pathname) {
         snackbarStore.enqueue("Failed to upload image", "error");
+        return;
       }
+      if (isFileUploadCover.value) {
+        emits("updatePage", { id: props.page.id, coverUrl: res.pathname });
+        return;
+      }
+      const fileName = file.name;
+      fileUploadOpen.value = false;
+      snackbarStore.enqueue("Image uploaded successfully", "success");
+      setTimeout(() => {
+        element.value?.focus();
+      }, 0);
+      insertFormating("![", fileName, `](${res.pathname})`);
     })
     .catch(() => {
       snackbarStore.enqueue("Failed to upload image", "error");
     });
+};
+
+const deleteCover = () => {
+  emits("updatePage", { id: props.page.id, coverUrl: "" });
+  snackbarStore.enqueue("Cover removed successfully", "success");
 };
 </script>
 
@@ -302,6 +314,17 @@ const uploadImage = (file: File) => {
         :nodes="mdNodes || []"
         @favoritePage="favoritePage"
         @togglePreview="previewPage = !previewPage"
+      />
+    </div>
+    <div v-if="props.page.coverUrl" class="relative flex-initial">
+      <img
+        :src="
+          !props.page.coverUrl?.includes('https://')
+            ? `/api/private/avatars/${props.page.coverUrl}`
+            : props.page.coverUrl
+        "
+        alt="Page Cover"
+        class="h-64 w-full object-cover"
       />
     </div>
     <div class="relative flex w-full flex-auto overflow-hidden">
@@ -333,23 +356,25 @@ const uploadImage = (file: File) => {
                 <button
                   class="mr-1 flex items-center rounded-md p-1 hover:bg-gray-100 dark:hover:bg-stone-600"
                   @click="
-                    () => snackbarStore.enqueue('Not implemented', 'warning')
+                    () => {
+                      fileUploadOpen = true;
+                      isFileUploadCover = true;
+                    }
                   "
                 >
                   <UIcon name="i-heroicons-photo" class="mr-2 size-5" />
-                  Add cover
+                  {{ props.page.coverUrl ? "Change Cover" : "Add Cover" }}
                 </button>
                 <button
-                  class="flex items-center rounded-md p-1 hover:bg-gray-100 dark:hover:bg-stone-600"
-                  @click="
-                    () => snackbarStore.enqueue('Not implemented', 'warning')
-                  "
+                  class="mr-1 flex items-center rounded-md p-1 hover:bg-gray-100 dark:hover:bg-stone-600"
+                  @click="deleteCover"
                 >
                   <UIcon
-                    name="i-heroicons-chat-bubble-bottom-center-text"
+                    v-if="props.page.coverUrl"
+                    name="i-heroicons-trash"
                     class="mr-2 size-5"
                   />
-                  Add comment
+                  Remove Cover
                 </button>
               </div>
 

@@ -1,0 +1,1 @@
+ALTER TABLE `pages` ADD `coverUrl` text DEFAULT '' NOT NULL;
