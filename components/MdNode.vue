@@ -252,7 +252,7 @@ const copied = ref(false);
         : node.href
     "
     :alt="node.text"
-    class="m-4"
+    class="my-4 rounded object-contain"
   />
   <ul
     v-else-if="node.type === 'list-items'"

@@ -294,6 +294,7 @@ const deleteCover = () => {
   emits("updatePage", { id: props.page.id, coverUrl: "" });
   snackbarStore.enqueue("Cover removed successfully", "success");
 };
+const newCoverUrl = ref("");
 </script>
 
 <template>
@@ -316,17 +317,6 @@ const deleteCover = () => {
         @togglePreview="previewPage = !previewPage"
       />
     </div>
-    <div v-if="props.page.coverUrl" class="relative flex-initial">
-      <img
-        :src="
-          !props.page.coverUrl?.includes('https://')
-            ? `/api/private/avatars/${props.page.coverUrl}`
-            : props.page.coverUrl
-        "
-        alt="Page Cover"
-        class="h-64 w-full object-cover"
-      />
-    </div>
     <div class="relative flex w-full flex-auto overflow-hidden">
       <div
         class="flex h-full flex-col overflow-y-auto"
@@ -335,8 +325,26 @@ const deleteCover = () => {
           'w-7/12': previewPage,
         }"
       >
-        <div class="z-0 flex flex-initial justify-center">
-          <div class="flex w-8/12 flex-col">
+        <div
+          class="relative z-0 flex w-full flex-initial justify-center"
+          :class="{ 'h-96': props.page.coverUrl }"
+        >
+          <div
+            v-if="props.page.coverUrl"
+            class="absolute top-0 right-0 left-0 z-0 h-64"
+          >
+            <img
+              :src="
+                !props.page.coverUrl?.includes('https://')
+                  ? `/api/private/avatars/${props.page.coverUrl}`
+                  : props.page.coverUrl
+              "
+              alt="Page Cover"
+              style="object-position: center 20%"
+              class="h-64 w-full object-cover"
+            />
+          </div>
+          <div class="z-10 flex w-8/12 flex-col justify-end">
             <div class="group pt-12">
               <UPopover>
                 <UButton
@@ -353,29 +361,82 @@ const deleteCover = () => {
               <div
                 class="invisible my-1 flex items-center text-xs text-gray-400 group-hover:visible"
               >
-                <button
-                  class="mr-1 flex items-center rounded-md p-1 hover:bg-gray-100 dark:hover:bg-stone-600"
-                  @click="
-                    () => {
-                      fileUploadOpen = true;
-                      isFileUploadCover = true;
-                    }
-                  "
-                >
-                  <UIcon name="i-heroicons-photo" class="mr-2 size-5" />
-                  {{ props.page.coverUrl ? "Change Cover" : "Add Cover" }}
-                </button>
-                <button
-                  class="mr-1 flex items-center rounded-md p-1 hover:bg-gray-100 dark:hover:bg-stone-600"
+                <UPopover mode="hover">
+                  <UButton
+                    variant="ghost"
+                    color="neutral"
+                    class="mr-1"
+                    @click="
+                      () => {
+                        fileUploadOpen = true;
+                        isFileUploadCover = true;
+                      }
+                    "
+                    icon="i-heroicons-photo"
+                  >
+                    {{ props.page.coverUrl ? "Change Cover" : "Add Cover" }}
+                  </UButton>
+                  <template #content>
+                    <UButtonGroup orientation="vertical">
+                      <UButton
+                        variant="ghost"
+                        color="neutral"
+                        @click="
+                          () => {
+                            fileUploadOpen = true;
+                            isFileUploadCover = true;
+                          }
+                        "
+                      >
+                        <UIcon name="i-heroicons-photo" class="mr-2 size-5" />
+                        Upload Cover Photo
+                      </UButton>
+                      <UButtonGroup>
+                        <UInput
+                          v-model="newCoverUrl"
+                          placeholder="Enter Cover URL"
+                          @keydown.enter="
+                            () =>
+                              emits(
+                                'updatePage',
+                                {
+                                  id: props.page.id,
+                                  coverUrl: newCoverUrl,
+                                },
+                                true,
+                              )
+                          "
+                        />
+                        <UButton
+                          variant="ghost"
+                          color="neutral"
+                          @click="
+                            () =>
+                              emits(
+                                'updatePage',
+                                {
+                                  id: props.page.id,
+                                  coverUrl: newCoverUrl,
+                                },
+                                true,
+                              )
+                          "
+                          label="Save"
+                        />
+                      </UButtonGroup>
+                    </UButtonGroup>
+                  </template>
+                </UPopover>
+                <UButton
+                  variant="ghost"
+                  color="neutral"
+                  class="mr-1"
                   @click="deleteCover"
+                  v-if="props.page.coverUrl"
+                  icon="i-heroicons-trash"
                 >
-                  <UIcon
-                    v-if="props.page.coverUrl"
-                    name="i-heroicons-trash"
-                    class="mr-2 size-5"
-                  />
                   Remove Cover
-                </button>
+                </UButton>
               </div>
 
               <h1 class="mt-1 w-full text-4xl font-bold">
@@ -449,12 +510,25 @@ const deleteCover = () => {
       </div>
       <div
         v-if="previewPage"
-        class="flex w-5/12 flex-col overflow-y-auto border-l border-l-stone-300"
+        class="relative flex w-5/12 flex-col overflow-y-auto border-l border-l-stone-300"
       >
-        <div class="flex flex-initial items-center gap-2 p-4">
+        <div v-if="props.page.coverUrl" class="h-64 w-full">
+          <img
+            :src="
+              !props.page.coverUrl?.includes('https://')
+                ? `/api/private/avatars/${props.page.coverUrl}`
+                : props.page.coverUrl
+            "
+            alt="Page Cover"
+            style="object-position: center 20%"
+            class="h-64 w-full object-cover"
+          />
+        </div>
+        <div class="z-10 flex flex-initial items-center gap-2 p-4">
           <p class="text-5xl">{{ page.emoji }}</p>
           <p class="text-lg font-semibold">{{ page.title }}</p>
         </div>
+
         <div class="flex flex-auto flex-col p-4">
           <div
             v-for="(block, index) in page.blocks"

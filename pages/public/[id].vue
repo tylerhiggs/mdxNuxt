@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { type MdNode } from "~/shared/types";
-
 definePageMeta({
   layout: "default",
   validate({ params }) {
@@ -48,41 +46,33 @@ useHead({
     },
   ],
 });
-
-/**
- * This is the re-computed array of rendered Markdown nodes that
- * replaces the original `renderedMd` in the page blocks that
- * are hydrated from the server and present on first render.
- *
- * We need to re-render the Markdown nodes when the system color
- * mode changes (dark/light mode) because of syntax highlighting
- * and other styles that depend on the color mode.
- */
-const renderedMdNodes = ref<MdNode[][]>([]);
 </script>
 
 <template>
   <div v-if="page" class="flex justify-center">
     <div class="flex w-8/12 flex-col p-4">
+      <div v-if="page.coverUrl" class="h-64 w-full">
+        <img
+          :src="
+            !page.coverUrl?.includes('https://')
+              ? `/api/private/avatars/${page.coverUrl}`
+              : page.coverUrl
+          "
+          alt="Page Cover"
+          style="object-position: center 20%"
+          class="h-64 w-full object-cover"
+        />
+      </div>
       <div class="mb-4 flex items-center gap-4">
         <div class="text-5xl">{{ page.emoji }}</div>
         <h1 class="text-4xl font-bold">{{ page.title }}</h1>
       </div>
-      <div v-for="(block, blockIndex) in page.blocks" :key="block.id">
+      <div v-for="block in page.blocks" :key="block.id">
         <div
           v-if="block.type === 'text' && block.renderedMd"
-          v-for="(node, nodeIndex) in block.renderedMd"
+          v-for="node in block.renderedMd"
         >
-          <MdNode
-            v-if="!renderedMdNodes.length"
-            :node="node"
-            :preview="false"
-          />
-          <MdNode
-            v-else
-            :node="renderedMdNodes[blockIndex][nodeIndex]"
-            :preview="false"
-          />
+          <MdNode :node="node" :preview="false" />
         </div>
       </div>
     </div>
