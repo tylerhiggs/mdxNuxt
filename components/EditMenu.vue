@@ -29,8 +29,13 @@ const options = computed(
         label: "Media",
         items: [
           {
-            label: "Image",
+            label: "Upload Image",
             suffix: "Insert an image",
+            icon: "i-heroicons-photo",
+          },
+          {
+            label: "Image Url",
+            suffix: "Insert an image URL",
             icon: "i-heroicons-photo",
           },
         ],

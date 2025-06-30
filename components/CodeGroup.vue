@@ -45,48 +45,49 @@ const fileExtension = (name: string | undefined) => {
 </script>
 
 <template>
-  <div
-    class="group my-2 rounded border border-neutral-200 bg-neutral-50 shadow-sm dark:border-neutral-700 dark:bg-neutral-900"
-  >
-    <div
-      class="flex items-center justify-between border-b border-neutral-300 px-2 py-1 dark:border-neutral-600"
-    >
-      <div class="flex max-w-11/12 items-center gap-1 overflow-x-auto">
-        <UButton
-          v-for="(item, index) in codeGroups"
-          :key="index"
-          :color="'neutral'"
-          :active="tabIndex === index"
-          :icon="`i-vscode-icons:file-type-${fileExtension(item.name)}`"
-          :variant="tabIndex === index ? 'subtle' : 'ghost'"
-          @click="tabIndex = index"
-        >
-          {{ item.name }}
-        </UButton>
-      </div>
-      <UButton
-        class="invisible group-hover:visible"
-        size="sm"
-        variant="ghost"
-        color="neutral"
-        icon="i-heroicons-clipboard-document"
-        @click="copyCode"
-      />
-    </div>
-
-    <div class="relative">
-      <div class="p-3 text-sm">
-        <CodeBlock
-          v-if="codeGroups[tabIndex]?.text"
-          :code="codeGroups[tabIndex]?.text || ''"
-          :language="codeGroups[tabIndex]?.language"
-          :syntax-highlighted-tokens="
-            colorMode.value === 'dark'
-              ? codeGroups[tabIndex]?.darkSyntaxHighlightedTokens
-              : codeGroups[tabIndex]?.syntaxHighlightedTokens
-          "
-        />
-      </div>
-    </div>
+  <div class="group my-2 shadow-sm">
+    <MyCard>
+      <template #header>
+        <div class="flex items-center justify-between px-2 py-1">
+          <div class="flex max-w-11/12 items-center gap-1 overflow-x-auto">
+            <UButton
+              v-for="(item, index) in codeGroups"
+              :key="index"
+              :color="'neutral'"
+              :active="tabIndex === index"
+              :icon="`i-vscode-icons:file-type-${fileExtension(item.name)}`"
+              :variant="tabIndex === index ? 'subtle' : 'ghost'"
+              @click="tabIndex = index"
+            >
+              {{ item.name }}
+            </UButton>
+          </div>
+          <UButton
+            class="invisible group-hover:visible"
+            size="sm"
+            variant="ghost"
+            color="neutral"
+            icon="i-heroicons-clipboard-document"
+            @click="copyCode"
+          />
+        </div>
+      </template>
+      <template #content>
+        <div class="relative">
+          <div class="p-3 text-sm">
+            <CodeBlock
+              v-if="codeGroups[tabIndex]?.text"
+              :code="codeGroups[tabIndex]?.text || ''"
+              :language="codeGroups[tabIndex]?.language"
+              :syntax-highlighted-tokens="
+                colorMode.value === 'dark'
+                  ? codeGroups[tabIndex]?.darkSyntaxHighlightedTokens
+                  : codeGroups[tabIndex]?.syntaxHighlightedTokens
+              "
+            />
+          </div>
+        </div>
+      </template>
+    </MyCard>
   </div>
 </template>

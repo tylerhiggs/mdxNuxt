@@ -50,7 +50,8 @@ export type PageItem = {
 };
 
 export type Command =
-  | "Image"
+  | "Upload Image"
+  | "Image Url"
   | "Bold"
   | "Italic"
   | "Link"

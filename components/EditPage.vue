@@ -249,7 +249,7 @@ const onEditMenuSelect = (
   setTimeout(() => {
     element.value?.focus();
   }, 0);
-  if (command === "Image") {
+  if (command === "Upload Image") {
     fileUploadOpen.value = true;
     isFileUploadCover.value = false;
     return;

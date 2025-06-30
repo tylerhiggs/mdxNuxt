@@ -114,39 +114,44 @@ const copyCode = () => {
       <UTree :items="treeItems" />
     </div>
     <div
-      class="group h-full min-w-8/12 overflow-auto rounded-r border border-neutral-200 bg-neutral-50 dark:border-neutral-700 dark:bg-neutral-900"
+      class="group h-full min-w-8/12 overflow-auto *:h-full *:rounded-l-none"
     >
-      <div
-        class="flex items-center justify-between border-b border-neutral-300 px-2 py-1 dark:border-neutral-600"
-      >
-        <div class="flex max-w-11/12 items-center gap-1 overflow-x-auto">
-          <UIcon :name="currentIcon" />
-          {{ selected?.name?.split("/").pop() || "Code" }}
-        </div>
-        <UButton
-          class="invisible group-hover:visible"
-          size="sm"
-          variant="ghost"
-          color="neutral"
-          icon="i-heroicons-clipboard-document"
-          @click="copyCode"
-        />
-      </div>
-
-      <div class="relative overflow-auto">
-        <div class="p-3 text-sm">
-          <CodeBlock
-            v-if="selected?.text"
-            :code="selected?.text || ''"
-            :language="selected?.language"
-            :syntax-highlighted-tokens="
-              colorMode.value === 'dark'
-                ? selected?.darkSyntaxHighlightedTokens
-                : selected?.syntaxHighlightedTokens
-            "
-          />
-        </div>
-      </div>
+      <MyCard>
+        <template #header>
+          <div
+            class="flex items-center justify-between border-b border-neutral-300 px-2 py-1 dark:border-neutral-600"
+          >
+            <div class="flex max-w-11/12 items-center gap-1 overflow-x-auto">
+              <UIcon :name="currentIcon" />
+              {{ selected?.name?.split("/").pop() || "Code" }}
+            </div>
+            <UButton
+              class="invisible group-hover:visible"
+              size="sm"
+              variant="ghost"
+              color="neutral"
+              icon="i-heroicons-clipboard-document"
+              @click="copyCode"
+            />
+          </div>
+        </template>
+        <template #content>
+          <div class="relative overflow-auto">
+            <div class="p-3 text-sm">
+              <CodeBlock
+                v-if="selected?.text"
+                :code="selected?.text || ''"
+                :language="selected?.language"
+                :syntax-highlighted-tokens="
+                  colorMode.value === 'dark'
+                    ? selected?.darkSyntaxHighlightedTokens
+                    : selected?.syntaxHighlightedTokens
+                "
+              />
+            </div>
+          </div>
+        </template>
+      </MyCard>
     </div>
   </div>
 </template>

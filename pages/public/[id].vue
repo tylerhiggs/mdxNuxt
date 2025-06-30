@@ -54,7 +54,7 @@ useHead({
       <div v-if="page.coverUrl" class="h-64 w-full">
         <img
           :src="
-            !page.coverUrl?.includes('https://')
+            !/^https?:\/\//.test(page.coverUrl)
               ? `/api/private/avatars/${page.coverUrl}`
               : page.coverUrl
           "

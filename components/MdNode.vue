@@ -362,29 +362,59 @@ const copied = ref(false);
   </a>
   <div
     v-if="node.type === 'code-block' && node.text"
-    class="group relative my-2 rounded-lg bg-stone-50 p-3 text-sm shadow-sm *:overflow-auto dark:bg-stone-800 **:[.line]:isolate **:[.line]:not-last:min-h-[1lh]"
+    class="group relative my-2 text-sm **:[.line]:isolate **:[.line]:not-last:min-h-[1lh]"
   >
-    <UButton
-      class="invisible absolute top-2 right-2 z-10 group-hover:visible"
-      size="sm"
-      variant="ghost"
-      color="neutral"
-      :icon="
-        copied
-          ? 'i-heroicons-clipboard-document-check'
-          : 'i-heroicons-clipboard-document'
-      "
-      @click="() => copyCode(node.text || '')"
-    />
-    <CodeBlock
-      :code="node.text"
-      :language="node.language"
-      :syntaxHighlightedTokens="
-        colorMode.value === 'light'
-          ? node.syntaxHighlightedTokens
-          : node.darkSyntaxHighlightedTokens
-      "
-    />
+    <MyCard>
+      <template #header v-if="node.name">
+        <div class="flex items-center justify-between p-1.5">
+          <div class="flex items-center gap-1.5">
+            <UIcon
+              :name="`i-vscode-icons:file-type-${fileExtension(node.language || 'text')}`"
+              class="h-5 w-5"
+            />
+            <span class="text-sm">{{ node.name }}</span>
+          </div>
+          <UButton
+            class="invisible z-10 group-hover:visible"
+            size="sm"
+            variant="ghost"
+            color="neutral"
+            :icon="
+              copied
+                ? 'i-heroicons-clipboard-document-check'
+                : 'i-heroicons-clipboard-document'
+            "
+            @click="() => copyCode(node.text || '')"
+          />
+        </div>
+      </template>
+      <template #content>
+        <div class="p-2">
+          <UButton
+            v-if="!node.name"
+            class="invisible absolute top-2 right-2 z-10 group-hover:visible"
+            size="sm"
+            variant="ghost"
+            color="neutral"
+            :icon="
+              copied
+                ? 'i-heroicons-clipboard-document-check'
+                : 'i-heroicons-clipboard-document'
+            "
+            @click="() => copyCode(node.text || '')"
+          />
+          <CodeBlock
+            :code="node.text"
+            :language="node.language"
+            :syntaxHighlightedTokens="
+              colorMode.value === 'light'
+                ? node.syntaxHighlightedTokens
+                : node.darkSyntaxHighlightedTokens
+            "
+          />
+        </div>
+      </template>
+    </MyCard>
   </div>
   <hr v-if="node.type === 'hr'" class="border-default my-12 border-t" />
 </template>

@@ -357,6 +357,16 @@ export default defineNuxtConfig({
       return ["\n1. ", "List item", ""];
     case "Unordered List":
       return ["\n- ", "List item", ""];
+    case "Divider":
+      return ["\n---\n", "", ""];
+    case "Heading 1":
+      return ["# ", "Heading 1", ""];
+    case "Heading 2":
+      return ["## ", "Heading 2", ""];
+    case "Heading 3":
+      return ["### ", "Heading 3", ""];
+    case "Image Url":
+      return ["![image alt text](", "image-url", ")"];
     default:
       return ["/", "", ""];
   }
