@@ -28,6 +28,7 @@ const element = computed(() => {
   return elements.value.find((el) => Number(el.id) === focusedBlockId.value);
 });
 const elements = ref<HTMLTextAreaElement[]>([]);
+const caretPosition = ref(0);
 
 watch(element, (el) => {
   if (el) {
@@ -212,22 +213,36 @@ watch([() => props.page.blocks, () => colorMode.value], async ([blocks]) => {
 });
 
 const syntaxHighlightedTokens = ref<TokensResult[]>([]);
-watch([() => props.page.blocks, () => colorMode.value], async ([blocks]) => {
-  if (!blocks || !blocks.length) {
-    return;
-  }
-  syntaxHighlightedTokens.value = await Promise.all(
-    blocks.map((block) =>
-      codeToTokens(block.textContent, {
-        lang: "mdc",
-        theme:
-          colorMode.value === "light"
-            ? "material-theme-lighter"
-            : "material-theme-darker",
-      }),
-    ),
-  );
-});
+watch(
+  [() => props.page.blocks, () => colorMode.value, caretPosition],
+  async ([blocks]) => {
+    if (!blocks || !blocks.length) {
+      return;
+    }
+    const tokens = await Promise.all(
+      blocks.map((block) =>
+        codeToTokens(block.textContent, {
+          lang: "mdc",
+          theme:
+            colorMode.value === "light"
+              ? "material-theme-lighter"
+              : "material-theme-darker",
+        }),
+      ),
+    );
+    const caretLineIndex =
+      (element.value?.value ?? "").slice(0, caretPosition.value).split("\n")
+        .length - 1 || 0;
+    syntaxHighlightedTokens.value = tokens.map((blockTokenResult) => ({
+      ...blockTokenResult,
+      tokens: blockTokenResult.tokens.map((line, index) =>
+        index === caretLineIndex && !line.length
+          ? [{ content: "Press '/' for commands", color: "gray", offset: 0 }]
+          : line,
+      ),
+    }));
+  },
+);
 
 const editMenuOpen = ref(false);
 const fileUploadOpen = ref(false);
@@ -500,8 +515,16 @@ const newCoverUrl = ref("");
               @keydown.shift.tab.prevent="() => tab(block, true)"
               @keydown="
                 (event) => {
+                  caretPosition = (event.target as HTMLTextAreaElement)
+                    .selectionStart;
                   paren(event, block);
                   slash(event, block);
+                }
+              "
+              @click="
+                (event) => {
+                  caretPosition = (event.target as HTMLTextAreaElement)
+                    .selectionStart;
                 }
               "
             />
