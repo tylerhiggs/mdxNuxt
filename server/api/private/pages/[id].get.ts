@@ -37,7 +37,10 @@ export default eventHandler(async (event) => {
                 ...block,
                 renderedMd: JSON.parse(block.renderedMd) as MdNode[],
               }
-            : block,
+            : {
+                ...block,
+                renderedMd: [],
+              },
         ),
       ),
     },

@@ -1,28 +1,15 @@
 <script setup lang="ts">
-import type {
-  Page,
-  PageUpdate,
-  Block,
-  Command,
-  CommandOptions,
-} from "@/types/page";
+import type { Block, Command, CommandOptions } from "@/types/page";
 import { codeToTokens, type TokensResult } from "shiki";
 import type { MdNode } from "~/shared/types";
 import { getDefaultCommandItems } from "~/utils/getDefaultCommandItems";
 const snackbarStore = useSnackbar();
-const props = defineProps<{
-  page: Page;
-  isSaved: boolean;
-}>();
 
-const emits = defineEmits<{
-  updatePage: [page: PageUpdate, instantSave?: boolean];
-  updateBlock: [pageId: number, blockId: number, content: string];
-}>();
+const { currentPage: page, updatePage, updateBlock } = usePageState();
 
 const previewPage = ref(false);
 const focusedBlockId = ref(
-  props.page.blocks.length ? props.page.blocks[0].id : undefined,
+  page.value?.blocks.length ? page.value.blocks[0].id : undefined,
 );
 const element = computed(() => {
   return elements.value.find((el) => Number(el.id) === focusedBlockId.value);
@@ -36,24 +23,12 @@ watch(element, (el) => {
   }
 });
 
-const updateTitle = (event: Event) => {
-  const target = event.target as HTMLInputElement;
-  emits("updatePage", { id: props.page.id, title: target.value });
-};
-const favoritePage = () => {
-  emits(
-    "updatePage",
-    { id: props.page.id, isFavorite: !props.page.isFavorite },
-    true,
-  );
-};
-const selectEmoji = (emoji: string) => {
-  emits("updatePage", { id: props.page.id, emoji }, true);
-};
-
 const updateBlockTextarea = (event: Event, block: Block) => {
   const target = event.target as HTMLTextAreaElement;
-  emits("updateBlock", props.page.id, block.id, target.value);
+  if (!page.value) {
+    return;
+  }
+  updateBlock(page.value.id, block.id, target.value);
 };
 
 const platformConsistent = (event: KeyboardEvent) => {
@@ -69,10 +44,10 @@ const bold = (event: KeyboardEvent, block: Block) => {
     return;
   }
   insertFormating("**", "", "**");
-  if (!element.value) {
+  if (!element.value || !page.value) {
     return;
   }
-  emits("updateBlock", props.page.id, block.id, element.value.value);
+  updateBlock(page.value.id, block.id, element.value.value);
 };
 
 const italic = (event: KeyboardEvent, block: Block) => {
@@ -81,18 +56,18 @@ const italic = (event: KeyboardEvent, block: Block) => {
     return;
   }
   insertFormating("__", "", "__");
-  if (!element.value) {
+  if (!element.value || !page.value) {
     return;
   }
-  emits("updateBlock", props.page.id, block.id, element.value.value);
+  updateBlock(page.value.id, block.id, element.value.value);
 };
 
 const tab = (block: Block, remove = false) => {
   insertFormating("  ", "", "", remove);
-  if (!element.value) {
+  if (!element.value || !page.value) {
     return;
   }
-  emits("updateBlock", props.page.id, block.id, element.value.value);
+  updateBlock(page.value.id, block.id, element.value.value);
 };
 
 const paren = (event: KeyboardEvent, block: Block) => {
@@ -121,10 +96,10 @@ const paren = (event: KeyboardEvent, block: Block) => {
       textarea.focus();
     }
   }
-  if (!element.value) {
+  if (!element.value || !page.value) {
     return;
   }
-  emits("updateBlock", props.page.id, block.id, element.value.value);
+  updateBlock(page.value.id, block.id, element.value.value);
 };
 
 //https://dev.to/shivams136/simple-markdown-insertion-in-the-text-using-pure-javascript-pl4
@@ -202,7 +177,7 @@ const insertFormating = (
 
 const colorMode = useColorMode();
 const mdNodes = ref<MdNode[][]>([]);
-watch([() => props.page.blocks, () => colorMode.value], async ([blocks]) => {
+watch([() => page.value?.blocks, () => colorMode.value], async ([blocks]) => {
   if (!blocks || !blocks.length) {
     return;
   }
@@ -214,8 +189,8 @@ watch([() => props.page.blocks, () => colorMode.value], async ([blocks]) => {
 
 const syntaxHighlightedTokens = ref<TokensResult[]>([]);
 watch(
-  [() => props.page.blocks, () => colorMode.value, caretPosition],
-  async ([blocks]) => {
+  [() => page.value?.blocks, () => colorMode.value, caretPosition],
+  async ([blocks, colorMode, caretPosition]) => {
     if (!blocks || !blocks.length) {
       return;
     }
@@ -224,15 +199,21 @@ watch(
         codeToTokens(block.textContent, {
           lang: "mdc",
           theme:
-            colorMode.value === "light"
+            colorMode === "light"
               ? "material-theme-lighter"
               : "material-theme-darker",
         }),
       ),
     );
     const caretLineIndex =
-      (element.value?.value ?? "").slice(0, caretPosition.value).split("\n")
-        .length - 1 || 0;
+      (element.value?.value ?? "").slice(0, caretPosition).split("\n").length -
+        1 || 0;
+    console.log(
+      "caretLineIndex",
+      caretLineIndex,
+      "caretPosition",
+      caretPosition,
+    );
     syntaxHighlightedTokens.value = tokens.map((blockTokenResult) => ({
       ...blockTokenResult,
       tokens: blockTokenResult.tokens.map((line, index) =>
@@ -279,7 +260,7 @@ const uploadImage = (file: File) => {
     method: "POST",
     body: form,
     query: {
-      pageId: props.page.id,
+      pageId: page.value?.id,
       isCover: isFileUploadCover.value,
     },
   })
@@ -289,7 +270,14 @@ const uploadImage = (file: File) => {
         return;
       }
       if (isFileUploadCover.value) {
-        emits("updatePage", { id: props.page.id, coverUrl: res.pathname });
+        if (!page.value) {
+          console.warn("No page found to update cover URL");
+          return;
+        }
+        updatePage({
+          id: page.value.id,
+          coverUrl: res.pathname,
+        });
         return;
       }
       const fileName = file.name;
@@ -305,11 +293,12 @@ const uploadImage = (file: File) => {
     });
 };
 
-const deleteCover = () => {
-  emits("updatePage", { id: props.page.id, coverUrl: "" });
-  snackbarStore.enqueue("Cover removed successfully", "success");
+const updateCaretPosition = (event: Event) => {
+  const target = event.target as HTMLTextAreaElement;
+  setTimeout(() => {
+    caretPosition.value = target.selectionStart;
+  }, 0);
 };
-const newCoverUrl = ref("");
 </script>
 
 <template>
@@ -324,11 +313,8 @@ const newCoverUrl = ref("");
     />
     <div class="relative flex flex-initial flex-col">
       <PageNav
-        :page="props.page"
-        :saved="props.isSaved"
         :previewPage="previewPage"
         :nodes="mdNodes || []"
-        @favoritePage="favoritePage"
         @togglePreview="previewPage = !previewPage"
       />
     </div>
@@ -340,135 +326,15 @@ const newCoverUrl = ref("");
           'w-7/12': previewPage,
         }"
       >
+        <PageHeader
+          v-if="page"
+          @upload-cover="
+            fileUploadOpen = true;
+            isFileUploadCover = true;
+          "
+        />
         <div
-          class="relative z-0 flex w-full flex-initial justify-center"
-          :class="{ 'h-96': props.page.coverUrl }"
-        >
-          <div
-            v-if="props.page.coverUrl"
-            class="absolute top-0 right-0 left-0 z-0 h-64"
-          >
-            <img
-              :src="
-                !props.page.coverUrl?.includes('https://')
-                  ? `/api/private/avatars/${props.page.coverUrl}`
-                  : props.page.coverUrl
-              "
-              alt="Page Cover"
-              style="object-position: center 20%"
-              class="h-64 w-full object-cover"
-            />
-          </div>
-          <div class="z-10 flex w-8/12 flex-col justify-end">
-            <div class="group pt-12">
-              <UPopover>
-                <UButton
-                  variant="ghost"
-                  color="neutral"
-                  class="flex rounded-md border-none text-7xl hover:bg-gray-100 focus:outline-hidden dark:hover:bg-stone-600"
-                >
-                  {{ page.emoji }}
-                </UButton>
-                <template #content>
-                  <LazyEmojiPicker @select="selectEmoji" />
-                </template>
-              </UPopover>
-              <div
-                class="invisible my-1 flex items-center text-xs text-gray-400 group-hover:visible"
-              >
-                <UPopover mode="hover">
-                  <UButton
-                    variant="ghost"
-                    color="neutral"
-                    class="mr-1"
-                    @click="
-                      () => {
-                        fileUploadOpen = true;
-                        isFileUploadCover = true;
-                      }
-                    "
-                    icon="i-heroicons-photo"
-                  >
-                    {{ props.page.coverUrl ? "Change Cover" : "Add Cover" }}
-                  </UButton>
-                  <template #content>
-                    <UButtonGroup orientation="vertical">
-                      <UButton
-                        variant="ghost"
-                        color="neutral"
-                        @click="
-                          () => {
-                            fileUploadOpen = true;
-                            isFileUploadCover = true;
-                          }
-                        "
-                      >
-                        <UIcon name="i-heroicons-photo" class="mr-2 size-5" />
-                        Upload Cover Photo
-                      </UButton>
-                      <UButtonGroup>
-                        <UInput
-                          v-model="newCoverUrl"
-                          placeholder="Enter Cover URL"
-                          @keydown.enter="
-                            () =>
-                              emits(
-                                'updatePage',
-                                {
-                                  id: props.page.id,
-                                  coverUrl: newCoverUrl,
-                                },
-                                true,
-                              )
-                          "
-                        />
-                        <UButton
-                          variant="ghost"
-                          color="neutral"
-                          @click="
-                            () =>
-                              emits(
-                                'updatePage',
-                                {
-                                  id: props.page.id,
-                                  coverUrl: newCoverUrl,
-                                },
-                                true,
-                              )
-                          "
-                          label="Save"
-                        />
-                      </UButtonGroup>
-                    </UButtonGroup>
-                  </template>
-                </UPopover>
-                <UButton
-                  variant="ghost"
-                  color="neutral"
-                  class="mr-1"
-                  @click="deleteCover"
-                  v-if="props.page.coverUrl"
-                  icon="i-heroicons-trash"
-                >
-                  Remove Cover
-                </UButton>
-              </div>
-
-              <h1 class="mt-1 w-full text-4xl font-bold">
-                <input
-                  type="text"
-                  :value="page.title"
-                  @input="updateTitle"
-                  placeholder="Untitled"
-                  class="w-full outline-hidden dark:bg-inherit"
-                />
-              </h1>
-            </div>
-          </div>
-        </div>
-
-        <div
-          v-for="(block, i) in props.page.blocks"
+          v-for="(block, i) in page?.blocks"
           :key="block.id"
           class="relative flex w-full flex-auto flex-col items-center pb-8"
         >
@@ -515,16 +381,14 @@ const newCoverUrl = ref("");
               @keydown.shift.tab.prevent="() => tab(block, true)"
               @keydown="
                 (event) => {
-                  caretPosition = (event.target as HTMLTextAreaElement)
-                    .selectionStart;
+                  updateCaretPosition(event);
                   paren(event, block);
                   slash(event, block);
                 }
               "
               @click="
                 (event) => {
-                  caretPosition = (event.target as HTMLTextAreaElement)
-                    .selectionStart;
+                  updateCaretPosition(event);
                 }
               "
             />
@@ -535,40 +399,25 @@ const newCoverUrl = ref("");
         v-if="previewPage"
         class="relative flex w-5/12 flex-col overflow-y-auto border-l border-l-stone-300"
       >
-        <div v-if="props.page.coverUrl" class="h-64 w-full">
-          <img
-            :src="
-              !props.page.coverUrl?.includes('https://')
-                ? `/api/private/avatars/${props.page.coverUrl}`
-                : props.page.coverUrl
-            "
-            alt="Page Cover"
-            style="object-position: center 20%"
-            class="h-64 w-full object-cover"
+        <UModal fullscreen :close="true">
+          <UButton
+            icon="i-heroicons-arrows-pointing-out"
+            color="neutral"
+            class="absolute top-2 right-2"
           />
-        </div>
-        <div class="z-10 flex flex-initial items-center gap-2 p-4">
-          <p class="text-5xl">{{ page.emoji }}</p>
-          <p class="text-lg font-semibold">{{ page.title }}</p>
-        </div>
-
-        <div class="flex flex-auto flex-col p-4">
-          <div
-            v-for="(block, index) in page.blocks"
-            :key="block.id"
-            class="mb-4 text-lg"
-          >
-            <div
-              v-if="
-                block.type === 'text' &&
-                block.renderedMd &&
-                mdNodes?.length === page.blocks.length
-              "
-              v-for="node in mdNodes[index] || []"
-            >
-              <MdNode :node="node" :preview="true" />
-            </div>
-          </div>
+          <template #body>
+            <RenderedPage v-if="page" :nodes="mdNodes" :page="page" />
+          </template>
+          <template #close>
+            <UButton
+              icon="i-heroicons-arrows-pointing-in"
+              color="neutral"
+              class="absolute top-2 right-2"
+            />
+          </template>
+        </UModal>
+        <div class="w-full *:*:w-full">
+          <RenderedPage v-if="page" :nodes="mdNodes" :page="page" />
         </div>
       </div>
     </div>

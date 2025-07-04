@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { MdNode } from "~/shared/types";
+
 definePageMeta({
   layout: "default",
   validate({ params }) {
@@ -46,37 +48,17 @@ useHead({
     },
   ],
 });
+
+const nodes = computed<MdNode[][]>(
+  () =>
+    page.value?.blocks
+      .filter((block) => block.type === "text")
+      .map((block) => block.renderedMd || []) || [],
+);
 </script>
 
 <template>
-  <div v-if="page" class="flex justify-center">
-    <div class="flex w-8/12 flex-col p-4">
-      <div v-if="page.coverUrl" class="h-64 w-full">
-        <img
-          :src="
-            !/^https?:\/\//.test(page.coverUrl)
-              ? `/api/private/avatars/${page.coverUrl}`
-              : page.coverUrl
-          "
-          alt="Page Cover"
-          style="object-position: center 20%"
-          class="h-64 w-full object-cover"
-        />
-      </div>
-      <div class="mb-4 flex items-center gap-4">
-        <div class="text-5xl">{{ page.emoji }}</div>
-        <h1 class="text-4xl font-bold">{{ page.title }}</h1>
-      </div>
-      <div v-for="block in page.blocks" :key="block.id">
-        <div
-          v-if="block.type === 'text' && block.renderedMd"
-          v-for="node in block.renderedMd"
-        >
-          <MdNode :node="node" :preview="false" />
-        </div>
-      </div>
-    </div>
-  </div>
+  <RenderedPage v-if="page" :nodes="nodes" :page="page" />
   <div v-else>
     <div>
       <UIcon

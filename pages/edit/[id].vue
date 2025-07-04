@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { ClientOnly } from "#components";
-
 definePageMeta({
   layout: "editor",
 });
@@ -37,13 +35,7 @@ onMounted(() => {
 
 <template>
   <ClientOnly>
-    <EditPage
-      v-if="currentPage"
-      :page="currentPage"
-      :isSaved="isSaved"
-      @updatePage="updatePage"
-      @updateBlock="updateBlock"
-    />
+    <EditPage v-if="currentPage" />
 
     <div v-else>
       <div>

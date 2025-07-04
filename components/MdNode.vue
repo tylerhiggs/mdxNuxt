@@ -11,8 +11,8 @@ import type {
 } from "~/shared/types";
 const props = defineProps<{
   node: MdNode;
-  preview?: boolean;
 }>();
+const preview = usePreview();
 const colorMode = useColorMode();
 const snackbar = useSnackbar();
 const copyCode = (code: string) => {
@@ -37,35 +37,20 @@ const copied = ref(false);
     v-if="node.type === 'blockquote'"
     class="border-accented border-s-4 ps-4 italic"
   >
-    <MdNode
-      v-for="(item, index) in node.items"
-      :key="index"
-      :node="item"
-      :preview="props.preview"
-    />
+    <MdNode v-for="(item, index) in node.items" :key="index" :node="item" />
   </blockquote>
   <Accordion v-else-if="node.type === 'accordion'" :node="node" />
   <Badge
     v-else-if="node.type === 'badge'"
     :componentProps="(node.componentProps as BadgeProps | undefined) || {}"
   >
-    <MdNode
-      v-for="(item, index) in node.items"
-      :key="index"
-      :node="item"
-      :preview="props.preview"
-    />
+    <MdNode v-for="(item, index) in node.items" :key="index" :node="item" />
   </Badge>
   <Callout
     v-else-if="node.type === 'callout'"
     :componentProps="(node.componentProps as CalloutProps | undefined) || {}"
   >
-    <MdNode
-      v-for="(item, index) in node.items"
-      :key="index"
-      :node="item"
-      :preview="props.preview"
-    />
+    <MdNode v-for="(item, index) in node.items" :key="index" :node="item" />
   </Callout>
   <Callout
     v-else-if="
@@ -93,23 +78,13 @@ const copied = ref(false);
               : 'exclamation-circle',
     }"
   >
-    <MdNode
-      v-for="(item, index) in node.items"
-      :key="index"
-      :node="item"
-      :preview="props.preview"
-    />
+    <MdNode v-for="(item, index) in node.items" :key="index" :node="item" />
   </Callout>
   <Card
     v-else-if="node.type === 'card'"
     :componentProps="(node.componentProps as CardProps | undefined) || {}"
   >
-    <MdNode
-      v-for="(item, index) in node.items"
-      :key="index"
-      :node="item"
-      :preview="props.preview"
-    />
+    <MdNode v-for="(item, index) in node.items" :key="index" :node="item" />
   </Card>
   <CardGroup v-else-if="node.type === 'card-group'" :node="node" />
   <CodeCollapse v-else-if="node.type === 'code-collapse'" :node="node" />
@@ -121,34 +96,19 @@ const copied = ref(false);
       (node.componentProps as CollapsibleProps | undefined) || {}
     "
   >
-    <MdNode
-      v-for="(item, index) in node.items"
-      :key="index"
-      :node="item"
-      :preview="props.preview"
-    />
+    <MdNode v-for="(item, index) in node.items" :key="index" :node="item" />
   </Collapsible>
   <Field
     v-else-if="node.type === 'field'"
     :componentProps="(node.componentProps as FieldProps | undefined) || {}"
   >
-    <MdNode
-      v-for="(item, index) in node.items"
-      :key="index"
-      :node="item"
-      :preview="props.preview"
-    />
+    <MdNode v-for="(item, index) in node.items" :key="index" :node="item" />
   </Field>
   <div
     v-else-if="node.type === 'field-group'"
     class="divide-default my-5 divide-y *:not-last:pb-5"
   >
-    <MdNode
-      v-for="(item, index) in node.items"
-      :key="index"
-      :node="item"
-      :preview="props.preview"
-    />
+    <MdNode v-for="(item, index) in node.items" :key="index" :node="item" />
   </div>
   <UIcon
     v-else-if="node.type === 'icon'"
@@ -158,85 +118,47 @@ const copied = ref(false);
     v-else-if="node.type === 'kbd'"
     :value="(node.componentProps as KbdProps | undefined)?.value || ''"
   />
-  <Tabs
-    v-else-if="node.type === 'tabs'"
-    :node="node"
-    :preview="props.preview"
-  />
-  <Stepper
-    v-else-if="node.type === 'steps'"
-    :node="node"
-    :preview="props.preview"
-  />
+  <Tabs v-else-if="node.type === 'tabs'" :node="node" />
+  <Stepper v-else-if="node.type === 'steps'" :node="node" />
   <template v-else-if="node.type === 'heading'">
     <h1
       v-if="node.depth === 1"
       class="text-highlighted mb-8 text-4xl font-bold *:text-4xl"
     >
-      <MdNode
-        v-for="(item, index) in node.items"
-        :key="index"
-        :node="item"
-        :preview="props.preview"
-      />
+      <MdNode v-for="(item, index) in node.items" :key="index" :node="item" />
     </h1>
     <h2
       v-else-if="node.depth === 2"
       class="text-highlighted relative mt-12 mb-6 text-2xl font-bold *:text-2xl"
     >
-      <MdNode
-        v-for="(item, index) in node.items"
-        :key="index"
-        :node="item"
-        :preview="props.preview"
-      />
+      <MdNode v-for="(item, index) in node.items" :key="index" :node="item" />
     </h2>
     <h3
       v-else-if="node.depth === 3"
       class="text-highlighted relative mt-8 mb-3 text-xl font-bold *:text-xl"
     >
-      <MdNode
-        v-for="(item, index) in node.items"
-        :key="index"
-        :node="item"
-        :preview="props.preview"
-      />
+      <MdNode v-for="(item, index) in node.items" :key="index" :node="item" />
     </h3>
     <h4
       v-else-if="node.depth === 4"
       class="text-highlighted relative mt-6 mb-2 text-lg font-bold *:text-lg"
     >
-      <MdNode
-        v-for="(item, index) in node.items"
-        :key="index"
-        :node="item"
-        :preview="props.preview"
-      />
+      <MdNode v-for="(item, index) in node.items" :key="index" :node="item" />
     </h4>
     <h5
       v-else-if="node.depth === 5"
       class="text-highlighted relative mt-4 mb-1 text-base font-bold *:text-base"
     >
-      <MdNode
-        v-for="(item, index) in node.items"
-        :key="index"
-        :node="item"
-        :preview="props.preview"
-      />
+      <MdNode v-for="(item, index) in node.items" :key="index" :node="item" />
     </h5>
     <h6
       v-else-if="node.depth === 6"
       class="text-highlighted relative mt-2 mb-1 text-sm font-bold *:text-sm"
     >
-      <MdNode
-        v-for="(item, index) in node.items"
-        :key="index"
-        :node="item"
-        :preview="props.preview"
-      />
+      <MdNode v-for="(item, index) in node.items" :key="index" :node="item" />
     </h6>
     <div
-      v-if="node.depth && node.depth > 3 && props.preview"
+      v-if="node.depth && node.depth > 3 && preview.preview"
       class="mb-2 rounded border border-yellow-300 bg-yellow-100 px-3 py-2 text-sm text-yellow-800"
     >
       Warning: Heading levels greater than 3 are not recommended.
@@ -246,7 +168,7 @@ const copied = ref(false);
     v-else-if="node.type === 'image'"
     :src="
       !node.href?.includes('https://')
-        ? preview
+        ? preview.preview
           ? `/api/private/avatars/${node.href}`
           : `/api/public/pages/images/${node.href}`
         : node.href
@@ -259,11 +181,7 @@ const copied = ref(false);
     class="my-5 list-disc ps-6 marker:text-(--ui-border-accented)"
   >
     <li v-for="item in node.items" class="my-1.5 ps-1.5 leading-7 [&>ul]:my-0">
-      <MdNode
-        v-for="node in item.items"
-        :node="node"
-        :preview="props.preview"
-      />
+      <MdNode v-for="node in item.items" :node="node" />
     </li>
   </ul>
   <ol
@@ -280,11 +198,7 @@ const copied = ref(false);
     }"
   >
     <li v-for="item in node.items" class="my-1.5 ps-1.5 leading-7 [&>ul]:my-0">
-      <MdNode
-        v-for="node in item.items"
-        :node="node"
-        :preview="props.preview"
-      />
+      <MdNode v-for="node in item.items" :node="node" />
     </li>
   </ol>
   <div v-else-if="node.items && node.items.length">
@@ -292,7 +206,6 @@ const copied = ref(false);
       v-for="(item, index) in props.node.items"
       :key="index"
       :node="item"
-      :preview="props.preview"
     />
   </div>
   <template v-if="node.type === 'text'">
