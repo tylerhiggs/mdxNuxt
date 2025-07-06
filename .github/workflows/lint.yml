@@ -1,0 +1,35 @@
+name: Lint
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  eslint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Run ESLint (no auto-fix)
+        run: bunx eslint . --max-warnings=0 --no-error-on-unmatched-pattern
+
+      - name: Check for auto-fixable issues
+        run: |
+          bunx eslint . --fix-dry-run --format json --no-error-on-unmatched-pattern > eslint-fixable.json
+          if grep -q '"fixable":true' eslint-fixable.json; then
+            echo "There are auto-fixable lint issues. Please run eslint --fix locally.";
+            exit 1;
+          fi
