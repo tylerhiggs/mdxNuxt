@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { StepperItem } from "@nuxt/ui";
-import type { MdNode, StepperProps } from "~/shared/types";
+import type { ComponentNode, MdNode, StepperProps } from "~/shared/types";
 const props = defineProps<{
-  node: MdNode;
+  node: ComponentNode;
 }>();
 
 const items = computed(() => {
@@ -30,7 +30,7 @@ const items = computed(() => {
 <template>
   <UStepper
     :disabled="true"
-    :defaultValue="-1"
+    :default-value="-1"
     :items="items"
     orientation="vertical"
     :ui="{
@@ -43,11 +43,7 @@ const items = computed(() => {
     </template>
     <template #description="{ item }">
       <div class="w-full">
-        <MdNode
-          v-for="(node, index) in item.contentNodes"
-          :key="index"
-          :node="node"
-        />
+        <MdNode v-for="n in item.contentNodes" :key="n.id" :node="n" />
       </div>
     </template>
   </UStepper>

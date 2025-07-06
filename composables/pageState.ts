@@ -1,9 +1,4 @@
-import {
-  type PageItem,
-  type Page,
-  type PageUpdate,
-  type BlockUpdate,
-} from "@/types/page";
+import type { Page, PageUpdate, BlockUpdate } from "@/types/page";
 
 const DEBOUNCE_TIME = 5000;
 
@@ -11,10 +6,9 @@ export function usePageState() {
   const snackbarStore = useSnackbar();
 
   // private state
-  const lastUpdatedAt = useState("lastUpdatedAt", () => Date.now());
+  const lastPageUpdateAt = useState("lastUpdatedAt", () => Date.now());
+  const lastBlockUpdateAt = useState("lastBlockUpdatedAt", () => Date.now());
 
-  // public state
-  const pages = useState<PageItem[]>("pages", () => []);
   const currentPageId = useState<number | undefined>(
     "currentPageId",
     () => undefined,
@@ -41,7 +35,6 @@ export function usePageState() {
   const {
     data: pageData,
     error: _pageGetError,
-    refresh: fetchPageData,
     status: pageStatus,
   } = useFetch(() => `/api/private/pages/${currentPageId.value}`, {
     watch: [currentPageId],
@@ -58,10 +51,11 @@ export function usePageState() {
 
   const selectPage = async (pageId: number) => {
     currentPageId.value = pageId;
-    console.log("pageId changed", pageId);
     if (currentPage.value && pageUpdateToSave.value) {
-      lastUpdatedAt.value = Date.now();
+      lastPageUpdateAt.value = Date.now();
+      lastBlockUpdateAt.value = Date.now();
       executePageUpdateDb();
+      executeBlockUpdateDb();
     }
     navigateTo(`/edit/${pageId}`);
   };
@@ -77,13 +71,6 @@ export function usePageState() {
       snackbarStore.enqueue("Failed to create page", "error");
       return;
     }
-    pages.value = [
-      ...pages.value,
-      {
-        ...body,
-        lastUpdatedAt: new Date(body.lastUpdatedAt).getTime(),
-      },
-    ];
     selectPage(body.id);
     snackbarStore.enqueue("Page created", "success");
   };
@@ -111,7 +98,32 @@ export function usePageState() {
       snackbarStore.enqueue("Error updating page", "error");
       return;
     }
-    await Promise.all([fetchPageData(), fetchPagesData()]);
+    if (pagesData.value) {
+      pagesData.value = pageUpdateToSave.value
+        ? pagesData.value?.map((page) =>
+            page.id === pageUpdateToSave.value?.id
+              ? {
+                  ...page,
+                  ...pageUpdateToSave.value,
+                  createdAt: body.createdAt,
+                  path: page.path,
+                }
+              : page,
+          )
+        : pagesData.value;
+    }
+    if (pageData.value) {
+      pageData.value = {
+        ...pageData.value,
+        ...pageUpdateToSave.value,
+        blocks: pageData.value.blocks.map((block) => {
+          return blockUpdateToSave.value &&
+            block.id === blockUpdateToSave.value.blockId
+            ? { ...block, textContent: blockUpdateToSave.value.textContent }
+            : block;
+        }),
+      };
+    }
     pageUpdateToSave.value = undefined;
     snackbarStore.enqueue("Successfully updated page", "success");
   };
@@ -141,9 +153,19 @@ export function usePageState() {
       snackbarStore.enqueue("Error updating page block", "error");
       return;
     }
-    await fetchPageData();
+    if (pageData.value) {
+      pageData.value = {
+        ...pageData.value,
+        ...pageUpdateToSave.value,
+        blocks: pageData.value.blocks.map((block) => {
+          return blockUpdateToSave.value &&
+            block.id === blockUpdateToSave.value.blockId
+            ? { ...block, textContent: blockUpdateToSave.value.textContent }
+            : block;
+        }),
+      };
+    }
     blockUpdateToSave.value = undefined;
-    pageUpdateToSave.value = undefined;
     snackbarStore.enqueue("Successfully updated page block", "success");
   };
 
@@ -189,13 +211,13 @@ export function usePageState() {
       };
     }
     pageUpdateToSave.value = { ...pageUpdateToSave.value, ...update };
-    lastUpdatedAt.value = Date.now();
+    lastPageUpdateAt.value = Date.now();
     if (instantSave) {
       executePageUpdateDb();
       return;
     }
     setTimeout(() => {
-      if (lastUpdatedAt.value + DEBOUNCE_TIME > Date.now()) return;
+      if (lastPageUpdateAt.value + DEBOUNCE_TIME > Date.now()) return;
       executePageUpdateDb();
     }, DEBOUNCE_TIME);
   };
@@ -208,7 +230,15 @@ export function usePageState() {
       snackbarStore.enqueue("Failed to duplicate page", "error");
       return;
     }
-    await Promise.all([fetchPageData(), fetchPagesData()]);
+    if (pagesData.value) {
+      pagesData.value = [
+        ...pagesData.value,
+        {
+          ...body,
+          lastUpdatedAt: new Date(body.lastUpdatedAt).getTime(),
+        },
+      ];
+    }
     snackbarStore.enqueue("Page duplicated", "success");
     selectPage(body.id);
   };
@@ -233,13 +263,13 @@ export function usePageState() {
       id: pageId,
       lastUpdatedAt: Date.now(),
     };
-    lastUpdatedAt.value = Date.now();
+    lastBlockUpdateAt.value = Date.now();
     if (instantSave) {
       executeBlockUpdateDb();
       return;
     }
     setTimeout(() => {
-      if (lastUpdatedAt.value + DEBOUNCE_TIME > Date.now()) return;
+      if (lastBlockUpdateAt.value + DEBOUNCE_TIME > Date.now()) return;
       executeBlockUpdateDb();
     }, DEBOUNCE_TIME);
   };
@@ -252,26 +282,27 @@ export function usePageState() {
       snackbarStore.enqueue("Failed to delete page", "error");
       return;
     }
-    await fetchPagesData();
-    if (pagesData.value && pagesData.value.length)
-      selectPage(pagesData.value[0].id);
+    if (pagesData.value) {
+      pagesData.value = pagesData.value.filter((p) => p.id !== pageId);
+    }
+    if (currentPageId.value === pageId)
+      if (pagesData.value && pagesData.value.length)
+        selectPage(pagesData.value[0].id);
     snackbarStore.enqueue("Page deleted", "success");
   };
 
-  const {
-    data: pagesData,
-    error: _pagesGetError,
-    refresh: fetchPagesData,
-    status: pagesStatus,
-  } = useFetch("/api/private/users/pages", {
-    method: "get",
-    transform: (data) => {
-      return data.body.map((p) => ({
-        ...p,
-        lastUpdatedAt: new Date(p.lastUpdatedAt).getTime(),
-      }));
+  const { data: pagesData, error: _pagesGetError } = useFetch(
+    "/api/private/users/pages",
+    {
+      method: "get",
+      transform: (data) => {
+        return data.body.map((p) => ({
+          ...p,
+          lastUpdatedAt: new Date(p.lastUpdatedAt).getTime(),
+        }));
+      },
     },
-  });
+  );
 
   return {
     pages: computed(() =>
@@ -300,11 +331,12 @@ export function usePageState() {
     selectPage,
     createPage,
     updatePage,
-    isSaved: computed(() => {
-      return !pageUpdateToSave.value;
-    }),
+    isSaved: computed(
+      () => !pageUpdateToSave.value && !blockUpdateToSave.value,
+    ),
     deletePage,
     updateBlock,
     duplicatePage,
+    pageStatus,
   };
 }

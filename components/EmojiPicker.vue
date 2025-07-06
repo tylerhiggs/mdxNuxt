@@ -99,7 +99,7 @@ const getGroupedFilteredEmojiData = (filteredData: EmojiData[]) => {
           {} as { [group: string]: EmojiData[] },
         )
       : emojiDataStore.emojiData.value;
-  let ret = {} as { [group: string]: EmojiData[] };
+  const ret = {} as { [group: string]: EmojiData[] };
   let left = numEmojis.value;
   if (!res) return ret;
   Object.keys(res)
@@ -116,7 +116,6 @@ const handleScroll = (event: Event) => {
   if (!event.target) return;
   const target = event.target as HTMLElement;
   if (target.scrollTop + target.clientHeight >= target.scrollHeight - 50) {
-    console.log("load more emojis");
     numEmojis.value += PAGE_SIZE * 3;
   }
 };
@@ -209,7 +208,6 @@ const selectEmoji = () => {
 
 const focusableIds = ["emojiSearch", "randomEmojiButton", "skinToneButton"];
 const handleTabKey = (num: number) => {
-  console.log("handleTabKey", num);
   const currentIndex = focusableIds.indexOf(document.activeElement?.id || "");
   if (currentIndex === -1) {
     console.error("No focusable element found");
@@ -246,10 +244,10 @@ const select = (emoji: string) => {
         <input
           :id="focusableIds[0]"
           ref="searchHtmlInput"
+          v-model="search"
           type="text"
           class="ml-1 w-full border-none bg-transparent text-sm text-gray-700 focus:outline-hidden"
           placeholder="Filter..."
-          v-model="search"
           @keydown.down.prevent.stop="incrementFocusedItemIndex(4)"
           @keydown.up.prevent.stop="incrementFocusedItemIndex(-4)"
           @keydown.left.prevent.stop="incrementFocusedItemIndex(-1)"
@@ -271,11 +269,11 @@ const select = (emoji: string) => {
       </div>
       <ToolTip message="Select a random emoji" position="bottom">
         <button
-          @click="selectRandomEmoji"
           :id="focusableIds[1]"
+          class="flex size-7 items-center justify-center rounded-sm border border-gray-300 hover:bg-gray-300 focus:bg-gray-300"
+          @click="selectRandomEmoji"
           @keydown.tab.exact.prevent.stop="handleTabKey(1)"
           @keydown.shift.tab.prevent.stop="handleTabKey(-1)"
-          class="flex size-7 items-center justify-center rounded-sm border border-gray-300 hover:bg-gray-300 focus:bg-gray-300"
         >
           <UIcon name="i-heroicons-swatch" class="size-4 text-gray-500" />
         </button>
@@ -283,11 +281,11 @@ const select = (emoji: string) => {
       <UDropdownMenu :items="items">
         <UButton
           :id="focusableIds[2]"
-          @keydown.tab.exact.prevent.stop="handleTabKey(1)"
-          @keydown.shift.tab.prevent.stop="handleTabKey(-1)"
           variant="ghost"
           color="neutral"
           class="relative mx-1 flex size-7 items-center justify-center rounded-sm border border-gray-300 hover:bg-gray-300 focus:bg-gray-300"
+          @keydown.tab.exact.prevent.stop="handleTabKey(1)"
+          @keydown.shift.tab.prevent.stop="handleTabKey(-1)"
         >
           <ToolTip message="Select skin tone" position="bottom">
             {{ skinToneEmoji }}
@@ -296,8 +294,8 @@ const select = (emoji: string) => {
       </UDropdownMenu>
     </div>
     <div
-      @scroll="handleScroll"
       class="relative h-80 overflow-x-visible overflow-y-scroll"
+      @scroll="handleScroll"
     >
       <div v-if="(filteredEmojis?.filteredEmojiData?.length || 0) > 120">
         <div
@@ -318,10 +316,10 @@ const select = (emoji: string) => {
                 class="aspect-square"
               >
                 <EmojiButton
-                  :skinTone="skinTone"
+                  :skin-tone="skinTone"
                   :emoji="emoji"
-                  @select="select"
                   :focused="focusedItemIndex === i"
+                  @select="select"
                 />
               </div>
             </div>
@@ -332,10 +330,10 @@ const select = (emoji: string) => {
         <EmojiButton
           v-for="(emoji, i) in filteredEmojis?.filteredEmojiData || []"
           :key="emoji.char"
-          :skinTone="skinTone"
+          :skin-tone="skinTone"
           :emoji="emoji"
-          @select="select"
           :focused="focusedItemIndex === i"
+          @select="select"
         />
       </div>
     </div>

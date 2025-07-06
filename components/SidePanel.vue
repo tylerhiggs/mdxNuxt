@@ -106,8 +106,8 @@ const avatarUrl = computed(() => {
             <UButton
               variant="ghost"
               color="neutral"
-              @click="isOpen = false"
               class="invisible ml-0.5 flex items-center rounded-md p-0.5 text-2xl group-hover:visible hover:bg-gray-300 dark:hover:bg-stone-600"
+              @click="isOpen = false"
             >
               <UIcon
                 name="i-heroicons-x-mark"
@@ -117,8 +117,8 @@ const avatarUrl = computed(() => {
           </ToolTip>
           <ToolTip message="Create a new page" position="right">
             <button
-              @click.prevent.stop="emit('createPage')"
               class="flex items-center rounded-md p-1 text-2xl hover:bg-gray-300 dark:hover:bg-stone-600"
+              @click.prevent.stop="emit('createPage')"
             >
               <UIcon
                 name="i-heroicons-pencil-square"
@@ -128,13 +128,10 @@ const avatarUrl = computed(() => {
           </ToolTip>
         </UButton>
 
-        <template
-          #content
-          class="absolute left-8 z-10 w-64 rounded-lg bg-white shadow-xl"
-        >
+        <template #content>
           <ProfilePopup
-            :workspaceTitle="workspaceTitle"
-            :userFirstLetter="userFirstLetter"
+            :workspace-title="workspaceTitle"
+            :user-first-letter="userFirstLetter"
           />
         </template>
       </UPopover>
@@ -145,9 +142,9 @@ const avatarUrl = computed(() => {
       :command="toggleSearchCommand"
     >
       <DefaultPanelItem
-        @click="emit('toggleSearch')"
         class="w-full pl-3 font-medium text-gray-400"
         title="Search"
+        @click="emit('toggleSearch')"
       >
         <UIcon name="i-heroicons-magnifying-glass" class="size-4" />
       </DefaultPanelItem>
@@ -181,31 +178,23 @@ const avatarUrl = computed(() => {
       :page="page"
       :selected="page.id === currentPageId"
     />
-    <p
-      class="my-0.5 ml-3 text-xs font-normal text-gray-400"
-      v-if="publicPages.length"
-    >
-      Public
-    </p>
-    <PagePanelItem
-      v-if="publicPages.length"
-      v-for="page in publicPages"
-      :key="page.id"
-      :page="page"
-      :selected="page.id === currentPageId"
-    />
-    <p
-      class="my-0.5 ml-3 text-xs font-normal text-gray-400"
-      v-if="privatePages.length || props.pages.length === 0"
-    >
-      Private
-    </p>
-    <PagePanelItem
-      v-if="privatePages.length || props.pages.length === 0"
-      v-for="page in privatePages"
-      :key="page.id"
-      :page="page"
-      :selected="page.id === currentPageId"
-    />
+    <template v-if="publicPages.length">
+      <p class="my-0.5 ml-3 text-xs font-normal text-gray-400">Public</p>
+      <PagePanelItem
+        v-for="page in publicPages"
+        :key="page.id"
+        :page="page"
+        :selected="page.id === currentPageId"
+      />
+    </template>
+    <template v-if="privatePages.length || props.pages.length === 0">
+      <p class="my-0.5 ml-3 text-xs font-normal text-gray-400">Private</p>
+      <PagePanelItem
+        v-for="page in privatePages"
+        :key="page.id"
+        :page="page"
+        :selected="page.id === currentPageId"
+      />
+    </template>
   </nav>
 </template>

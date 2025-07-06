@@ -38,7 +38,6 @@ export default eventHandler<{
       message: "User ID is required and must be a number",
     });
   }
-  console.log("search query", query);
   const drizzle = useDrizzle();
   const pagePromise = drizzle.query.pages.findMany({
     where: (pages, { eq, like, and, isNull }) => {
@@ -89,7 +88,6 @@ export default eventHandler<{
     },
   });
   if (query.titleOnly !== "true") {
-    console.log("made it here");
     const blocksPromise = drizzle.query.blocks.findMany({
       where: (blocks, { like }) => {
         const searchTerm = `%${query.search}%`;

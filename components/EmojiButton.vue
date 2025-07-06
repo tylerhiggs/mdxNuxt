@@ -22,7 +22,8 @@ const items = computed(
       label,
       type: "checkbox" as const,
       onSelect: () => {
-        label && emits("select", label);
+        if (!label) return;
+        emits("select", label);
       },
     })) satisfies DropdownMenuItem[],
 );
@@ -52,10 +53,10 @@ const items = computed(
     </UTooltip>
   </UDropdownMenu>
   <UTooltip
+    v-else
     :text="props.emoji.name"
     :delay-duration="0"
     :content="{ side: 'top' }"
-    v-else
   >
     <UButton
       :id="props.emoji.char"

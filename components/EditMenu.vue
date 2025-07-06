@@ -260,8 +260,8 @@ const options = computed(
   <UModal v-model:open="open">
     <template #content>
       <UCommandPalette
-        :groups="options"
         v-model:search-term="searchTerm"
+        :groups="options"
         @update:model-value="
           (value) =>
             emits(

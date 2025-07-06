@@ -14,11 +14,14 @@ const selectIndex = (index: number) => (selectedIndex.value = index);
 <template>
   <UModal
     :open="props.open"
-    @close="() => emit('close')"
     class="bg-opacity-20 fixed inset-0 z-10 flex items-center justify-center overflow-y-auto bg-black"
+    @close="() => emit('close')"
   >
     <template #content>
-      <SettingsSidePanel :selectedIndex="selectedIndex" @select="selectIndex" />
+      <SettingsSidePanel
+        :selected-index="selectedIndex"
+        @select="selectIndex"
+      />
       <UserAccount v-if="selectedIndex === 0" />
     </template>
   </UModal>

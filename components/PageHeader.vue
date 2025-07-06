@@ -72,8 +72,8 @@ const deleteCover = () => {
               variant="ghost"
               color="neutral"
               class="mr-1"
-              @click="() => emits('uploadCover')"
               icon="i-heroicons-photo"
+              @click="() => emits('uploadCover')"
             >
               {{ page?.coverUrl ? "Change Cover" : "Add Cover" }}
             </UButton>
@@ -106,6 +106,7 @@ const deleteCover = () => {
                   <UButton
                     variant="ghost"
                     color="neutral"
+                    label="Save"
                     @click="
                       () => {
                         if (!page?.id) return;
@@ -118,19 +119,18 @@ const deleteCover = () => {
                         );
                       }
                     "
-                    label="Save"
                   />
                 </UButtonGroup>
               </UButtonGroup>
             </template>
           </UPopover>
           <UButton
+            v-if="page?.coverUrl"
             variant="ghost"
             color="neutral"
             class="mr-1"
-            @click="deleteCover"
-            v-if="page?.coverUrl"
             icon="i-heroicons-trash"
+            @click="deleteCover"
           >
             Remove Cover
           </UButton>
@@ -140,9 +140,9 @@ const deleteCover = () => {
           <input
             type="text"
             :value="page?.title"
-            @input="updateTitle"
             placeholder="Untitled"
             class="w-full outline-hidden dark:bg-inherit"
+            @input="updateTitle"
           />
         </h1>
       </div>

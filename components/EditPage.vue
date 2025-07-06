@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { Block, Command, CommandOptions } from "@/types/page";
-import { codeToTokens, type TokensResult } from "shiki";
+import { codeToTokens } from "shiki";
+import type { TokensResult } from "shiki";
 import type { MdNode } from "~/shared/types";
-import { getDefaultCommandItems } from "~/utils/getDefaultCommandItems";
 const snackbarStore = useSnackbar();
 
 const { currentPage: page, updatePage, updateBlock } = usePageState();
@@ -62,8 +62,8 @@ const italic = (event: KeyboardEvent, block: Block) => {
   updateBlock(page.value.id, block.id, element.value.value);
 };
 
-const tab = (block: Block, remove = false) => {
-  insertFormating("  ", "", "", remove);
+const tab = (block: Block) => {
+  insertFormating("  ", "", "");
   if (!element.value || !page.value) {
     return;
   }
@@ -103,12 +103,7 @@ const paren = (event: KeyboardEvent, block: Block) => {
 };
 
 //https://dev.to/shivams136/simple-markdown-insertion-in-the-text-using-pure-javascript-pl4
-const insertFormating = (
-  text: string,
-  defaultTxt = "",
-  text2 = "",
-  remove = false,
-) => {
+const insertFormating = (text: string, defaultTxt = "", text2 = "") => {
   const txtarea = element.value;
   if (!txtarea) {
     console.error(
@@ -208,12 +203,6 @@ watch(
     const caretLineIndex =
       (element.value?.value ?? "").slice(0, caretPosition).split("\n").length -
         1 || 0;
-    console.log(
-      "caretLineIndex",
-      caretLineIndex,
-      "caretPosition",
-      caretPosition,
-    );
     syntaxHighlightedTokens.value = tokens.map((blockTokenResult) => ({
       ...blockTokenResult,
       tokens: blockTokenResult.tokens.map((line, index) =>
@@ -228,7 +217,7 @@ watch(
 const editMenuOpen = ref(false);
 const fileUploadOpen = ref(false);
 const isFileUploadCover = ref(false);
-const slash = (event: KeyboardEvent, block: Block) => {
+const slash = (event: KeyboardEvent) => {
   if (event.key !== "/") {
     return;
   }
@@ -278,6 +267,7 @@ const uploadImage = (file: File) => {
           id: page.value.id,
           coverUrl: res.pathname,
         });
+        fileUploadOpen.value = false;
         return;
       }
       const fileName = file.name;
@@ -305,17 +295,17 @@ const updateCaretPosition = (event: Event) => {
   <div
     class="z-0 flex h-full flex-auto flex-col dark:bg-stone-900 dark:text-white"
   >
-    <EditMenu v-model:open="editMenuOpen" @optionSelected="onEditMenuSelect" />
+    <EditMenu v-model:open="editMenuOpen" @option-selected="onEditMenuSelect" />
     <FileUploadModal
       v-model:open="fileUploadOpen"
-      @save="uploadImage"
       accept="image/*"
+      @save="uploadImage"
     />
     <div class="relative flex flex-initial flex-col">
       <PageNav
-        :previewPage="previewPage"
+        :preview-page="previewPage"
         :nodes="mdNodes || []"
-        @togglePreview="previewPage = !previewPage"
+        @toggle-preview="previewPage = !previewPage"
       />
     </div>
     <div class="relative flex w-full flex-auto overflow-hidden">
@@ -339,6 +329,7 @@ const updateCaretPosition = (event: Event) => {
           class="relative flex w-full flex-auto flex-col items-center pb-8"
         >
           <div
+            v-if="syntaxHighlightedTokens?.[i]?.tokens"
             class="relative mt-4 flex w-full px-2 sm:w-8/12 lg:px-0"
             :class="{ 'sm:w-11/12': previewPage }"
           >
@@ -347,12 +338,12 @@ const updateCaretPosition = (event: Event) => {
                 class="relative flex flex-col overflow-x-auto text-lg break-words whitespace-pre-wrap"
               >
                 <code class="relative flex flex-col"><span
-                    v-if="syntaxHighlightedTokens?.[i]?.tokens"
                     v-for="(line, lineIndex) in syntaxHighlightedTokens[i].tokens"
                     :key="lineIndex"
                     class="line block indent-0 relative min-h-[1lh]"
                   ><span
-                      v-for="(token) in line"
+                      v-for="(token, tokenIndex) in line"
+                      :key="tokenIndex"
                       :style="{
                         color: token.color,
                         backgroundColor: token.bgColor,
@@ -361,8 +352,8 @@ const updateCaretPosition = (event: Event) => {
               </pre>
             </div>
             <textarea
-              ref="elements"
               :id="`${block.id}`"
+              ref="elements"
               :spellcheck="false"
               :value="block.textContent"
               :style="{
@@ -377,13 +368,13 @@ const updateCaretPosition = (event: Event) => {
               @keydown.ctrl.b="(event) => bold(event, block)"
               @keydown.meta.i="(event) => italic(event, block)"
               @keydown.ctrl.i="(event) => italic(event, block)"
-              @keydown.tab.prevent="() => tab(block)"
-              @keydown.shift.tab.prevent="() => tab(block, true)"
+              @keydown.tab.prevent.exact="() => tab(block)"
+              @keydown.shift.tab.prevent="() => tab(block)"
               @keydown="
                 (event) => {
                   updateCaretPosition(event);
                   paren(event, block);
-                  slash(event, block);
+                  slash(event);
                 }
               "
               @click="

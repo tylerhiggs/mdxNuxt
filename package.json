@@ -9,13 +9,17 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "db:generate": "drizzle-kit generate",
-    "test": "vitest run"
+    "test": "vitest run",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
     "@braintree/sanitize-url": "^7.1.1",
+    "@nuxt/eslint": "1.5.2",
     "@nuxt/ui": "3.2.0",
     "@nuxthub/core": "latest",
     "drizzle-orm": "^0.40.0",
+    "eslint": "^9.0.0",
     "nuxt": "3.17.5",
     "nuxt-auth-utils": "0.5.17",
     "vue": "latest",
@@ -36,6 +40,7 @@
     "prettier-plugin-tailwindcss": "^0.6.11",
     "shiki": "^3.3.0",
     "tailwindcss": "latest",
+    "typescript": "^5.8.3",
     "vitest": "latest",
     "wrangler": "^3.114.1"
   }

@@ -29,8 +29,8 @@ defineProps<{
         <div class="text-5xl">{{ page.emoji }}</div>
         <h1 class="text-4xl font-bold">{{ page.title }}</h1>
       </div>
-      <div v-for="(block, i) in nodes" :key="i">
-        <div v-for="node in block">
+      <div v-for="(block, i) in nodes" :key="`block-${i}`">
+        <div v-for="node in block" :key="node.id">
           <MdNode :node="node" />
         </div>
       </div>

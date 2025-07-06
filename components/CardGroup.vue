@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { type CardProps, type MdNode } from "~/shared/types";
+import type { CardProps, ComponentNode } from "~/shared/types";
 const props = defineProps<{
-  node: MdNode;
+  node: ComponentNode;
 }>();
 const cardItems = computed(() => {
-  return props.node.items?.filter((item) => item.type === "card") || [];
+  return (props.node.items?.filter((item) => item.type === "card") ||
+    []) as ComponentNode[];
 });
 </script>
 
@@ -13,13 +14,9 @@ const cardItems = computed(() => {
     <Card
       v-for="(item, index) in cardItems"
       :key="index"
-      :componentProps="(item.componentProps as CardProps | undefined) || {}"
+      :component-props="(item.componentProps as CardProps | undefined) || {}"
     >
-      <MdNode
-        v-for="(node, nodeIndex) in item.items"
-        :key="nodeIndex"
-        :node="node"
-      />
+      <MdNode v-for="n in item.items" :key="n.id" :node="n" />
     </Card>
   </div>
 </template>

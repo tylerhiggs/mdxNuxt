@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { CodeCollapseProps, MdNode } from "~/shared/types";
+import type { CodeCollapseProps, ComponentNode } from "~/shared/types";
 const props = defineProps<{
-  node: MdNode;
+  node: ComponentNode;
 }>();
 const componentProps = computed(() => {
   return props.node.componentProps as CodeCollapseProps | undefined;
@@ -21,8 +21,11 @@ const filename = computed(() => {
 const colorMode = useColorMode();
 const snackbar = useSnackbar();
 const copyCode = () => {
-  if (codeBlock.value?.text) {
-    navigator.clipboard.writeText(codeBlock.value.text).then(() => {
+  if (codeBlock.value?.syntaxHighlightedTokens) {
+    const text = codeBlock.value.syntaxHighlightedTokens
+      .map((line) => line.map((token) => token.content).join(""))
+      .join("\n");
+    navigator.clipboard.writeText(text).then(() => {
       snackbar.enqueue("code copied to clipboard", "success");
     });
   }
@@ -59,8 +62,6 @@ const copyCode = () => {
           }"
         >
           <CodeBlock
-            v-if="codeBlock?.text"
-            :code="codeBlock?.text"
             :language="codeBlock?.language"
             :syntax-highlighted-tokens="
               colorMode.value === 'dark'

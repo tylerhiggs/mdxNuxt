@@ -31,6 +31,20 @@ const adjustedX = computed(() => {
 });
 </script>
 
+<template>
+  <div
+    v-if="tooltipStore.x.value"
+    ref="tooltipRef"
+    class="absolute z-50 rounded-md bg-black px-2 py-1 text-xs text-nowrap text-white"
+    :class="[tooltipStore.position.value]"
+  >
+    <p>{{ tooltipStore.title.value }}</p>
+    <p v-if="tooltipStore.message.value" class="font-mono text-gray-400">
+      {{ tooltipStore.message.value }}
+    </p>
+  </div>
+</template>
+
 <style scoped>
 .top {
   left: v-bind(xCoord);
@@ -56,17 +70,3 @@ const adjustedX = computed(() => {
   transform: translateY(-50%) translateX(0.2rem);
 }
 </style>
-
-<template>
-  <div
-    ref="tooltipRef"
-    class="absolute z-50 rounded-md bg-black px-2 py-1 text-xs text-nowrap text-white"
-    :class="[tooltipStore.position.value]"
-    v-if="tooltipStore.x.value"
-  >
-    <p>{{ tooltipStore.title.value }}</p>
-    <p v-if="tooltipStore.message.value" class="font-mono text-gray-400">
-      {{ tooltipStore.message.value }}
-    </p>
-  </div>
-</template>

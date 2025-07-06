@@ -17,11 +17,11 @@ const buttonText = computed(() => {
 
 <template>
   <UCollapsible
+    v-model:open="open"
     :ui="{
       root: 'my-2',
       content: '*:first:mt-2.5 *:last:mb-0 *:my-1.5',
     }"
-    v-model:open="open"
   >
     <UButton
       color="neutral"

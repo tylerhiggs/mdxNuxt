@@ -74,13 +74,15 @@ const mouseleave = () => {
 </script>
 
 <template>
-  <header class="flex w-full flex-row items-center justify-between p-2">
+  <header
+    v-if="page"
+    class="flex w-full flex-row items-center justify-between p-2"
+  >
     <button
-      v-for="(page, index) in page.path"
-      v-if="page"
-      :key="page.id"
+      v-for="(p, index) in page.path"
+      :key="p.id"
       class="flex items-center rounded-xs p-0.5 text-gray-700 hover:bg-gray-200 dark:text-stone-300 dark:hover:bg-stone-700"
-      @click="() => selectPage(page.id)"
+      @click="() => selectPage(p.id)"
     >
       <p v-if="index !== 0" class="mx-2 text-gray-500 dark:text-stone-400">/</p>
       <p class="text-sm">{{ page.emoji }}</p>
@@ -88,8 +90,8 @@ const mouseleave = () => {
     </button>
     <div class="flex items-center">
       <UIcon
-        name="i-heroicons-check"
         v-if="saved"
+        name="i-heroicons-check"
         class="size-5 text-emerald-400"
         aria-label="Saved"
       />
@@ -151,10 +153,9 @@ const mouseleave = () => {
                   </div>
                   <div class="h-32 text-sm text-gray-700">
                     <MdNode
-                      v-for="(node, i) in props.nodes[0] || []"
-                      :key="i"
+                      v-for="node in props.nodes[0] || []"
+                      :key="node.id"
                       :node="node"
-                      v-if="page?.blocks?.length"
                     />
                     <div
                       class="absolute right-0 bottom-0 left-0 h-16 bg-linear-to-t from-white to-transparent dark:from-stone-800"

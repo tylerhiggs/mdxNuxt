@@ -1,15 +1,16 @@
 import type {
+  ComponentNode,
   ComponentProps,
   ComponentType,
+  ListItemNode,
+  ListItemsNode,
   MdNode,
+  OrderedListItemNode,
+  OrderedListItemsNode,
   ThemeColor,
 } from "~/shared/types";
-import {
-  bundledLanguages,
-  codeToTokens,
-  type BundledLanguage,
-  type ThemedToken,
-} from "shiki";
+import { bundledLanguages, codeToTokens } from "shiki";
+import type { BundledLanguage, ThemedToken } from "shiki";
 import { sanitizeUrl } from "@braintree/sanitize-url";
 
 /**
@@ -33,7 +34,7 @@ export async function parseMd(markdown: string): Promise<MdNode[]> {
   }
   const tokens: MdNode[] = [];
   // Stack to keep track of nested components
-  const componentStack: MdNode[] = [];
+  const componentStack: (MdNode & { items: MdNode[] })[] = [];
   const lines = markdown.split("\n");
   let inCodeBlock = false;
   let codeBlockLanguage = "text" as BundledLanguage;
@@ -41,7 +42,7 @@ export async function parseMd(markdown: string): Promise<MdNode[]> {
   let codeBlockContent: string[] = [];
   let codeBlockFence: string | null = null; // Track the current fence (``` or ````)
 
-  for (const line of lines) {
+  for (const [index, line] of lines.entries()) {
     const trimmed = line.trim();
 
     const lastComponent = componentStack.at(-1);
@@ -69,23 +70,15 @@ export async function parseMd(markdown: string): Promise<MdNode[]> {
             },
           );
           listToPushTo.push({
+            id: `${index}-${codeBlockContent.join("\n").slice(0, 20)}`,
             type: "code-block",
-            raw: codeBlockContent.join("\n"),
             language: codeBlockLanguage,
             name,
-            text: codeBlockContent.join("\n"),
             syntaxHighlightedTokens: codeTokens,
             darkSyntaxHighlightedTokens: darkCodeTokens,
           });
         } catch (error) {
           console.error("Error parsing code block:", error);
-          listToPushTo.push({
-            type: "code-block",
-            raw: codeBlockContent.join("\n"),
-            language: codeBlockLanguage,
-            name,
-            text: codeBlockContent.join("\n"),
-          });
         }
         inCodeBlock = false;
         codeBlockLanguage = "text" as BundledLanguage;
@@ -122,8 +115,8 @@ export async function parseMd(markdown: string): Promise<MdNode[]> {
         const componentType = match[1] as ComponentType;
         const componentProps = match[2] ? getProps(match[2]) : {};
         const componentNode: MdNode = {
+          id: `${index}-${match[1]}-${match[2] || ""}`,
           type: componentType,
-          raw: "",
           items: [],
           componentProps: componentProps as ComponentProps,
         };
@@ -136,42 +129,42 @@ export async function parseMd(markdown: string): Promise<MdNode[]> {
     if (trimmed.startsWith("---")) {
       // Horizontal rule
       tokens.push({
+        id: `${index}-hr`,
         type: "hr",
-        raw: line,
       });
     } else if (trimmed.startsWith("#")) {
       const depth = trimmed.match(/^#+/)?.[0].length || 0;
       listToPushTo.push({
+        id: `${index}-h${depth}`,
         type: "heading",
-        raw: line,
-        text: trimmed.slice(depth).trim(),
         depth,
         items: await parseLine(trimmed.slice(depth).trim()),
       });
     } else if (trimmed.startsWith("- ") || trimmed.startsWith("* ")) {
       listToPushTo.push({
+        id: `${index}-li-${trimmed}`,
         type: "list-item",
-        raw: line,
         depth: Math.floor((line.match(/^\s*/)?.[0].length || 0) / 2),
         items: await parseLine(trimmed.slice(2).trim()),
       });
     } else if (/^\d+\.\s/.test(trimmed)) {
       listToPushTo.push({
+        id: `${index}-ol-${trimmed}`,
         type: "ordered-list-item",
-        raw: line,
         depth: Math.floor((line.match(/^\s*/)?.[0].length || 0) / 2),
         items: await parseLine(trimmed.replace(/^\d+\.\s/, "")),
+        number: parseInt(trimmed.match(/^\d+/)?.[0] || "1", 10),
       });
     } else if (trimmed.startsWith("> ")) {
       listToPushTo.push({
+        id: `${index}-blockquote-${trimmed}`,
         type: "blockquote",
-        raw: line,
         items: await parseLine(trimmed.slice(2).trim()),
       });
     } else if (trimmed) {
       listToPushTo.push({
+        id: `${index}-p-${trimmed}`,
         type: "paragraph",
-        raw: line,
         items: await parseLine(trimmed),
       });
     }
@@ -209,21 +202,21 @@ export async function parseLine(mdLine: string): Promise<MdNode[]> {
   for (const part of parts) {
     if (part.startsWith("**") && part.endsWith("**")) {
       tokens.push({
+        id: `bold-${part.slice(2, -2)}`,
         type: "bold",
-        raw: part,
-        text: part.slice(2, -2),
+        items: await parseLine(part.slice(2, -2)),
       });
     } else if (part.startsWith("*") && part.endsWith("*")) {
       tokens.push({
+        id: `italic-${part.slice(1, -1)}`,
         type: "italic",
-        raw: part,
-        text: part.slice(1, -1),
+        items: await parseLine(part.slice(1, -1)),
       });
     } else if (part.startsWith("__") && part.endsWith("__")) {
       tokens.push({
+        id: `italic-${part.slice(2, -2)}`,
         type: "italic",
-        raw: part,
-        text: part.slice(2, -2),
+        items: await parseLine(part.slice(2, -2)),
       });
     } else if (
       part.startsWith("`") &&
@@ -257,9 +250,8 @@ export async function parseLine(mdLine: string): Promise<MdNode[]> {
         color = match?.[2].match(/color=['"](\w+)['"]/)?.[1] as ThemeColor;
       }
       tokens.push({
+        id: `inline-code-${part.slice(1, -1)}`,
         type: "inline-code",
-        raw: part,
-        text: match?.[1],
         language,
         color,
         syntaxHighlightedTokens,
@@ -267,8 +259,8 @@ export async function parseLine(mdLine: string): Promise<MdNode[]> {
       });
     } else if (part.startsWith("`") && part.endsWith("`")) {
       tokens.push({
+        id: `inline-code-${part.slice(1, -1)}`,
         type: "inline-code",
-        raw: part,
         text: part.slice(1, -1),
       });
     } else if (part.startsWith(":")) {
@@ -278,9 +270,9 @@ export async function parseLine(mdLine: string): Promise<MdNode[]> {
         const componentType = match[1] as ComponentType;
         // Check if the component type is valid
         const componentProps = match[2] ? getProps(match[2]) : {};
-        const componentNode: MdNode = {
+        const componentNode: ComponentNode = {
+          id: `component-${componentType}-${match[2] || ""}`,
           type: componentType,
-          raw: part,
           items: [],
           componentProps: componentProps as ComponentProps,
         };
@@ -295,9 +287,9 @@ export async function parseLine(mdLine: string): Promise<MdNode[]> {
       const match = part.match(/!\[(.*?)\]\((.*?)\)/);
       if (match) {
         tokens.push({
+          id: `image-${match[1]}-${match[2]}`,
           type: "image",
-          raw: part,
-          text: match[1],
+          title: match[1],
           href: sanitizeUrl(match[2]),
         });
       }
@@ -309,24 +301,24 @@ export async function parseLine(mdLine: string): Promise<MdNode[]> {
       const match = part.match(/\[(.*?)\]\((.*?)\)/);
       if (match) {
         tokens.push({
+          id: `link-${match[1]}-${match[2]}`,
           type: "link",
-          raw: part,
-          text: match[1],
+          title: match[1],
           href: sanitizeUrl(match[2]),
         });
       }
     } else if (part.startsWith("http://") || part.startsWith("https://")) {
       // Handle plain URLs
       tokens.push({
+        id: `link-${part}`,
         type: "link",
-        raw: part,
-        text: part,
+        title: part,
         href: sanitizeUrl(part),
       });
     } else {
       tokens.push({
+        id: `text-${part}`,
         type: "text",
-        raw: part,
         text: part,
       });
     }
@@ -350,7 +342,7 @@ export function groupListItems(items: MdNode[]): MdNode[] {
    * ```
    * Then `prevListNodeStack === [Node(ul-1), Node(ul-2)]`
    */
-  let prevListNodeStack: MdNode[] = [];
+  let prevListNodeStack: (ListItemsNode | OrderedListItemsNode)[] = [];
   return items.reduce((acc, node, i, arr) => {
     if (node.type !== "list-item" && node.type !== "ordered-list-item") {
       prevListNodeStack = []; // Reset stack if not a list item
@@ -391,16 +383,18 @@ export function groupListItems(items: MdNode[]): MdNode[] {
         (prevListNodeStack.at(-1)?.depth || 0) < (node.depth || 0)
       ) {
         // If the last item is a list-item and the current node is deeper, we need to push it into the last list-items node
-        const previousListItem = arr.at(i - 1);
+        const previousListItem = arr.at(i - 1) as
+          | ListItemNode
+          | OrderedListItemNode;
         if (!previousListItem) {
           console.warn(
             "Unexpected state: No previous list item found when trying to push a nested list item.",
           );
           return acc;
         }
-        const newNode = {
+        const newNode: ListItemsNode | OrderedListItemsNode = {
+          id: `${node.id}-nested`,
           type: prevListNodeStack.at(-1)?.type || "list-items",
-          raw: "",
           items: [node],
           depth: node.depth,
         };
@@ -417,27 +411,25 @@ export function groupListItems(items: MdNode[]): MdNode[] {
         (acc.at(-1)?.type !== "list-items" &&
           acc.at(-1)?.type !== "ordered-list-items")
       ) {
-        acc.push(
+        const newListNode: ListItemsNode | OrderedListItemsNode =
           node?.type === "list-item"
             ? {
+                id: `${node.id}-list-items`,
                 type: "list-items",
-                raw: "",
                 items: [],
                 depth: 0,
               }
             : {
+                id: `${node.id}-ordered-list-items`,
                 type: "ordered-list-items",
-                raw: "",
                 items: [],
                 depth: 0,
-                orderedListStartIndex: node.raw.match(/^\d+/)
-                  ? parseInt(node.raw.match(/^\d+/)![0], 10)
-                  : 1,
-              },
-        );
-        prevListNodeStack.push(acc.at(-1)!);
+                orderedListStartIndex: node.number,
+              };
+        acc.push(newListNode);
+        prevListNodeStack.push(newListNode);
       }
-      acc[acc.length - 1]?.items?.push(node);
+      (acc.at(-1) as ListItemsNode | OrderedListItemsNode)?.items?.push(node);
     } else {
       acc.push(node);
     }

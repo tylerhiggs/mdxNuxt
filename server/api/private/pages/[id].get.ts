@@ -1,6 +1,6 @@
 import { asc } from "drizzle-orm";
 import { useDrizzle } from "~/server/utils/drizzle";
-import { MdNode } from "~/shared/types";
+import type { MdNode } from "~/shared/types";
 export default eventHandler(async (event) => {
   const { id } = getRouterParams(event);
   if (!id || isNaN(Number(id))) {
@@ -11,7 +11,6 @@ export default eventHandler(async (event) => {
     );
     throw createError({ statusCode: 400, message: "Page ID is required" });
   }
-  console.log("successfully got page id", id);
   const pages = await useDrizzle().query.pages.findMany({
     with: {
       blocks: {

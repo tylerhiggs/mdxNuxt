@@ -40,8 +40,8 @@ defineProps<{
     }"
   >
     <a
-      class="flex justify-between text-neutral-500 dark:text-neutral-300"
       v-if="componentProps.link"
+      class="flex justify-between text-neutral-500 dark:text-neutral-300"
       :href="componentProps.link"
       target="_blank"
     >

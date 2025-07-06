@@ -7,6 +7,8 @@ const snackbarStore = useSnackbar();
     class="absolute right-4 bottom-4 left-4 flex w-full flex-col items-center"
   >
     <div
+      v-for="snackbar in snackbarStore.queue.value"
+      :key="snackbar.id"
       class="group m-2 flex items-center justify-between rounded-lg px-2 py-0.5 text-white shadow-md"
       :class="
         snackbar.type === 'error'
@@ -19,8 +21,6 @@ const snackbarStore = useSnackbar();
                 ? 'bg-slate-900'
                 : 'bg-slate-900'
       "
-      v-for="snackbar in snackbarStore.queue.value"
-      :key="snackbar.id"
     >
       <p class="mr-0.5">{{ snackbar.message }}</p>
       <UIcon

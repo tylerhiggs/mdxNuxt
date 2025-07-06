@@ -7,13 +7,11 @@ export default defineOAuthGoogleEventHandler({
     event: H3Event,
     { user }: { user: { name: string; email: string; picture: string } },
   ) {
-    console.log("User authenticated successfully:", user);
     const response = await fetch(user.picture);
     if (!response.ok) {
       console.error("Error fetching user picture:", response.statusText);
       sendRedirect(event, "/login");
     }
-    console.log("User picture fetched successfully:", response);
     const imageBlob = await response.blob();
     ensureBlob(imageBlob, {
       types: ["image"],
@@ -23,7 +21,6 @@ export default defineOAuthGoogleEventHandler({
       addRandomSuffix: true,
       prefix: "user-avatars",
     });
-    console.log("Blob URL:", blobUrl.pathname);
     let dbUser = await useDrizzle()
       .insert(users)
       .values({
@@ -46,7 +43,6 @@ export default defineOAuthGoogleEventHandler({
         .get();
       dbUser = existingUser || dbUser;
     }
-    console.log("User upserted successfully:", user);
     await setUserSession(event, {
       user: {
         id: dbUser.id,
@@ -55,7 +51,6 @@ export default defineOAuthGoogleEventHandler({
         avatar: blobUrl.pathname,
       },
     });
-    console.log("User session set successfully:", user);
     return sendRedirect(event, "/edit");
   },
   onError(event: H3Event, error: H3Error) {

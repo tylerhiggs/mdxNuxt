@@ -4,9 +4,9 @@ import {
   text,
   integer,
   index,
-  AnySQLiteColumn,
   real,
 } from "drizzle-orm/sqlite-core";
+import type { AnySQLiteColumn } from "drizzle-orm/sqlite-core";
 
 export const users = sqliteTable(
   "users",

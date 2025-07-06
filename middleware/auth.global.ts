@@ -1,14 +1,11 @@
 const publicRoutes = ["/login", "/signup", "public"];
-export default defineNuxtRouteMiddleware((to, from) => {
-  console.log("Middleware: auth", to.path);
+export default defineNuxtRouteMiddleware((to) => {
   if (publicRoutes.some((route) => to.path.startsWith(route))) {
-    console.log("Public route, no auth needed");
     return;
   }
 
   const unauthenticatedRoutes = ["/public", "/auth/google"];
   if (unauthenticatedRoutes.some((route) => to.path.startsWith(route))) {
-    console.log("Unauthenticated route, no auth needed");
     return;
   }
 
@@ -16,14 +13,13 @@ export default defineNuxtRouteMiddleware((to, from) => {
   const auth = useAuth();
   if (!loggedIn.value) {
     auth.setPrevLink(to.path);
-    console.log(
+    console.warn(
       "User not logged in, redirecting to login, setting prevLink to ",
       to.path,
     );
     return navigateTo("/login");
   }
   if (auth.prevLink.value) {
-    console.log("User logged in, redirecting to prevLink", auth.prevLink.value);
     const prevLinkValue = auth.prevLink.value;
     auth.setPrevLink("");
     return navigateTo(prevLinkValue);

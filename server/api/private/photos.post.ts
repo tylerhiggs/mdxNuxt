@@ -1,12 +1,10 @@
 import { pages } from "~/server/database/schema";
 
 export default defineEventHandler(async (event) => {
-  console.log("Handling photo upload request");
   const { user } = await requireUserSession(event);
   if (!user.id || isNaN(Number(user.id))) {
     throw createError({ statusCode: 400, message: "User ID is required" });
   }
-  console.log("User session validated:", user.email);
   const query = getQuery<{ pageId: string; isCover?: boolean }>(event);
   if (!query.pageId || isNaN(Number(query.pageId))) {
     console.error("Invalid or missing page ID:", query.pageId);

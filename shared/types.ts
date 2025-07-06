@@ -108,22 +108,124 @@ export type MdNodeType =
   | "italic"
   | "hr"
   | "text";
-export type MdNode = {
+
+export type BaseMdNode = {
   type: MdNodeType | ComponentType;
-  raw: string;
-  text?: string;
-  depth?: number;
-  href?: string;
+  id: string;
+};
+export type HeadingNode = BaseMdNode & {
+  type: "heading";
+  depth: number;
+  items: MdNode[];
+};
+export type ParagraphNode = BaseMdNode & {
+  type: "paragraph";
+  items: MdNode[];
+};
+export type ListItemsNode = BaseMdNode & {
+  type: "list-items";
+  items: MdNode[];
+  depth: number;
+};
+export type ListItemNode = BaseMdNode & {
+  type: "list-item";
+  items: MdNode[];
+  depth: number;
+};
+export type OrderedListItemsNode = BaseMdNode & {
+  type: "ordered-list-items";
+  items: MdNode[];
+  orderedListStartIndex?: number;
+  depth: number;
+};
+export type OrderedListItemNode = BaseMdNode & {
+  type: "ordered-list-item";
+  items: MdNode[];
+  orderedListStartIndex?: number;
+  depth: number;
+  number: number; // for ordered lists, the number to display
+};
+export type LinkNode = BaseMdNode & {
+  type: "link";
+  href: string;
   title?: string;
+};
+export type InlineCodeNode = BaseMdNode & {
+  type: "inline-code";
   language?: string;
-  name?: string;
   color?: ThemeColor;
+  text?: string; // if not using syntax highlighting
   syntaxHighlightedTokens?: ThemedToken[][];
   darkSyntaxHighlightedTokens?: ThemedToken[][];
-  items?: MdNode[];
-  orderedListStartIndex?: number;
-  componentProps?: ComponentProps;
 };
+export type ImageNode = BaseMdNode & {
+  type: "image";
+  href: string;
+  title: string;
+};
+export type BlockquoteNode = BaseMdNode & {
+  type: "blockquote";
+  items: MdNode[];
+};
+export type CodeBlockNode = BaseMdNode & {
+  type: "code-block";
+  language?: string;
+  name?: string;
+  syntaxHighlightedTokens?: ThemedToken[][];
+  darkSyntaxHighlightedTokens?: ThemedToken[][];
+};
+export type BoldNode = BaseMdNode & {
+  type: "bold";
+  items: MdNode[];
+};
+export type ItalicNode = BaseMdNode & {
+  type: "italic";
+  items: MdNode[];
+};
+export type HrNode = BaseMdNode & {
+  type: "hr";
+};
+export type TextNode = BaseMdNode & {
+  type: "text";
+  text: string;
+};
+export type ComponentNode = BaseMdNode & {
+  type: ComponentType;
+  componentProps?: ComponentProps;
+  items: MdNode[];
+};
+export type MdNode =
+  | HeadingNode
+  | ParagraphNode
+  | ListItemsNode
+  | ListItemNode
+  | OrderedListItemsNode
+  | OrderedListItemNode
+  | LinkNode
+  | InlineCodeNode
+  | ImageNode
+  | BlockquoteNode
+  | CodeBlockNode
+  | BoldNode
+  | ItalicNode
+  | HrNode
+  | TextNode
+  | ComponentNode;
+// export type MdNode = {
+//   type: MdNodeType | ComponentType;
+//   text?: string;
+//   depth?: number;
+//   href?: string;
+//   title?: string;
+//   language?: string;
+//   name?: string;
+//   color?: ThemeColor;
+//   syntaxHighlightedTokens?: ThemedToken[][];
+//   darkSyntaxHighlightedTokens?: ThemedToken[][];
+//   items?: MdNode[];
+//   orderedListStartIndex?: number;
+//   componentProps?: ComponentProps;
+// };
 
 export type ThemeColor =
   | "neutral"

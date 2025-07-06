@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { type CodeGroupProps, type MdNode } from "~/shared/types";
+import type { CodeGroupProps, ComponentNode } from "~/shared/types";
 const props = defineProps<{
-  node: MdNode;
+  node: ComponentNode;
 }>();
 const componentProps = computed(() => {
   return props.node.componentProps as CodeGroupProps | undefined;
@@ -27,9 +27,12 @@ const tabIndex = computed({
 });
 const copyCode = () => {
   const codeBlock = codeGroups.value[tabIndex.value];
-  if (codeBlock?.text) {
+  if (codeBlock?.syntaxHighlightedTokens) {
+    const text = codeBlock.syntaxHighlightedTokens
+      .map((line) => line.map((token) => token.content).join(""))
+      .join("\n");
     navigator.clipboard
-      .writeText(codeBlock.text)
+      .writeText(text)
       .then(() => {
         useSnackbar().enqueue("Code copied to clipboard", "success");
       })
@@ -76,8 +79,6 @@ const fileExtension = (name: string | undefined) => {
         <div class="relative">
           <div class="p-3 text-sm">
             <CodeBlock
-              v-if="codeGroups[tabIndex]?.text"
-              :code="codeGroups[tabIndex]?.text || ''"
               :language="codeGroups[tabIndex]?.language"
               :syntax-highlighted-tokens="
                 colorMode.value === 'dark'

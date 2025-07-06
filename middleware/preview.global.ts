@@ -1,4 +1,4 @@
-export default defineNuxtRouteMiddleware((to, from) => {
+export default defineNuxtRouteMiddleware((to) => {
   const preview = usePreview();
   if (to.path.startsWith("/edit")) {
     preview.preview.value = true;

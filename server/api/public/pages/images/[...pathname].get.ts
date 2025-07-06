@@ -26,7 +26,6 @@ export default defineEventHandler(async (event) => {
   }
 
   // Log the requested pathname
-  console.log("Requested pathname:", pathname);
 
   // Serve the requested page
   return hubBlob().serve(event, pathname);

@@ -1,9 +1,13 @@
 <script setup lang="ts">
-import { type CodeTreeProps, type MdNode } from "~/shared/types";
+import type {
+  ComponentNode,
+  CodeTreeProps,
+  CodeBlockNode,
+} from "~/shared/types";
 import type { TreeItem } from "@nuxt/ui";
 
 const props = defineProps<{
-  node: MdNode;
+  node: ComponentNode;
 }>();
 
 const expandAll = computed(() => {
@@ -13,7 +17,8 @@ const expandAll = computed(() => {
 });
 
 const codeBlocks = computed(() => {
-  return props.node.items?.filter((item) => item.type === "code-block") || [];
+  return (props.node.items?.filter((item) => item.type === "code-block") ||
+    []) as CodeBlockNode[];
 });
 
 const treeItems = computed(() =>
@@ -27,7 +32,6 @@ const treeItems = computed(() =>
             currentNodesChildren.push({
               label: part,
               icon: `i-vscode-icons-file-type-${fileExtension(part)}`,
-              value: item.text || "",
               type: "code-block",
               onSelect: () => {
                 selected.value = item;
@@ -70,7 +74,7 @@ const sortTree = (items: TreeItem[]) => {
   return items;
 };
 
-const _selected = ref<MdNode | undefined>(
+const _selected = ref<CodeBlockNode | undefined>(
   codeBlocks.value.find(
     (item) =>
       item.name ===
@@ -93,9 +97,12 @@ const currentIcon = computed(() => {
 const colorMode = useColorMode();
 
 const copyCode = () => {
-  if (selected.value?.text) {
+  if (selected.value?.syntaxHighlightedTokens) {
+    const text = selected.value.syntaxHighlightedTokens
+      .map((line) => line.map((token) => token.content).join(""))
+      .join("\n");
     navigator.clipboard
-      .writeText(selected.value.text)
+      .writeText(text)
       .then(() => {
         useSnackbar().enqueue("Code copied to clipboard", "success");
       })
@@ -139,8 +146,6 @@ const copyCode = () => {
           <div class="relative overflow-auto">
             <div class="p-3 text-sm">
               <CodeBlock
-                v-if="selected?.text"
-                :code="selected?.text || ''"
                 :language="selected?.language"
                 :syntax-highlighted-tokens="
                   colorMode.value === 'dark'

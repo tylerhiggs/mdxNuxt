@@ -1,5 +1,5 @@
 import { eq, tables, useDrizzle } from "~/server/utils/drizzle";
-import { MdNode } from "~/shared/types";
+import type { MdNode } from "~/shared/types";
 
 export default eventHandler(async (event) => {
   const { id } = getRouterParams(event);

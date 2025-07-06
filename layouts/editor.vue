@@ -38,8 +38,8 @@ useHead({
         :pages="pages || []"
         :current-page-id="currentPage?.id"
         @toggle-search="showSearch = !showSearch"
-        @openSettings="showSettings = true"
-        @createPage="createPage"
+        @open-settings="showSettings = true"
+        @create-page="createPage"
         @delete-page="deletePage"
       />
       <slot />

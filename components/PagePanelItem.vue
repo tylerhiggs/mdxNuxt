@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { DropdownMenuItem } from "@nuxt/ui";
 import type { PageItem } from "@/types/page";
-import { UIcon } from "#components";
 const pageState = usePageState();
 const props = defineProps<{
   page: PageItem;
@@ -10,9 +9,11 @@ const props = defineProps<{
 const emit = defineEmits<{
   addPage: [];
 }>();
-
+const snackbarStore = useSnackbar();
+const hostname = useRequestURL().origin;
 const copyLink = () => {
-  console.log("Copy link");
+  navigator.clipboard.writeText(`${hostname}/public/${props.page.id}`);
+  snackbarStore.enqueue("Link copied to clipboard", "success");
 };
 
 const menuItems = computed<DropdownMenuItem[]>(() => [
@@ -28,24 +29,12 @@ const menuItems = computed<DropdownMenuItem[]>(() => [
   {
     label: "Copy link",
     icon: "i-heroicons-link",
-    onSelect: () => copyLink(),
+    onSelect: copyLink,
   },
   {
     label: "Duplicate",
     icon: "i-heroicons-document-duplicate",
     onSelect: () => pageState.duplicatePage(props.page.id),
-  },
-  {
-    label: "Rename",
-    icon: "i-heroicons-pencil-square",
-    onSelect: () => console.log("Rename"),
-    kbds: ["meta", "shift", "r"],
-  },
-  {
-    label: "Move to",
-    icon: "i-heroicons-arrow-uturn-left",
-    onSelect: () => console.log("Move to"),
-    kbds: ["meta", "shift", "p"],
   },
   {
     label: "Delete",
@@ -69,13 +58,13 @@ const isOpen = ref(false);
         @click="((isOpen = !isOpen), $event.stopPropagation())"
       >
         <UIcon
-          name="i-heroicons-chevron-right"
           v-if="!isOpen"
+          name="i-heroicons-chevron-right"
           class="size-5 text-gray-400"
         />
         <UIcon
-          name="i-heroicons-chevron-down"
           v-else
+          name="i-heroicons-chevron-down"
           class="size-5 text-gray-400"
         />
       </button>

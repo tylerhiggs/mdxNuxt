@@ -36,19 +36,19 @@ const handleImageChange = (e: Event) => {
           @click="imageInputElement?.click()"
         >
           <input
+            id="userImage"
+            ref="imageInputElement"
             type="file"
             name="userImage"
-            id="userImage"
             accept="image/*"
-            ref="imageInputElement"
-            @change="handleImageChange"
             class="hidden"
+            @change="handleImageChange"
           />
           {{ userFirstLetter }}
         </button>
         <label
-          for="userImage"
           v-if="!auth.dbUser.value?.avatar"
+          for="userImage"
           class="mt-1 text-sm text-gray-400"
           >Add photo</label
         >

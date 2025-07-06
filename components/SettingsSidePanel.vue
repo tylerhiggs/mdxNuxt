@@ -26,8 +26,8 @@ const userFirstLetter = computed(() => {
     <div class="ml-3 flex items-center">
       <div v-if="authStore.dbUser.value?.avatar"></div>
       <div
-        class="flex size-5 items-center justify-center rounded-full bg-white text-xs text-gray-500 shadow-xs"
         v-else
+        class="flex size-5 items-center justify-center rounded-full bg-white text-xs text-gray-500 shadow-xs"
       >
         {{ userFirstLetter }}
       </div>

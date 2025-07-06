@@ -1,5 +1,7 @@
 <template>
-  <slot />
-  <SnackBar />
-  <OuterToolTip />
+  <div>
+    <slot />
+    <SnackBar />
+    <OuterToolTip />
+  </div>
 </template>

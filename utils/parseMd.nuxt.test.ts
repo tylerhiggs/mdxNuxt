@@ -1,6 +1,11 @@
 import { expect, test } from "vitest";
 import { groupListItems, parseMd } from "./parseMd";
-import type { MdNode } from "~/shared/types";
+import type {
+  LinkNode,
+  ListItemNode,
+  MdNode,
+  ParagraphNode,
+} from "~/shared/types";
 import { sanitizeUrl } from "@braintree/sanitize-url";
 
 test("parseMd - empty input", async () => {
@@ -12,17 +17,15 @@ test("parseMd - empty input", async () => {
 test("parseMd - single line input", async () => {
   const input = "This is a single line of text.";
   const expectedOutput = [
-    {
+    expect.objectContaining({
       type: "paragraph",
-      raw: "This is a single line of text.",
       items: [
-        {
+        expect.objectContaining({
           type: "text",
-          raw: "This is a single line of text.",
           text: "This is a single line of text.",
-        },
+        }),
       ],
-    },
+    }),
   ];
   const output = await parseMd(input);
   expect(output).toEqual(expectedOutput);
@@ -63,17 +66,15 @@ This is a paragraph with some text.`;
         }),
       ],
     }),
-    {
+    expect.objectContaining({
       type: "paragraph",
-      raw: "This is a paragraph with some text.",
       items: [
-        {
+        expect.objectContaining({
           type: "text",
-          raw: "This is a paragraph with some text.",
           text: "This is a paragraph with some text.",
-        },
+        }),
       ],
-    },
+    }),
   ];
   const output = await parseMd(input);
   expect(output).toEqual(expectedOutput);
@@ -128,7 +129,12 @@ This is a paragraph with **bold text** and *italic text*.
         }),
         expect.objectContaining({
           type: "bold",
-          text: "bold text",
+          items: [
+            expect.objectContaining({
+              type: "text",
+              text: "bold text",
+            }),
+          ],
         }),
         expect.objectContaining({
           type: "text",
@@ -136,7 +142,12 @@ This is a paragraph with **bold text** and *italic text*.
         }),
         expect.objectContaining({
           type: "italic",
-          text: "italic text",
+          items: [
+            expect.objectContaining({
+              type: "text",
+              text: "italic text",
+            }),
+          ],
         }),
         expect.objectContaining({
           type: "text",
@@ -144,46 +155,40 @@ This is a paragraph with **bold text** and *italic text*.
         }),
       ],
     }),
-    {
+    expect.objectContaining({
       type: "list-items",
       depth: 0,
-      raw: "",
       items: [
-        {
+        expect.objectContaining({
           type: "list-item",
-          raw: "- List item 1",
           depth: 0,
           items: [
-            {
+            expect.objectContaining({
               type: "text",
-              raw: "List item 1",
               text: "List item 1",
-            },
+            }),
           ],
-        },
-        {
+        }),
+        expect.objectContaining({
           type: "list-item",
-          raw: "- List item 2",
           depth: 0,
           items: [
-            {
+            expect.objectContaining({
               type: "text",
-              raw: "List item 2",
               text: "List item 2",
-            },
+            }),
           ],
-        },
+        }),
       ],
-    },
+    }),
     expect.objectContaining({
       type: "paragraph",
       items: [
-        {
+        expect.objectContaining({
           type: "link",
-          raw: "[Link text](https://example.com)",
-          text: "Link text",
+          title: "Link text",
           href: sanitizeUrl("https://example.com"),
-        },
+        }),
       ],
     }),
   ];
@@ -194,33 +199,32 @@ This is a paragraph with **bold text** and *italic text*.
 test("parseMd - link XXS safety", async () => {
   const input = `[Link text](javascript:alert('XSS'))`;
   const output = await parseMd(input);
-  expect(output[0].href).not.toEqual("javascript:alert('XSS')");
+  expect((output[0] as ParagraphNode).items[0].type).toEqual("link");
+  expect(((output[0] as ParagraphNode).items[0] as LinkNode).href).not.toEqual(
+    "javascript:alert('XSS')",
+  );
 });
 
 test("parseMd - inline code", async () => {
   const input = `This is a paragraph with \`inline code\`.`;
   const expectedOutput = [
-    {
+    expect.objectContaining({
       type: "paragraph",
-      raw: "This is a paragraph with `inline code`.",
       items: [
-        {
+        expect.objectContaining({
           type: "text",
-          raw: "This is a paragraph with ",
           text: "This is a paragraph with ",
-        },
-        {
+        }),
+        expect.objectContaining({
           type: "inline-code",
-          raw: "`inline code`",
           text: "inline code",
-        },
-        {
+        }),
+        expect.objectContaining({
           type: "text",
-          raw: ".",
           text: ".",
-        },
+        }),
       ],
-    },
+    }),
   ];
   const output = await parseMd(input);
   expect(output).toEqual(expectedOutput);
@@ -228,32 +232,25 @@ test("parseMd - inline code", async () => {
 
 test("parseMd - inline code with options", async () => {
   const input = `This is a paragraph with \`inline code\`{lang='typescript', color='primary'}.`;
-  // Option 1: Use expect.objectContaining to ignore syntaxHighlightedTokens
   const expectedOutput = [
-    {
+    expect.objectContaining({
       type: "paragraph",
-      raw: "This is a paragraph with `inline code`{lang='typescript', color='primary'}.",
       items: [
-        {
+        expect.objectContaining({
           type: "text",
-          raw: "This is a paragraph with ",
           text: "This is a paragraph with ",
-        },
+        }),
         expect.objectContaining({
           type: "inline-code",
-          raw: "`inline code`{lang='typescript', color='primary'}",
-          text: "inline code",
           language: "typescript",
           color: "primary",
-          // syntaxHighlightedTokens is ignored
         }),
-        {
+        expect.objectContaining({
           type: "text",
-          raw: ".",
           text: ".",
-        },
+        }),
       ],
-    },
+    }),
   ];
   const output = await parseMd(input);
   expect(output).toEqual(expectedOutput);
@@ -266,160 +263,151 @@ test("parseMd - nested lists", async () => {
   - Nested item 2
 - List item 3`;
   const expectedOutput = [
-    {
+    expect.objectContaining({
       type: "list-items",
       depth: 0,
-      raw: "",
       items: [
-        {
+        expect.objectContaining({
           type: "list-item",
-          raw: "- List item 1",
           depth: 0,
           items: [
-            {
+            expect.objectContaining({
               type: "text",
-              raw: "List item 1",
               text: "List item 1",
-            },
+            }),
           ],
-        },
-        {
+        }),
+        expect.objectContaining({
           type: "list-item",
-          raw: "- List item 2",
           depth: 0,
           items: [
-            {
+            expect.objectContaining({
               type: "text",
-              raw: "List item 2",
               text: "List item 2",
-            },
-            {
+            }),
+            expect.objectContaining({
               type: "list-items",
               depth: 1,
-              raw: "",
               items: [
-                {
+                expect.objectContaining({
                   type: "list-item",
-                  raw: "  - Nested item 1",
                   depth: 1,
                   items: [
-                    {
+                    expect.objectContaining({
                       type: "text",
-                      raw: "Nested item 1",
                       text: "Nested item 1",
-                    },
+                    }),
                   ],
-                },
-                {
+                }),
+                expect.objectContaining({
                   type: "list-item",
-                  raw: "  - Nested item 2",
                   depth: 1,
                   items: [
-                    {
+                    expect.objectContaining({
                       type: "text",
-                      raw: "Nested item 2",
                       text: "Nested item 2",
-                    },
+                    }),
                   ],
-                },
+                }),
               ],
-            },
+            }),
           ],
-        },
-        {
+        }),
+        expect.objectContaining({
           type: "list-item",
-          raw: "- List item 3",
           depth: 0,
           items: [
-            {
+            expect.objectContaining({
               type: "text",
-              raw: "List item 3",
               text: "List item 3",
-            },
+            }),
           ],
-        },
+        }),
       ],
-    },
+    }),
   ];
   const output = await parseMd(input);
   expect(output).toEqual(expectedOutput);
 });
 
 test("parseMd - groupListItems", () => {
-  const items: MdNode[] = [
+  const items: ListItemNode[] = [
     {
+      id: "",
       type: "list-item",
-      raw: "- Item 1",
-      items: [{ type: "text", raw: "Item 1", text: "Item 1" }],
+      items: [{ id: "", type: "text", text: "Item 1" }],
+      depth: 0,
     },
     {
+      id: "",
       type: "list-item",
-      raw: "- Item 2",
-      items: [{ type: "text", raw: "Item 2", text: "Item 2" }],
+      items: [{ id: "", type: "text", text: "Item 2" }],
+      depth: 0,
     },
   ];
   const grouped = groupListItems(items);
   expect(grouped).toEqual([
-    {
+    expect.objectContaining({
       type: "list-items",
       items,
-      raw: "",
       depth: 0,
-    },
+    }),
   ]);
 });
 
 test("parseMd - groupListItems with ordered list", () => {
   const items: MdNode[] = [
     {
+      id: "",
       type: "ordered-list-item",
-      raw: "1. Item 1",
       depth: 0,
-      items: [{ type: "text", raw: "Item 1", text: "Item 1" }],
+      items: [{ id: "", type: "text", text: "Item 1" }],
+      number: 1,
     },
     {
+      id: "",
       type: "ordered-list-item",
-      raw: "2. Item 2",
       depth: 0,
-      items: [{ type: "text", raw: "Item 2", text: "Item 2" }],
+      items: [{ id: "", type: "text", text: "Item 2" }],
+      number: 2,
     },
   ];
   const grouped = groupListItems(items);
   expect(grouped).toEqual([
-    {
+    expect.objectContaining({
       type: "ordered-list-items",
       items,
       depth: 0,
       orderedListStartIndex: 1,
-      raw: "",
-    },
+    }),
   ]);
 });
 
 test("parseMd - groupListItems with ordered list - start number 2", () => {
   const items: MdNode[] = [
     {
+      id: "",
       type: "ordered-list-item",
-      raw: "2. Item 1",
       depth: 0,
-      items: [{ type: "text", raw: "Item 1", text: "Item 1" }],
+      number: 2,
+      items: [{ id: "", type: "text", text: "Item 1" }],
     },
     {
+      id: "",
+      number: 1,
       type: "ordered-list-item",
-      raw: "1. Item 2",
       depth: 0,
-      items: [{ type: "text", raw: "Item 2", text: "Item 2" }],
+      items: [{ id: "", type: "text", text: "Item 2" }],
     },
   ];
   const grouped = groupListItems(items);
   expect(grouped).toEqual([
-    {
+    expect.objectContaining({
       type: "ordered-list-items",
       items,
-      raw: "",
       depth: 0,
       orderedListStartIndex: 2,
-    },
+    }),
   ]);
 });
 
@@ -438,7 +426,12 @@ test("parseMd - basic component parsing", async () => {
         }),
         expect.objectContaining({
           type: "bold",
-          text: "rich",
+          items: [
+            expect.objectContaining({
+              type: "text",
+              text: "rich",
+            }),
+          ],
         }),
         expect.objectContaining({
           type: "text",
@@ -474,7 +467,12 @@ test("parseMd - component with props", async () => {
         }),
         expect.objectContaining({
           type: "bold",
-          text: "rich",
+          items: [
+            expect.objectContaining({
+              type: "text",
+              text: "rich",
+            }),
+          ],
         }),
         expect.objectContaining({
           type: "text",
@@ -556,7 +554,6 @@ const f = false
     expect.objectContaining({
       type: "code-block",
       language: "md",
-      text: "```\nconst f = false\n```",
     }),
   ];
   const output = await parseMd(input);
@@ -569,22 +566,20 @@ test("parseMd - inline component with props", async () => {
     expect.objectContaining({
       type: "paragraph",
       items: [
-        {
+        expect.objectContaining({
           type: "text",
-          raw: "This is a paragraph with ",
           text: "This is a paragraph with ",
-        },
+        }),
         expect.objectContaining({
           type: "icon",
           componentProps: {
             name: "plus",
           },
         }),
-        {
+        expect.objectContaining({
           type: "text",
-          raw: " inline component.",
           text: " inline component.",
-        },
+        }),
       ],
     }),
   ];

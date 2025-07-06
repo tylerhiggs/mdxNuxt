@@ -8,13 +8,6 @@ definePageMeta({
   },
 });
 const route = useRoute();
-watch(
-  () => route.params.id,
-  (paramId) => {
-    console.log("paramId", paramId);
-    const strParamId = paramId as string;
-  },
-);
 
 const { data: page } = useFetch(() => `/api/public/pages/${route.params.id}`, {
   method: "GET",

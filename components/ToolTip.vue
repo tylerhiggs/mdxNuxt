@@ -7,6 +7,20 @@ defineProps<{
 }>();
 </script>
 
+<template>
+  <div class="group/tooltip relative z-50">
+    <slot></slot>
+    <div
+      v-if="!disabled"
+      class="invisible absolute z-50 rounded-md bg-black px-2 py-1 text-xs text-nowrap text-white group-hover/tooltip:visible dark:bg-stone-800"
+      :class="position"
+    >
+      <p>{{ message }}</p>
+      <p v-if="command" class="font-mono text-gray-400">{{ command }}</p>
+    </div>
+  </div>
+</template>
+
 <style scoped>
 .top {
   bottom: 100%;
@@ -29,17 +43,3 @@ defineProps<{
   transform: translateY(-50%) translateX(0.2rem);
 }
 </style>
-
-<template>
-  <div class="group/tooltip relative z-50">
-    <slot></slot>
-    <div
-      class="invisible absolute z-50 text-nowrap rounded-md bg-black px-2 py-1 text-xs text-white group-hover/tooltip:visible dark:bg-stone-800"
-      :class="position"
-      v-if="!disabled"
-    >
-      <p>{{ message }}</p>
-      <p v-if="command" class="font-mono text-gray-400">{{ command }}</p>
-    </div>
-  </div>
-</template>

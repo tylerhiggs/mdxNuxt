@@ -3,15 +3,13 @@ definePageMeta({
   layout: "editor",
 });
 const emojiDataStore = useEmojiData();
-const { selectPage, isSaved, currentPage, updatePage, updateBlock } =
-  usePageState();
+const { selectPage, currentPage } = usePageState();
 const route = useRoute();
 const snackbar = useSnackbar();
 
 watch(
   () => route.params.id,
   (paramId) => {
-    console.log("paramId", paramId);
     const numParamId = Number(paramId as string);
     if (isNaN(numParamId)) {
       snackbar.enqueue("Invalid page ID", "error");

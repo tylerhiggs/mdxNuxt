@@ -33,16 +33,16 @@ function closeModal() {
   <UModal v-model:open="isOpen">
     <template #content>
       <form
-        @submit.prevent="() => file && emits('save', file)"
         class="rounded-lg bg-white p-6 shadow-md"
+        @submit.prevent="() => file && emits('save', file)"
       >
         <label
           for="file-upload"
           class="flex cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 p-8 transition hover:border-blue-400 hover:bg-blue-50"
+          :class="{ 'border-blue-500 bg-blue-100': isDragging }"
           @dragover.prevent="isDragging = true"
           @dragleave.prevent="isDragging = false"
           @drop.prevent="handleDrop"
-          :class="{ 'border-blue-500 bg-blue-100': isDragging }"
         >
           <UIcon
             name="i-heroicons-cloud-arrow-up"

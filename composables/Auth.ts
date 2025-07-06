@@ -7,23 +7,6 @@ export const useAuth = () => {
   const loading = useState<boolean>("loadingUser", () => true);
   const prevLink = useState<string | null>("prevLink", () => null);
 
-  watch(
-    loggedIn,
-    (newValue) => {
-      console.log("loggedIn changed", newValue);
-    },
-    { immediate: true },
-  );
-
-  watch(
-    user,
-    (newValue) => {
-      console.log("user changed", newValue);
-      loading.value = false;
-    },
-    { immediate: true },
-  );
-
   const { data: userData, error: userError } = useFetch("/api/private/users", {
     method: "get",
     watch: [loggedIn],

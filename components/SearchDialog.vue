@@ -29,14 +29,14 @@ const toggleTitleOnly = () => {
   isTitleOnly.value = !isTitleOnly.value;
 };
 
-const createdByOptions = [{ id: "Me" }];
-const selectedCreatedBy = ref([createdByOptions[0]]);
-const selectCreatedByOptions = (value: string) => {
-  selectedCreatedBy.value.push(
-    createdByOptions.find((option) => option.id === value) ||
-      createdByOptions[0],
-  );
-};
+// const createdByOptions = [{ id: "Me" }];
+// const selectedCreatedBy = ref([createdByOptions[0]]);
+// const selectCreatedByOptions = (value: string) => {
+//   selectedCreatedBy.value.push(
+//     createdByOptions.find((option) => option.id === value) ||
+//       createdByOptions[0],
+//   );
+// };
 
 const closeDialog = () => {
   search.value = "";
@@ -100,24 +100,20 @@ const handleKeyDown = (event: KeyboardEvent) => {
 <template>
   <UModal
     :open="props.open"
-    @close="closeDialog"
     class="fixed inset-0 z-10 flex justify-center overflow-y-auto bg-gray-900/50 pt-12 backdrop-blur-sm"
+    @close="closeDialog"
   >
-    <template
-      #content
-      class="flex h-3/6 w-6/12 flex-col rounded-xl bg-gray-50 shadow-lg dark:bg-stone-700"
-      @keydown="handleKeyDown"
-    >
-      <div class="mt-0 flex items-center">
+    <template #content>
+      <div class="mt-0 flex items-center" @keydown="handleKeyDown">
         <UIcon
           name="i-heroicons-magnifying-glass"
           class="mx-2 size-5 text-gray-400"
         />
         <input
+          v-model="search"
           type="text"
           class="h-10 w-full bg-transparent px-3 py-2 text-sm text-gray-700 placeholder-gray-400 focus:border-transparent focus:outline-hidden dark:text-stone-100 dark:placeholder-stone-300"
           placeholder="Search..."
-          v-model="search"
         />
         <ToolTip
           class="mx-2"
@@ -140,8 +136,8 @@ const handleKeyDown = (event: KeyboardEvent) => {
         <PillListBox
           :items="sortOptions"
           :selected="selectedSort"
-          :getTitle="(item) => item.name"
-          iconName="i-heroicons-arrow-up-down"
+          :get-title="(item) => item.name"
+          icon-name="i-heroicons-arrow-up-down"
           @select="selectSortId"
         />
         <button

@@ -22,6 +22,7 @@ export default defineNuxtConfig({
     "nuxt-auth-utils",
     "@nuxt/ui",
     "@nuxt/test-utils/module",
+    "@nuxt/eslint",
   ],
 
   devServer: {
