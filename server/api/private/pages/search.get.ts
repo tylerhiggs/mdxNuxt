@@ -12,7 +12,7 @@ type SearchResult = {
   }[];
 };
 
-export default eventHandler<{
+export default defineEventHandler<{
   query: {
     search: string;
     titleOnly: "true" | "false";
@@ -161,6 +161,7 @@ export default eventHandler<{
             },
       ),
     ];
+    console.log("Search results:", body);
     return {
       statusCode: 200,
       body,
@@ -180,6 +181,7 @@ export default eventHandler<{
       blocks: [],
     }),
   );
+  console.log("Search results:", body);
   return {
     statusCode: 200,
     body,

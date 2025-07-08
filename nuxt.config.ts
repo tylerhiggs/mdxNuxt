@@ -23,6 +23,7 @@ export default defineNuxtConfig({
     "@nuxt/ui",
     "@nuxt/test-utils/module",
     "@nuxt/eslint",
+    "@vueuse/nuxt",
   ],
 
   devServer: {

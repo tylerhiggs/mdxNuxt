@@ -43,7 +43,7 @@ useHead({
         @delete-page="deletePage"
       />
       <slot />
-      <SearchDialog :open="showSearch" @close="showSearch = false" />
+      <SearchDialog v-model:open="showSearch" @close="showSearch = false" />
       <SettingsDialog :open="showSettings" @close="showSettings = false" />
       <SnackBar />
       <OuterToolTip />

@@ -226,14 +226,17 @@ const copied = ref(false);
   >
     <MdNode v-for="item in node.items" :key="item.id" :node="item" />
   </p>
-  <div v-else-if="'items' in node && node.items && node.items.length">
+  <strong v-else-if="node.type === 'bold'" class="inline font-extrabold">
     <MdNode v-for="item in node.items" :key="item.id" :node="item" />
-  </div>
-  <template v-if="node.type === 'text'">
+  </strong>
+  <em v-else-if="node.type === 'italic'" class="inline italic">
+    <MdNode v-for="item in node.items" :key="item.id" :node="item" />
+  </em>
+  <template v-else-if="node.type === 'text'">
     {{ node.text }}
   </template>
   <code
-    v-if="node.type === 'inline-code'"
+    v-else-if="node.type === 'inline-code'"
     class="inline rounded-md border px-1.5 py-0.5 font-mono text-sm font-medium"
     :class="{
       'border-error/25 bg-error/10 text-error': node.color === 'error',
@@ -278,14 +281,8 @@ const copied = ref(false);
       {{ node.text }}
     </template>
   </code>
-  <strong v-if="node.type === 'bold'" class="inline font-extrabold">
-    <MdNode v-for="item in node.items" :key="item.id" :node="item" />
-  </strong>
-  <em v-if="node.type === 'italic'" class="inline italic">
-    <MdNode v-for="item in node.items" :key="item.id" :node="item" />
-  </em>
   <a
-    v-if="node.type === 'link'"
+    v-else-if="node.type === 'link'"
     :href="node.href"
     class="text-primary hover:border-primary focus-visible:outline-primary hover:[&>code]:border-primary hover:[&>code]:text-primary border-b border-transparent font-medium [&>code]:border-dashed"
     target="_blank"
@@ -295,7 +292,7 @@ const copied = ref(false);
     {{ node.title }}
   </a>
   <div
-    v-if="node.type === 'code-block'"
+    v-else-if="node.type === 'code-block'"
     class="group relative my-2 text-sm **:[.line]:isolate **:[.line]:not-last:min-h-[1lh]"
   >
     <MyCard>
@@ -349,5 +346,5 @@ const copied = ref(false);
       </template>
     </MyCard>
   </div>
-  <hr v-if="node.type === 'hr'" class="border-default my-12 border-t" />
+  <hr v-else-if="node.type === 'hr'" class="border-default my-12 border-t" />
 </template>

@@ -165,7 +165,13 @@ export function usePageState() {
         }),
       };
     }
+
     blockUpdateToSave.value = undefined;
+    console.log(
+      "pageState: !blockUpdateToSave.value",
+      !blockUpdateToSave.value,
+      pageUpdateToSave.value,
+    );
     snackbarStore.enqueue("Successfully updated page block", "success");
   };
 
@@ -258,11 +264,7 @@ export function usePageState() {
       pageId,
       textContent,
     };
-    pageUpdateToSave.value = {
-      ...pageUpdateToSave.value,
-      id: pageId,
-      lastUpdatedAt: Date.now(),
-    };
+    updatePage({ id: pageId, lastUpdatedAt: Date.now() });
     lastBlockUpdateAt.value = Date.now();
     if (instantSave) {
       executeBlockUpdateDb();
