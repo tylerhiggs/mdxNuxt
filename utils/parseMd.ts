@@ -262,7 +262,7 @@ export async function parseLine(mdLine: string): Promise<MdNode[]> {
   const tokens: MdNode[] = [];
   const parts = mdLine
     .split(
-      /(\*\*.*?\*\*|\*.*?\*|__.*?__|`.*?`\{.*?\}|`.*?`|!\[.*?\]\(.*?\)|\[.*?\]\(.*?\)|:[\w-]+\{.*?\}|https?:\/\/[^\s<>"'`]*[^\s<>"'`.,;:!?)]?)/g,
+      /(\*\*.*?\*\*|\*.*?\*|__.*?__|~~.*?~~|==.*?==|~.*?~|\^.*?\^|`.*?`\{.*?\}|`.*?`|!\[.*?\]\(.*?\)|\[.*?\]\(.*?\)|:[\w-]+\{.*?\}|https?:\/\/[^\s<>"'`]*[^\s<>"'`.,;:!?)]?)/g,
     )
     .filter(Boolean);
 
@@ -285,6 +285,30 @@ export async function parseLine(mdLine: string): Promise<MdNode[]> {
         type: "italic",
         items: await parseLine(part.slice(2, -2)),
       });
+    } else if (part.startsWith("~~") && part.endsWith("~~")) {
+      tokens.push({
+        id: `strikethrough-${part.slice(2, -2)}`,
+        type: "strikethrough",
+        items: await parseLine(part.slice(2, -2)),
+      });
+    } else if (part.startsWith("==") && part.endsWith("==")) {
+      tokens.push({
+        id: `highlighted-${part.slice(2, -2)}`,
+        type: "highlighted",
+        items: await parseLine(part.slice(2, -2)),
+      });
+    } else if (part.startsWith("~") && part.endsWith("~")) {
+      tokens.push({
+        id: `sub-${part.slice(1, -1)}`,
+        type: "sub",
+        items: await parseLine(part.slice(1, -1)),
+      });
+    } else if (part.startsWith("^") && part.endsWith("^")) {
+      tokens.push({
+        id: `sup-${part.slice(1, -1)}`,
+        type: "sup",
+        items: await parseLine(part.slice(1, -1)),
+      });
     } else if (
       part.startsWith("`") &&
       part.includes("`{") &&
@@ -296,9 +320,9 @@ export async function parseLine(mdLine: string): Promise<MdNode[]> {
       let syntaxHighlightedTokens: ThemedToken[][] | undefined;
       let darkSyntaxHighlightedTokens: ThemedToken[][] | undefined;
       if (part.includes("lang")) {
-        language = match?.[2].match(/lang=['"](\w+)['"]/)?.[1];
+        language = match?.[2].match(/lang=['"]([\w-#+]+)['"]/)?.[1];
         if (language) {
-          if (language.startsWith("ts")) {
+          if (language.startsWith("ts-")) {
             language = "typescript";
           }
           if (!bundledLanguages[language as BundledLanguage]) {

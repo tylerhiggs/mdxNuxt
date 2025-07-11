@@ -331,6 +331,18 @@ export default defineNuxtConfig({
       return ["**", "bold", "**"];
     case "Italic":
       return ["__", "italic", "__"];
+    case "Strikethrough":
+      return [
+        "~~",
+        "The world is flat",
+        "~~ We now know that the world is round.",
+      ];
+    case "Highlighted":
+      return ["==", "highlighted text", "=="];
+    case "Subscript":
+      return ["H", "~2~", "O"];
+    case "Superscript":
+      return ["x", "^2^", " is a square"];
     case "Link":
       return ["[link text](", "url", ")"];
     case "Inline Code":
@@ -367,6 +379,17 @@ export default defineNuxtConfig({
       return ["### ", "Heading 3", ""];
     case "Image Url":
       return ["![image alt text](", "image-url", ")"];
+    case "Insert Table":
+      return [
+        `| Prop    | Default   | Type                     |
+|---------|-----------|--------------------------|
+| \`name\`  |           | \`string\`{lang="ts-type"} |
+| \`size\`  | \`md\`      | \`string\`{lang="ts-type"} |
+| \`color\` | \`neutral\` | \`string\`{lang="ts-type"} |
+`,
+        "",
+        "",
+      ];
     default:
       return ["/", "", ""];
   }

@@ -4,12 +4,12 @@ const snackbarStore = useSnackbar();
 
 <template>
   <div
-    class="absolute right-4 bottom-4 left-4 flex w-full flex-col items-center"
+    class="pointer-events-none absolute right-4 bottom-4 left-4 flex w-full flex-col items-center"
   >
     <div
       v-for="snackbar in snackbarStore.queue.value"
       :key="snackbar.id"
-      class="group m-2 flex items-center justify-between rounded-lg px-2 py-0.5 text-white shadow-md"
+      class="group pointer-events-auto m-2 flex items-center justify-between rounded-lg px-2 py-0.5 text-white shadow-md"
       :class="
         snackbar.type === 'error'
           ? 'bg-red-500'

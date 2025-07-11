@@ -232,6 +232,22 @@ const copied = ref(false);
   <em v-else-if="node.type === 'italic'" class="inline italic">
     <MdNode v-for="item in node.items" :key="item.id" :node="item" />
   </em>
+  <s v-else-if="node.type === 'strikethrough'" class="inline line-through">
+    <MdNode v-for="item in node.items" :key="item.id" :node="item" />
+  </s>
+  <mark
+    v-else-if="node.type === 'highlighted'"
+    class="inline rounded-md px-1.5 py-0.5"
+  >
+    <MdNode v-for="item in node.items" :key="item.id" :node="item" />
+  </mark>
+  <sup v-else-if="node.type === 'sup'" class="inline align-super text-xs">
+    <MdNode v-for="item in node.items" :key="item.id" :node="item" />
+  </sup>
+  <sub v-else-if="node.type === 'sub'" class="inline align-sub text-xs">
+    <MdNode v-for="item in node.items" :key="item.id" :node="item" />
+  </sub>
+
   <template v-else-if="node.type === 'text'">
     {{ node.text }}
   </template>

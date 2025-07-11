@@ -106,6 +106,10 @@ export type MdNodeType =
   | "code-block"
   | "bold"
   | "italic"
+  | "strikethrough"
+  | "highlighted"
+  | "sup"
+  | "sub"
   | "hr"
   | "table"
   | "text";
@@ -183,6 +187,22 @@ export type ItalicNode = BaseMdNode & {
   type: "italic";
   items: MdNode[];
 };
+export type StrikethroughNode = BaseMdNode & {
+  type: "strikethrough";
+  items: MdNode[];
+};
+export type HighlightedNode = BaseMdNode & {
+  type: "highlighted";
+  items: MdNode[];
+};
+export type SupNode = BaseMdNode & {
+  type: "sup";
+  items: MdNode[];
+};
+export type SubNode = BaseMdNode & {
+  type: "sub";
+  items: MdNode[];
+};
 export type HrNode = BaseMdNode & {
   type: "hr";
 };
@@ -215,6 +235,10 @@ export type MdNode =
   | CodeBlockNode
   | BoldNode
   | ItalicNode
+  | StrikethroughNode
+  | HighlightedNode
+  | SupNode
+  | SubNode
   | HrNode
   | TableNode
   | TextNode

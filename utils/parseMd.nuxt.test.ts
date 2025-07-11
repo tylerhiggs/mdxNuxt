@@ -88,6 +88,10 @@ This is a paragraph with **bold text** and *italic text*.
 - List item 1
 - List item 2
 [Link text](https://example.com)
+~~Strikethrough text~~
+==Highlighted text==
+H~2~O subscript
+x^2^ superscript
 `;
   const expectedOutput = [
     expect.objectContaining({
@@ -191,6 +195,78 @@ This is a paragraph with **bold text** and *italic text*.
         }),
       ],
     }),
+    expect.objectContaining({
+      type: "paragraph",
+      items: [
+        expect.objectContaining({
+          type: "strikethrough",
+          items: [
+            expect.objectContaining({
+              type: "text",
+              text: "Strikethrough text",
+            }),
+          ],
+        }),
+      ],
+    }),
+    expect.objectContaining({
+      type: "paragraph",
+      items: [
+        expect.objectContaining({
+          type: "highlighted",
+          items: [
+            expect.objectContaining({
+              type: "text",
+              text: "Highlighted text",
+            }),
+          ],
+        }),
+      ],
+    }),
+    expect.objectContaining({
+      type: "paragraph",
+      items: [
+        expect.objectContaining({
+          type: "text",
+          text: "H",
+        }),
+        expect.objectContaining({
+          type: "sub",
+          items: [
+            expect.objectContaining({
+              type: "text",
+              text: "2",
+            }),
+          ],
+        }),
+        expect.objectContaining({
+          type: "text",
+          text: "O subscript",
+        }),
+      ],
+    }),
+    expect.objectContaining({
+      type: "paragraph",
+      items: [
+        expect.objectContaining({
+          type: "text",
+          text: "x",
+        }),
+        expect.objectContaining({
+          type: "sup",
+          items: [
+            expect.objectContaining({
+              type: "text",
+              text: "2",
+            }),
+          ],
+        }),
+        expect.objectContaining({
+          type: "text",
+          text: " superscript",
+        }),
+      ],
+    }),
   ];
   const output = await parseMd(input);
   expect(output).toEqual(expectedOutput);
@@ -231,7 +307,7 @@ test("parseMd - inline code", async () => {
 });
 
 test("parseMd - inline code with options", async () => {
-  const input = `This is a paragraph with \`inline code\`{lang='typescript', color='primary'}.`;
+  const input = `This is a paragraph with \`inline code\`{lang='ts-type', color='primary'}.`;
   const expectedOutput = [
     expect.objectContaining({
       type: "paragraph",

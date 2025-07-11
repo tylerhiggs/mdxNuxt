@@ -54,6 +54,10 @@ export type Command =
   | "Image Url"
   | "Bold"
   | "Italic"
+  | "Strikethrough"
+  | "Highlighted"
+  | "Superscript"
+  | "Subscript"
   | "Link"
   | "Inline Code"
   | "Inline Code - Success"
@@ -88,7 +92,8 @@ export type Command =
   | "Field Group"
   | "Tabs"
   | "Steps"
-  | "Custom Input";
+  | "Custom Input"
+  | "Insert Table";
 
 export type CommandOptions = {
   name?: string;

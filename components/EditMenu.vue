@@ -55,6 +55,26 @@ const options = computed(
             icon: "i-heroicons-italic",
           },
           {
+            label: "Strikethrough",
+            suffix: "Insert strikethrough text",
+            icon: "i-heroicons-strikethrough",
+          },
+          {
+            label: "Highlighted",
+            suffix: "Insert highlighted text",
+            icon: "i-heroicons-highlighted",
+          },
+          {
+            label: "Superscript",
+            suffix: "Insert superscript text",
+            icon: "i-heroicons-superscript",
+          },
+          {
+            label: "Subscript",
+            suffix: "Insert subscript text",
+            icon: "i-heroicons-subscript",
+          },
+          {
             label: "Link",
             suffix: "Insert a link",
             icon: "i-heroicons-link",
@@ -128,6 +148,16 @@ const options = computed(
             label: "Heading 3",
             suffix: "Insert a heading 3",
             icon: "i-heroicons-h3",
+          },
+        ],
+      },
+      {
+        id: "table",
+        label: "Table",
+        items: [
+          {
+            label: "Insert Table",
+            icon: "i-heroicons-table-cells",
           },
         ],
       },

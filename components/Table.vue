@@ -15,7 +15,12 @@ defineProps<{
           <th
             v-for="(header, index) in node.headers"
             :key="index"
-            class="border-muted border-e border-t border-b px-4 py-3 text-left text-sm font-semibold first:border-s"
+            class="border-muted border-e border-t border-b px-4 py-3 text-sm font-semibold first:border-s"
+            :class="{
+              'text-left': !node.align[index] || node.align[index] === 'left',
+              'text-center': node.align[index] === 'center',
+              'text-right': node.align[index] === 'right',
+            }"
           >
             <MdNode v-for="item in header" :key="item.id" :node="item" />
           </th>
@@ -30,7 +35,13 @@ defineProps<{
           <td
             v-for="(cell, cellIndex) in row"
             :key="cellIndex"
-            class="border-muted border-e border-b px-4 py-3 text-left align-top text-sm first:border-s [&_code]:text-xs/5 [&_li]:my-0.5 [&_li]:leading-6 [&_ol]:my-0 [&_ol]:ps-4.5 [&_p]:my-0 [&_p]:leading-6 [&_ul]:my-0 [&_ul]:ps-4.5"
+            class="border-muted border-e border-b px-4 py-3 align-top text-sm first:border-s [&_code]:text-xs/5 [&_li]:my-0.5 [&_li]:leading-6 [&_ol]:my-0 [&_ol]:ps-4.5 [&_p]:my-0 [&_p]:leading-6 [&_ul]:my-0 [&_ul]:ps-4.5"
+            :class="{
+              'text-left':
+                !node.align[cellIndex] || node.align[cellIndex] === 'left',
+              'text-center': node.align[cellIndex] === 'center',
+              'text-right': node.align[cellIndex] === 'right',
+            }"
           >
             <MdNode v-for="item in cell" :key="item.id" :node="item" />
           </td>
