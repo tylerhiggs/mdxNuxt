@@ -586,3 +586,120 @@ test("parseMd - inline component with props", async () => {
   const output = await parseMd(input);
   expect(output).toEqual(expectedOutput);
 });
+
+test("parseMd - table with headers and rows", async () => {
+  const input = `| Header 1 | Header 2 |
+| --------- | --------- |
+| Row 1 Col 1 | Row 1 Col 2 |
+| Row 2 Col 1 | Row 2 Col 2 |`;
+  const expectedOutput = [
+    expect.objectContaining({
+      type: "table",
+      headers: [
+        [
+          expect.objectContaining({
+            type: "text",
+            text: "Header 1",
+          }),
+        ],
+        [
+          expect.objectContaining({
+            type: "text",
+            text: "Header 2",
+          }),
+        ],
+      ],
+      rows: [
+        [
+          [
+            expect.objectContaining({
+              type: "text",
+              text: "Row 1 Col 1",
+            }),
+          ],
+          [
+            expect.objectContaining({
+              type: "text",
+              text: "Row 1 Col 2",
+            }),
+          ],
+        ],
+        [
+          [
+            expect.objectContaining({
+              type: "text",
+              text: "Row 2 Col 1",
+            }),
+          ],
+          [
+            expect.objectContaining({
+              type: "text",
+              text: "Row 2 Col 2",
+            }),
+          ],
+        ],
+      ],
+    }),
+  ];
+  const output = await parseMd(input);
+  expect(output).toEqual(expectedOutput);
+});
+
+test("parseMd - table with alignment", async () => {
+  const input = `| Header 1 | Header 2 |
+| :-------: | ---------: |
+| Row 1 Col 1 | Row 1 Col 2 |
+| Row 2 Col 1 | Row 2 Col 2 |`;
+  const expectedOutput = [
+    expect.objectContaining({
+      type: "table",
+      headers: [
+        [
+          expect.objectContaining({
+            type: "text",
+            text: "Header 1",
+          }),
+        ],
+        [
+          expect.objectContaining({
+            type: "text",
+            text: "Header 2",
+          }),
+        ],
+      ],
+      rows: [
+        [
+          [
+            expect.objectContaining({
+              type: "text",
+              text: "Row 1 Col 1",
+            }),
+          ],
+          [
+            expect.objectContaining({
+              type: "text",
+              text: "Row 1 Col 2",
+            }),
+          ],
+        ],
+        [
+          [
+            expect.objectContaining({
+              type: "text",
+              text: "Row 2 Col 1",
+            }),
+          ],
+          [
+            expect.objectContaining({
+              type: "text",
+              text: "Row 2 Col 2",
+            }),
+          ],
+        ],
+      ],
+      align: ["center", "right"],
+    }),
+  ];
+  const output = await parseMd(input);
+  expect(output).toEqual(expectedOutput);
+});

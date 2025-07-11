@@ -107,6 +107,7 @@ export type MdNodeType =
   | "bold"
   | "italic"
   | "hr"
+  | "table"
   | "text";
 
 export type BaseMdNode = {
@@ -189,6 +190,12 @@ export type TextNode = BaseMdNode & {
   type: "text";
   text: string;
 };
+export type TableNode = BaseMdNode & {
+  type: "table";
+  headers?: MdNode[][];
+  rows: MdNode[][][];
+  align: ("left" | "center" | "right")[];
+};
 export type ComponentNode = BaseMdNode & {
   type: ComponentType;
   componentProps?: ComponentProps;
@@ -209,23 +216,9 @@ export type MdNode =
   | BoldNode
   | ItalicNode
   | HrNode
+  | TableNode
   | TextNode
   | ComponentNode;
-// export type MdNode = {
-//   type: MdNodeType | ComponentType;
-//   text?: string;
-//   depth?: number;
-//   href?: string;
-//   title?: string;
-//   language?: string;
-//   name?: string;
-//   color?: ThemeColor;
-//   syntaxHighlightedTokens?: ThemedToken[][];
-//   darkSyntaxHighlightedTokens?: ThemedToken[][];
-//   items?: MdNode[];
-//   orderedListStartIndex?: number;
-//   componentProps?: ComponentProps;
-// };
 
 export type ThemeColor =
   | "neutral"

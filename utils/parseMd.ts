@@ -7,6 +7,7 @@ import type {
   MdNode,
   OrderedListItemNode,
   OrderedListItemsNode,
+  TableNode,
   ThemeColor,
 } from "~/shared/types";
 import { bundledLanguages, codeToTokens } from "shiki";
@@ -37,6 +38,8 @@ export async function parseMd(markdown: string): Promise<MdNode[]> {
   const componentStack: (MdNode & { items: MdNode[] })[] = [];
   const lines = markdown.split("\n");
   let inCodeBlock = false;
+  let inTable = false;
+  let tableContent: TableNode | null = null; // Track the current table being parsed
   let codeBlockLanguage = "text" as BundledLanguage;
   let name: string | undefined;
   let codeBlockContent: string[] = [];
@@ -124,6 +127,70 @@ export async function parseMd(markdown: string): Promise<MdNode[]> {
         componentStack.push(componentNode);
       }
       continue;
+    }
+
+    if (trimmed.startsWith("|") && trimmed.endsWith("|")) {
+      // Table row or header
+      if (!inTable) {
+        // Start of table
+        inTable = true;
+        tableContent = {
+          id: `${index}-table`,
+          type: "table",
+          headers: [],
+          rows: [],
+          align: [],
+        };
+        const headerCells = trimmed
+          .split("|")
+          .slice(1, -1)
+          .map((cell) => parseLine(cell.trim()));
+        const parsedCells = await Promise.all(headerCells);
+        tableContent.headers = [...parsedCells];
+        continue;
+      }
+
+      if (/^\s*\|?[\s:-]+\|[\s|:-]*$/.test(trimmed) && tableContent) {
+        // Table header separator - find alignment
+        const align = trimmed
+          .split("|")
+          .slice(1, -1)
+          .map((cell) => {
+            if (/^\s*:-+:\s*$/.test(cell)) {
+              return "center";
+            } else if (/^\s*-+:\s*$/.test(cell)) {
+              return "right";
+            } else if (/^\s*:-+\s*$/.test(cell) || /^\s*-+\s*$/.test(cell)) {
+              return "left";
+            }
+            return "left";
+          });
+        tableContent.align = [...align];
+        continue;
+      }
+      const rowCells = trimmed
+        .split("|")
+        .slice(1, -1)
+        .map((cell) => parseLine(cell.trim()));
+      const parsedCells = await Promise.all(rowCells);
+      if (tableContent) {
+        tableContent.rows.push(parsedCells);
+        if (
+          index === lines.length - 1 ||
+          !lines[index + 1].trim().startsWith("|")
+        ) {
+          listToPushTo.push({ ...tableContent });
+          tableContent = null; // Reset table content for next table
+          inTable = false; // End of table
+        }
+      }
+      continue;
+    }
+
+    if (inTable && tableContent) {
+      listToPushTo.push(tableContent);
+      inTable = false; // End of table
+      tableContent = null;
     }
 
     if (trimmed.startsWith("---")) {

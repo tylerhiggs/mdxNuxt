@@ -22,7 +22,6 @@ export default eventHandler(async (event) => {
   if (!avatarPath) {
     throw createError({ statusCode: 404, message: "User not found" });
   }
-  console.log("Uploading avatar for user:", dbUser.id, "to path:", avatarPath);
 
   return hubBlob().put(avatarPath, file, {
     addRandomSuffix: false,
