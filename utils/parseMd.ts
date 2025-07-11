@@ -297,7 +297,16 @@ export async function parseLine(mdLine: string): Promise<MdNode[]> {
       let darkSyntaxHighlightedTokens: ThemedToken[][] | undefined;
       if (part.includes("lang")) {
         language = match?.[2].match(/lang=['"](\w+)['"]/)?.[1];
-        if (language && bundledLanguages[language as BundledLanguage]) {
+        if (language) {
+          if (language.startsWith("ts")) {
+            language = "typescript";
+          }
+          if (!bundledLanguages[language as BundledLanguage]) {
+            console.warn(
+              `parseMd: Unsupported language "${language}". Falling back to "text".`,
+            );
+            language = "text";
+          }
           const { tokens: codeTokens } = await codeToTokens(match?.[1] || "", {
             lang: language as BundledLanguage,
             theme: "material-theme-lighter",

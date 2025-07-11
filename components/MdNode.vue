@@ -347,4 +347,5 @@ const copied = ref(false);
     </MyCard>
   </div>
   <hr v-else-if="node.type === 'hr'" class="border-default my-12 border-t" />
+  <Table v-else-if="node.type === 'table'" :node="node" />
 </template>
