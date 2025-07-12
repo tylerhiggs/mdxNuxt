@@ -69,7 +69,7 @@ export async function parseMd(markdown: string): Promise<MdNode[]> {
             codeBlockContent.join("\n"),
             {
               lang: codeBlockLanguage,
-              theme: "material-theme-darker",
+              theme: "material-theme-palenight",
             },
           );
           listToPushTo.push({
@@ -108,7 +108,10 @@ export async function parseMd(markdown: string): Promise<MdNode[]> {
     }
     if (trimmed === "::") {
       // End of component
-      componentStack.pop();
+      const component = componentStack.pop();
+      if (component) {
+        component.items = groupListItems(component.items);
+      }
       continue;
     }
     if (trimmed.startsWith("::")) {
@@ -142,7 +145,7 @@ export async function parseMd(markdown: string): Promise<MdNode[]> {
           align: [],
         };
         const headerCells = trimmed
-          .split("|")
+          .split(/(?<!`)\|(?=(?:[^`]*`[^`]*`)*[^`]*$)/) // Split by | unless inside backticks
           .slice(1, -1)
           .map((cell) => parseLine(cell.trim()));
         const parsedCells = await Promise.all(headerCells);
@@ -153,7 +156,7 @@ export async function parseMd(markdown: string): Promise<MdNode[]> {
       if (/^\s*\|?[\s:-]+\|[\s|:-]*$/.test(trimmed) && tableContent) {
         // Table header separator - find alignment
         const align = trimmed
-          .split("|")
+          .split(/(?<!`)\|(?=(?:[^`]*`[^`]*`)*[^`]*$)/) // Split by | unless inside backticks
           .slice(1, -1)
           .map((cell) => {
             if (/^\s*:-+:\s*$/.test(cell)) {
@@ -169,7 +172,7 @@ export async function parseMd(markdown: string): Promise<MdNode[]> {
         continue;
       }
       const rowCells = trimmed
-        .split("|")
+        .split(/(?<!`)\|(?=(?:[^`]*`[^`]*`)*[^`]*$)/) // Split by | unless inside backticks
         .slice(1, -1)
         .map((cell) => parseLine(cell.trim()));
       const parsedCells = await Promise.all(rowCells);
@@ -339,7 +342,7 @@ export async function parseLine(mdLine: string): Promise<MdNode[]> {
             match?.[1] || "",
             {
               lang: language as BundledLanguage,
-              theme: "material-theme-darker",
+              theme: "material-theme-palenight",
             },
           );
           syntaxHighlightedTokens = codeTokens;
@@ -352,6 +355,7 @@ export async function parseLine(mdLine: string): Promise<MdNode[]> {
       tokens.push({
         id: `inline-code-${part.slice(1, -1)}`,
         type: "inline-code",
+        text: match?.[1] || "",
         language,
         color,
         syntaxHighlightedTokens,

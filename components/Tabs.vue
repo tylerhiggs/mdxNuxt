@@ -27,7 +27,9 @@ const items = computed(() => {
 <template>
   <UTabs :items="items" variant="link" :ui="{ root: 'my-5 gap-4' }">
     <template #content="{ item }">
-      <MdNode v-for="n in item.node.items" :key="n.id" :node="n" />
+      <div v-for="n in item.node.items" :key="n.id">
+        <MdNode :node="n" />
+      </div>
     </template>
   </UTabs>
 </template>

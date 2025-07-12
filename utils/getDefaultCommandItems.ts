@@ -324,7 +324,7 @@ export default defineNuxtConfig({
         "",
       ];
     case "Key Binding":
-      return [':kbd{name="', commandOptions?.name || "add key here", '"}'];
+      return [':kbd{value="', commandOptions?.name || "add key here", '"}'];
     case "Icon":
       return [':icon{name="', commandOptions?.name, '"}'];
     case "Bold":
@@ -332,17 +332,13 @@ export default defineNuxtConfig({
     case "Italic":
       return ["__", "italic", "__"];
     case "Strikethrough":
-      return [
-        "~~",
-        "The world is flat",
-        "~~ We now know that the world is round.",
-      ];
+      return ["~~", "Strikethrough text", "~~"];
     case "Highlighted":
       return ["==", "highlighted text", "=="];
     case "Subscript":
-      return ["H", "~2~", "O"];
+      return ["H~", "2", "~O"];
     case "Superscript":
-      return ["x", "^2^", " is a square"];
+      return ["x^", "2", "^"];
     case "Link":
       return ["[link text](", "url", ")"];
     case "Inline Code":

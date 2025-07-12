@@ -196,7 +196,7 @@ watch(
           theme:
             colorMode === "light"
               ? "material-theme-lighter"
-              : "material-theme-darker",
+              : "material-theme-palenight",
         }),
       ),
     );

@@ -1,6 +1,7 @@
 import { expect, test } from "vitest";
 import { groupListItems, parseMd } from "./parseMd";
 import type {
+  ComponentNode,
   LinkNode,
   ListItemNode,
   MdNode,
@@ -307,7 +308,7 @@ test("parseMd - inline code", async () => {
 });
 
 test("parseMd - inline code with options", async () => {
-  const input = `This is a paragraph with \`inline code\`{lang='ts-type', color='primary'}.`;
+  const input = `This is a paragraph with \`inline code\`{color='primary'}.`;
   const expectedOutput = [
     expect.objectContaining({
       type: "paragraph",
@@ -318,8 +319,8 @@ test("parseMd - inline code with options", async () => {
         }),
         expect.objectContaining({
           type: "inline-code",
-          language: "typescript",
           color: "primary",
+          text: "inline code",
         }),
         expect.objectContaining({
           type: "text",
@@ -520,6 +521,59 @@ test("parseMd - basic component parsing", async () => {
   const expectedOutput = [
     expect.objectContaining({
       type: "note",
+      items: expectedContent,
+    }),
+  ];
+
+  const output = await parseMd(input);
+  expect(output).toEqual(expectedOutput);
+});
+
+test("parseMd - component with list content", async () => {
+  const input = `::callout
+- Item 1
+- Item 2
+- Item 3
+::`;
+
+  const expectedContent = [
+    expect.objectContaining({
+      type: "list-items",
+      items: [
+        expect.objectContaining({
+          type: "list-item",
+          items: [
+            expect.objectContaining({
+              type: "text",
+              text: "Item 1",
+            }),
+          ],
+        }),
+        expect.objectContaining({
+          type: "list-item",
+          items: [
+            expect.objectContaining({
+              type: "text",
+              text: "Item 2",
+            }),
+          ],
+        }),
+        expect.objectContaining({
+          type: "list-item",
+          items: [
+            expect.objectContaining({
+              type: "text",
+              text: "Item 3",
+            }),
+          ],
+        }),
+      ],
+    }),
+  ];
+
+  const expectedOutput = [
+    expect.objectContaining({
+      type: "callout",
       items: expectedContent,
     }),
   ];
