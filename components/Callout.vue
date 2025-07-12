@@ -8,7 +8,7 @@ defineProps<{
 
 <template>
   <div
-    class="my-2 rounded p-3"
+    class="my-2 rounded px-3"
     :class="{
       'border border-neutral-400 bg-neutral-100 text-neutral-600 dark:bg-neutral-900 dark:text-neutral-100':
         componentProps.color === 'neutral',

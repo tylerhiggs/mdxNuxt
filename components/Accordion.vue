@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type {
   AccordionItemProps,
-  MdNode,
   AccordionProps,
   ComponentNode,
 } from "~/shared/types";

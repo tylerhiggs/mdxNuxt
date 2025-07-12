@@ -1,7 +1,6 @@
 import { expect, test } from "vitest";
 import { groupListItems, parseMd } from "./parseMd";
 import type {
-  ComponentNode,
   LinkNode,
   ListItemNode,
   MdNode,
