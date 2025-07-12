@@ -42,9 +42,6 @@ const copyCode = () => {
   }
 };
 const colorMode = useColorMode();
-const fileExtension = (name: string | undefined) => {
-  return name ? name.split(".").pop() : "";
-};
 </script>
 
 <template>
@@ -58,7 +55,7 @@ const fileExtension = (name: string | undefined) => {
               :key="index"
               :color="'neutral'"
               :active="tabIndex === index"
-              :icon="`i-vscode-icons:file-type-${fileExtension(item.name)}`"
+              :icon="fileIcon(item.name)"
               :variant="tabIndex === index ? 'subtle' : 'ghost'"
               @click="tabIndex = index"
             >

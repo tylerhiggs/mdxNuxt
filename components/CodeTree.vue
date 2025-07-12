@@ -31,7 +31,7 @@ const treeItems = computed(() =>
           if (index === path.length - 1) {
             currentNodesChildren.push({
               label: part,
-              icon: `i-vscode-icons-file-type-${fileExtension(part)}`,
+              icon: fileIcon(item.name),
               type: "code-block",
               onSelect: () => {
                 selected.value = item;
@@ -91,7 +91,7 @@ const selected = computed({
 
 const currentIcon = computed(() => {
   return selected.value?.name
-    ? `i-vscode-icons:file-type-${fileExtension(selected.value.name)}`
+    ? fileIcon(selected.value.name)
     : "i-vscode-icons:file-type-text";
 });
 const colorMode = useColorMode();

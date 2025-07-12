@@ -315,10 +315,7 @@ const copied = ref(false);
       <template v-if="node.name" #header>
         <div class="flex items-center justify-between p-1.5">
           <div class="flex items-center gap-1.5">
-            <UIcon
-              :name="`i-vscode-icons:file-type-${fileExtension(node.language || 'text')}`"
-              class="h-5 w-5"
-            />
+            <UIcon :name="fileIcon(node.name)" class="h-5 w-5" />
             <span class="text-sm">{{ node.name }}</span>
           </div>
           <UButton

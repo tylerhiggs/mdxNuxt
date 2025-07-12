@@ -38,9 +38,7 @@ const copyCode = () => {
       <template #header>
         <div class="flex items-center justify-between px-1">
           <div class="flex items-center gap-1">
-            <UIcon
-              :name="`i-vscode-icons:file-type-${fileExtension(filename)}`"
-            />
+            <UIcon :name="fileIcon(filename)" />
             <h3 class="text-sm">{{ filename }}</h3>
           </div>
           <UButton

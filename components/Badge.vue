@@ -9,7 +9,7 @@ defineProps<{
   <UBadge
     :ui="{
       base: [
-        'rounded-full',
+        'rounded-full *:m-0',
         componentProps?.color === 'primary' ||
         !componentProps ||
         !componentProps.color ||
@@ -38,7 +38,7 @@ defineProps<{
           : '',
       ],
     }"
-    v-bind="componentProps"
+    :color="componentProps?.color || 'primary'"
   >
     <slot />
   </UBadge>
