@@ -351,7 +351,6 @@ const updateCaretPosition = (event: Event) => {
                       :key="tokenIndex"
                       :style="{
                         color: token.color,
-                        backgroundColor: token.bgColor,
                       }"
                     >{{token.content}}</span></span></code>
               </pre>

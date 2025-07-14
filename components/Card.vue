@@ -10,33 +10,7 @@ defineProps<{
     v-bind="componentProps"
     :ui="{
       body: 'p-2 sm:p-3 [p]:m-0',
-      root: [
-        'border border-neutral-200 group my-2',
-        componentProps.color === 'neutral' &&
-          'hover:border-neutral-600 hover:bg-neutral-200',
-        componentProps.color === 'error' &&
-          'hover:border-error/25 hover:bg-error/10',
-        componentProps.color === 'success' &&
-          'hover:border-success/25 hover:bg-success/10',
-        componentProps.color === 'warning' &&
-          'hover:border-warning/25 hover:bg-warning/10',
-        componentProps.color === 'info' &&
-          'hover:border-info/25 hover:bg-info/10',
-        componentProps.color === 'primary' &&
-          'hover:border-primary/25 hover:bg-primary/10',
-        componentProps.color === 'secondary' &&
-          'hover:border-secondary/25 hover:bg-secondary/10',
-        (!componentProps.color ||
-          ![
-            'error',
-            'warning',
-            'info',
-            'success',
-            'primary',
-            'secondary',
-          ].includes(componentProps.color)) &&
-          'hover:border-muted hover:bg-muted',
-      ].filter(Boolean),
+      root: ['border border-neutral-200 group my-2'],
     }"
   >
     <a

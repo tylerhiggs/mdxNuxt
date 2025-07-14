@@ -35,7 +35,7 @@ const copyCode = () => {
 <template>
   <div class="group shadow-sm">
     <MyCard>
-      <template #header>
+      <template v-if="filename" #header>
         <div class="flex items-center justify-between px-1">
           <div class="flex items-center gap-1">
             <UIcon :name="fileIcon(filename)" />
