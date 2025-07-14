@@ -71,6 +71,34 @@ const mouseover = (event: MouseEvent) => {
 const mouseleave = () => {
   tooltipStore.hide();
 };
+
+const copyToClipboard = (text: string) => {
+  navigator.clipboard
+    .writeText(text)
+    .then(() => {
+      snackbarStore.enqueue("Link copied to clipboard", "success");
+    })
+    .catch((error) => {
+      console.error("Failed to copy text to clipboard:", error);
+      snackbarStore.enqueue("Failed to copy text", "error");
+    });
+};
+const copyMd = () => {
+  if (!page.value) {
+    console.warn("No page selected");
+    return;
+  }
+  const md = page.value.blocks.map((block) => block.textContent).join("\n\n");
+  copyToClipboard(md);
+};
+const copyJson = () => {
+  if (!page.value) {
+    console.warn("No page selected");
+    return;
+  }
+  const json = JSON.stringify(page.value, null, 2);
+  copyToClipboard(json);
+};
 </script>
 
 <template>
@@ -105,6 +133,24 @@ const mouseleave = () => {
           })
         }}
       </p>
+      <UPopover mode="hover">
+        <UButton
+          icon="i-heroicons-clipboard-document"
+          variant="ghost"
+          color="neutral"
+          @click="copyMd()"
+        />
+        <template #content>
+          <UButtonGroup orientation="vertical">
+            <UButton variant="ghost" color="neutral" @click="copyMd()">
+              Copy Markdown
+            </UButton>
+            <UButton variant="ghost" color="neutral" @click="copyJson()">
+              Copy JSON
+            </UButton>
+          </UButtonGroup>
+        </template>
+      </UPopover>
       <button
         :class="{
           'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200':

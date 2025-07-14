@@ -1,11 +1,27 @@
 import { desc } from "drizzle-orm";
+import { join } from "path";
 import { MdNode } from "~/shared/types";
+import { Page } from "~/types/page";
 export default defineEventHandler(async (event) => {
   const { id } = getRouterParams(event);
+  if (id === "home") {
+    const fs = await import("fs/promises");
+    const path = await import("path");
+    const homePagePath = path.resolve(
+      process.cwd(),
+      "server",
+      "home-page.json",
+    );
+    const homePageData = await fs.readFile(homePagePath, "utf-8");
+    const page = JSON.parse(homePageData);
+    return {
+      statusCode: 200,
+      body: page as Page,
+    };
+  }
   if (!id || isNaN(Number(id))) {
     throw createError({ statusCode: 400, message: "Page ID is required" });
   }
-  const darkMode = getCookie(event, "isDark");
   const page = await useDrizzle().query.pages.findFirst({
     where: (pages, { eq, isNull, and }) =>
       and(
