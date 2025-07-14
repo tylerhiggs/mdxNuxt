@@ -6,6 +6,23 @@ const props = defineProps<{
   showLineNumbers?: boolean;
   showCopyButton?: boolean;
 }>();
+const getBackgroundColor = (tokenIndex: number, lineIndex: number) => {
+  if (
+    tokenIndex &&
+    props.syntaxHighlightedTokens &&
+    props.syntaxHighlightedTokens[lineIndex][tokenIndex - 1].content === "#" &&
+    props.syntaxHighlightedTokens[lineIndex][tokenIndex].content
+      .split(";")
+      ?.at(0)
+      ?.split("")
+      .every((c) => parseInt(c, 16) >= 0)
+  ) {
+    return `#${props.syntaxHighlightedTokens[lineIndex][tokenIndex].content
+      .split(";")
+      ?.at(0)}`;
+  }
+  return props.syntaxHighlightedTokens?.at(lineIndex)?.at(tokenIndex)?.bgColor;
+};
 </script>
 
 <template>
@@ -24,8 +41,10 @@ const props = defineProps<{
         <span
           v-for="(token, tokenIndex) in line"
           :key="tokenIndex"
+          class="rounded"
           :style="{
             color: token.color,
+            backgroundColor: getBackgroundColor(tokenIndex, lineIndex),
           }"
         >{{token.content}}</span>
       </div>

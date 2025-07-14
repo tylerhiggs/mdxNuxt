@@ -4,7 +4,7 @@ export const fileIcon = (name: string | undefined) => {
       return value;
     }
   }
-  return "i-vscode-icons-file-type-default";
+  return `i-vscode-icons-file-type-${name?.split(".").pop() || "text"}`;
 };
 
 export const codeIcons = {

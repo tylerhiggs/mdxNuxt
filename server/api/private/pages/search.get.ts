@@ -161,7 +161,6 @@ export default defineEventHandler<{
             },
       ),
     ];
-    console.log("Search results:", body);
     return {
       statusCode: 200,
       body,
@@ -181,7 +180,6 @@ export default defineEventHandler<{
       blocks: [],
     }),
   );
-  console.log("Search results:", body);
   return {
     statusCode: 200,
     body,

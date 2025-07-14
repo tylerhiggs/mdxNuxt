@@ -167,11 +167,6 @@ export function usePageState() {
     }
 
     blockUpdateToSave.value = undefined;
-    console.log(
-      "pageState: !blockUpdateToSave.value",
-      !blockUpdateToSave.value,
-      pageUpdateToSave.value,
-    );
     snackbarStore.enqueue("Successfully updated page block", "success");
   };
 

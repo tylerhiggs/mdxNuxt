@@ -52,44 +52,46 @@ const copyCode = () => {
         </div>
       </template>
       <template #content>
-        <div
-          class="p-3 text-sm"
-          :class="{
-            'max-h-72 overflow-y-auto pb-16': !collapsed,
-            'max-h-48 overflow-hidden': collapsed,
-          }"
-        >
-          <CodeBlock
-            :language="codeBlock?.language"
-            :syntax-highlighted-tokens="
-              colorMode.value === 'dark'
-                ? codeBlock?.darkSyntaxHighlightedTokens
-                : codeBlock?.syntaxHighlightedTokens
-            "
-          />
-        </div>
-        <div
-          class="from-muted absolute right-0 bottom-0 left-0 m-0 flex h-16 items-center justify-center rounded bg-linear-to-t to-transparent"
-        >
-          <UButton
-            :icon="
-              collapsed
-                ? propIcon || 'i-heroicons-chevron-down'
-                : propIcon || 'i-heroicons-chevron-up'
-            "
-            color="neutral"
-            size="sm"
-            variant="subtle"
-            @click="collapsed = !collapsed"
+        <div class="relative">
+          <div
+            class="p-3 text-sm"
+            :class="{
+              'max-h-96 overflow-y-auto pb-16': !collapsed,
+              'max-h-48 overflow-hidden': collapsed,
+            }"
           >
-            {{
-              collapsed
-                ? componentProps?.openText || componentProps?.name || "Expand"
-                : componentProps?.closeText ||
-                  componentProps?.name ||
-                  "Collapse"
-            }}
-          </UButton>
+            <CodeBlock
+              :language="codeBlock?.language"
+              :syntax-highlighted-tokens="
+                colorMode.value === 'dark'
+                  ? codeBlock?.darkSyntaxHighlightedTokens
+                  : codeBlock?.syntaxHighlightedTokens
+              "
+            />
+          </div>
+          <div
+            class="from-muted absolute right-0 bottom-0 left-0 m-0 flex h-16 items-center justify-center rounded bg-linear-to-t to-transparent"
+          >
+            <UButton
+              :icon="
+                collapsed
+                  ? propIcon || 'i-heroicons-chevron-down'
+                  : propIcon || 'i-heroicons-chevron-up'
+              "
+              color="neutral"
+              size="sm"
+              variant="subtle"
+              @click="collapsed = !collapsed"
+            >
+              {{
+                collapsed
+                  ? componentProps?.openText || componentProps?.name || "Expand"
+                  : componentProps?.closeText ||
+                    componentProps?.name ||
+                    "Collapse"
+              }}
+            </UButton>
+          </div>
         </div>
       </template>
     </MyCard>

@@ -9,7 +9,7 @@ defineProps<{
   <UCard
     v-bind="componentProps"
     :ui="{
-      body: 'p-2 sm:p-3',
+      body: 'p-2 sm:p-3 [p]:m-0',
       root: [
         'border border-neutral-200 group my-2',
         componentProps.color === 'neutral' &&

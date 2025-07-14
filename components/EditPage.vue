@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Block, Command, CommandOptions } from "@/types/page";
-import { codeToTokens } from "shiki";
+import { createHighlighter } from "shiki";
 import type { TokensResult } from "shiki";
 import type { MdNode } from "~/shared/types";
 const snackbarStore = useSnackbar();
@@ -181,6 +181,10 @@ watch([() => page.value?.blocks, () => colorMode.value], async ([blocks]) => {
   );
   mdNodes.value = nodes;
 });
+const editorHighlighterPromise = createHighlighter({
+  themes: ["material-theme-lighter", "material-theme-palenight"],
+  langs: ["mdc"],
+});
 
 const syntaxHighlightedTokens = ref<TokensResult[]>([]);
 watch(
@@ -189,9 +193,10 @@ watch(
     if (!blocks || !blocks.length) {
       return;
     }
+    const editorHighlighter = await editorHighlighterPromise;
     const tokens = await Promise.all(
       blocks.map((block) =>
-        codeToTokens(block.textContent, {
+        editorHighlighter.codeToTokens(block.textContent, {
           lang: "mdc",
           theme:
             colorMode === "light"

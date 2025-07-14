@@ -44,10 +44,7 @@ useHead({
       />
       <slot />
       <SearchDialog v-model:open="showSearch" @close="showSearch = false" />
-      <SettingsDialog
-        v-model:open="showSettings"
-        @close="showSettings = false"
-      />
+      <SettingsDialog v-model:open="showSettings" />
       <SnackBar />
       <OuterToolTip />
     </div>
