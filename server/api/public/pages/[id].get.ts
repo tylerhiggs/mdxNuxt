@@ -1,17 +1,13 @@
 import { desc } from "drizzle-orm";
-import { resolve } from "path";
-import { readFile } from "fs/promises";
 import { MdNode } from "~/shared/types";
 import { Page } from "~/types/page";
 export default defineEventHandler(async (event) => {
   const { id } = getRouterParams(event);
   if (id === "home") {
-    const homePagePath = resolve(process.cwd(), "server", "home-page.json");
-    const homePageData = await readFile(homePagePath, "utf-8");
-    const page = JSON.parse(homePageData);
+    const homePageData = await import("~/server/assets/home-page.json");
     return {
       statusCode: 200,
-      body: page as Page,
+      body: homePageData as Page,
     };
   }
   if (!id || isNaN(Number(id))) {
