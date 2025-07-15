@@ -1,18 +1,13 @@
 import { desc } from "drizzle-orm";
-import { join } from "path";
+import { resolve } from "path";
+import { readFile } from "fs/promises";
 import { MdNode } from "~/shared/types";
 import { Page } from "~/types/page";
 export default defineEventHandler(async (event) => {
   const { id } = getRouterParams(event);
   if (id === "home") {
-    const fs = await import("fs/promises");
-    const path = await import("path");
-    const homePagePath = path.resolve(
-      process.cwd(),
-      "server",
-      "home-page.json",
-    );
-    const homePageData = await fs.readFile(homePagePath, "utf-8");
+    const homePagePath = resolve(process.cwd(), "server", "home-page.json");
+    const homePageData = await readFile(homePagePath, "utf-8");
     const page = JSON.parse(homePageData);
     return {
       statusCode: 200,
