@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { sanitizeUrl } from "@braintree/sanitize-url";
 import type {
   BadgeProps,
   CalloutProps,
@@ -129,39 +130,44 @@ const copied = ref(false);
   <template v-else-if="node.type === 'heading'">
     <h1
       v-if="node.depth === 1"
-      class="text-highlighted mb-8 text-4xl font-bold *:text-4xl"
+      class="text-highlighted mb-8 text-4xl font-bold **:text-4xl"
     >
       <MdNode v-for="item in node.items" :key="item.id" :node="item" />
     </h1>
     <h2
       v-else-if="node.depth === 2"
-      class="text-highlighted relative mt-12 mb-6 text-2xl font-bold *:text-2xl"
+      :id="node.id"
+      class="text-highlighted relative my-6 text-2xl font-bold **:text-2xl"
     >
-      <MdNode v-for="item in node.items" :key="item.id" :node="item" />
+      <HeadingContent :node="node" :href="sanitizeUrl(`#${node.id}`)" />
     </h2>
     <h3
       v-else-if="node.depth === 3"
-      class="text-highlighted relative mt-8 mb-3 text-xl font-bold *:text-xl"
+      :id="node.id"
+      class="text-highlighted relative mt-8 mb-3 text-xl font-bold **:text-xl"
     >
-      <MdNode v-for="item in node.items" :key="item.id" :node="item" />
+      <HeadingContent :node="node" :href="sanitizeUrl(`#${node.id}`)" />
     </h3>
     <h4
       v-else-if="node.depth === 4"
-      class="text-highlighted relative mt-6 mb-2 text-lg font-bold *:text-lg"
+      :id="node.id"
+      class="text-highlighted relative mt-6 mb-2 text-lg font-bold **:text-lg"
     >
-      <MdNode v-for="item in node.items" :key="item.id" :node="item" />
+      <HeadingContent :node="node" :href="sanitizeUrl(`#${node.id}`)" />
     </h4>
     <h5
       v-else-if="node.depth === 5"
-      class="text-highlighted relative mt-4 mb-1 text-base font-bold *:text-base"
+      :id="node.id"
+      class="text-highlighted relative mt-4 mb-1 text-base font-bold **:text-base"
     >
-      <MdNode v-for="item in node.items" :key="item.id" :node="item" />
+      <HeadingContent :node="node" :href="sanitizeUrl(`#${node.id}`)" />
     </h5>
     <h6
       v-else-if="node.depth === 6"
-      class="text-highlighted relative mt-2 mb-1 text-sm font-bold *:text-sm"
+      :id="node.id"
+      class="text-highlighted relative mt-2 mb-1 text-sm font-bold **:text-sm"
     >
-      <MdNode v-for="item in node.items" :key="item.id" :node="item" />
+      <HeadingContent :node="node" :href="sanitizeUrl(`#${node.id}`)" />
     </h6>
     <div
       v-if="node.depth && node.depth > 3 && preview.preview"
@@ -336,7 +342,12 @@ const copied = ref(false);
         <div class="p-2">
           <UButton
             v-if="!node.name"
-            class="invisible absolute top-2 right-2 z-10 group-hover:visible"
+            class="invisible absolute right-2 z-10 group-hover:visible"
+            :class="
+              node.syntaxHighlightedTokens?.length === 1
+                ? 'top-1/2 -translate-y-1/2'
+                : 'top-2'
+            "
             size="sm"
             variant="ghost"
             color="neutral"

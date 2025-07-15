@@ -411,7 +411,7 @@ const updateCaretPosition = (event: Event) => {
             />
           </template>
         </UModal>
-        <div class="w-full *:*:w-full">
+        <div class="w-full p-5 *:*:w-full">
           <RenderedPage v-if="page" :nodes="mdNodes" :page="page" />
         </div>
       </div>

@@ -116,7 +116,7 @@ const copyJson = () => {
       <p class="text-sm">{{ page.emoji }}</p>
       <p class="ml-2 text-sm">{{ page.title || "Untitled" }}</p>
     </button>
-    <div class="flex items-center">
+    <div class="flex items-center gap-1">
       <UIcon
         v-if="saved"
         name="i-heroicons-check"
@@ -133,24 +133,6 @@ const copyJson = () => {
           })
         }}
       </p>
-      <UPopover mode="hover">
-        <UButton
-          icon="i-heroicons-clipboard-document"
-          variant="ghost"
-          color="neutral"
-          @click="copyMd()"
-        />
-        <template #content>
-          <UButtonGroup orientation="vertical">
-            <UButton variant="ghost" color="neutral" @click="copyMd()">
-              Copy Markdown
-            </UButton>
-            <UButton variant="ghost" color="neutral" @click="copyJson()">
-              Copy JSON
-            </UButton>
-          </UButtonGroup>
-        </template>
-      </UPopover>
       <button
         :class="{
           'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200':
@@ -158,7 +140,7 @@ const copyJson = () => {
           'text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300':
             props.previewPage,
         }"
-        class="ml-2 flex cursor-pointer items-center rounded-md px-1 py-0.5 text-xs font-semibold"
+        class="flex cursor-pointer items-center rounded-md px-1 py-0.5 text-xs font-semibold"
         @click="() => emits('togglePreview')"
       >
         <span>Preview</span>
@@ -167,7 +149,7 @@ const copyJson = () => {
         <UButton
           variant="ghost"
           color="neutral"
-          class="ml-2 flex items-center rounded-md px-1 py-0.5 text-xs font-semibold text-gray-700 hover:bg-gray-200 dark:text-gray-200 dark:hover:bg-gray-700"
+          class="flex items-center rounded-md px-1 py-0.5 text-xs font-semibold text-gray-700 hover:bg-gray-200 dark:text-gray-200 dark:hover:bg-gray-700"
           @mouseover="mouseover"
           @mouseleave="mouseleave"
           @click="mouseleave"
@@ -239,7 +221,7 @@ const copyJson = () => {
         </template>
       </UPopover>
       <button
-        class="ml-2 flex items-center text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+        class="flex items-center text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
         @click="favoritePage"
       >
         <UIcon
@@ -249,6 +231,25 @@ const copyJson = () => {
           aria-label="Favorite"
         />
       </button>
+      <UPopover mode="hover">
+        <UButton
+          icon="i-heroicons-clipboard-document"
+          variant="ghost"
+          color="neutral"
+          size="sm"
+          @click="copyMd()"
+        />
+        <template #content>
+          <UButtonGroup orientation="vertical">
+            <UButton variant="ghost" color="neutral" @click="copyMd()">
+              Copy Markdown
+            </UButton>
+            <UButton variant="ghost" color="neutral" @click="copyJson()">
+              Copy JSON
+            </UButton>
+          </UButtonGroup>
+        </template>
+      </UPopover>
     </div>
   </header>
 </template>
