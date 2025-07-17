@@ -7,15 +7,17 @@ export default eventHandler(async (event) => {
     console.error("Invalid page ID:", id);
     throw createError({ statusCode: 400, message: "Page ID is required" });
   }
-  const { title, emoji, isPublic, isFavorite, coverUrl } = await readBody<
-    Partial<{
-      title: string;
-      emoji: string;
-      isPublic: boolean;
-      isFavorite: boolean;
-      coverUrl: string;
-    }>
-  >(event);
+  const { title, emoji, isPublic, isFavorite, coverUrl, showOutline } =
+    await readBody<
+      Partial<{
+        title: string;
+        emoji: string;
+        isPublic: boolean;
+        isFavorite: boolean;
+        coverUrl: string;
+        showOutline: boolean;
+      }>
+    >(event);
   const drizzle = useDrizzle();
 
   // Get the previous value of the `path` column
@@ -63,6 +65,7 @@ export default eventHandler(async (event) => {
       isPublic,
       isFavorite,
       coverUrl,
+      showOutline,
       lastUpdatedAt: new Date(),
       lastUpdatedByName: user.name,
       path,

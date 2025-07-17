@@ -37,41 +37,56 @@ test("parseMd - headings and paragraphs", async () => {
 This is a paragraph with some text.`;
   const expectedOutput = [
     expect.objectContaining({
-      type: "heading",
-      depth: 1,
+      type: "section",
       items: [
         expect.objectContaining({
-          type: "text",
-          text: "Heading 1",
+          type: "heading",
+          depth: 1,
+          items: [
+            expect.objectContaining({
+              type: "text",
+              text: "Heading 1",
+            }),
+          ],
         }),
       ],
     }),
     expect.objectContaining({
-      type: "heading",
-      depth: 2,
+      type: "section",
       items: [
         expect.objectContaining({
-          type: "text",
-          text: "Heading 2",
+          type: "heading",
+          depth: 2,
+          items: [
+            expect.objectContaining({
+              type: "text",
+              text: "Heading 2",
+            }),
+          ],
         }),
       ],
     }),
     expect.objectContaining({
-      type: "heading",
-      depth: 3,
+      type: "section",
       items: [
         expect.objectContaining({
-          type: "text",
-          text: "Heading 3",
+          type: "heading",
+          depth: 3,
+          items: [
+            expect.objectContaining({
+              type: "text",
+              text: "Heading 3",
+            }),
+          ],
         }),
-      ],
-    }),
-    expect.objectContaining({
-      type: "paragraph",
-      items: [
         expect.objectContaining({
-          type: "text",
-          text: "This is a paragraph with some text.",
+          type: "paragraph",
+          items: [
+            expect.objectContaining({
+              type: "text",
+              text: "This is a paragraph with some text.",
+            }),
+          ],
         }),
       ],
     }),
@@ -95,175 +110,190 @@ x^2^ superscript
 `;
   const expectedOutput = [
     expect.objectContaining({
-      type: "heading",
-      depth: 1,
+      type: "section",
       items: [
         expect.objectContaining({
-          type: "text",
-          text: "Heading 1",
-        }),
-      ],
-    }),
-    expect.objectContaining({
-      type: "heading",
-      depth: 2,
-      items: [
-        expect.objectContaining({
-          type: "text",
-          text: "Heading 2",
-        }),
-      ],
-    }),
-    expect.objectContaining({
-      type: "heading",
-      depth: 3,
-      items: [
-        expect.objectContaining({
-          type: "text",
-          text: "Heading 3",
-        }),
-      ],
-    }),
-    expect.objectContaining({
-      type: "paragraph",
-      items: [
-        expect.objectContaining({
-          type: "text",
-          text: "This is a paragraph with ",
-        }),
-        expect.objectContaining({
-          type: "bold",
+          type: "heading",
+          depth: 1,
           items: [
             expect.objectContaining({
               type: "text",
-              text: "bold text",
+              text: "Heading 1",
+            }),
+          ],
+        }),
+      ],
+    }),
+    expect.objectContaining({
+      type: "section",
+      items: [
+        expect.objectContaining({
+          type: "heading",
+          depth: 2,
+          items: [
+            expect.objectContaining({
+              type: "text",
+              text: "Heading 2",
+            }),
+          ],
+        }),
+      ],
+    }),
+    expect.objectContaining({
+      type: "section",
+      items: [
+        expect.objectContaining({
+          type: "heading",
+          depth: 3,
+          items: [
+            expect.objectContaining({
+              type: "text",
+              text: "Heading 3",
             }),
           ],
         }),
         expect.objectContaining({
-          type: "text",
-          text: " and ",
-        }),
-        expect.objectContaining({
-          type: "italic",
+          type: "paragraph",
           items: [
             expect.objectContaining({
               type: "text",
-              text: "italic text",
+              text: "This is a paragraph with ",
+            }),
+            expect.objectContaining({
+              type: "bold",
+              items: [
+                expect.objectContaining({
+                  type: "text",
+                  text: "bold text",
+                }),
+              ],
+            }),
+            expect.objectContaining({
+              type: "text",
+              text: " and ",
+            }),
+            expect.objectContaining({
+              type: "italic",
+              items: [
+                expect.objectContaining({
+                  type: "text",
+                  text: "italic text",
+                }),
+              ],
+            }),
+            expect.objectContaining({
+              type: "text",
+              text: ".",
             }),
           ],
         }),
         expect.objectContaining({
-          type: "text",
-          text: ".",
-        }),
-      ],
-    }),
-    expect.objectContaining({
-      type: "list-items",
-      depth: 0,
-      items: [
-        expect.objectContaining({
-          type: "list-item",
+          type: "list-items",
           depth: 0,
           items: [
             expect.objectContaining({
-              type: "text",
-              text: "List item 1",
+              type: "list-item",
+              depth: 0,
+              items: [
+                expect.objectContaining({
+                  type: "text",
+                  text: "List item 1",
+                }),
+              ],
+            }),
+            expect.objectContaining({
+              type: "list-item",
+              depth: 0,
+              items: [
+                expect.objectContaining({
+                  type: "text",
+                  text: "List item 2",
+                }),
+              ],
             }),
           ],
         }),
         expect.objectContaining({
-          type: "list-item",
-          depth: 0,
+          type: "paragraph",
+          items: [
+            expect.objectContaining({
+              type: "link",
+              title: "Link text",
+              href: sanitizeUrl("https://example.com"),
+            }),
+          ],
+        }),
+        expect.objectContaining({
+          type: "paragraph",
+          items: [
+            expect.objectContaining({
+              type: "strikethrough",
+              items: [
+                expect.objectContaining({
+                  type: "text",
+                  text: "Strikethrough text",
+                }),
+              ],
+            }),
+          ],
+        }),
+        expect.objectContaining({
+          type: "paragraph",
+          items: [
+            expect.objectContaining({
+              type: "highlighted",
+              items: [
+                expect.objectContaining({
+                  type: "text",
+                  text: "Highlighted text",
+                }),
+              ],
+            }),
+          ],
+        }),
+        expect.objectContaining({
+          type: "paragraph",
           items: [
             expect.objectContaining({
               type: "text",
-              text: "List item 2",
+              text: "H",
+            }),
+            expect.objectContaining({
+              type: "sub",
+              items: [
+                expect.objectContaining({
+                  type: "text",
+                  text: "2",
+                }),
+              ],
+            }),
+            expect.objectContaining({
+              type: "text",
+              text: "O subscript",
             }),
           ],
         }),
-      ],
-    }),
-    expect.objectContaining({
-      type: "paragraph",
-      items: [
         expect.objectContaining({
-          type: "link",
-          title: "Link text",
-          href: sanitizeUrl("https://example.com"),
-        }),
-      ],
-    }),
-    expect.objectContaining({
-      type: "paragraph",
-      items: [
-        expect.objectContaining({
-          type: "strikethrough",
+          type: "paragraph",
           items: [
             expect.objectContaining({
               type: "text",
-              text: "Strikethrough text",
+              text: "x",
             }),
-          ],
-        }),
-      ],
-    }),
-    expect.objectContaining({
-      type: "paragraph",
-      items: [
-        expect.objectContaining({
-          type: "highlighted",
-          items: [
+            expect.objectContaining({
+              type: "sup",
+              items: [
+                expect.objectContaining({
+                  type: "text",
+                  text: "2",
+                }),
+              ],
+            }),
             expect.objectContaining({
               type: "text",
-              text: "Highlighted text",
+              text: " superscript",
             }),
           ],
-        }),
-      ],
-    }),
-    expect.objectContaining({
-      type: "paragraph",
-      items: [
-        expect.objectContaining({
-          type: "text",
-          text: "H",
-        }),
-        expect.objectContaining({
-          type: "sub",
-          items: [
-            expect.objectContaining({
-              type: "text",
-              text: "2",
-            }),
-          ],
-        }),
-        expect.objectContaining({
-          type: "text",
-          text: "O subscript",
-        }),
-      ],
-    }),
-    expect.objectContaining({
-      type: "paragraph",
-      items: [
-        expect.objectContaining({
-          type: "text",
-          text: "x",
-        }),
-        expect.objectContaining({
-          type: "sup",
-          items: [
-            expect.objectContaining({
-              type: "text",
-              text: "2",
-            }),
-          ],
-        }),
-        expect.objectContaining({
-          type: "text",
-          text: " superscript",
         }),
       ],
     }),

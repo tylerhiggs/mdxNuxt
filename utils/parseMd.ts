@@ -7,6 +7,7 @@ import type {
   MdNode,
   OrderedListItemNode,
   OrderedListItemsNode,
+  SectionNode,
   TableNode,
   ThemeColor,
 } from "~/shared/types";
@@ -205,7 +206,7 @@ export async function parseMd(markdown: string): Promise<MdNode[]> {
     } else if (trimmed.startsWith("#")) {
       const depth = trimmed.match(/^#+/)?.[0].length || 0;
       listToPushTo.push({
-        id: `${index}-h${depth}`,
+        id: `${trimmed.slice(depth)}-${index}-h${depth}`,
         type: "heading",
         depth,
         items: await parseLine(trimmed.slice(depth).trim()),
@@ -240,7 +241,7 @@ export async function parseMd(markdown: string): Promise<MdNode[]> {
     }
   }
 
-  return groupListItems(tokens);
+  return groupSections(groupListItems(tokens));
 }
 
 /**
@@ -558,4 +559,26 @@ const getProps = (props: string) => {
     result[key] = parsed;
   }
   return result;
+};
+
+const groupSections = (nodes: MdNode[]): MdNode[] => {
+  let currentSection: SectionNode | null = null; // Track the current section being parsed
+
+  return nodes.reduce((acc, node) => {
+    if (node.type === "heading") {
+      currentSection = {
+        id: `section-${node.id}`,
+        type: "section",
+        headingId: node.id,
+        items: [node],
+      };
+      acc.push(currentSection);
+    } else if (currentSection) {
+      currentSection.items.push(node);
+    } else {
+      // If no current section, just push the node
+      acc.push(node);
+    }
+    return acc;
+  }, [] as MdNode[]);
 };

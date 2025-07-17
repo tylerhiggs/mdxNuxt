@@ -56,7 +56,7 @@ const copyCode = () => {
           <div
             class="p-3 text-sm"
             :class="{
-              'max-h-96 overflow-y-auto pb-16': !collapsed,
+              'pb-16': !collapsed,
               'max-h-48 overflow-hidden': collapsed,
             }"
           >

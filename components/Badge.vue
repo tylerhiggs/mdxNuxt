@@ -9,7 +9,7 @@ defineProps<{
   <UBadge
     :ui="{
       base: [
-        'rounded-full *:m-0',
+        'rounded-full *:m-0 **:leading-4',
         componentProps?.color === 'primary' ||
         !componentProps ||
         !componentProps.color ||

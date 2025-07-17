@@ -93,6 +93,7 @@ export type ComponentType =
   | "warning"
   | "caution";
 export type MdNodeType =
+  | "section"
   | "heading"
   | "paragraph"
   | "list-items"
@@ -117,6 +118,11 @@ export type MdNodeType =
 export type BaseMdNode = {
   type: MdNodeType | ComponentType;
   id: string;
+};
+export type SectionNode = BaseMdNode & {
+  type: "section";
+  items: MdNode[];
+  headingId: string; // The title is the heading text, which should be the first item in the section
 };
 export type HeadingNode = BaseMdNode & {
   type: "heading";
@@ -222,6 +228,7 @@ export type ComponentNode = BaseMdNode & {
   items: MdNode[];
 };
 export type MdNode =
+  | SectionNode
   | HeadingNode
   | ParagraphNode
   | ListItemsNode
@@ -252,3 +259,10 @@ export type ThemeColor =
   | "success"
   | "primary"
   | "secondary";
+
+export type HeadingOutlineItem = {
+  id: string;
+  label: string;
+  depth: number;
+  items: HeadingOutlineItem[];
+};

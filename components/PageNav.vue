@@ -20,6 +20,13 @@ const favoritePage = () => {
   }
   updatePage({ id, isFavorite: !isFavorite }, true);
 };
+const toggleShowOutline = () => {
+  if (!page.value) {
+    console.warn("No page selected");
+    return;
+  }
+  updatePage({ id: page.value.id, showOutline: !page.value.showOutline }, true);
+};
 const emits = defineEmits<{
   togglePreview: [];
 }>();
@@ -250,6 +257,15 @@ const copyJson = () => {
           </UButtonGroup>
         </template>
       </UPopover>
+      <UTooltip :text="page?.showOutline ? 'Hide Outline' : 'Show Outline'">
+        <UButton
+          icon="i-heroicons-list-bullet"
+          :variant="page?.showOutline ? 'solid' : 'ghost'"
+          :color="page?.showOutline ? 'primary' : 'neutral'"
+          size="sm"
+          @click="toggleShowOutline()"
+        />
+      </UTooltip>
     </div>
   </header>
 </template>

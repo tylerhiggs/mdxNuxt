@@ -6,6 +6,7 @@ export type Page = {
   emoji: string;
   blocks: Block[];
   coverUrl?: string;
+  showOutline: boolean;
   path: {
     id: number;
     title: string;

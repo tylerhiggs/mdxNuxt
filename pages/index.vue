@@ -16,13 +16,15 @@ const nodes = computed<MdNode[][]>(
 </script>
 
 <template>
-  <RenderedPage v-if="page" :nodes="nodes" :page="page" />
-  <div v-else>
-    <div>
-      <UIcon
-        name="i-heroicons-arrow-path"
-        class="h-5 w-5 animate-spin text-white"
-      />
+  <main>
+    <RenderedPage v-if="page" :nodes="nodes" :page="page" />
+    <div v-else>
+      <div>
+        <UIcon
+          name="i-heroicons-arrow-path"
+          class="h-5 w-5 animate-spin text-white"
+        />
+      </div>
     </div>
-  </div>
+  </main>
 </template>

@@ -1,18 +1,22 @@
 <script setup lang="ts">
 import type { MdNode } from "~/shared/types";
+const { preview } = usePreview();
 defineProps<{
   nodes: MdNode[][];
   page: {
     title: string;
     emoji: string;
     coverUrl?: string;
+    showOutline: boolean;
   };
 }>();
 </script>
 
 <template>
-  <div class="flex justify-center">
-    <div class="flex w-8/12 flex-col p-4">
+  <div class="grid grid-cols-12">
+    <div
+      class="col-span-12 flex flex-col p-4 md:col-span-10 md:col-start-2 lg:col-span-8 lg:col-start-3"
+    >
       <div v-if="page.coverUrl" class="h-64 w-full">
         <img
           :src="
@@ -34,6 +38,12 @@ defineProps<{
           <MdNode :node="node" />
         </div>
       </div>
+    </div>
+    <div
+      v-if="!preview && page.showOutline"
+      class="lg-flex-col sticky top-0 col-span-12 hidden max-h-screen md:col-span-2 lg:col-span-2 lg:flex"
+    >
+      <Outline v-if="nodes.length > 0" :nodes="nodes.flat()" />
     </div>
   </div>
 </template>

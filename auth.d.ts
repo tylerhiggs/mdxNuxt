@@ -3,14 +3,25 @@ declare module "#auth-utils" {
     id: number;
     name: string;
     email: string;
+    avatar?: string; // Optional avatar field
   }
 
   // interface UserSession {
-  //   // Add your own fields
+  //   user: {
+  //     id: number;
+  //     name: string;
+  //     email: string;
+  //     avatar?: string; // Optional avatar field
+  //   };
   // }
 
-  // interface SecureSessionData {
-  //   // Add your own fields
+  // interface UserSession {
+  //   user: {
+  //     id: number;
+  //     name: string;
+  //     email: string;
+  //     avatar?: string; // Optional avatar field
+  //   };
   // }
 }
 

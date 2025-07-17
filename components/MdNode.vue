@@ -10,13 +10,22 @@ import type {
   IconProps,
   KbdProps,
   MdNode,
+  SectionNode,
 } from "~/shared/types";
-defineProps<{
+const props = defineProps<{
   node: MdNode;
 }>();
 const preview = usePreview();
 const colorMode = useColorMode();
 const snackbar = useSnackbar();
+const sectionElement = useTemplateRef<HTMLElement>("sectionElement");
+const { onElementVisibilityChange } = useElementVisibilityState();
+const elementIsVisible = useElementVisibility(sectionElement);
+watch(elementIsVisible, (isVisible) => {
+  if (sectionElement.value) {
+    onElementVisibilityChange((props.node as SectionNode).headingId, isVisible);
+  }
+});
 const copyCode = (code: CodeBlockNode) => {
   const text = code.syntaxHighlightedTokens
     ? code.syntaxHighlightedTokens
@@ -372,4 +381,9 @@ const copied = ref(false);
   </div>
   <hr v-else-if="node.type === 'hr'" class="border-default my-12 border-t" />
   <Table v-else-if="node.type === 'table'" :node="node" />
+  <section v-else-if="node.type === 'section'" ref="sectionElement">
+    <div v-for="n in node.items" :key="n.id">
+      <MdNode :node="n" />
+    </div>
+  </section>
 </template>

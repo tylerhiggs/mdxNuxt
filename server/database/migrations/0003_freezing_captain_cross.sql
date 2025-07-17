@@ -1,0 +1,1 @@
+ALTER TABLE `pages` ADD `showOutline` integer DEFAULT true NOT NULL;

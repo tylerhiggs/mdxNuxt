@@ -34,6 +34,9 @@ export const pages = sqliteTable(
     isFavorite: integer("isFavorite", { mode: "boolean" })
       .notNull()
       .default(false),
+    showOutline: integer("showOutline", { mode: "boolean" })
+      .notNull()
+      .default(true),
     path: text("path").notNull(),
     parentId: integer("parent_id").references((): AnySQLiteColumn => pages.id),
     lastUpdatedAt: integer("lastUpdatedAt", { mode: "timestamp" }).notNull(),
