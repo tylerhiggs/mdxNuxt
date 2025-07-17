@@ -232,9 +232,11 @@ const copyJson = () => {
         @click="favoritePage"
       >
         <UIcon
-          name="i-heroicons-star"
+          :name="
+            page?.isFavorite ? 'i-heroicons-solid-star' : 'i-heroicons-star'
+          "
           class="size-5"
-          :class="{ 'fill-yellow-200': page?.isFavorite }"
+          :class="{ 'text-yellow-200': page?.isFavorite }"
           aria-label="Favorite"
         />
       </button>
@@ -261,7 +263,7 @@ const copyJson = () => {
         <UButton
           icon="i-heroicons-list-bullet"
           :variant="page?.showOutline ? 'solid' : 'ghost'"
-          :color="page?.showOutline ? 'primary' : 'neutral'"
+          :color="page?.showOutline ? 'secondary' : 'neutral'"
           size="sm"
           @click="toggleShowOutline()"
         />
