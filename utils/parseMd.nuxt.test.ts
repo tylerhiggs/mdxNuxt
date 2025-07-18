@@ -302,6 +302,50 @@ x^2^ superscript
   expect(output).toEqual(expectedOutput);
 });
 
+test("parseMd - bold text mixture", async () => {
+  const input = `* **Molinism**: Developed by **Luis de Molina** (1535-1600)`;
+  const expectedOutput = [
+    expect.objectContaining({
+      type: "list-items",
+      items: [
+        expect.objectContaining({
+          type: "list-item",
+          items: [
+            expect.objectContaining({
+              type: "bold",
+              items: [
+                expect.objectContaining({
+                  type: "text",
+                  text: "Molinism",
+                }),
+              ],
+            }),
+            expect.objectContaining({
+              type: "text",
+              text: ": Developed by ",
+            }),
+            expect.objectContaining({
+              type: "bold",
+              items: [
+                expect.objectContaining({
+                  type: "text",
+                  text: "Luis de Molina",
+                }),
+              ],
+            }),
+            expect.objectContaining({
+              type: "text",
+              text: " (1535-1600)",
+            }),
+          ],
+        }),
+      ],
+    }),
+  ];
+  const output = await parseMd(input);
+  expect(output).toEqual(expectedOutput);
+});
+
 test("parseMd - link XXS safety", async () => {
   const input = `[Link text](javascript:alert('XSS'))`;
   const output = await parseMd(input);

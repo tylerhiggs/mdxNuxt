@@ -368,7 +368,7 @@ export async function parseLine(mdLine: string): Promise<MdNode[]> {
         type: "inline-code",
         text: part.slice(1, -1),
       });
-    } else if (part.startsWith(":")) {
+    } else if (/:[\w-]+\{.*?\}/.test(part)) {
       // inline component without child items
       const match = part.match(/:(\w+)(?:\{(.*?)\})?/);
       if (match) {

@@ -62,17 +62,17 @@ const options = computed(
           {
             label: "Highlighted",
             suffix: "Insert highlighted text",
-            icon: "i-heroicons-highlighted",
+            icon: "i-heroicons-bookmark",
           },
           {
             label: "Superscript",
             suffix: "Insert superscript text",
-            icon: "i-heroicons-superscript",
+            icon: "i-heroicons-arrow-up",
           },
           {
             label: "Subscript",
             suffix: "Insert subscript text",
-            icon: "i-heroicons-subscript",
+            icon: "i-heroicons-arrow-down",
           },
           {
             label: "Link",
