@@ -181,6 +181,43 @@ export const parseDom = (el: Element, listDepth = 0): string => {
       const src = el.getAttribute("src") || "";
       return src ? `![${alt}](${src})` : "";
     },
+    TABLE: (el) => {
+      const rows = Array.from(el.querySelectorAll("tr"));
+      if (rows.length === 0) return "";
+      const headerRow = rows[0];
+      const headerCells = Array.from(headerRow.querySelectorAll("th, td"));
+      const headerMarkdown =
+        headerCells.map((cell) => `| ${cell.textContent || ""} `).join("") +
+        "|\n";
+      const separator = headerCells.map(() => "| --- ").join("") + "|\n";
+      const bodyMarkdown = rows
+        .slice(1)
+        .map(
+          (row) =>
+            Array.from(row.querySelectorAll("th, td"))
+              .map((cell) => `| ${cell.textContent || ""} `)
+              .join("") + "|\n",
+        )
+        .join("");
+      return headerMarkdown + separator + bodyMarkdown;
+    },
+    HR: () => "---\n",
+    PRE: (el) => {
+      const codeEl = el.querySelector("code");
+      if (codeEl) {
+        const codeContent = Array.from(codeEl.childNodes)
+          .map((node) =>
+            node.nodeType === Node.ELEMENT_NODE
+              ? parseDom(node as Element)
+              : node.nodeType === Node.TEXT_NODE
+                ? node.textContent || ""
+                : "",
+          )
+          .join("");
+        return `\`\`\`${codeEl.getAttribute("lang") || ""}\n${codeContent}\n\`\`\`\n`;
+      }
+      return "";
+    },
   };
 
   if (tagToMarkdown[el.tagName]) {

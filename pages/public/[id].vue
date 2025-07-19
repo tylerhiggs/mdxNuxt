@@ -8,6 +8,8 @@ definePageMeta({
   },
 });
 const route = useRoute();
+const { preview } = usePreview();
+preview.value = false;
 
 const { data: page } = useFetch(() => `/api/public/pages/${route.params.id}`, {
   method: "GET",

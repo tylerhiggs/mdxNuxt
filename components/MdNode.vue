@@ -51,7 +51,7 @@ const copied = ref(false);
 <template>
   <blockquote
     v-if="node.type === 'blockquote'"
-    class="border-accented border-s-4 ps-4 italic"
+    class="border-accented my-4 border-s-4 ps-4 italic"
   >
     <MdNode v-for="item in node.items" :key="item.id" :node="item" />
   </blockquote>
@@ -178,12 +178,6 @@ const copied = ref(false);
     >
       <HeadingContent :node="node" :href="sanitizeUrl(`#${node.id}`)" />
     </h6>
-    <div
-      v-if="node.depth && node.depth > 3 && preview.preview"
-      class="mb-2 rounded border border-yellow-300 bg-yellow-100 px-3 py-2 text-sm text-yellow-800"
-    >
-      Warning: Heading levels greater than 3 are not recommended.
-    </div>
   </template>
   <div v-else-if="node.type === 'image'" class="flex w-full justify-center">
     <img
