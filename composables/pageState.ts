@@ -125,7 +125,6 @@ export function usePageState() {
       };
     }
     pageUpdateToSave.value = undefined;
-    snackbarStore.enqueue("Successfully updated page", "success");
   };
 
   const executeBlockUpdateDb = async () => {
@@ -167,7 +166,6 @@ export function usePageState() {
     }
 
     blockUpdateToSave.value = undefined;
-    snackbarStore.enqueue("Successfully updated page block", "success");
   };
 
   /**
@@ -184,7 +182,6 @@ export function usePageState() {
   ) => {
     if (!pageData.value) {
       console.error("No current page to update");
-      snackbarStore.enqueue("No current page to update", "error");
       return;
     }
     if (update.id !== currentPageId.value) {

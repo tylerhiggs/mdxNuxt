@@ -283,8 +283,12 @@ const uploadImage = (file: File) => {
       }, 0);
       insertFormating("![", fileName, `](${res.pathname})`);
     })
-    .catch(() => {
-      snackbarStore.enqueue("Failed to upload image", "error");
+    .catch((e) => {
+      snackbarStore.enqueue(
+        e.response?._data?.message || "Failed to upload image",
+        "error",
+      );
+      console.log(e, Object.entries(e.FetchError));
     });
 };
 
@@ -293,6 +297,46 @@ const updateCaretPosition = (event: Event) => {
   setTimeout(() => {
     caretPosition.value = target.selectionStart;
   }, 0);
+};
+const onPaste = (event: ClipboardEvent) => {
+  const clipboardData = event.clipboardData;
+  if (!clipboardData) {
+    return;
+  }
+  const items = clipboardData.items;
+  console.log("html", clipboardData.getData("text/html"));
+  console.log("text", clipboardData.getData("text/plain"));
+  for (const item of items) {
+    console.log("item", item);
+    if (item.kind === "file" && item.type.startsWith("image/")) {
+      const file = item.getAsFile();
+      if (file) {
+        uploadImage(file);
+        return;
+      }
+    }
+  }
+  const parser = new DOMParser();
+  const html = clipboardData.getData("text/html");
+  if (html) {
+    const doc = parser.parseFromString(html, "text/html");
+    const images = doc.querySelectorAll("img");
+    if (images.length > 0) {
+      const image = images[0];
+      const src = image.getAttribute("src");
+      if (src) {
+        insertFormating("![", "Image", `](${src})`);
+      }
+    }
+    const mdText = Array.from(doc.body.children).map((el) => parseDom(el));
+    insertFormating("", mdText.join("\n"), "");
+    return;
+  }
+  const text = clipboardData.getData("text/plain");
+  if (text) {
+    insertFormating("", text, "");
+    return;
+  }
 };
 </script>
 
@@ -368,6 +412,7 @@ const updateCaretPosition = (event: Event) => {
               }"
               class="absolute inset-0 field-sizing-content h-full w-full resize-none overflow-visible border-none bg-transparent font-mono text-lg font-normal whitespace-pre-wrap text-transparent outline-hidden"
               @input="(event) => updateBlockTextarea(event, block)"
+              @paste.prevent="onPaste"
               @keydown.meta.b="(event) => bold(event, block)"
               @keydown.ctrl.b="(event) => bold(event, block)"
               @keydown.meta.i="(event) => italic(event, block)"
@@ -395,26 +440,35 @@ const updateCaretPosition = (event: Event) => {
         class="relative flex w-5/12 flex-col overflow-y-auto border-l border-l-stone-300"
       >
         <UModal fullscreen :close="true">
-          <UButton
-            icon="i-heroicons-arrows-pointing-out"
-            color="neutral"
-            class="absolute top-2 right-2"
-          />
+          <UTooltip text="Expand to fullscreen">
+            <UButton
+              icon="i-heroicons-arrows-pointing-out"
+              color="neutral"
+              variant="ghost"
+              class="sticky top-2 right-2 flex self-end"
+            />
+          </UTooltip>
           <template #body>
             <RenderedPage v-if="page" :nodes="mdNodes" :page="page" />
           </template>
           <template #close>
-            <UButton
-              icon="i-heroicons-arrows-pointing-in"
-              color="neutral"
-              class="absolute top-2 right-2"
-            />
+            <UTooltip text="Close preview">
+              <UButton
+                icon="i-heroicons-arrows-pointing-in"
+                color="neutral"
+                variant="ghost"
+                class="absolute top-2 right-2"
+              />
+            </UTooltip>
           </template>
         </UModal>
-        <div
-          class="w-full p-5 *:*:col-span-12 *:*:md:col-span-12 *:*:lg:col-span-12"
-        >
-          <RenderedPage v-if="page" :nodes="mdNodes" :page="page" />
+        <div class="w-full p-5">
+          <RenderedPage
+            v-if="page"
+            :nodes="mdNodes"
+            :page="page"
+            :narrow-view="true"
+          />
         </div>
       </div>
     </div>

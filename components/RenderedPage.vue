@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { MdNode } from "~/shared/types";
-const { preview } = usePreview();
 defineProps<{
   nodes: MdNode[][];
   page: {
@@ -9,13 +8,18 @@ defineProps<{
     coverUrl?: string;
     showOutline: boolean;
   };
+  narrowView?: boolean;
 }>();
 </script>
 
 <template>
   <div class="grid grid-cols-12">
     <div
-      class="col-span-12 flex flex-col p-4 md:col-span-10 md:col-start-2 lg:col-span-8 lg:col-start-3"
+      class="col-span-12 flex flex-col p-4"
+      :class="{
+        'md:col-span-10 md:col-start-2 lg:col-span-8 lg:col-start-3':
+          !narrowView,
+      }"
     >
       <div v-if="page.coverUrl" class="h-64 w-full">
         <img
@@ -40,7 +44,7 @@ defineProps<{
       </div>
     </div>
     <div
-      v-if="!preview && page.showOutline"
+      v-if="!narrowView && page.showOutline"
       class="lg-flex-col sticky top-0 col-span-12 hidden max-h-screen md:col-span-2 lg:col-span-2 lg:flex"
     >
       <Outline v-if="nodes.length > 0" :nodes="nodes.flat()" />

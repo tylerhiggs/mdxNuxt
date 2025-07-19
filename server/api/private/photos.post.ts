@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
 
   ensureBlob(file, {
     maxSize: "1MB",
-    types: ["image"],
+    types: ["image", "image/gif"],
   });
   if (query.isCover) {
     const storedPageCoverImages = await hubBlob().list({
