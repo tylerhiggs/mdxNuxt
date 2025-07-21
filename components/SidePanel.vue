@@ -21,7 +21,7 @@ defineShortcuts({
     handler: () => emit("toggleSearch"),
     usingInput: true,
   },
-  meta_b: {
+  meta_shift_b: {
     handler: () => (isOpen.value = !isOpen.value),
     usingInput: true,
   },
@@ -91,7 +91,11 @@ const avatarUrl = computed(() => {
         >
           {{ workspaceTitle }}
         </div>
-        <ToolTip message="Close sidebar" position="bottom" command="meta+b">
+        <ToolTip
+          message="Close sidebar"
+          position="bottom"
+          command="meta+shift+b"
+        >
           <UButton
             variant="ghost"
             color="neutral"
@@ -173,7 +177,7 @@ const avatarUrl = computed(() => {
   <UTooltip
     v-else
     text="Open sidebar"
-    :kbds="['meta', 'b']"
+    :kbds="['meta', 'shift', 'b']"
     :delay-duration="0"
   >
     <UButton

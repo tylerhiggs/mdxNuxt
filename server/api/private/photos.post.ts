@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
   if (!user.id || isNaN(Number(user.id))) {
     throw createError({ statusCode: 400, message: "User ID is required" });
   }
-  const query = getQuery<{ pageId: string; isCover?: boolean }>(event);
+  const query = getQuery<{ pageId: string; isCover?: "true" | "false" }>(event);
   if (!query.pageId || isNaN(Number(query.pageId))) {
     console.error("Invalid or missing page ID:", query.pageId);
     throw createError({ statusCode: 400, message: "Page ID is required" });
@@ -22,7 +22,7 @@ export default defineEventHandler(async (event) => {
     maxSize: "1MB",
     types: ["image", "image/gif"],
   });
-  if (query.isCover) {
+  if (query.isCover && query.isCover === "true") {
     const storedPageCoverImages = await hubBlob().list({
       prefix: `images/${user.email}/${query.pageId}/cover`,
     });
