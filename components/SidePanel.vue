@@ -21,6 +21,10 @@ defineShortcuts({
     handler: () => emit("toggleSearch"),
     usingInput: true,
   },
+  meta_b: {
+    handler: () => (isOpen.value = !isOpen.value),
+    usingInput: true,
+  },
 });
 
 const isOpen = ref(true);
@@ -45,12 +49,6 @@ const userFirstLetter = computed(() => {
 const workspaceTitle = computed(() => {
   return `${auth.user.value?.name || auth.user.value?.email || "User"}'s Workspace`;
 });
-
-const ctrlOrCmd = "⌘";
-
-const toggleSidePanelCommand = `${ctrlOrCmd}+\\`;
-const toggleSearchCommand = `${ctrlOrCmd}+K`;
-
 const avatarUrl = computed(() => {
   return auth.dbUser.value?.avatar
     ? `/api/private/avatars/${auth.dbUser.value?.avatar}`
@@ -93,11 +91,7 @@ const avatarUrl = computed(() => {
         >
           {{ workspaceTitle }}
         </div>
-        <ToolTip
-          message="Close sidebar"
-          position="bottom"
-          :command="toggleSidePanelCommand"
-        >
+        <ToolTip message="Close sidebar" position="bottom" command="meta+b">
           <UButton
             variant="ghost"
             color="neutral"
@@ -126,7 +120,7 @@ const avatarUrl = computed(() => {
     <ToolTip
       message="Search and quickly jump to a page"
       position="right"
-      :command="toggleSearchCommand"
+      command="meta+k"
     >
       <DefaultPanelItem
         class="w-full pl-3 font-medium text-gray-400"
@@ -176,12 +170,18 @@ const avatarUrl = computed(() => {
       />
     </template>
   </nav>
-  <UButton
+  <UTooltip
     v-else
-    variant="ghost"
-    color="neutral"
-    class="fixed top-12 left-2 z-50"
-    icon="i-heroicons-chevron-double-right"
-    @click="isOpen = true"
-  />
+    text="Open sidebar"
+    :kbds="['meta', 'b']"
+    :delay-duration="0"
+  >
+    <UButton
+      variant="ghost"
+      color="neutral"
+      class="fixed top-12 left-2 z-50"
+      icon="i-heroicons-chevron-double-right"
+      @click="isOpen = true"
+    />
+  </UTooltip>
 </template>

@@ -101,6 +101,7 @@ export type MdNodeType =
   | "ordered-list-items"
   | "ordered-list-item"
   | "link"
+  | "youtube"
   | "inline-code"
   | "image"
   | "blockquote"
@@ -160,6 +161,10 @@ export type LinkNode = BaseMdNode & {
   type: "link";
   href: string;
   title?: string;
+};
+export type YouTubeNode = BaseMdNode & {
+  type: "youtube";
+  videoId: string;
 };
 export type InlineCodeNode = BaseMdNode & {
   type: "inline-code";
@@ -236,6 +241,7 @@ export type MdNode =
   | OrderedListItemsNode
   | OrderedListItemNode
   | LinkNode
+  | YouTubeNode
   | InlineCodeNode
   | ImageNode
   | BlockquoteNode

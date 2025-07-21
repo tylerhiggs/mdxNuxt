@@ -12,11 +12,13 @@ defineProps<{
     <slot></slot>
     <div
       v-if="!disabled"
-      class="invisible absolute z-50 rounded-md bg-black px-2 py-1 text-xs text-nowrap text-white group-hover/tooltip:visible dark:bg-stone-800"
+      class="invisible absolute z-50 rounded-md bg-neutral-950 px-2 py-1 text-xs text-nowrap text-white group-hover/tooltip:visible"
       :class="position"
     >
       <p>{{ message }}</p>
-      <p v-if="command" class="font-mono text-gray-400">{{ command }}</p>
+      <p v-if="command">
+        <UKbd v-for="key in command.split('+')" :key="key" :value="key" />
+      </p>
     </div>
   </div>
 </template>

@@ -30,7 +30,6 @@ const toggleShowOutline = () => {
 const emits = defineEmits<{
   togglePreview: [];
 }>();
-const tooltipStore = useTooltip();
 const pageState = usePageState();
 const snackbarStore = useSnackbar();
 
@@ -63,22 +62,6 @@ const copyLink = () => {
   snackbarStore.enqueue("Link copied to clipboard", "success");
 };
 
-const mouseover = (event: MouseEvent) => {
-  const target = event.target as HTMLElement;
-  const rect = target.getBoundingClientRect();
-  tooltipStore.show(
-    "Share or publish to the web",
-    rect.right,
-    rect.bottom,
-    "bottom",
-    "⌘⇧O",
-  );
-};
-
-const mouseleave = () => {
-  tooltipStore.hide();
-};
-
 const copyToClipboard = (text: string) => {
   navigator.clipboard
     .writeText(text)
@@ -106,6 +89,20 @@ const copyJson = () => {
   const json = JSON.stringify(page.value, null, 2);
   copyToClipboard(json);
 };
+
+defineShortcuts({
+  meta_e: {
+    handler: () => emits("togglePreview"),
+    usingInput: true,
+  },
+  meta_shift_o: () => {
+    if (!page.value) {
+      console.warn("No page selected");
+      return;
+    }
+    publicize();
+  },
+});
 </script>
 
 <template>
@@ -140,29 +137,32 @@ const copyJson = () => {
           })
         }}
       </p>
-      <button
-        :class="{
-          'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200':
-            !props.previewPage,
-          'text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300':
-            props.previewPage,
-        }"
-        class="flex cursor-pointer items-center rounded-md px-1 py-0.5 text-xs font-semibold"
-        @click="() => emits('togglePreview')"
-      >
-        <span>Preview</span>
-      </button>
-      <UPopover class="relative">
+      <UTooltip text="Preview page to the side" :kbds="['meta', 'E']">
         <UButton
+          icon="i-heroicons-eye"
           variant="ghost"
           color="neutral"
-          class="flex items-center rounded-md px-1 py-0.5 text-xs font-semibold text-gray-700 hover:bg-gray-200 dark:text-gray-200 dark:hover:bg-gray-700"
-          @mouseover="mouseover"
-          @mouseleave="mouseleave"
-          @click="mouseleave"
+          size="sm"
+          :class="{
+            'text-muted': !props.previewPage,
+            'text-primary-300 hover:text-primary-500': props.previewPage,
+          }"
+          @click="() => emits('togglePreview')"
+        />
+      </UTooltip>
+      <UPopover class="relative">
+        <UTooltip
+          text="Share or publish to the web"
+          :kbds="['meta', 'shift', 'O']"
         >
-          Share
-        </UButton>
+          <UButton
+            variant="ghost"
+            color="neutral"
+            class="flex items-center rounded-md px-1 py-0.5 text-xs font-semibold text-gray-700 hover:bg-gray-200 dark:text-gray-200 dark:hover:bg-gray-700"
+          >
+            Share
+          </UButton>
+        </UTooltip>
         <template #content>
           <div v-if="!page?.isPublic" class="w-96 p-4">
             <div class="text-md font-bold">Publish to web</div>

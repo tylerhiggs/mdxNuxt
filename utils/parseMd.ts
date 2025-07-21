@@ -413,6 +413,16 @@ export async function parseLine(mdLine: string): Promise<MdNode[]> {
         });
       }
     } else if (part.startsWith("http://") || part.startsWith("https://")) {
+      if (part.startsWith("https://www.youtube.com/watch?v=")) {
+        // Handle YouTube links
+        const videoId = sanitizeUrl(part.split("v=")[1].split("&")[0]);
+        tokens.push({
+          id: `youtube-${videoId}`,
+          type: "youtube",
+          videoId,
+        });
+        continue;
+      }
       // Handle plain URLs
       tokens.push({
         id: `link-${part}`,

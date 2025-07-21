@@ -380,4 +380,11 @@ const copied = ref(false);
       <MdNode :node="n" />
     </div>
   </section>
+  <iframe
+    v-else-if="node.type === 'youtube'"
+    :src="`https://www.youtube.com/embed/${node.videoId}`"
+    class="my-4 aspect-video w-full rounded-lg border border-neutral-200 dark:border-neutral-700"
+    allowfullscreen
+    title="YouTube video player"
+  ></iframe>
 </template>

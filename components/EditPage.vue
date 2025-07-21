@@ -8,6 +8,15 @@ const snackbarStore = useSnackbar();
 const { currentPage: page, updatePage, updateBlock } = usePageState();
 
 const previewPage = ref(false);
+const fullscreenPreview = ref(false);
+defineShortcuts({
+  meta_shift_e: {
+    handler: () => {
+      fullscreenPreview.value = !fullscreenPreview.value && previewPage.value;
+    },
+    usingInput: true,
+  },
+});
 const focusedBlockId = ref(
   page.value?.blocks.length ? page.value.blocks[0].id : undefined,
 );
@@ -439,8 +448,8 @@ const onPaste = (event: ClipboardEvent) => {
         v-if="previewPage"
         class="relative flex w-5/12 flex-col overflow-y-auto border-l border-l-stone-300"
       >
-        <UModal fullscreen :close="true">
-          <UTooltip text="Expand to fullscreen">
+        <UModal v-model:open="fullscreenPreview" fullscreen :close="true">
+          <UTooltip text="Expand to fullscreen" :kbds="['meta', 'shift', 'E']">
             <UButton
               icon="i-heroicons-arrows-pointing-out"
               color="neutral"
@@ -452,7 +461,7 @@ const onPaste = (event: ClipboardEvent) => {
             <RenderedPage v-if="page" :nodes="mdNodes" :page="page" />
           </template>
           <template #close>
-            <UTooltip text="Close preview">
+            <UTooltip text="Close preview" :kbds="['meta', 'shift', 'E']">
               <UButton
                 icon="i-heroicons-arrows-pointing-in"
                 color="neutral"
