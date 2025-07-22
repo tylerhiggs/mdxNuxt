@@ -1,6 +1,5 @@
 import { asc } from "drizzle-orm";
-import { useDrizzle } from "~/server/utils/drizzle";
-import type { MdNode } from "~/shared/types";
+import type { MdNode } from "~~/shared/types";
 export default eventHandler(async (event) => {
   const { id } = getRouterParams(event);
   if (!id || isNaN(Number(id))) {

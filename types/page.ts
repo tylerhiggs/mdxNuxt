@@ -1,4 +1,4 @@
-import type { MdNode } from "~/shared/types";
+import type { MdNode } from "~~/shared/types";
 
 export type Page = {
   id: number;

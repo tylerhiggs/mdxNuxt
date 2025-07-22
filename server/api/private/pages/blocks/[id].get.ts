@@ -1,5 +1,4 @@
 import { asc } from "drizzle-orm";
-import { eq, tables, useDrizzle } from "~/server/utils/drizzle";
 
 export default eventHandler(async (event) => {
   const { id } = getRouterParams(event);

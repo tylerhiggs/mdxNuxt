@@ -1,4 +1,4 @@
-import { pages } from "~/server/database/schema";
+import { pages } from "~~/server/database/schema";
 
 export default defineEventHandler(async (event) => {
   const { user } = await requireUserSession(event);

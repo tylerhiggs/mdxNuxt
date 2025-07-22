@@ -1,5 +1,5 @@
-import { users } from "~/server/database/schema";
-import { useDrizzle } from "~/server/utils/drizzle";
+import { users } from "~~/server/database/schema";
+import { useDrizzle } from "~~/server/utils/drizzle";
 import type { H3Event, H3Error } from "h3";
 
 export default defineOAuthGoogleEventHandler({

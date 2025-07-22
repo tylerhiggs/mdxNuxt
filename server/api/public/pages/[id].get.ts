@@ -1,10 +1,10 @@
 import { desc } from "drizzle-orm";
-import { MdNode } from "~/shared/types";
-import { Page } from "~/types/page";
+import { MdNode } from "~~/shared/types";
+import { Page } from "~~/types/page";
 export default defineEventHandler(async (event) => {
   const { id } = getRouterParams(event);
   if (id === "home") {
-    const homePageData = await import("~/server/assets/home-page.json");
+    const homePageData = await import("~~/server/assets/home-page.json");
     return {
       statusCode: 200,
       body: homePageData as Page,

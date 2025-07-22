@@ -1,5 +1,3 @@
-import { eq, tables, useDrizzle } from "~/server/utils/drizzle";
-
 export default eventHandler(async (event) => {
   const { user } = await requireUserSession(event);
   const { id } = getRouterParams(event);

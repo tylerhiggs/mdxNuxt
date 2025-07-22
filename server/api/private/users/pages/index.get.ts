@@ -1,5 +1,4 @@
 import { asc } from "drizzle-orm";
-import { useDrizzle } from "~/server/utils/drizzle";
 
 /**
  * Just returns the pages metadata for a given user id,

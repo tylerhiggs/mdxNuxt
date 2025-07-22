@@ -1,5 +1,4 @@
-import { tables, useDrizzle } from "~/server/utils/drizzle";
-import type { MdNode, MdNodeType } from "~/shared/types";
+import type { MdNode, MdNodeType } from "~~/shared/types";
 
 export default eventHandler(async (event) => {
   const { id } = getRouterParams(event);
@@ -11,7 +10,7 @@ export default eventHandler(async (event) => {
     pageId: number;
     index: number;
     textContent: string;
-    type?: MdNodeType;
+    type?: "text";
     renderedMd?: MdNode;
   }>(event);
   const block = await useDrizzle()
@@ -20,7 +19,7 @@ export default eventHandler(async (event) => {
       pageId,
       textContent,
       index,
-      type: type || ("text" as MdNodeType),
+      type: type || "text",
       renderedMd: JSON.stringify(renderedMd) || "[]",
     })
     .returning()

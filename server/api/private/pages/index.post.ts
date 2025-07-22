@@ -1,6 +1,3 @@
-import { tables, useDrizzle } from "~/server/utils/drizzle";
-import type { PageInsert } from "~/server/utils/drizzle";
-
 export default eventHandler(async (event) => {
   const { user } = await requireUserSession(event);
   const { path, parentId } = await readBody<{

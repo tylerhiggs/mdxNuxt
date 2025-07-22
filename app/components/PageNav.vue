@@ -203,7 +203,7 @@ defineShortcuts({
               </div>
             </div>
             <button
-              class="my-2 w-full rounded-md bg-blue-500 py-1 text-sm font-semibold text-white hover:bg-blue-600"
+              class="bg-primary-500 hover:bg-primary-600 my-2 w-full rounded-md py-1 text-sm font-semibold text-white"
               @click="publicize"
             >
               Publish
@@ -212,20 +212,22 @@ defineShortcuts({
           <div v-else class="p-3">
             <div class="text-md font-bold">Share link</div>
             <div class="mt-2 border-t pt-2"></div>
-            <div class="flex items-center justify-between">
+            <div class="flex items-center justify-between gap-1">
               <a
                 :href="`${hostname}/public/${page.id}`"
                 target="_blank"
-                class="w-full rounded-md px-2 py-1 text-sm text-blue-500 hover:underline"
+                class="text-primary hover:border-primary focus-visible:outline-primary hover:[&>code]:border-primary hover:[&>code]:text-primary border-b border-transparent font-medium [&>code]:border-dashed"
               >
                 {{ `${hostname}/public/${page.id}` }}
               </a>
-              <button
-                class="ml-2 rounded-md bg-blue-500 px-2 py-1 text-sm font-semibold text-white hover:bg-blue-600"
+              <UButton
+                icon="i-heroicons-link"
+                variant="ghost"
+                color="neutral"
                 @click="copyLink"
               >
                 Copy
-              </button>
+              </UButton>
             </div>
           </div>
         </template>

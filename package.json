@@ -21,7 +21,7 @@
     "@vueuse/nuxt": "13.5.0",
     "drizzle-orm": "^0.40.0",
     "eslint": "^9.0.0",
-    "nuxt": "3.17.5",
+    "nuxt": "^4.0.0",
     "nuxt-auth-utils": "0.5.17",
     "vue": "latest",
     "vue-router": "latest",
