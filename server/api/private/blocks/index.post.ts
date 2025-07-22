@@ -1,4 +1,4 @@
-import type { MdNode, MdNodeType } from "~~/shared/types";
+import type { MdNode } from "~~/shared/types";
 
 export default eventHandler(async (event) => {
   const { id } = getRouterParams(event);
