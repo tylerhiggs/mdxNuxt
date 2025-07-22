@@ -9,6 +9,7 @@ defineProps<{
     showOutline: boolean;
   };
   narrowView?: boolean;
+  noTitle?: boolean;
 }>();
 </script>
 
@@ -33,7 +34,7 @@ defineProps<{
           class="h-64 w-full object-cover"
         />
       </div>
-      <div class="mb-4 flex items-center gap-4">
+      <div v-if="!noTitle" class="mb-4 flex items-center gap-4">
         <div class="text-5xl">{{ page.emoji }}</div>
         <h1 class="text-4xl font-bold">{{ page.title }}</h1>
       </div>

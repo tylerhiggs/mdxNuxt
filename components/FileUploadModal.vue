@@ -11,6 +11,9 @@ const emits = defineEmits<{
 }>();
 
 const file = ref<File | null>(null);
+const fileUrl = computed(() => {
+  return file.value ? URL.createObjectURL(file.value) : "";
+});
 const isDragging = ref(false);
 const fileInput = ref<HTMLInputElement | null>(null);
 
@@ -37,6 +40,7 @@ function closeModal() {
         @submit.prevent="() => file && emits('save', file)"
       >
         <label
+          v-if="!file"
           for="file-upload"
           class="hover:border-primary-400 hover:bg-primary-50 flex cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 p-8 transition"
           :class="{ 'border-primary-500 bg-primary-100': isDragging }"
@@ -68,9 +72,27 @@ function closeModal() {
             "
           />
         </label>
+        <img
+          v-else
+          :src="fileUrl"
+          alt="Uploaded file preview"
+          class="m-4 w-full rounded-lg shadow-md"
+        />
         <div class="mt-6 flex justify-end gap-2">
           <UButton type="button" color="neutral" @click="closeModal"
             >Cancel</UButton
+          >
+          <UButton
+            v-if="file"
+            type="button"
+            color="primary"
+            variant="subtle"
+            @click="
+              () => {
+                file = null;
+              }
+            "
+            >Choose another photo</UButton
           >
           <UButton type="submit" color="primary" :disabled="!file"
             >Upload</UButton

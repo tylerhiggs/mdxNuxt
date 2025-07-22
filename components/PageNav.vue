@@ -186,11 +186,14 @@ defineShortcuts({
                       {{ page?.title }}
                     </p>
                   </div>
-                  <div class="h-32 text-sm text-gray-700">
-                    <MdNode
-                      v-for="node in props.nodes[0] || []"
-                      :key="node.id"
-                      :node="node"
+                  <div class="h-48">
+                    <RenderedPage
+                      v-if="props.nodes.length === 1"
+                      :nodes="[props.nodes.at(0)?.slice(0, 100) || []]"
+                      :page="page"
+                      :narrow-view="true"
+                      :no-title="true"
+                      class="mt-2"
                     />
                     <div
                       class="absolute right-0 bottom-0 left-0 h-16 bg-linear-to-t from-white to-transparent dark:from-stone-800"
