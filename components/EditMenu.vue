@@ -110,6 +110,16 @@ const options = computed(
             icon: "i-heroicons-code-bracket",
           },
           {
+            label: "Inline Code - Primary",
+            suffix: "Insert inline code with primary style",
+            icon: "i-heroicons-code-bracket",
+          },
+          {
+            label: "Inline Code - Secondary",
+            suffix: "Insert inline code with secondary style",
+            icon: "i-heroicons-code-bracket",
+          },
+          {
             label: "Ordered List",
             suffix: "Insert an ordered list",
             icon: "i-heroicons-numbered-list",

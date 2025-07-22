@@ -361,6 +361,10 @@ export default defineNuxtConfig({
       return ["`", "inline code", "`{color='error'}"];
     case "Inline Code - Info":
       return ["`", "inline code", "`{color='info'}"];
+    case "Inline Code - Primary":
+      return ["`", "inline code", "`{color='primary'}"];
+    case "Inline Code - Secondary":
+      return ["`", "inline code", "`{color='secondary'}"];
     case "Ordered List":
       return ["\n1. ", "List item", ""];
     case "Unordered List":

@@ -214,9 +214,12 @@ watch(
         }),
       ),
     );
+    const mostAccurateCaretPosition =
+      element.value?.selectionStart || caretPosition;
     const caretLineIndex =
-      (element.value?.value ?? "").slice(0, caretPosition).split("\n").length -
-        1 || 0;
+      (element.value?.value ?? "")
+        .slice(0, mostAccurateCaretPosition)
+        .split("\n").length - 1 || 0;
     syntaxHighlightedTokens.value = tokens.map((blockTokenResult) => ({
       ...blockTokenResult,
       tokens: blockTokenResult.tokens.map((line, index) =>
@@ -435,11 +438,7 @@ const onPaste = (event: ClipboardEvent) => {
                   slash(event);
                 }
               "
-              @click="
-                (event) => {
-                  updateCaretPosition(event);
-                }
-              "
+              @click="updateCaretPosition"
             />
           </div>
         </div>

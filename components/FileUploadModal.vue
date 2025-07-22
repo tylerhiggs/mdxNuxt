@@ -38,8 +38,8 @@ function closeModal() {
       >
         <label
           for="file-upload"
-          class="flex cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 p-8 transition hover:border-blue-400 hover:bg-blue-50"
-          :class="{ 'border-blue-500 bg-blue-100': isDragging }"
+          class="hover:border-primary-400 hover:bg-primary-50 flex cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 p-8 transition"
+          :class="{ 'border-primary-500 bg-primary-100': isDragging }"
           @dragover.prevent="isDragging = true"
           @dragleave.prevent="isDragging = false"
           @drop.prevent="handleDrop"
@@ -49,7 +49,9 @@ function closeModal() {
             class="mb-2 h-12 w-12 text-gray-400"
           />
           <span class="mb-2 text-gray-600">Drag & drop your file here</span>
-          <span class="text-blue-600 underline">or click to select a file</span>
+          <span class="text-primary-600 underline"
+            >or click to select a file</span
+          >
           <input
             id="file-upload"
             ref="fileInput"

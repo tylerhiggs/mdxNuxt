@@ -65,6 +65,8 @@ export type Command =
   | "Inline Code - Error"
   | "Inline Code - Warning"
   | "Inline Code - Info"
+  | "Inline Code - Primary"
+  | "Inline Code - Secondary"
   | "Inline Code - Syntax Highlighted"
   | "Ordered List"
   | "Unordered List"
