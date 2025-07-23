@@ -10,6 +10,10 @@ const onAvatarChange = async (event: Event) => {
   if (!target.files || target.files.length === 0) return;
 
   const file = target.files[0];
+  if (!file) {
+    snackbarStore.enqueue("No file selected", "error");
+    return;
+  }
   const formData = new FormData();
   formData.append("avatar", file);
 

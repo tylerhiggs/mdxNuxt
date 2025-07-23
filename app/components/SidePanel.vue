@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { PageItem } from "@/types/page";
+import type { PageItem } from "~~/types/page";
 
 const auth = useAuth();
 

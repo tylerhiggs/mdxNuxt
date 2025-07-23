@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { CardProps } from "~/shared/types";
+import type { CardProps } from "~~/shared/types";
 defineProps<{
   componentProps: CardProps;
 }>();

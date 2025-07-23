@@ -3,7 +3,7 @@ import type {
   AccordionItemProps,
   AccordionProps,
   ComponentNode,
-} from "~/shared/types";
+} from "~~/shared/types";
 import type { AccordionItem } from "@nuxt/ui";
 
 const props = defineProps<{

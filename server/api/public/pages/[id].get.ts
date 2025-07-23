@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
     const homePageData = await import("~~/server/assets/home-page.json");
     return {
       statusCode: 200,
-      body: homePageData as Page,
+      body: homePageData as Omit<Page, "updatedAt" | "createdAt" | "deletedAt">,
     };
   }
   if (!id || isNaN(Number(id))) {

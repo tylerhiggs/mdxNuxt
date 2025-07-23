@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { sanitizeUrl } from "@braintree/sanitize-url";
-import type { HeadingOutlineItem } from "~/shared/types";
+import type { HeadingOutlineItem } from "~~/shared/types";
 defineProps<{
   items: HeadingOutlineItem[];
 }>();

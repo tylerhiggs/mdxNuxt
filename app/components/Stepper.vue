@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { StepperItem } from "@nuxt/ui";
-import type { ComponentNode, MdNode, StepperProps } from "~/shared/types";
+import type { ComponentNode, MdNode, StepperProps } from "~~/shared/types";
 const props = defineProps<{
   node: ComponentNode;
 }>();

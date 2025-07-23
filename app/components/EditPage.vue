@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import type { Block, Command, CommandOptions } from "@/types/page";
 import { createHighlighter } from "shiki";
 import type { TokensResult } from "shiki";
-import type { MdNode } from "~/shared/types";
+import type { MdNode } from "~~/shared/types";
+import type { Command, CommandOptions } from "~~/types/page";
 const snackbarStore = useSnackbar();
 
-const { currentPage: page, updatePage, updateBlock } = usePageState();
+const { currentPage: page, updatePage, updateBlock, saveNow } = usePageState();
 
 const previewPage = ref(false);
 const fullscreenPreview = ref(false);
@@ -18,12 +18,27 @@ defineShortcuts({
   },
 });
 const focusedBlockId = ref(
-  page.value?.blocks.length ? page.value.blocks[0].id : undefined,
+  page.value?.blocks.length ? page.value.blocks.at(0)?.id : undefined,
+);
+watch(
+  () => page.value?.blocks,
+  (newBlocks) => {
+    if (newBlocks?.some((block) => block.id === focusedBlockId.value)) {
+      return;
+    }
+    focusedBlockId.value = newBlocks?.at(0)?.id;
+  },
 );
 const element = computed(() => {
-  return elements.value.find((el) => Number(el.id) === focusedBlockId.value);
+  console.log("focusedBlockId", focusedBlockId.value);
+  console.log(
+    "elements",
+    elements.value?.map((el) => el.id),
+  );
+  console.log("we should have made it here");
+  return elements.value?.find((el) => Number(el.id) === focusedBlockId.value);
 });
-const elements = ref<HTMLTextAreaElement[]>([]);
+const elements = useTemplateRef<HTMLTextAreaElement[]>("elements");
 const caretPosition = ref(0);
 
 watch(element, (el) => {
@@ -32,9 +47,12 @@ watch(element, (el) => {
   }
 });
 
-const updateBlockTextarea = (event: Event, block: Block) => {
+const updateBlockTextarea = (
+  event: Event,
+  block: Omit<Block, "renderedMd">,
+) => {
   const target = event.target as HTMLTextAreaElement;
-  if (!page.value) {
+  if (!page.value || !page.value.id) {
     return;
   }
   updateBlock(page.value.id, block.id, target.value);
@@ -47,39 +65,39 @@ const platformConsistent = (event: KeyboardEvent) => {
   return event.ctrlKey;
 };
 
-const bold = (event: KeyboardEvent, block: Block) => {
+const bold = (event: KeyboardEvent, blockId: number) => {
   event.preventDefault(); // Prevent the default browser action
   if (!platformConsistent(event)) {
     return;
   }
   insertFormating("**", "", "**");
-  if (!element.value || !page.value) {
+  if (!element.value || !page.value || !page.value.id) {
     return;
   }
-  updateBlock(page.value.id, block.id, element.value.value);
+  updateBlock(page.value.id, blockId, element.value.value);
 };
 
-const italic = (event: KeyboardEvent, block: Block) => {
+const italic = (event: KeyboardEvent, blockId: number) => {
   event.preventDefault(); // Prevent the default browser action
   if (!platformConsistent(event)) {
     return;
   }
   insertFormating("__", "", "__");
-  if (!element.value || !page.value) {
+  if (!element.value || !page.value || !page.value.id) {
     return;
   }
-  updateBlock(page.value.id, block.id, element.value.value);
+  updateBlock(page.value.id, blockId, element.value.value);
 };
 
-const tab = (block: Block) => {
+const tab = (blockId: number) => {
   insertFormating("  ", "", "");
-  if (!element.value || !page.value) {
+  if (!element.value || !page.value || !page.value.id) {
     return;
   }
-  updateBlock(page.value.id, block.id, element.value.value);
+  updateBlock(page.value.id, blockId, element.value.value);
 };
 
-const paren = (event: KeyboardEvent, block: Block) => {
+const paren = (event: KeyboardEvent, blockId: number) => {
   const parens: Record<string, string> = {
     "(": ")",
     "{": "}",
@@ -105,10 +123,10 @@ const paren = (event: KeyboardEvent, block: Block) => {
       textarea.focus();
     }
   }
-  if (!element.value || !page.value) {
+  if (!element.value || !page.value || !page.value.id) {
     return;
   }
-  updateBlock(page.value.id, block.id, element.value.value);
+  updateBlock(page.value.id, blockId, element.value.value);
 };
 
 //https://dev.to/shivams136/simple-markdown-insertion-in-the-text-using-pure-javascript-pl4
@@ -199,9 +217,11 @@ const syntaxHighlightedTokens = ref<TokensResult[]>([]);
 watch(
   [() => page.value?.blocks, () => colorMode.value, caretPosition],
   async ([blocks, colorMode, caretPosition]) => {
+    console.log("what about this time");
     if (!blocks || !blocks.length) {
       return;
     }
+    console.log("blocks", blocks);
     const editorHighlighter = await editorHighlighterPromise;
     const tokens = await Promise.all(
       blocks.map((block) =>
@@ -229,6 +249,7 @@ watch(
       ),
     }));
   },
+  { deep: true, immediate: true },
 );
 
 const editMenuOpen = ref(false);
@@ -276,7 +297,7 @@ const uploadImage = (file: File) => {
         return;
       }
       if (isFileUploadCover.value) {
-        if (!page.value) {
+        if (!page.value?.id) {
           console.warn("No page found to update cover URL");
           return;
         }
@@ -335,7 +356,7 @@ const onPaste = (event: ClipboardEvent) => {
     const images = doc.querySelectorAll("img");
     if (images.length > 0) {
       const image = images[0];
-      const src = image.getAttribute("src");
+      const src = image?.getAttribute("src");
       if (src) {
         insertFormating("![", "Image", `](${src})`);
       }
@@ -425,16 +446,18 @@ const onPaste = (event: ClipboardEvent) => {
               class="absolute inset-0 field-sizing-content h-full w-full resize-none overflow-visible border-none bg-transparent font-mono text-lg font-normal whitespace-pre-wrap text-transparent outline-hidden"
               @input="(event) => updateBlockTextarea(event, block)"
               @paste.prevent="onPaste"
-              @keydown.meta.b="(event) => bold(event, block)"
-              @keydown.ctrl.b="(event) => bold(event, block)"
-              @keydown.meta.i="(event) => italic(event, block)"
-              @keydown.ctrl.i="(event) => italic(event, block)"
-              @keydown.tab.prevent.exact="() => tab(block)"
-              @keydown.shift.tab.prevent="() => tab(block)"
+              @keydown.meta.b="(event) => bold(event, block.id)"
+              @keydown.ctrl.b="(event) => bold(event, block.id)"
+              @keydown.meta.i="(event) => italic(event, block.id)"
+              @keydown.ctrl.i="(event) => italic(event, block.id)"
+              @keydown.tab.prevent.exact="() => tab(block.id)"
+              @keydown.shift.tab.prevent="() => tab(block.id)"
+              @keydown.meta.s.prevent="saveNow"
+              @keydown.ctrl.s.prevent="saveNow"
               @keydown="
                 (event) => {
                   updateCaretPosition(event);
-                  paren(event, block);
+                  paren(event, block.id);
                   slash(event);
                 }
               "

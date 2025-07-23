@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { DropdownMenuItem } from "@nuxt/ui";
-import type { PageItem } from "@/types/page";
+import type { PageItem } from "~~/types/page";
 const pageState = usePageState();
 const props = defineProps<{
   page: PageItem;

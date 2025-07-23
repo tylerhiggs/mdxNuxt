@@ -21,7 +21,7 @@ const handleDrop = (event: DragEvent) => {
   isDragging.value = false;
   const droppedFiles = event.dataTransfer?.files;
   if (droppedFiles && droppedFiles.length > 0) {
-    file.value = droppedFiles[0];
+    file.value = droppedFiles[0]!;
   }
 };
 
@@ -66,7 +66,7 @@ function closeModal() {
               (event) => {
                 const input = event.target as HTMLInputElement;
                 if (input.files && input.files.length > 0) {
-                  file = input.files[0];
+                  file = input.files[0]!;
                 }
               }
             "

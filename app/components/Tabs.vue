@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { TabsItem } from "@nuxt/ui";
-import type { ComponentNode, TabItemProps } from "~/shared/types";
+import type { ComponentNode, TabItemProps } from "~~/shared/types";
 const props = defineProps<{
   node: ComponentNode;
 }>();

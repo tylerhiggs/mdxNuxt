@@ -24,7 +24,7 @@ const updateTitle = (event: Event) => {
   updatePage({ id, title });
 };
 const deleteCover = () => {
-  if (!page.value) {
+  if (!page.value?.id) {
     console.warn("No page found to delete cover URL");
     return;
   }

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { CollapsibleProps } from "~/shared/types";
+import type { CollapsibleProps } from "~~/shared/types";
 
 const props = defineProps<{
   componentProps: CollapsibleProps;

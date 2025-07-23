@@ -4,7 +4,7 @@ import type {
   MdNode,
   HeadingOutlineItem,
   SectionNode,
-} from "~/shared/types";
+} from "~~/shared/types";
 
 const props = defineProps<{
   nodes: MdNode[];

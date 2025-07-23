@@ -3,7 +3,7 @@ import type {
   ComponentNode,
   CodeTreeProps,
   CodeBlockNode,
-} from "~/shared/types";
+} from "~~/shared/types";
 import type { TreeItem } from "@nuxt/ui";
 
 const props = defineProps<{

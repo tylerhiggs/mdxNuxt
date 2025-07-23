@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { CardProps, ComponentNode } from "~/shared/types";
+import type { CardProps, ComponentNode } from "~~/shared/types";
 const props = defineProps<{
   node: ComponentNode;
 }>();

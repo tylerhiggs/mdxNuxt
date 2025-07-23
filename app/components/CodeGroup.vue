@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { CodeGroupProps, ComponentNode } from "~/shared/types";
+import type { CodeGroupProps, ComponentNode } from "~~/shared/types";
 const props = defineProps<{
   node: ComponentNode;
 }>();

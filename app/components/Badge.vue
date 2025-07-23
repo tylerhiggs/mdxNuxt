@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { BadgeProps } from "~/shared/types";
+import type { BadgeProps } from "~~/shared/types";
 defineProps<{
   componentProps?: BadgeProps;
 }>();

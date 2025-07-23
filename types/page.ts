@@ -1,35 +1,19 @@
-import type { MdNode } from "~~/shared/types";
-
-export type Page = {
-  id: number;
-  title: string;
-  emoji: string;
-  blocks: Block[];
-  coverUrl?: string;
-  showOutline: boolean;
+export type Page = Omit<
+  typeof tables.pages.$inferSelect,
+  "path" | "createdAt" | "updatedAt" | "lastUpdatedAt" | "deletedAt"
+> & {
   path: {
     id: number;
     title: string;
     emoji: string;
   }[];
-  parentId: number | null;
-  children?: string[];
-  lastUpdatedAt: number;
-  lastUpdatedByName: string;
   createdAt: number;
-  createdByName: string;
-  isPublic: boolean;
-  isFavorite: boolean;
-  deletedAt: string | null;
+  updatedAt: number;
+  lastUpdatedAt: number;
+  deletedAt?: string;
 };
 
-export type Block = {
-  id: number;
-  index: number;
-  type: BlockType;
-  textContent: string;
-  renderedMd?: MdNode[];
-};
+export type Block = typeof tables.blocks.$inferSelect;
 
 export type BlockType = "text" | "table" | "callout" | "image" | "code";
 

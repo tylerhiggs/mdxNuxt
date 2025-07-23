@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { MdNode } from "~/shared/types";
+import type { MdNode } from "~~/shared/types";
 
 definePageMeta({
   layout: false,

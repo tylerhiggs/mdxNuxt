@@ -10,15 +10,20 @@ const getBackgroundColor = (tokenIndex: number, lineIndex: number) => {
   if (
     tokenIndex &&
     props.syntaxHighlightedTokens &&
-    props.syntaxHighlightedTokens[lineIndex][tokenIndex - 1].content === "#" &&
-    props.syntaxHighlightedTokens[lineIndex][tokenIndex].content
-      .split(";")
+    props.syntaxHighlightedTokens.at(lineIndex)?.at(tokenIndex - 1)?.content ===
+      "#" &&
+    props.syntaxHighlightedTokens
+      .at(lineIndex)
+      ?.at(tokenIndex)
+      ?.content.split(";")
       ?.at(0)
       ?.split("")
       .every((c) => parseInt(c, 16) >= 0)
   ) {
-    return `#${props.syntaxHighlightedTokens[lineIndex][tokenIndex].content
-      .split(";")
+    return `#${props.syntaxHighlightedTokens
+      .at(lineIndex)
+      ?.at(tokenIndex)
+      ?.content.split(";")
       ?.at(0)}`;
   }
   return props.syntaxHighlightedTokens?.at(lineIndex)?.at(tokenIndex)?.bgColor;

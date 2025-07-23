@@ -1,5 +1,3 @@
-<script setup lang="ts"></script>
-
 <template>
   <div
     class="w-full overflow-auto rounded border border-neutral-200 bg-neutral-50 dark:border-neutral-700 dark:bg-neutral-900"

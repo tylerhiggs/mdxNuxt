@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import type { MdNode } from "~/shared/types";
+import type { MdNode } from "~~/shared/types";
 defineProps<{
   nodes: MdNode[][];
   page: {
-    title: string;
-    emoji: string;
+    title?: string;
+    emoji?: string;
     coverUrl?: string;
-    showOutline: boolean;
+    showOutline?: boolean;
   };
   narrowView?: boolean;
   noTitle?: boolean;

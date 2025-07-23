@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TableNode } from "@/shared/types";
+import type { TableNode } from "~~/shared/types";
 defineProps<{
   node: TableNode;
 }>();

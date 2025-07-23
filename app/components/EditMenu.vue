@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { CommandPaletteGroup, CommandPaletteItem } from "@nuxt/ui";
-import type { Command, CommandOptions } from "~/types/page";
+import type { Command, CommandOptions } from "~~/types/page";
 
 const open = defineModel<boolean>("open");
 const emits = defineEmits<{

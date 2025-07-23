@@ -49,22 +49,29 @@ export const useEmojiData = () => {
           if (usedNames.has(currentValue.name)) return accumulator;
           if (currentValue.name.includes(":")) {
             const baseName = currentValue.name.split(": ")[0];
-            const skinTone = currentValue.name.split(": ")[1].split(" ")[0];
-            accumulator[currentValue.group] = accumulator[
-              currentValue.group
-            ].map((emoji) => {
-              if (emoji.name === baseName) {
-                emoji.altColors = {
-                  ...(emoji.altColors || ({} as { [color in Tone]: string })),
-                  [skinTone as Tone]: currentValue.char,
-                };
-              }
-              return emoji;
-            });
+            const skinTone = currentValue.name
+              .split(": ")
+              .at(1)
+              ?.split(" ")
+              ?.at(0);
+            const groupEmojis = accumulator[currentValue.group]?.map(
+              (emoji) => {
+                if (emoji.name === baseName) {
+                  emoji.altColors = {
+                    ...(emoji.altColors || ({} as { [color in Tone]: string })),
+                    [skinTone as Tone]: currentValue.char,
+                  };
+                }
+                return emoji;
+              },
+            );
+            if (groupEmojis) {
+              accumulator[currentValue.group] = groupEmojis;
+            }
             usedNames.add(currentValue.name);
             return accumulator;
           }
-          accumulator[currentValue.group].push(currentValue);
+          accumulator[currentValue.group]?.push(currentValue);
           usedNames.add(currentValue.name);
           return accumulator;
         },

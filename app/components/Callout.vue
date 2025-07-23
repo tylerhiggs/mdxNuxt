@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { CalloutProps } from "~/shared/types";
+import type { CalloutProps } from "~~/shared/types";
 
 defineProps<{
   componentProps: Partial<CalloutProps>;

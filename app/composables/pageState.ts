@@ -1,4 +1,4 @@
-import type { Page, PageUpdate, BlockUpdate } from "@/types/page";
+import type { Page, PageUpdate, BlockUpdate } from "~~/types/page";
 
 const DEBOUNCE_TIME = 5000;
 
@@ -41,7 +41,7 @@ export function usePageState() {
     method: "get",
     transform: (data) => ({
       ...data.body,
-      path: JSON.parse(data.body.path) as {
+      path: JSON.parse(data.body.path || "") as {
         id: number;
         title: string;
         emoji: string;
@@ -190,7 +190,12 @@ export function usePageState() {
     }
     if (update.title) {
       const newPath = pageData.value.path.map((p) => ({ ...p }));
-      newPath[newPath.length - 1].title = update.title;
+      const lastItem = newPath.at(-1);
+      if (!lastItem) {
+        console.error("No last item in path to update title");
+        return;
+      }
+      lastItem.title = update.title;
       pageUpdateToSave.value = {
         ...pageUpdateToSave.value,
         path: newPath,
@@ -200,7 +205,12 @@ export function usePageState() {
     }
     if (update.emoji) {
       const newPath = pageData.value.path.map((p) => ({ ...p }));
-      newPath[newPath.length - 1].emoji = update.emoji;
+      const lastItem = newPath.at(-1);
+      if (!lastItem) {
+        console.error("No last item in path to update emoji");
+        return;
+      }
+      lastItem.emoji = update.emoji;
       pageUpdateToSave.value = {
         ...pageUpdateToSave.value,
         path: newPath,
@@ -281,7 +291,7 @@ export function usePageState() {
     }
     if (currentPageId.value === pageId)
       if (pagesData.value && pagesData.value.length)
-        selectPage(pagesData.value[0].id);
+        selectPage(pagesData.value.at(0)!.id);
     snackbarStore.enqueue("Page deleted", "success");
   };
 
@@ -297,6 +307,17 @@ export function usePageState() {
       },
     },
   );
+
+  const saveNow = async () => {
+    if (pageUpdateToSave.value) {
+      lastPageUpdateAt.value = Date.now();
+      executePageUpdateDb();
+    }
+    if (blockUpdateToSave.value) {
+      lastBlockUpdateAt.value = Date.now();
+      executeBlockUpdateDb();
+    }
+  };
 
   return {
     pages: computed(() =>
@@ -332,5 +353,6 @@ export function usePageState() {
     updateBlock,
     duplicatePage,
     pageStatus,
+    saveNow,
   };
 }

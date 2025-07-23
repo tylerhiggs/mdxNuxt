@@ -11,7 +11,7 @@ import type {
   KbdProps,
   MdNode,
   SectionNode,
-} from "~/shared/types";
+} from "~~/shared/types";
 const props = defineProps<{
   node: MdNode;
 }>();

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { FieldProps } from "~/shared/types";
+import type { FieldProps } from "~~/shared/types";
 
 defineProps<{
   componentProps: FieldProps;

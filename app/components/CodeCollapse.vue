@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { CodeCollapseProps, ComponentNode } from "~/shared/types";
+import type { CodeCollapseProps, ComponentNode } from "~~/shared/types";
 const props = defineProps<{
   node: ComponentNode;
 }>();

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { HeadingNode } from "~/shared/types";
+import type { HeadingNode } from "~~/shared/types";
 defineProps<{
   node: HeadingNode;
   href: string;

@@ -93,7 +93,7 @@ const getGroupedFilteredEmojiData = (filteredData: EmojiData[]) => {
             if (!acc[emoji.group]) {
               acc[emoji.group] = [];
             }
-            acc[emoji.group].push(emoji);
+            acc[emoji.group]?.push(emoji);
             return acc;
           },
           {} as { [group: string]: EmojiData[] },
@@ -103,11 +103,11 @@ const getGroupedFilteredEmojiData = (filteredData: EmojiData[]) => {
   let left = numEmojis.value;
   if (!res) return ret;
   Object.keys(res)
-    .filter((key) => res[key].length)
+    .filter((key) => res[key]?.length)
     .forEach((key) => {
       if (left <= 0) return;
-      ret[key] = res[key].slice(0, numEmojis.value);
-      left -= res[key].length;
+      ret[key] = res[key]?.slice(0, numEmojis.value) || [];
+      left -= res[key]?.length || 0;
     });
   return ret;
 };
@@ -131,9 +131,9 @@ const selectRandomEmoji = () => {
   const randomIndex = Math.floor(Math.random() * flatEmojis.length);
   const emojiItem = flatEmojis[randomIndex];
   const char =
-    emojiItem.altColors && skinTone.value
+    emojiItem?.altColors && skinTone.value
       ? emojiItem.altColors[skinTone.value]
-      : emojiItem.char;
+      : emojiItem?.char;
   if (!char) {
     console.error("No emoji found");
     return;
@@ -215,7 +215,12 @@ const handleTabKey = (num: number) => {
   }
   const nextIndex =
     (currentIndex + num + focusableIds.length) % focusableIds.length;
-  const nextElement = document.getElementById(focusableIds[nextIndex]);
+  const elementId = focusableIds[nextIndex];
+  if (!elementId) {
+    console.error("No next element found");
+    return;
+  }
+  const nextElement = document.getElementById(elementId);
   if (!nextElement) {
     console.error("No next element found");
     return;

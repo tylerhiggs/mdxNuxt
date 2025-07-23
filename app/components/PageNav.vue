@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { MdNode } from "~/shared/types";
+import type { MdNode } from "~~/shared/types";
 
 const props = defineProps<{
   previewPage: boolean;
@@ -21,7 +21,7 @@ const favoritePage = () => {
   updatePage({ id, isFavorite: !isFavorite }, true);
 };
 const toggleShowOutline = () => {
-  if (!page.value) {
+  if (!page.value?.id) {
     console.warn("No page selected");
     return;
   }
@@ -41,6 +41,10 @@ const publicize = async () => {
   const p = { ...page.value };
   if (p.isPublic) {
     console.warn("Page is already public");
+    return;
+  }
+  if (!p.id) {
+    console.warn("Page does not have an ID");
     return;
   }
   await pageState.updatePage(
