@@ -7,9 +7,12 @@ defineProps<{
     emoji?: string;
     coverUrl?: string;
     showOutline?: boolean;
+    userId?: number;
+    lastUpdatedByName?: string;
   };
   narrowView?: boolean;
   noTitle?: boolean;
+  showAuthor?: boolean;
 }>();
 </script>
 
