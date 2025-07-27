@@ -199,15 +199,19 @@ const insertFormating = (text: string, defaultTxt = "", text2 = "") => {
 
 const colorMode = useColorMode();
 const mdNodes = ref<MdNode[][]>([]);
-watch([() => page.value?.blocks, () => colorMode.value], async ([blocks]) => {
-  if (!blocks || !blocks.length) {
-    return;
-  }
-  const nodes = await Promise.all(
-    blocks.map((block) => parseMd(block.textContent)),
-  );
-  mdNodes.value = nodes;
-});
+watch(
+  [() => page.value?.blocks, () => colorMode.value],
+  async ([blocks]) => {
+    if (!blocks || !blocks.length) {
+      return;
+    }
+    const nodes = await Promise.all(
+      blocks.map((block) => parseMd(block.textContent)),
+    );
+    mdNodes.value = nodes;
+  },
+  { immediate: true },
+);
 const editorHighlighterPromise = createHighlighter({
   themes: ["material-theme-lighter", "material-theme-palenight"],
   langs: ["mdc"],

@@ -10,9 +10,10 @@ import type {
   SectionNode,
   TableNode,
   ThemeColor,
-} from "~/shared/types";
+} from "~~/shared/types";
 import { bundledLanguages, codeToTokens } from "shiki";
 import type { BundledLanguage, ThemedToken } from "shiki";
+import katex from "katex";
 import { sanitizeUrl } from "@braintree/sanitize-url";
 
 /**
@@ -91,7 +92,7 @@ export async function parseMd(markdown: string): Promise<MdNode[]> {
       } else if (!inCodeBlock) {
         // Start of code block
         inCodeBlock = true;
-        codeBlockFence = fence;
+        codeBlockFence = fence || null;
         const lang =
           (fenceMatch?.[2] as BundledLanguage) || ("text" as BundledLanguage);
         name = fenceMatch?.[3];
@@ -107,6 +108,19 @@ export async function parseMd(markdown: string): Promise<MdNode[]> {
       codeBlockContent.push(line);
       continue;
     }
+    if (trimmed.startsWith("$$") && trimmed.endsWith("$$")) {
+      // Inline math block
+      const content = katex.renderToString(trimmed.slice(2, -2), {
+        throwOnError: false,
+      });
+      listToPushTo.push({
+        id: `${index}-block-math`,
+        type: "block-math",
+        content,
+      });
+      continue;
+    }
+
     if (trimmed === "::") {
       // End of component
       const component = componentStack.pop();
@@ -181,7 +195,7 @@ export async function parseMd(markdown: string): Promise<MdNode[]> {
         tableContent.rows.push(parsedCells);
         if (
           index === lines.length - 1 ||
-          !lines[index + 1].trim().startsWith("|")
+          !lines[index + 1]?.trim().startsWith("|")
         ) {
           listToPushTo.push({ ...tableContent });
           tableContent = null; // Reset table content for next table
@@ -266,7 +280,7 @@ export async function parseLine(mdLine: string): Promise<MdNode[]> {
   const tokens: MdNode[] = [];
   const parts = mdLine
     .split(
-      /(\*\*.*?\*\*|\*.*?\*|__.*?__|~~.*?~~|==.*?==|~.*?~|\^.*?\^|`.*?`\{.*?\}|`.*?`|!\[.*?\]\(.*?\)|\[.*?\]\(.*?\)|:[\w-]+\{.*?\}|https?:\/\/[^\s<>"'`]*[^\s<>"'`.,;:!?)]?)/g,
+      /(\*\*.*?\*\*|\*.*?\*|__.*?__|~~.*?~~|==.*?==|~.*?~|\$.*?\$|\^.*?\^|`.*?`\{.*?\}|`.*?`|!\[.*?\]\(.*?\)|\[.*?\]\(.*?\)|:[\w-]+\{.*?\}|https?:\/\/[^\s<>"'`]*[^\s<>"'`.,;:!?)]?)/g,
     )
     .filter(Boolean);
 
@@ -307,6 +321,15 @@ export async function parseLine(mdLine: string): Promise<MdNode[]> {
         type: "sub",
         items: await parseLine(part.slice(1, -1)),
       });
+    } else if (part.startsWith("$") && part.endsWith("$")) {
+      const renderedMath = katex.renderToString(part.slice(1, -1), {
+        throwOnError: false,
+      });
+      tokens.push({
+        id: `inline-math-${part.slice(1, -1)}`,
+        type: "inline-math",
+        content: renderedMath,
+      });
     } else if (part.startsWith("^") && part.endsWith("^")) {
       tokens.push({
         id: `sup-${part.slice(1, -1)}`,
@@ -324,7 +347,7 @@ export async function parseLine(mdLine: string): Promise<MdNode[]> {
       let syntaxHighlightedTokens: ThemedToken[][] | undefined;
       let darkSyntaxHighlightedTokens: ThemedToken[][] | undefined;
       if (part.includes("lang")) {
-        language = match?.[2].match(/lang=['"]([\w-#+]+)['"]/)?.[1];
+        language = match?.[2]?.match(/lang=['"]([\w-#+]+)['"]/)?.[1];
         if (language) {
           if (language.startsWith("ts-")) {
             language = "typescript";
@@ -351,7 +374,7 @@ export async function parseLine(mdLine: string): Promise<MdNode[]> {
         }
       }
       if (part.includes("color")) {
-        color = match?.[2].match(/color=['"](\w+)['"]/)?.[1] as ThemeColor;
+        color = match?.[2]?.match(/color=['"](\w+)['"]/)?.[1] as ThemeColor;
       }
       tokens.push({
         id: `inline-code-${part.slice(1, -1)}`,
@@ -394,7 +417,7 @@ export async function parseLine(mdLine: string): Promise<MdNode[]> {
         tokens.push({
           id: `image-${match[1]}-${match[2]}`,
           type: "image",
-          title: match[1],
+          title: match[1] || "",
           href: sanitizeUrl(match[2]),
         });
       }
@@ -415,7 +438,7 @@ export async function parseLine(mdLine: string): Promise<MdNode[]> {
     } else if (part.startsWith("http://") || part.startsWith("https://")) {
       if (part.startsWith("https://www.youtube.com/watch?v=")) {
         // Handle YouTube links
-        const videoId = sanitizeUrl(part.split("v=")[1].split("&")[0]);
+        const videoId = sanitizeUrl(part.split("v=")[1]?.split("&")[0]);
         tokens.push({
           id: `youtube-${videoId}`,
           type: "youtube",
@@ -559,9 +582,10 @@ const getProps = (props: string) => {
   let match: RegExpExecArray | null;
   while ((match = regex.exec(props))) {
     const key = match[1];
+    if (!key) continue; // Skip if no key is found
     const value = match[2] ?? match[3] ?? match[4];
     // If value is undefined, treat as boolean true
-    let parsed: string | boolean | number = value;
+    let parsed: string | boolean | number | undefined = value;
     if (parsed === undefined) parsed = true;
     else if (parsed === "true") parsed = true;
     else if (parsed === "false") parsed = false;

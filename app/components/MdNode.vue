@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-v-html -->
 <script setup lang="ts">
 import { sanitizeUrl } from "@braintree/sanitize-url";
 import type {
@@ -387,4 +388,22 @@ const copied = ref(false);
     allowfullscreen
     title="YouTube video player"
   ></iframe>
+  <span v-else-if="node.type === 'inline-math'" class="inline">
+    <!-- eslint-disable eslint-disable-next-line vue/no-v-html -->
+
+    <span
+      class="bg-muted inline-block rounded-md px-1.5 py-0.5 font-mono text-sm font-medium"
+      v-html="node.content"
+    ></span>
+  </span>
+  <span
+    v-else-if="node.type === 'block-math'"
+    class="my-4 flex w-full items-center justify-center"
+  >
+    <span
+      class="text-md inline-block rounded-md px-1.5 py-0.5 font-mono font-medium"
+      v-html="node.content"
+    ></span>
+    <!-- esline-enable -->
+  </span>
 </template>

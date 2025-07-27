@@ -114,11 +114,21 @@ export type MdNodeType =
   | "sub"
   | "hr"
   | "table"
+  | "inline-math"
+  | "block-math"
   | "text";
 
 export type BaseMdNode = {
   type: MdNodeType | ComponentType;
   id: string;
+};
+export type InlineMathNode = BaseMdNode & {
+  type: "inline-math";
+  content: string;
+};
+export type BlockMathNode = BaseMdNode & {
+  type: "block-math";
+  content: string;
 };
 export type SectionNode = BaseMdNode & {
   type: "section";
@@ -254,6 +264,8 @@ export type MdNode =
   | SubNode
   | HrNode
   | TableNode
+  | InlineMathNode
+  | BlockMathNode
   | TextNode
   | ComponentNode;
 
