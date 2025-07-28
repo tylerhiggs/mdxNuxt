@@ -44,11 +44,12 @@ useHead({
   ],
 });
 
-const nodes = computed<MdNode[][]>(
-  () =>
-    page.value?.blocks
-      .filter((block) => block.type === "text")
-      .map((block) => block.renderedMd || []) || [],
+const nodes = computed<MdNode[][]>(() =>
+  page.value && "blocks" in page.value
+    ? page.value.blocks
+        .filter((block) => block.type === "text")
+        .map((block) => block.renderedMd || [])
+    : [],
 );
 </script>
 

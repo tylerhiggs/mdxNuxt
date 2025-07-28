@@ -71,6 +71,15 @@ export function usePageState() {
       snackbarStore.enqueue("Failed to create page", "error");
       return;
     }
+    if (pagesData.value) {
+      pagesData.value = [
+        ...pagesData.value,
+        {
+          ...body,
+          lastUpdatedAt: new Date(body.lastUpdatedAt).getTime(),
+        },
+      ];
+    }
     selectPage(body.id);
     snackbarStore.enqueue("Page created", "success");
   };

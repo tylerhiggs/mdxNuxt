@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { MdNode } from "~/shared/types";
+import type { MdNode } from "~~/shared/types";
 
 const { data: page } = useFetch("/api/public/pages/home", {
   method: "GET",
@@ -7,11 +7,35 @@ const { data: page } = useFetch("/api/public/pages/home", {
     return "body" in data ? data.body : null;
   },
 });
-const nodes = computed<MdNode[][]>(
-  () =>
-    page.value?.blocks
-      .filter((block) => block.type === "text")
-      .map((block) => block.renderedMd || []) || [],
+const pageTitle = computed(() => {
+  return page.value?.title || "No Page Title";
+});
+const pageEmojiPath = computed(() => {
+  return `data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">${page.value?.emoji || "📄"}</text></svg>`;
+});
+watch(
+  pageEmojiPath,
+  (newPath) => {
+    document?.querySelector("link[rel='icon']")?.setAttribute("href", newPath);
+  },
+  { immediate: true },
+);
+useHead({
+  title: pageTitle,
+  link: [
+    {
+      rel: "icon",
+      href: pageEmojiPath,
+    },
+  ],
+});
+
+const nodes = computed<MdNode[][]>(() =>
+  page.value && "blocks" in page.value
+    ? page.value.blocks
+        .filter((block) => block.type === "text")
+        .map((block) => block.renderedMd || [])
+    : [],
 );
 </script>
 
