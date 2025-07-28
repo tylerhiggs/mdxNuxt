@@ -95,7 +95,7 @@ const onAvatarChange = async (event: Event) => {
         icon="i-heroicons-arrow-left-start-on-rectangle"
         @click="
           () => {
-            signOut;
+            signOut();
           }
         "
       >

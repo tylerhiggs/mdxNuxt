@@ -245,7 +245,6 @@ const select = (emoji: string) => {
           name="i-heroicons-magnifying-glass"
           class="size-4 text-gray-500"
         />
-        {{}}
         <input
           :id="focusableIds[0]"
           ref="searchHtmlInput"
@@ -310,7 +309,7 @@ const select = (emoji: string) => {
           :key="group"
           class="w-full border-t border-gray-300"
         >
-          <h2 class="p-1 text-sm font-semibold">{{ group }}</h2>
+          <h2 class="p-1 text-sm font-semibold text-stone-800">{{ group }}</h2>
           <div class="flex justify-center">
             <div class="grid grid-cols-4 p-1">
               <div
