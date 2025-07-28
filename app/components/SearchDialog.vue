@@ -59,7 +59,7 @@ const { data: searchResults, status } = useFetch("/api/private/pages/search", {
         blocks: result.blocks,
       } satisfies CommandPaletteItem;
     }),
-  immediate: false,
+  immediate: true,
 });
 
 const groups = computed(
