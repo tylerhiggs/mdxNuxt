@@ -15,7 +15,7 @@
     }
   ],
   "parentId": null,
-  "lastUpdatedAt": 1753737499451,
+  "lastUpdatedAt": 1753744281710,
   "lastUpdatedByName": "Tyler Higgs",
   "createdAt": 1750112383000,
   "createdByName": "Tyler Higgs",
@@ -26,7 +26,7 @@
       "pageId": 2,
       "index": 0,
       "type": "text",
-      "textContent": "## Introduction\nWelcome! If you navigate to the [editor](../edit) (after logging in with Google) you can create pages like this one by using a mixture of markdown and extra components.\n\n## Colors\nFor any `color` properties, here are your options:\n| Color | Description |\n| `primary`{color='primary'} | Main brand color, used as the default color for components. |\n| `secondary`{color='secondary'} | Secondary color to complement the primary color. |\n| `success`{color='success'} | Used for success states. |\n| `warning`{color='warning'} | Used for warning states. |\n| `info`{color='info'} | Used for informational states. |\n| `neutral`{color='neutral'} | Neutral color for backgrounds, text, etc. |\n\n## Markdown components\n### `h1`\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n# This is an h1\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n# This is an h1\n\n::\n\n::\n### `h2`\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n# This is an h2\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n# This is an h2\n\n::\n\n::\n### `h3`\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n# This is an h3\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n# This is an h3\n\n::\n\n::\n\n### `a` (link)\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n[Nuxt documentation](https://nuxt.com)\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n[Nuxt documentation](https://nuxt.com)\n\n::\n\n::\n\n### `blockquote`\n\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n> While Nuxt UI is free and open source, Nuxt UI Pro is a premium product that helps sustain Nuxt OSS development, check out the License section to learn more.\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n> While Nuxt UI is free and open source, Nuxt UI Pro is a premium product that helps sustain Nuxt OSS development, check out the License section to learn more.\n\n\n::\n\n::\n### `strong`\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n**Strong text**\n```\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n**Strong text**\n::\n::\n### `em`\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n*Emphasized text*\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n*Emphasized text*\n::\n::\n### `s` (strikethrough)\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n~~The world is flat~~ We now know that the world is round.\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n~~The world is flat~~ We now know that the world is round.\n::\n::\n### `mark` (highlighted)\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\nI need to highlight these ==very important words==.\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\nI need to highlight these ==very important words==.\n::\n::\n### `sup` (superscript)\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\nx^2^ is a square\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\nx^2^ is a square\n::\n::\n### `sub` (subscript)\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\nH~2~O\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\nH~2~O\n::\n::\n\n### `ul` (unordered list)\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n- I'm a list item.\n  - I'm nested.\n- I'm the last list item.\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n- I'm a list item.\n  - I'm nested.\n- I'm the last list item.\n::\n::\n\n### `ol` (ordered list)\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n1. I'm a list item.\n  1. I'm another list item.\n2. I'm the last list item.\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n1. I'm a list item.\n  1. I'm nested.\n2. I'm the last list item.\n::\n::\n\n### `hr` (horizontal rule)\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n-------\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n-------\n::\n::\n\n### `table`\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n| Prop    | Default   | Type                |\n|---------|-----------|---------------------|\n| `name`  |           | `string`{lang=\"ts\"} |\n| `size`  | `md`      | `string`{lang=\"ts\"} |\n| `color` | `neutral` | `string`{lang=\"ts\"} |\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n| Prop    | Default   | Type                |\n|---------|-----------|---------------------|\n| `name`  |           | `string`{lang=\"ts\"} |\n| `size`  | `md`      | `string`{lang=\"ts\"} |\n| `color` | `neutral` | `string`{lang=\"ts\"} |\n::\n::\n\n### `img`\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n![Nuxt Social Image](https://nuxt.com/new-social.jpg)\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n![Nuxt Social Image](https://nuxt.com/new-social.jpg)\n::\n::\n\n### `code`\n\nInline code\n\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n`inline code`\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n`inline code`\n::\n::\n\nYou can use any of the [colors](#3-h2)\n\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n`inline code`{color=\"error\"}\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n`inline code`{color=\"error\"}\n::\n::\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n`const isFalse = (b: boolean) => !b`{lang=\"typescript\"}\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n`const isFalse = (b: boolean) => !b`{lang=\"typescript\"}\n::\n::\n\n| Prop    | Default   | Type |\n| `lang`  |           | `string`{lang='typescript'} |\n| `color` | `neutral` | `\"error\" | \"primary\" | \"secondary\" | \"success\" | \"info\" | \"warning\" | \"neutral\"`{lang='typescript'} |\n\n### `pre` (code block)\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n````mdc\n```typescript\nconst isFalse = (b: boolean) => {\n  return !b\n}\n```\n````\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n```typescript\nconst isFalse = (b: boolean) => {\n  return !b\n}\n```\n::\n::\nOr name the code block like this:\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n````mdc\n```typescript [is-false.ts]\nconst isFalse = (b: boolean) => {\n  return !b\n}\n```\n````\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n```typescript [is-false.ts]\nconst isFalse = (b: boolean) => {\n  return !b\n}\n```\n::\n::\n\n### Inline math\n\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\nEnergy $e$ and mass $m$ are related in the following way: $e = mc^2$\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\nEnergy $e$ and mass $m$ are related in the following way: $e = mc^2$\n::\n\n::\n\n\n### Math blocks\n\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n$$y = \\sum_{i=0}^{n-1} (1 + r/12)^{12n} - \\sum_{i=0}^{n-1} r_0^i - r_0^n$$\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n$$y = \\sum_{i=0}^{n-1} (1 + r/12)^{12n} - \\sum_{i=0}^{n-1} r_0^i - r_0^n$$\n::\n::\n\n\n## Components\n\n### Youtube\nJust add a link to a youtube video and it will render as a playable video on the page\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\nhttps://www.youtube.com/watch?v=dCxSsr5xuL8&t=11s\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\nhttps://www.youtube.com/watch?v=dCxSsr5xuL8&t=11s\n\n::\n\n::\n\n### Accordion\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n::accordion\n\n::accordion-item{label='First Item' icon='question-mark-circle'}\nAdd **markdown** content here\n::\n\n::accordion-item{label=\"Second Item\" icon=\"light-bulb\"}\n==Second== item's content\n::\n\n::\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n::accordion\n::accordion-item{label='First Item' icon='question-mark-circle'}\nAdd **markdown** content here\n::\n::accordion-item{label=\"Second Item\" icon=\"light-bulb\"}\n==Second== item's content\n::\n::\n\n::\n\n::\n| Prop   | Default      | Type                    |\n| `type` | `'multiple'` | `'multiple' | 'single'`{lang='typescript'} |\n### Badge\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n::badge{color='secondary'}\nLabel **here**\n::\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n::badge{color='secondary'}\nLabel **here**\n::\n\n::\n\n::\n| Prop    | Default     | Type                    |\n| `color` | `'primary'` | `\"neutral\" | \"error\" | \"warning\" | \"info\" | \"success\" | \"primary\" | \"secondary\"`{lang='typescript'} |\n\n### Callout\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n::callout\nLorem velit voluptate ex reprehenderit ullamco et culpa.\n::\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n::callout\nLorem velit voluptate ex reprehenderit ullamco et culpa.\n::\n::\n::\n\n| Prop    | Default     | Type     |\n| `color` | `'primary'` | `\"neutral\" | \"error\" | \"warning\" | \"info\" | \"success\" | \"primary\" | \"secondary\"`{lang='typescript'} |\n| `icon`  |             | `string` |\n| `link`  |             | `string` | \n\nYou can also use the `note`, `tip`, `warning` and `caution` shortcuts with pre-defined icons and colors:\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n::note\nHere's some additional information.\n::\n\n::tip\nHere's a helpful suggestion.\n::\n\n::warning\nBe careful with this action as it might have unexpected results.\n::\n\n::caution\nThis action cannot be undone.\n::\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n::note\nHere's some additional information.\n::\n::tip\nHere's a helpful suggestion.\n::\n::warning\nBe careful with this action as it might have unexpected results.\n::\n::caution\nThis action cannot be undone.\n::\n::\n::\n\n### Card\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n::card{title=\"Icons\" icon=\"users\" color=\"secondary\" link=\"https://heroicons.com\"}\nClick here to see __icons__.\n::\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n::card{title=\"Icons\" icon=\"users\" color=\"secondary\" link=\"https://heroicons.com\"}\nClick here to see __icons__.\n::\n\n::\n\n::\n\n### Card Group\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n::card-group\n\n::card{title='Dashboard' icon='chart-bar' link'https://github.com/nuxt-ui-pro/dashboard'}\nA dashboard with multi-column layout.\n::\n\n::card{title='SaaS' icon='credit-card' link='https://github.com/nuxt-ui-pro/saas'}\nA template with landing, pricing, docs and blog.\n::\n\n::card{title='Docs' icon='document' link='https://github.com/nuxt-ui-pro/docs'}\nA documentation with `@nuxt/content`.\n::\n\n::card{title='Landing' icon='presentation-chart-line' link='https://github.com/nuxt-ui-pro/landing'}\nA landing page you can use as starting point.\n::\n\n::\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n::card-group\n\n::card{title='Dashboard' icon='chart-bar' link'https://github.com/nuxt-ui-pro/dashboard'}\nA dashboard with multi-column layout.\n::\n::card{title='SaaS' icon='credit-card' link='https://github.com/nuxt-ui-pro/saas'}\nA template with landing, pricing, docs and blog.\n::\n::card{title='Docs' icon='document' link='https://github.com/nuxt-ui-pro/docs'}\nA documentation with `@nuxt/content`.\n::\n::card{title='Landing' icon='presentation-chart-line' link='https://github.com/nuxt-ui-pro/landing'}\nA landing page you can use as starting point.\n::\n\n::\n::\n\n::\n\n### Code Collapse\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n````mdc\n::code-collapse\n\n```css [main.css]\n@import \"tailwindcss\";\n@import \"@nuxt/ui\";\n\n@theme static {\n  --font-sans: 'Public Sans', sans-serif;\n\n  --breakpoint-3xl: 1920px;\n\n  --color-green-50: #EFFDF5;\n  --color-green-100: #D9FBE8;\n  --color-green-200: #B3F5D1;\n  --color-green-300: #75EDAE;\n  --color-green-400: #00DC82;\n  --color-green-500: #00C16A;\n  --color-green-600: #00A155;\n  --color-green-700: #007F45;\n  --color-green-800: #016538;\n  --color-green-900: #0A5331;\n  --color-green-950: #052E16;\n}\n```\n\n::\n````\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n::code-collapse{open=true}\n```css [main.css]\n@import \"tailwindcss\";\n@import \"@nuxt/ui\";\n\n@theme static {\n  --font-sans: 'Public Sans', sans-serif;\n\n  --breakpoint-3xl: 1920px;\n\n  --color-green-50: #EFFDF5;\n  --color-green-100: #D9FBE8;\n  --color-green-200: #B3F5D1;\n  --color-green-300: #75EDAE;\n  --color-green-400: #00DC82;\n  --color-green-500: #00C16A;\n  --color-green-600: #00A155;\n  --color-green-700: #007F45;\n  --color-green-800: #016538;\n  --color-green-900: #0A5331;\n  --color-green-950: #052E16;\n}\n```\n::\n::\n::\n| Prop        | Default                             | Type                                                    |\n| `icon`      | `'chevron-down'`{lang='typescript'} | `string` The icon displayed to toggle the code.         |\n| `name`      |                                     | `string` The name displayed in the trigger label.       |\n| `openText`  | `'Expand'`{lang='typescript'}       | `string` The text displayed when the code is collapsed. |\n| `closeText` | `'Collapse'`{lang='typescript'}     | `string` The text displayed when the code is expanded.  |\n| `open`      | `false`{lang='typescript'}          | `boolean`                                               |\n\n### Code Group\nWrap your code-blocks around a `code-group` component to group them together in tabs.\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n````mdc\n::code-group\n\n```bash [pnpm]\npnpm add @nuxt/ui\n```\n\n```bash [yarn]\nyarn add @nuxt/ui\n```\n\n```bash [npm]\nnpm install @nuxt/ui\n```\n\n```bash [bun]\nbun add @nuxt/ui\n```\n\n::\n````\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n::code-group\n\n```bash [pnpm]\npnpm add @nuxt/ui\n```\n\n```bash [yarn]\nyarn add @nuxt/ui\n```\n\n```bash [npm]\nnpm install @nuxt/ui\n```\n\n```bash [bun]\nbun add @nuxt/ui\n```\n\n::\n\n::\n\n::\n| Prop | Default | Type |\n| `'defaultValue'` | 0 | `number | string`{lang='typescript'} |\n\n### Code Tree\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n::code-collapse\n`````mdc\n::code-tree{defaultValue=\"app/app.config.ts\"}\n\n```ts [nuxt.config.ts]\nexport default defineNuxtConfig({\n  modules: ['@nuxt/ui-pro'],\n\n  future: {\n    compatibilityVersion: 4\n  },\n\n  css: ['~/assets/css/main.css']\n})\n\n```\n\n```css [app/assets/css/main.css]\n@import \"tailwindcss\";\n@import \"@nuxt/ui-pro\";\n```\n\n```ts [app/app.config.ts]\nexport default defineAppConfig({\n  ui: {\n    colors: {\n      primary: 'sky',\n      colors: 'slate'\n    }\n  }\n})\n```\n\n```vue [app/app.vue]\n<template>\n  <UApp>\n    <NuxtPage />\n  </UApp>\n</template>\n```\n\n```json [package.json]\n{\n  \"name\": \"nuxt-app\",\n  \"private\": true,\n  \"type\": \"module\",\n  \"scripts\": {\n    \"build\": \"nuxt build\",\n    \"dev\": \"nuxt dev\",\n    \"generate\": \"nuxt generate\",\n    \"preview\": \"nuxt preview\",\n    \"postinstall\": \"nuxt prepare\",\n    \"typecheck\": \"nuxt typecheck\"\n  },\n  \"dependencies\": {\n    \"@iconify-json/lucide\": \"^1.2.18\",\n    \"@nuxt/ui-pro\": \"^3.0.0\",\n    \"nuxt\": \"^3.16.0\"\n  },\n  \"devDependencies\": {\n    \"typescript\": \"^5.8.2\",\n    \"vue-tsc\": \"^2.2.10\"\n  }\n}\n```\n\n```json [tsconfig.json]\n{\n  \"extends\": \"./.nuxt/tsconfig.json\"\n}\n```\n\n````md [README.md]\n# Nuxt 3 Minimal Starter\n\nLook at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.\n\n## Setup\n\nMake sure to install the dependencies:\n\n```bash\n# npm\nnpm install\n\n# pnpm\npnpm install\n\n# yarn\nyarn install\n\n# bun\nbun install\n```\n\n## Development Server\n\nStart the development server on `http://localhost:3000`:\n\n```bash\n# npm\nnpm run dev\n\n# pnpm\npnpm run dev\n\n# yarn\nyarn dev\n\n# bun\nbun run dev\n```\n\n## Production\n\nBuild the application for production:\n\n```bash\n# npm\nnpm run build\n\n# pnpm\npnpm run build\n\n# yarn\nyarn build\n\n# bun\nbun run build\n```\n\nLocally preview production build:\n\n```bash\n# npm\nnpm run preview\n\n# pnpm\npnpm run preview\n\n# yarn\nyarn preview\n\n# bun\nbun run preview\n```\n\nCheck out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.\n````\n\n::\n\n`````\n::\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n::code-tree{defaultValue=\"app/app.config.ts\"}\n\n```ts [nuxt.config.ts]\nexport default defineNuxtConfig({\n  modules: ['@nuxt/ui-pro'],\n\n  future: {\n    compatibilityVersion: 4\n  },\n\n  css: ['~/assets/css/main.css']\n})\n\n```\n\n```css [app/assets/css/main.css]\n@import \"tailwindcss\";\n@import \"@nuxt/ui-pro\";\n```\n\n```ts [app/app.config.ts]\nexport default defineAppConfig({\n  ui: {\n    colors: {\n      primary: 'sky',\n      colors: 'slate'\n    }\n  }\n})\n```\n\n```vue [app/app.vue]\n<template>\n  <UApp>\n    <NuxtPage />\n  </UApp>\n</template>\n```\n\n```json [package.json]\n{\n  \"name\": \"nuxt-app\",\n  \"private\": true,\n  \"type\": \"module\",\n  \"scripts\": {\n    \"build\": \"nuxt build\",\n    \"dev\": \"nuxt dev\",\n    \"generate\": \"nuxt generate\",\n    \"preview\": \"nuxt preview\",\n    \"postinstall\": \"nuxt prepare\",\n    \"typecheck\": \"nuxt typecheck\"\n  },\n  \"dependencies\": {\n    \"@iconify-json/lucide\": \"^1.2.18\",\n    \"@nuxt/ui-pro\": \"^3.0.0\",\n    \"nuxt\": \"^3.16.0\"\n  },\n  \"devDependencies\": {\n    \"typescript\": \"^5.8.2\",\n    \"vue-tsc\": \"^2.2.10\"\n  }\n}\n```\n\n```json [tsconfig.json]\n{\n  \"extends\": \"./.nuxt/tsconfig.json\"\n}\n```\n\n````md [README.md]\n# Nuxt 3 Minimal Starter\n\nLook at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.\n\n## Setup\n\nMake sure to install the dependencies:\n\n```bash\n# npm\nnpm install\n\n# pnpm\npnpm install\n\n# yarn\nyarn install\n\n# bun\nbun install\n```\n\n## Development Server\n\nStart the development server on `http://localhost:3000`:\n\n```bash\n# npm\nnpm run dev\n\n# pnpm\npnpm run dev\n\n# yarn\nyarn dev\n\n# bun\nbun run dev\n```\n\n## Production\n\nBuild the application for production:\n\n```bash\n# npm\nnpm run build\n\n# pnpm\npnpm run build\n\n# yarn\nyarn build\n\n# bun\nbun run build\n```\n\nLocally preview production build:\n\n```bash\n# npm\nnpm run preview\n\n# pnpm\npnpm run preview\n\n# yarn\nyarn preview\n\n# bun\nbun run preview\n```\n\nCheck out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.\n````\n\n::\n\n\n::\n\n::\n| Props          | Default                    | Type                                         |\n| `defaultValue` |                            | `string` The default tab to select.          |\n| `expandAll`    | `false`{lang=\"typescript\"} | `boolean` Expand all directories by default. |\n\n### Collapsible\n\nWrap your content with the `collapsible` component to display a [Collapse](https://ui.nuxt.com/components/collapsible) in your content.\n\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n::collapsible\n\n| Prop    | Default   | Type                     |\n|---------|-----------|--------------------------|\n| `name`  |           | `string`{lang=\"ts\"}      |\n| `size`  | `md`      | `string`{lang=\"ts\"}      |\n| `color` | `neutral` | `string`{lang=\"ts\"}      |\n\n::\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n::collapsible\n| Prop    | Default   | Type                     |\n|---------|-----------|--------------------------|\n| `name`  |           | `string`{lang=\"ts\"} |\n| `size`  | `md`      | `string`{lang=\"ts\"} |\n| `color` | `neutral` | `string`{lang=\"ts\"} |\n::\n::\n::\n| Props       | Default                      | Type                                                           |\n| `icon`      | `'chevron-down'`{lang=\"ts\"}  | `string` The **icon** displayed to toggle the show/hide button |\n| `name`      |                              | `string` The name displayed in the trigger **label**           |\n| `openText`  | `'Show'`{lang=\"ts\"}          | `string` The text displayed when the content is collapsed      |\n| `closeText` | `'Hide'`{lang=\"ts\"}          | `string` The text disolayed when the content is expanded       |\n\n### Field\nA field, prop or parameter to display in your content.\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n::field{name=\"name\" type=\"string\" required}\nThe `description` can be set here with full **markdown** support.\n::\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n::field{name=\"name\" type=\"string\" required}\nThe `description` can be set here with full **markdown** support.\n::\n::\n::\n\n| Prop       | Default            | Type      |\n| `name`     |                    | `string`  |\n| `type`     |                    | `string`  |\n| `required` | `false`{lang=\"ts\"} | `boolean` |\n\n### Field Group\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n::code-collapse\n```mdc\n::field-group\n  ::field{name=\"analytics\" type=\"boolean\"}\n    Default to `false` - Enables analytics for your project (coming soon).\n  ::\n\n  ::field{name=\"blob\" type=\"boolean\"}\n    Default to `false` - Enables blob storage to store static assets, such as images, videos and more.\n  ::\n\n  ::field{name=\"cache\" type=\"boolean\"}\n    Default to `false` - Enables cache storage to cache your server route responses or functions using Nitro's `cachedEventHandler` and `cachedFunction`\n  ::\n\n  ::field{name=\"database\" type=\"boolean\"}\n    Default to `false` - Enables SQL database to store your application's data.\n  ::\n::\n```\n::\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n::field-group\n  ::field{name=\"analytics\" type=\"boolean\"}\n    Default to `false` - Enables analytics for your project (coming soon).\n  ::\n  ::field{name=\"blob\" type=\"boolean\"}\n    Default to `false` - Enables blob storage to store static assets, such as images, videos and more.\n  ::\n  ::field{name=\"cache\" type=\"boolean\"}\n    Default to `false` - Enables cache storage to cache your server route responses or functions using Nitro's `cachedEventHandler` and `cachedFunction`\n  ::\n  ::field{name=\"database\" type=\"boolean\"}\n    Default to `false` - Enables SQL database to store your application's data.\n  ::\n::\n::\n::\n\n### Icon\nFind icon names from [heroicons](https://heroicons.com/) or just type `/` and search for the icon you are looking for.\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\nIcons can be displayed inline: :icon{name=\"face-smile\"}\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\nIcons can be displayed inline :icon{name=\"face-smile\"}\n::\n::\n\n| Prop   | Default | Type     |\n| `name` |         | `string` |\n\n### Key Binding\nSearch for special keys by typing `/` such as :kbd{value=\"meta\"} and :kbd{value=\"shift\"}\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\nSearch by pressing :kbd{value=\"meta\"} :kbd{value=\"K\"}\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\nSearch by pressing :kbd{value=\"meta\"} :kbd{value=\"K\"}\n::\n::\n| Prop    | Default | Type     |\n| `value` |         | `string` |\n\n### Tabs\n\nUse the `tabs` and `tabs-item` components to display tabs in your content.\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n````mdc\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n::callout\nLorem velit voluptate ex reprehenderit ullamco et culpa.\n::\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n::callout\nLorem velit voluptate ex reprehenderit ullamco et culpa.\n::\n\n::\n\n::\n````\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n::card\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n::callout\nLorem velit voluptate ex reprehenderit ullamco et culpa.\n::\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n::callout\nLorem velit voluptate ex reprehenderit ullamco et culpa.\n::\n::\n::\n::\n::\n::\n| Props          | Default | Type     |\n| `defaultValue` | `0`     | `string` |\n\n\n### Steps\nWrap your headings with the Steps component to display a list of steps.\n\nUse the `level` prop to define which heading will be used for the steps.\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n````mdc\n::steps{level=\"3\"}\n\n### Add the Nuxt UI Pro module in your `nuxt.config.ts`\n\n```ts [nuxt.config.ts]\nexport default defineNuxtConfig({\n  modules: ['@nuxt/ui']\n})\n```\n\n### Import Tailwind CSS and Nuxt UI Pro in your CSS\n\n```css [assets/css/main.css]\n@import \"tailwindcss\";\n@import \"@nuxt/ui\";\n```\n\n::\n\n````\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n::steps{level=\"3\"}\n\n### Add the Nuxt UI Pro module in your `nuxt.config.ts`\n\n```ts [nuxt.config.ts]\nexport default defineNuxtConfig({\n  modules: ['@nuxt/ui']\n})\n```\n\n### Import Tailwind CSS and Nuxt UI Pro in your CSS\n\n```css [assets/css/main.css]\n@import \"tailwindcss\";\n@import \"@nuxt/ui\";\n```\n\n::\n\n::\n\n::\n\n| Prop | Default | Type |\n| `level` | `'3'`{lang=\"ts\"} | `\"3\" | \"2\" | \"4\"`{lang=\"ts\"} |\n\n",
+      "textContent": "## Introduction\nWelcome! If you navigate to the [editor](../edit) (after logging in with Google) you can create pages like this one by using a mixture of markdown and extra components.\n\n## Colors\nFor any `color` properties, here are your options:\n| Color | Description |\n| `primary`{color='primary'} | Main brand color, used as the default color for components. |\n| `secondary`{color='secondary'} | Secondary color to complement the primary color. |\n| `success`{color='success'} | Used for success states. |\n| `warning`{color='warning'} | Used for warning states. |\n| `info`{color='info'} | Used for informational states. |\n| `neutral`{color='neutral'} | Neutral color for backgrounds, text, etc. |\n\n## Markdown components\n### `h1`\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n# This is an h1\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n# This is an h1\n\n::\n\n::\n### `h2`\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n# This is an h2\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n# This is an h2\n\n::\n\n::\n### `h3`\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n# This is an h3\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n# This is an h3\n\n::\n\n::\n\n### `a` (link)\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n[Nuxt documentation](https://nuxt.com)\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n[Nuxt documentation](https://nuxt.com)\n\n::\n\n::\n\n### `blockquote`\n\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n> While Nuxt UI is free and open source, Nuxt UI Pro is a premium product that helps sustain Nuxt OSS development, check out the License section to learn more.\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n> While Nuxt UI is free and open source, Nuxt UI Pro is a premium product that helps sustain Nuxt OSS development, check out the License section to learn more.\n\n\n::\n\n::\n### `strong`\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n**Strong text**\n```\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n**Strong text**\n::\n::\n### `em`\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n*Emphasized text*\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n*Emphasized text*\n::\n::\n### `s` (strikethrough)\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n~~The world is flat~~ We now know that the world is round.\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n~~The world is flat~~ We now know that the world is round.\n::\n::\n### `mark` (highlighted)\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\nI need to highlight these ==very important words==.\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\nI need to highlight these ==very important words==.\n::\n::\n### `sup` (superscript)\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\nx^2^ is a square\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\nx^2^ is a square\n::\n::\n### `sub` (subscript)\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\nH~2~O\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\nH~2~O\n::\n::\n\n### `ul` (unordered list)\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n- I'm a list item.\n  - I'm nested.\n- I'm the last list item.\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n- I'm a list item.\n  - I'm nested.\n- I'm the last list item.\n::\n::\n\n### `ol` (ordered list)\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n1. I'm a list item.\n  1. I'm another list item.\n2. I'm the last list item.\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n1. I'm a list item.\n  1. I'm nested.\n2. I'm the last list item.\n::\n::\n\n### `hr` (horizontal rule)\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n-------\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n-------\n::\n::\n\n### `table`\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n| Prop    | Default   | Type                |\n|---------|-----------|---------------------|\n| `name`  |           | `string`{lang=\"ts\"} |\n| `size`  | `md`      | `string`{lang=\"ts\"} |\n| `color` | `neutral` | `string`{lang=\"ts\"} |\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n| Prop    | Default   | Type                |\n|---------|-----------|---------------------|\n| `name`  |           | `string`{lang=\"ts\"} |\n| `size`  | `md`      | `string`{lang=\"ts\"} |\n| `color` | `neutral` | `string`{lang=\"ts\"} |\n::\n::\n\n### `img`\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n![Nuxt Social Image](https://nuxt.com/new-social.jpg)\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n![Nuxt Social Image](https://nuxt.com/new-social.jpg)\n::\n::\n\n### `code`\n\nInline code\n\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n`inline code`\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n`inline code`\n::\n::\n\nYou can use any of the [colors](#3-h2)\n\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n`inline code`{color=\"error\"}\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n`inline code`{color=\"error\"}\n::\n::\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n`const isFalse = (b: boolean) => !b`{lang=\"typescript\"}\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n`const isFalse = (b: boolean) => !b`{lang=\"typescript\"}\n::\n::\n\n| Prop    | Default   | Type |\n| `lang`  |           | `string`{lang='typescript'} |\n| `color` | `neutral` | `\"error\" | \"primary\" | \"secondary\" | \"success\" | \"info\" | \"warning\" | \"neutral\"`{lang='typescript'} |\n\n### `pre` (code block)\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n````mdc\n```typescript\nconst isFalse = (b: boolean) => {\n  return !b\n}\n```\n````\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n```typescript\nconst isFalse = (b: boolean) => {\n  return !b\n}\n```\n::\n::\nOr name the code block like this:\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n````mdc\n```typescript [is-false.ts]\nconst isFalse = (b: boolean) => {\n  return !b\n}\n```\n````\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n```typescript [is-false.ts]\nconst isFalse = (b: boolean) => {\n  return !b\n}\n```\n::\n::\n\n### Inline math\n\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```latex\nEnergy $e$ and mass $m$ are related in the following way: $e = mc^2$\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\nEnergy $e$ and mass $m$ are related in the following way: $e = mc^2$\n::\n\n::\n\n\n### Math blocks\n\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```latex\n$$y = \\sum_{i=0}^{n-1} (1 + r/12)^{12n} - \\sum_{i=0}^{n-1} r_0^i - r_0^n$$\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n$$y = \\sum_{i=0}^{n-1} (1 + r/12)^{12n} - \\sum_{i=0}^{n-1} r_0^i - r_0^n$$\n::\n::\n\n\n## Components\n\n### Youtube\nJust add a link to a youtube video and it will render as a playable video on the page\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\nhttps://www.youtube.com/watch?v=dCxSsr5xuL8&t=11s\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\nhttps://www.youtube.com/watch?v=dCxSsr5xuL8&t=11s\n\n::\n\n::\n\n### Accordion\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n::accordion\n\n::accordion-item{label='First Item' icon='question-mark-circle'}\nAdd **markdown** content here\n::\n\n::accordion-item{label=\"Second Item\" icon=\"light-bulb\"}\n==Second== item's content\n::\n\n::\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n::accordion\n::accordion-item{label='First Item' icon='question-mark-circle'}\nAdd **markdown** content here\n::\n::accordion-item{label=\"Second Item\" icon=\"light-bulb\"}\n==Second== item's content\n::\n::\n\n::\n\n::\n| Prop   | Default      | Type                    |\n| `type` | `'multiple'` | `'multiple' | 'single'`{lang='typescript'} |\n### Badge\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n::badge{color='secondary'}\nLabel **here**\n::\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n::badge{color='secondary'}\nLabel **here**\n::\n\n::\n\n::\n| Prop    | Default     | Type                    |\n| `color` | `'primary'` | `\"neutral\" | \"error\" | \"warning\" | \"info\" | \"success\" | \"primary\" | \"secondary\"`{lang='typescript'} |\n\n### Callout\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n::callout\nLorem velit voluptate ex reprehenderit ullamco et culpa.\n::\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n::callout\nLorem velit voluptate ex reprehenderit ullamco et culpa.\n::\n::\n::\n\n| Prop    | Default     | Type     |\n| `color` | `'primary'` | `\"neutral\" | \"error\" | \"warning\" | \"info\" | \"success\" | \"primary\" | \"secondary\"`{lang='typescript'} |\n| `icon`  |             | `string` |\n| `link`  |             | `string` | \n\nYou can also use the `note`, `tip`, `warning` and `caution` shortcuts with pre-defined icons and colors:\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n::note\nHere's some additional information.\n::\n\n::tip\nHere's a helpful suggestion.\n::\n\n::warning\nBe careful with this action as it might have unexpected results.\n::\n\n::caution\nThis action cannot be undone.\n::\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n::note\nHere's some additional information.\n::\n::tip\nHere's a helpful suggestion.\n::\n::warning\nBe careful with this action as it might have unexpected results.\n::\n::caution\nThis action cannot be undone.\n::\n::\n::\n\n### Card\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n::card{title=\"Icons\" icon=\"users\" color=\"secondary\" link=\"https://heroicons.com\"}\nClick here to see __icons__.\n::\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n::card{title=\"Icons\" icon=\"users\" color=\"secondary\" link=\"https://heroicons.com\"}\nClick here to see __icons__.\n::\n\n::\n\n::\n\n### Card Group\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n::card-group\n\n::card{title='Dashboard' icon='chart-bar' link'https://github.com/nuxt-ui-pro/dashboard'}\nA dashboard with multi-column layout.\n::\n\n::card{title='SaaS' icon='credit-card' link='https://github.com/nuxt-ui-pro/saas'}\nA template with landing, pricing, docs and blog.\n::\n\n::card{title='Docs' icon='document' link='https://github.com/nuxt-ui-pro/docs'}\nA documentation with `@nuxt/content`.\n::\n\n::card{title='Landing' icon='presentation-chart-line' link='https://github.com/nuxt-ui-pro/landing'}\nA landing page you can use as starting point.\n::\n\n::\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n::card-group\n\n::card{title='Dashboard' icon='chart-bar' link'https://github.com/nuxt-ui-pro/dashboard'}\nA dashboard with multi-column layout.\n::\n::card{title='SaaS' icon='credit-card' link='https://github.com/nuxt-ui-pro/saas'}\nA template with landing, pricing, docs and blog.\n::\n::card{title='Docs' icon='document' link='https://github.com/nuxt-ui-pro/docs'}\nA documentation with `@nuxt/content`.\n::\n::card{title='Landing' icon='presentation-chart-line' link='https://github.com/nuxt-ui-pro/landing'}\nA landing page you can use as starting point.\n::\n\n::\n::\n\n::\n\n### Code Collapse\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n````mdc\n::code-collapse\n\n```css [main.css]\n@import \"tailwindcss\";\n@import \"@nuxt/ui\";\n\n@theme static {\n  --font-sans: 'Public Sans', sans-serif;\n\n  --breakpoint-3xl: 1920px;\n\n  --color-green-50: #EFFDF5;\n  --color-green-100: #D9FBE8;\n  --color-green-200: #B3F5D1;\n  --color-green-300: #75EDAE;\n  --color-green-400: #00DC82;\n  --color-green-500: #00C16A;\n  --color-green-600: #00A155;\n  --color-green-700: #007F45;\n  --color-green-800: #016538;\n  --color-green-900: #0A5331;\n  --color-green-950: #052E16;\n}\n```\n\n::\n````\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n::code-collapse{open=true}\n```css [main.css]\n@import \"tailwindcss\";\n@import \"@nuxt/ui\";\n\n@theme static {\n  --font-sans: 'Public Sans', sans-serif;\n\n  --breakpoint-3xl: 1920px;\n\n  --color-green-50: #EFFDF5;\n  --color-green-100: #D9FBE8;\n  --color-green-200: #B3F5D1;\n  --color-green-300: #75EDAE;\n  --color-green-400: #00DC82;\n  --color-green-500: #00C16A;\n  --color-green-600: #00A155;\n  --color-green-700: #007F45;\n  --color-green-800: #016538;\n  --color-green-900: #0A5331;\n  --color-green-950: #052E16;\n}\n```\n::\n::\n::\n| Prop        | Default                             | Type                                                    |\n| `icon`      | `'chevron-down'`{lang='typescript'} | `string` The icon displayed to toggle the code.         |\n| `name`      |                                     | `string` The name displayed in the trigger label.       |\n| `openText`  | `'Expand'`{lang='typescript'}       | `string` The text displayed when the code is collapsed. |\n| `closeText` | `'Collapse'`{lang='typescript'}     | `string` The text displayed when the code is expanded.  |\n| `open`      | `false`{lang='typescript'}          | `boolean`                                               |\n\n### Code Group\nWrap your code-blocks around a `code-group` component to group them together in tabs.\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n````mdc\n::code-group\n\n```bash [pnpm]\npnpm add @nuxt/ui\n```\n\n```bash [yarn]\nyarn add @nuxt/ui\n```\n\n```bash [npm]\nnpm install @nuxt/ui\n```\n\n```bash [bun]\nbun add @nuxt/ui\n```\n\n::\n````\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n::code-group\n\n```bash [pnpm]\npnpm add @nuxt/ui\n```\n\n```bash [yarn]\nyarn add @nuxt/ui\n```\n\n```bash [npm]\nnpm install @nuxt/ui\n```\n\n```bash [bun]\nbun add @nuxt/ui\n```\n\n::\n\n::\n\n::\n| Prop | Default | Type |\n| `'defaultValue'` | 0 | `number | string`{lang='typescript'} |\n\n### Code Tree\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n::code-collapse\n`````mdc\n::code-tree{defaultValue=\"app/app.config.ts\"}\n\n```ts [nuxt.config.ts]\nexport default defineNuxtConfig({\n  modules: ['@nuxt/ui-pro'],\n\n  future: {\n    compatibilityVersion: 4\n  },\n\n  css: ['~/assets/css/main.css']\n})\n\n```\n\n```css [app/assets/css/main.css]\n@import \"tailwindcss\";\n@import \"@nuxt/ui-pro\";\n```\n\n```ts [app/app.config.ts]\nexport default defineAppConfig({\n  ui: {\n    colors: {\n      primary: 'sky',\n      colors: 'slate'\n    }\n  }\n})\n```\n\n```vue [app/app.vue]\n<template>\n  <UApp>\n    <NuxtPage />\n  </UApp>\n</template>\n```\n\n```json [package.json]\n{\n  \"name\": \"nuxt-app\",\n  \"private\": true,\n  \"type\": \"module\",\n  \"scripts\": {\n    \"build\": \"nuxt build\",\n    \"dev\": \"nuxt dev\",\n    \"generate\": \"nuxt generate\",\n    \"preview\": \"nuxt preview\",\n    \"postinstall\": \"nuxt prepare\",\n    \"typecheck\": \"nuxt typecheck\"\n  },\n  \"dependencies\": {\n    \"@iconify-json/lucide\": \"^1.2.18\",\n    \"@nuxt/ui-pro\": \"^3.0.0\",\n    \"nuxt\": \"^3.16.0\"\n  },\n  \"devDependencies\": {\n    \"typescript\": \"^5.8.2\",\n    \"vue-tsc\": \"^2.2.10\"\n  }\n}\n```\n\n```json [tsconfig.json]\n{\n  \"extends\": \"./.nuxt/tsconfig.json\"\n}\n```\n\n````md [README.md]\n# Nuxt 3 Minimal Starter\n\nLook at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.\n\n## Setup\n\nMake sure to install the dependencies:\n\n```bash\n# npm\nnpm install\n\n# pnpm\npnpm install\n\n# yarn\nyarn install\n\n# bun\nbun install\n```\n\n## Development Server\n\nStart the development server on `http://localhost:3000`:\n\n```bash\n# npm\nnpm run dev\n\n# pnpm\npnpm run dev\n\n# yarn\nyarn dev\n\n# bun\nbun run dev\n```\n\n## Production\n\nBuild the application for production:\n\n```bash\n# npm\nnpm run build\n\n# pnpm\npnpm run build\n\n# yarn\nyarn build\n\n# bun\nbun run build\n```\n\nLocally preview production build:\n\n```bash\n# npm\nnpm run preview\n\n# pnpm\npnpm run preview\n\n# yarn\nyarn preview\n\n# bun\nbun run preview\n```\n\nCheck out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.\n````\n\n::\n\n`````\n::\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n::code-tree{defaultValue=\"app/app.config.ts\"}\n\n```ts [nuxt.config.ts]\nexport default defineNuxtConfig({\n  modules: ['@nuxt/ui-pro'],\n\n  future: {\n    compatibilityVersion: 4\n  },\n\n  css: ['~/assets/css/main.css']\n})\n\n```\n\n```css [app/assets/css/main.css]\n@import \"tailwindcss\";\n@import \"@nuxt/ui-pro\";\n```\n\n```ts [app/app.config.ts]\nexport default defineAppConfig({\n  ui: {\n    colors: {\n      primary: 'sky',\n      colors: 'slate'\n    }\n  }\n})\n```\n\n```vue [app/app.vue]\n<template>\n  <UApp>\n    <NuxtPage />\n  </UApp>\n</template>\n```\n\n```json [package.json]\n{\n  \"name\": \"nuxt-app\",\n  \"private\": true,\n  \"type\": \"module\",\n  \"scripts\": {\n    \"build\": \"nuxt build\",\n    \"dev\": \"nuxt dev\",\n    \"generate\": \"nuxt generate\",\n    \"preview\": \"nuxt preview\",\n    \"postinstall\": \"nuxt prepare\",\n    \"typecheck\": \"nuxt typecheck\"\n  },\n  \"dependencies\": {\n    \"@iconify-json/lucide\": \"^1.2.18\",\n    \"@nuxt/ui-pro\": \"^3.0.0\",\n    \"nuxt\": \"^3.16.0\"\n  },\n  \"devDependencies\": {\n    \"typescript\": \"^5.8.2\",\n    \"vue-tsc\": \"^2.2.10\"\n  }\n}\n```\n\n```json [tsconfig.json]\n{\n  \"extends\": \"./.nuxt/tsconfig.json\"\n}\n```\n\n````md [README.md]\n# Nuxt 3 Minimal Starter\n\nLook at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.\n\n## Setup\n\nMake sure to install the dependencies:\n\n```bash\n# npm\nnpm install\n\n# pnpm\npnpm install\n\n# yarn\nyarn install\n\n# bun\nbun install\n```\n\n## Development Server\n\nStart the development server on `http://localhost:3000`:\n\n```bash\n# npm\nnpm run dev\n\n# pnpm\npnpm run dev\n\n# yarn\nyarn dev\n\n# bun\nbun run dev\n```\n\n## Production\n\nBuild the application for production:\n\n```bash\n# npm\nnpm run build\n\n# pnpm\npnpm run build\n\n# yarn\nyarn build\n\n# bun\nbun run build\n```\n\nLocally preview production build:\n\n```bash\n# npm\nnpm run preview\n\n# pnpm\npnpm run preview\n\n# yarn\nyarn preview\n\n# bun\nbun run preview\n```\n\nCheck out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.\n````\n\n::\n\n\n::\n\n::\n| Props          | Default                    | Type                                         |\n| `defaultValue` |                            | `string` The default tab to select.          |\n| `expandAll`    | `false`{lang=\"typescript\"} | `boolean` Expand all directories by default. |\n\n### Collapsible\n\nWrap your content with the `collapsible` component to display a [Collapse](https://ui.nuxt.com/components/collapsible) in your content.\n\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n::collapsible\n\n| Prop    | Default   | Type                     |\n|---------|-----------|--------------------------|\n| `name`  |           | `string`{lang=\"ts\"}      |\n| `size`  | `md`      | `string`{lang=\"ts\"}      |\n| `color` | `neutral` | `string`{lang=\"ts\"}      |\n\n::\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n::collapsible\n| Prop    | Default   | Type                     |\n|---------|-----------|--------------------------|\n| `name`  |           | `string`{lang=\"ts\"} |\n| `size`  | `md`      | `string`{lang=\"ts\"} |\n| `color` | `neutral` | `string`{lang=\"ts\"} |\n::\n::\n::\n| Props       | Default                      | Type                                                           |\n| `icon`      | `'chevron-down'`{lang=\"ts\"}  | `string` The **icon** displayed to toggle the show/hide button |\n| `name`      |                              | `string` The name displayed in the trigger **label**           |\n| `openText`  | `'Show'`{lang=\"ts\"}          | `string` The text displayed when the content is collapsed      |\n| `closeText` | `'Hide'`{lang=\"ts\"}          | `string` The text disolayed when the content is expanded       |\n\n### Field\nA field, prop or parameter to display in your content.\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n::field{name=\"name\" type=\"string\" required}\nThe `description` can be set here with full **markdown** support.\n::\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n::field{name=\"name\" type=\"string\" required}\nThe `description` can be set here with full **markdown** support.\n::\n::\n::\n\n| Prop       | Default            | Type      |\n| `name`     |                    | `string`  |\n| `type`     |                    | `string`  |\n| `required` | `false`{lang=\"ts\"} | `boolean` |\n\n### Field Group\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n::code-collapse\n```mdc\n::field-group\n  ::field{name=\"analytics\" type=\"boolean\"}\n    Default to `false` - Enables analytics for your project (coming soon).\n  ::\n\n  ::field{name=\"blob\" type=\"boolean\"}\n    Default to `false` - Enables blob storage to store static assets, such as images, videos and more.\n  ::\n\n  ::field{name=\"cache\" type=\"boolean\"}\n    Default to `false` - Enables cache storage to cache your server route responses or functions using Nitro's `cachedEventHandler` and `cachedFunction`\n  ::\n\n  ::field{name=\"database\" type=\"boolean\"}\n    Default to `false` - Enables SQL database to store your application's data.\n  ::\n::\n```\n::\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n::field-group\n  ::field{name=\"analytics\" type=\"boolean\"}\n    Default to `false` - Enables analytics for your project (coming soon).\n  ::\n  ::field{name=\"blob\" type=\"boolean\"}\n    Default to `false` - Enables blob storage to store static assets, such as images, videos and more.\n  ::\n  ::field{name=\"cache\" type=\"boolean\"}\n    Default to `false` - Enables cache storage to cache your server route responses or functions using Nitro's `cachedEventHandler` and `cachedFunction`\n  ::\n  ::field{name=\"database\" type=\"boolean\"}\n    Default to `false` - Enables SQL database to store your application's data.\n  ::\n::\n::\n::\n\n### Icon\nFind icon names from [heroicons](https://heroicons.com/) or just type `/` and search for the icon you are looking for.\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\nIcons can be displayed inline: :icon{name=\"face-smile\"}\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\nIcons can be displayed inline :icon{name=\"face-smile\"}\n::\n::\n\n| Prop   | Default | Type     |\n| `name` |         | `string` |\n\n### Key Binding\nSearch for special keys by typing `/` such as :kbd{value=\"meta\"} and :kbd{value=\"shift\"}\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\nSearch by pressing :kbd{value=\"meta\"} :kbd{value=\"K\"}\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\nSearch by pressing :kbd{value=\"meta\"} :kbd{value=\"K\"}\n::\n::\n| Prop    | Default | Type     |\n| `value` |         | `string` |\n\n### Tabs\n\nUse the `tabs` and `tabs-item` components to display tabs in your content.\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n````mdc\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n::callout\nLorem velit voluptate ex reprehenderit ullamco et culpa.\n::\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n::callout\nLorem velit voluptate ex reprehenderit ullamco et culpa.\n::\n\n::\n\n::\n````\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n::card\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n::callout\nLorem velit voluptate ex reprehenderit ullamco et culpa.\n::\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n::callout\nLorem velit voluptate ex reprehenderit ullamco et culpa.\n::\n::\n::\n::\n::\n::\n| Props          | Default | Type     |\n| `defaultValue` | `0`     | `string` |\n\n\n### Steps\nWrap your headings with the Steps component to display a list of steps.\n\nUse the `level` prop to define which heading will be used for the steps.\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n````mdc\n::steps{level=\"3\"}\n\n### Add the Nuxt UI Pro module in your `nuxt.config.ts`\n\n```ts [nuxt.config.ts]\nexport default defineNuxtConfig({\n  modules: ['@nuxt/ui']\n})\n```\n\n### Import Tailwind CSS and Nuxt UI Pro in your CSS\n\n```css [assets/css/main.css]\n@import \"tailwindcss\";\n@import \"@nuxt/ui\";\n```\n\n::\n\n````\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n::steps{level=\"3\"}\n\n### Add the Nuxt UI Pro module in your `nuxt.config.ts`\n\n```ts [nuxt.config.ts]\nexport default defineNuxtConfig({\n  modules: ['@nuxt/ui']\n})\n```\n\n### Import Tailwind CSS and Nuxt UI Pro in your CSS\n\n```css [assets/css/main.css]\n@import \"tailwindcss\";\n@import \"@nuxt/ui\";\n```\n\n::\n\n::\n\n::\n\n| Prop | Default | Type |\n| `level` | `'3'`{lang=\"ts\"} | `\"3\" | \"2\" | \"4\"`{lang=\"ts\"} |\n\n",
       "renderedMd": [
         {
           "id": "section- Introduction-0-h2",
@@ -4641,12 +4641,927 @@
           ]
         },
         {
-          "id": "section- Components-336-h2",
+          "id": "section- Inline math-336-h3",
           "type": "section",
-          "headingId": " Components-336-h2",
+          "headingId": " Inline math-336-h3",
           "items": [
             {
-              "id": " Components-336-h2",
+              "id": " Inline math-336-h3",
+              "type": "heading",
+              "depth": 3,
+              "items": [
+                {
+                  "id": "text-Inline math",
+                  "type": "text",
+                  "text": "Inline math"
+                }
+              ]
+            },
+            {
+              "id": "338-tabs-",
+              "type": "tabs",
+              "items": [
+                {
+                  "id": "340-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "type": "tabs-item",
+                  "items": [
+                    {
+                      "id": "344-Energy $e$ and mass ",
+                      "type": "code-block",
+                      "language": "latex",
+                      "syntaxHighlightedTokens": [
+                        [
+                          {
+                            "content": "Energy ",
+                            "offset": 0,
+                            "color": "#90A4AE",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "$",
+                            "offset": 7,
+                            "color": "#39ADB5",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "e",
+                            "offset": 8,
+                            "color": "#E2931D",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "$",
+                            "offset": 9,
+                            "color": "#39ADB5",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": " and mass ",
+                            "offset": 10,
+                            "color": "#90A4AE",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "$",
+                            "offset": 20,
+                            "color": "#39ADB5",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "m",
+                            "offset": 21,
+                            "color": "#E2931D",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "$",
+                            "offset": 22,
+                            "color": "#39ADB5",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": " are related in the following way: ",
+                            "offset": 23,
+                            "color": "#90A4AE",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "$",
+                            "offset": 58,
+                            "color": "#39ADB5",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "e = mc",
+                            "offset": 59,
+                            "color": "#E2931D",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "^",
+                            "offset": 65,
+                            "color": "#39ADB5",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "2",
+                            "offset": 66,
+                            "color": "#F76D47",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "$",
+                            "offset": 67,
+                            "color": "#39ADB5",
+                            "fontStyle": 0
+                          }
+                        ]
+                      ],
+                      "darkSyntaxHighlightedTokens": [
+                        [
+                          {
+                            "content": "Energy ",
+                            "offset": 0,
+                            "color": "#BABED8",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "$",
+                            "offset": 7,
+                            "color": "#89DDFF",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "e",
+                            "offset": 8,
+                            "color": "#FFCB6B",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "$",
+                            "offset": 9,
+                            "color": "#89DDFF",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": " and mass ",
+                            "offset": 10,
+                            "color": "#BABED8",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "$",
+                            "offset": 20,
+                            "color": "#89DDFF",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "m",
+                            "offset": 21,
+                            "color": "#FFCB6B",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "$",
+                            "offset": 22,
+                            "color": "#89DDFF",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": " are related in the following way: ",
+                            "offset": 23,
+                            "color": "#BABED8",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "$",
+                            "offset": 58,
+                            "color": "#89DDFF",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "e = mc",
+                            "offset": 59,
+                            "color": "#FFCB6B",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "^",
+                            "offset": 65,
+                            "color": "#89DDFF",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "2",
+                            "offset": 66,
+                            "color": "#F78C6C",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "$",
+                            "offset": 67,
+                            "color": "#89DDFF",
+                            "fontStyle": 0
+                          }
+                        ]
+                      ]
+                    }
+                  ],
+                  "componentProps": {
+                    "label": "Code",
+                    "icon": "code-bracket"
+                  }
+                },
+                {
+                  "id": "348-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "type": "tabs-item",
+                  "items": [
+                    {
+                      "id": "349-p-Energy $e$ and mass $m$ are related in the following way: $e = mc^2$",
+                      "type": "paragraph",
+                      "items": [
+                        {
+                          "id": "text-Energy ",
+                          "type": "text",
+                          "text": "Energy "
+                        },
+                        {
+                          "id": "inline-math-e",
+                          "type": "inline-math",
+                          "content": "<span class=\"katex\"><span class=\"katex-mathml\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><mi>e</mi></mrow><annotation encoding=\"application/x-tex\">e</annotation></semantics></math></span><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.4306em;\"></span><span class=\"mord mathnormal\">e</span></span></span></span>"
+                        },
+                        {
+                          "id": "text- and mass ",
+                          "type": "text",
+                          "text": " and mass "
+                        },
+                        {
+                          "id": "inline-math-m",
+                          "type": "inline-math",
+                          "content": "<span class=\"katex\"><span class=\"katex-mathml\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><mi>m</mi></mrow><annotation encoding=\"application/x-tex\">m</annotation></semantics></math></span><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.4306em;\"></span><span class=\"mord mathnormal\">m</span></span></span></span>"
+                        },
+                        {
+                          "id": "text- are related in the following way: ",
+                          "type": "text",
+                          "text": " are related in the following way: "
+                        },
+                        {
+                          "id": "inline-math-e = mc^2",
+                          "type": "inline-math",
+                          "content": "<span class=\"katex\"><span class=\"katex-mathml\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><mi>e</mi><mo>=</mo><mi>m</mi><msup><mi>c</mi><mn>2</mn></msup></mrow><annotation encoding=\"application/x-tex\">e = mc^2</annotation></semantics></math></span><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.4306em;\"></span><span class=\"mord mathnormal\">e</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.8141em;\"></span><span class=\"mord mathnormal\">m</span><span class=\"mord\"><span class=\"mord mathnormal\">c</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8141em;\"><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span></span></span></span>"
+                        }
+                      ]
+                    }
+                  ],
+                  "componentProps": {
+                    "label": "Preview",
+                    "icon": "eye"
+                  }
+                }
+              ],
+              "componentProps": {}
+            }
+          ]
+        },
+        {
+          "id": "section- Math blocks-355-h3",
+          "type": "section",
+          "headingId": " Math blocks-355-h3",
+          "items": [
+            {
+              "id": " Math blocks-355-h3",
+              "type": "heading",
+              "depth": 3,
+              "items": [
+                {
+                  "id": "text-Math blocks",
+                  "type": "text",
+                  "text": "Math blocks"
+                }
+              ]
+            },
+            {
+              "id": "357-tabs-",
+              "type": "tabs",
+              "items": [
+                {
+                  "id": "359-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "type": "tabs-item",
+                  "items": [
+                    {
+                      "id": "363-$$y = \\sum_{i=0}^{n-",
+                      "type": "code-block",
+                      "language": "latex",
+                      "syntaxHighlightedTokens": [
+                        [
+                          {
+                            "content": "$$",
+                            "offset": 0,
+                            "color": "#39ADB5",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "y = ",
+                            "offset": 2,
+                            "color": "#E2931D",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "\\",
+                            "offset": 6,
+                            "color": "#39ADB5",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "sum",
+                            "offset": 7,
+                            "color": "#E2931D",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "_{",
+                            "offset": 10,
+                            "color": "#39ADB5",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "i=",
+                            "offset": 12,
+                            "color": "#E2931D",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "0",
+                            "offset": 14,
+                            "color": "#F76D47",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "}^{",
+                            "offset": 15,
+                            "color": "#39ADB5",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "n",
+                            "offset": 18,
+                            "color": "#E2931D",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "-",
+                            "offset": 19,
+                            "color": "#39ADB5",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "1",
+                            "offset": 20,
+                            "color": "#F76D47",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "}",
+                            "offset": 21,
+                            "color": "#39ADB5",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": " ",
+                            "offset": 22,
+                            "color": "#E2931D",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "(",
+                            "offset": 23,
+                            "color": "#39ADB5",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "1",
+                            "offset": 24,
+                            "color": "#F76D47",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": " ",
+                            "offset": 25,
+                            "color": "#E2931D",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "+",
+                            "offset": 26,
+                            "color": "#39ADB5",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": " r",
+                            "offset": 27,
+                            "color": "#E2931D",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "/",
+                            "offset": 29,
+                            "color": "#39ADB5",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "12",
+                            "offset": 30,
+                            "color": "#F76D47",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": ")^{",
+                            "offset": 32,
+                            "color": "#39ADB5",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "12",
+                            "offset": 35,
+                            "color": "#F76D47",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "n",
+                            "offset": 37,
+                            "color": "#E2931D",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "}",
+                            "offset": 38,
+                            "color": "#39ADB5",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": " ",
+                            "offset": 39,
+                            "color": "#E2931D",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "-",
+                            "offset": 40,
+                            "color": "#39ADB5",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": " ",
+                            "offset": 41,
+                            "color": "#E2931D",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "\\",
+                            "offset": 42,
+                            "color": "#39ADB5",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "sum",
+                            "offset": 43,
+                            "color": "#E2931D",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "_{",
+                            "offset": 46,
+                            "color": "#39ADB5",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "i=",
+                            "offset": 48,
+                            "color": "#E2931D",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "0",
+                            "offset": 50,
+                            "color": "#F76D47",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "}^{",
+                            "offset": 51,
+                            "color": "#39ADB5",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "n",
+                            "offset": 54,
+                            "color": "#E2931D",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "-",
+                            "offset": 55,
+                            "color": "#39ADB5",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "1",
+                            "offset": 56,
+                            "color": "#F76D47",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "}",
+                            "offset": 57,
+                            "color": "#39ADB5",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": " r",
+                            "offset": 58,
+                            "color": "#E2931D",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "_",
+                            "offset": 60,
+                            "color": "#39ADB5",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "0",
+                            "offset": 61,
+                            "color": "#F76D47",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "^",
+                            "offset": 62,
+                            "color": "#39ADB5",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "i ",
+                            "offset": 63,
+                            "color": "#E2931D",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "-",
+                            "offset": 65,
+                            "color": "#39ADB5",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": " r",
+                            "offset": 66,
+                            "color": "#E2931D",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "_",
+                            "offset": 68,
+                            "color": "#39ADB5",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "0",
+                            "offset": 69,
+                            "color": "#F76D47",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "^",
+                            "offset": 70,
+                            "color": "#39ADB5",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "n",
+                            "offset": 71,
+                            "color": "#E2931D",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "$$",
+                            "offset": 72,
+                            "color": "#39ADB5",
+                            "fontStyle": 0
+                          }
+                        ]
+                      ],
+                      "darkSyntaxHighlightedTokens": [
+                        [
+                          {
+                            "content": "$$",
+                            "offset": 0,
+                            "color": "#89DDFF",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "y = ",
+                            "offset": 2,
+                            "color": "#FFCB6B",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "\\",
+                            "offset": 6,
+                            "color": "#89DDFF",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "sum",
+                            "offset": 7,
+                            "color": "#FFCB6B",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "_{",
+                            "offset": 10,
+                            "color": "#89DDFF",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "i=",
+                            "offset": 12,
+                            "color": "#FFCB6B",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "0",
+                            "offset": 14,
+                            "color": "#F78C6C",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "}^{",
+                            "offset": 15,
+                            "color": "#89DDFF",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "n",
+                            "offset": 18,
+                            "color": "#FFCB6B",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "-",
+                            "offset": 19,
+                            "color": "#89DDFF",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "1",
+                            "offset": 20,
+                            "color": "#F78C6C",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "}",
+                            "offset": 21,
+                            "color": "#89DDFF",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": " ",
+                            "offset": 22,
+                            "color": "#FFCB6B",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "(",
+                            "offset": 23,
+                            "color": "#89DDFF",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "1",
+                            "offset": 24,
+                            "color": "#F78C6C",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": " ",
+                            "offset": 25,
+                            "color": "#FFCB6B",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "+",
+                            "offset": 26,
+                            "color": "#89DDFF",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": " r",
+                            "offset": 27,
+                            "color": "#FFCB6B",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "/",
+                            "offset": 29,
+                            "color": "#89DDFF",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "12",
+                            "offset": 30,
+                            "color": "#F78C6C",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": ")^{",
+                            "offset": 32,
+                            "color": "#89DDFF",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "12",
+                            "offset": 35,
+                            "color": "#F78C6C",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "n",
+                            "offset": 37,
+                            "color": "#FFCB6B",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "}",
+                            "offset": 38,
+                            "color": "#89DDFF",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": " ",
+                            "offset": 39,
+                            "color": "#FFCB6B",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "-",
+                            "offset": 40,
+                            "color": "#89DDFF",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": " ",
+                            "offset": 41,
+                            "color": "#FFCB6B",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "\\",
+                            "offset": 42,
+                            "color": "#89DDFF",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "sum",
+                            "offset": 43,
+                            "color": "#FFCB6B",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "_{",
+                            "offset": 46,
+                            "color": "#89DDFF",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "i=",
+                            "offset": 48,
+                            "color": "#FFCB6B",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "0",
+                            "offset": 50,
+                            "color": "#F78C6C",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "}^{",
+                            "offset": 51,
+                            "color": "#89DDFF",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "n",
+                            "offset": 54,
+                            "color": "#FFCB6B",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "-",
+                            "offset": 55,
+                            "color": "#89DDFF",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "1",
+                            "offset": 56,
+                            "color": "#F78C6C",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "}",
+                            "offset": 57,
+                            "color": "#89DDFF",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": " r",
+                            "offset": 58,
+                            "color": "#FFCB6B",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "_",
+                            "offset": 60,
+                            "color": "#89DDFF",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "0",
+                            "offset": 61,
+                            "color": "#F78C6C",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "^",
+                            "offset": 62,
+                            "color": "#89DDFF",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "i ",
+                            "offset": 63,
+                            "color": "#FFCB6B",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "-",
+                            "offset": 65,
+                            "color": "#89DDFF",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": " r",
+                            "offset": 66,
+                            "color": "#FFCB6B",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "_",
+                            "offset": 68,
+                            "color": "#89DDFF",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "0",
+                            "offset": 69,
+                            "color": "#F78C6C",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "^",
+                            "offset": 70,
+                            "color": "#89DDFF",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "n",
+                            "offset": 71,
+                            "color": "#FFCB6B",
+                            "fontStyle": 0
+                          },
+                          {
+                            "content": "$$",
+                            "offset": 72,
+                            "color": "#89DDFF",
+                            "fontStyle": 0
+                          }
+                        ]
+                      ]
+                    }
+                  ],
+                  "componentProps": {
+                    "label": "Code",
+                    "icon": "code-bracket"
+                  }
+                },
+                {
+                  "id": "367-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "type": "tabs-item",
+                  "items": [
+                    {
+                      "id": "369-block-math",
+                      "type": "block-math",
+                      "content": "<span class=\"katex\"><span class=\"katex-mathml\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><mi>y</mi><mo>=</mo><msubsup><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>0</mn></mrow><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msubsup><mo stretchy=\"false\">(</mo><mn>1</mn><mo>+</mo><mi>r</mi><mi mathvariant=\"normal\">/</mi><mn>12</mn><msup><mo stretchy=\"false\">)</mo><mrow><mn>12</mn><mi>n</mi></mrow></msup><mo>−</mo><msubsup><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>0</mn></mrow><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msubsup><msubsup><mi>r</mi><mn>0</mn><mi>i</mi></msubsup><mo>−</mo><msubsup><mi>r</mi><mn>0</mn><mi>n</mi></msubsup></mrow><annotation encoding=\"application/x-tex\">y = \\sum_{i=0}^{n-1} (1 + r/12)^{12n} - \\sum_{i=0}^{n-1} r_0^i - r_0^n</annotation></semantics></math></span><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.625em;vertical-align:-0.1944em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.03588em;\">y</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">=</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1.2537em;vertical-align:-0.2997em;\"></span><span class=\"mop\"><span class=\"mop op-symbol small-op\" style=\"position:relative;top:0em;\">∑</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.954em;\"><span style=\"top:-2.4003em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\">i</span><span class=\"mrel mtight\">=</span><span class=\"mord mtight\">0</span></span></span></span><span style=\"top:-3.2029em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\">n</span><span class=\"mbin mtight\">−</span><span class=\"mord mtight\">1</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.2997em;\"><span></span></span></span></span></span></span><span class=\"mopen\">(</span><span class=\"mord\">1</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1.0641em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.02778em;\">r</span><span class=\"mord\">/12</span><span class=\"mclose\"><span class=\"mclose\">)</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8141em;\"><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">12</span><span class=\"mord mathnormal mtight\">n</span></span></span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">−</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:1.2537em;vertical-align:-0.2997em;\"></span><span class=\"mop\"><span class=\"mop op-symbol small-op\" style=\"position:relative;top:0em;\">∑</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.954em;\"><span style=\"top:-2.4003em;margin-left:0em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\">i</span><span class=\"mrel mtight\">=</span><span class=\"mord mtight\">0</span></span></span></span><span style=\"top:-3.2029em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\">n</span><span class=\"mbin mtight\">−</span><span class=\"mord mtight\">1</span></span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.2997em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.1667em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02778em;\">r</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8247em;\"><span style=\"top:-2.4519em;margin-left:-0.0278em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">0</span></span></span><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mathnormal mtight\">i</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.2481em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">−</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.9125em;vertical-align:-0.2481em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.02778em;\">r</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.6644em;\"><span style=\"top:-2.4519em;margin-left:-0.0278em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">0</span></span></span><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mathnormal mtight\">n</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.2481em;\"><span></span></span></span></span></span></span></span></span></span>"
+                    }
+                  ],
+                  "componentProps": {
+                    "label": "Preview",
+                    "icon": "eye"
+                  }
+                }
+              ],
+              "componentProps": {}
+            }
+          ]
+        },
+        {
+          "id": "section- Components-374-h2",
+          "type": "section",
+          "headingId": " Components-374-h2",
+          "items": [
+            {
+              "id": " Components-374-h2",
               "type": "heading",
               "depth": 2,
               "items": [
@@ -4660,12 +5575,12 @@
           ]
         },
         {
-          "id": "section- Youtube-338-h3",
+          "id": "section- Youtube-376-h3",
           "type": "section",
-          "headingId": " Youtube-338-h3",
+          "headingId": " Youtube-376-h3",
           "items": [
             {
-              "id": " Youtube-338-h3",
+              "id": " Youtube-376-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -4677,7 +5592,7 @@
               ]
             },
             {
-              "id": "339-p-Just add a link to a youtube video and it will render as a playable video on the page",
+              "id": "377-p-Just add a link to a youtube video and it will render as a playable video on the page",
               "type": "paragraph",
               "items": [
                 {
@@ -4688,15 +5603,15 @@
               ]
             },
             {
-              "id": "340-tabs-",
+              "id": "378-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "342-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "380-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "346-https://www.youtube.",
+                      "id": "384-https://www.youtube.",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -4727,11 +5642,11 @@
                   }
                 },
                 {
-                  "id": "350-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "388-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "352-p-https://www.youtube.com/watch?v=dCxSsr5xuL8&t=11s",
+                      "id": "390-p-https://www.youtube.com/watch?v=dCxSsr5xuL8&t=11s",
                       "type": "paragraph",
                       "items": [
                         {
@@ -4753,12 +5668,12 @@
           ]
         },
         {
-          "id": "section- Accordion-358-h3",
+          "id": "section- Accordion-396-h3",
           "type": "section",
-          "headingId": " Accordion-358-h3",
+          "headingId": " Accordion-396-h3",
           "items": [
             {
-              "id": " Accordion-358-h3",
+              "id": " Accordion-396-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -4770,15 +5685,15 @@
               ]
             },
             {
-              "id": "359-tabs-",
+              "id": "397-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "361-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "399-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "375-::accordion\n\n::accor",
+                      "id": "413-::accordion\n\n::accor",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -5299,19 +6214,19 @@
                   }
                 },
                 {
-                  "id": "379-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "417-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "381-accordion-",
+                      "id": "419-accordion-",
                       "type": "accordion",
                       "items": [
                         {
-                          "id": "382-accordion-item-label='First Item' icon='question-mark-circle'",
+                          "id": "420-accordion-item-label='First Item' icon='question-mark-circle'",
                           "type": "accordion-item",
                           "items": [
                             {
-                              "id": "383-p-Add **markdown** content here",
+                              "id": "421-p-Add **markdown** content here",
                               "type": "paragraph",
                               "items": [
                                 {
@@ -5344,11 +6259,11 @@
                           }
                         },
                         {
-                          "id": "385-accordion-item-label=\"Second Item\" icon=\"light-bulb\"",
+                          "id": "423-accordion-item-label=\"Second Item\" icon=\"light-bulb\"",
                           "type": "accordion-item",
                           "items": [
                             {
-                              "id": "386-p-==Second== item's content",
+                              "id": "424-p-==Second== item's content",
                               "type": "paragraph",
                               "items": [
                                 {
@@ -5388,7 +6303,7 @@
               "componentProps": {}
             },
             {
-              "id": "393-table",
+              "id": "431-table",
               "type": "table",
               "headers": [
                 [
@@ -5560,12 +6475,12 @@
           ]
         },
         {
-          "id": "section- Badge-395-h3",
+          "id": "section- Badge-433-h3",
           "type": "section",
-          "headingId": " Badge-395-h3",
+          "headingId": " Badge-433-h3",
           "items": [
             {
-              "id": " Badge-395-h3",
+              "id": " Badge-433-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -5577,15 +6492,15 @@
               ]
             },
             {
-              "id": "396-tabs-",
+              "id": "434-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "398-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "436-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "404-::badge{color='secon",
+                      "id": "442-::badge{color='secon",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -5756,15 +6671,15 @@
                   }
                 },
                 {
-                  "id": "408-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "446-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "410-badge-color='secondary'",
+                      "id": "448-badge-color='secondary'",
                       "type": "badge",
                       "items": [
                         {
-                          "id": "411-p-Label **here**",
+                          "id": "449-p-Label **here**",
                           "type": "paragraph",
                           "items": [
                             {
@@ -5800,7 +6715,7 @@
               "componentProps": {}
             },
             {
-              "id": "417-table",
+              "id": "455-table",
               "type": "table",
               "headers": [
                 [
@@ -6332,12 +7247,12 @@
           ]
         },
         {
-          "id": "section- Callout-420-h3",
+          "id": "section- Callout-458-h3",
           "type": "section",
-          "headingId": " Callout-420-h3",
+          "headingId": " Callout-458-h3",
           "items": [
             {
-              "id": " Callout-420-h3",
+              "id": " Callout-458-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -6349,15 +7264,15 @@
               ]
             },
             {
-              "id": "421-tabs-",
+              "id": "459-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "423-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "461-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "429-::callout\nLorem veli",
+                      "id": "467-::callout\nLorem veli",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -6432,15 +7347,15 @@
                   }
                 },
                 {
-                  "id": "433-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "471-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "435-callout-",
+                      "id": "473-callout-",
                       "type": "callout",
                       "items": [
                         {
-                          "id": "436-p-Lorem velit voluptate ex reprehenderit ullamco et culpa.",
+                          "id": "474-p-Lorem velit voluptate ex reprehenderit ullamco et culpa.",
                           "type": "paragraph",
                           "items": [
                             {
@@ -6463,7 +7378,7 @@
               "componentProps": {}
             },
             {
-              "id": "441-table",
+              "id": "479-table",
               "type": "table",
               "headers": [
                 [
@@ -7027,7 +7942,7 @@
               "align": []
             },
             {
-              "id": "446-p-You can also use the `note`, `tip`, `warning` and `caution` shortcuts with pre-defined icons and colors:",
+              "id": "484-p-You can also use the `note`, `tip`, `warning` and `caution` shortcuts with pre-defined icons and colors:",
               "type": "paragraph",
               "items": [
                 {
@@ -7078,15 +7993,15 @@
               ]
             },
             {
-              "id": "447-tabs-",
+              "id": "485-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "448-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "486-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "465-::note\nHere's some a",
+                      "id": "503-::note\nHere's some a",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -7347,15 +8262,15 @@
                   }
                 },
                 {
-                  "id": "467-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "505-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "468-note-",
+                      "id": "506-note-",
                       "type": "note",
                       "items": [
                         {
-                          "id": "469-p-Here's some additional information.",
+                          "id": "507-p-Here's some additional information.",
                           "type": "paragraph",
                           "items": [
                             {
@@ -7369,11 +8284,11 @@
                       "componentProps": {}
                     },
                     {
-                      "id": "471-tip-",
+                      "id": "509-tip-",
                       "type": "tip",
                       "items": [
                         {
-                          "id": "472-p-Here's a helpful suggestion.",
+                          "id": "510-p-Here's a helpful suggestion.",
                           "type": "paragraph",
                           "items": [
                             {
@@ -7387,11 +8302,11 @@
                       "componentProps": {}
                     },
                     {
-                      "id": "474-warning-",
+                      "id": "512-warning-",
                       "type": "warning",
                       "items": [
                         {
-                          "id": "475-p-Be careful with this action as it might have unexpected results.",
+                          "id": "513-p-Be careful with this action as it might have unexpected results.",
                           "type": "paragraph",
                           "items": [
                             {
@@ -7405,11 +8320,11 @@
                       "componentProps": {}
                     },
                     {
-                      "id": "477-caution-",
+                      "id": "515-caution-",
                       "type": "caution",
                       "items": [
                         {
-                          "id": "478-p-This action cannot be undone.",
+                          "id": "516-p-This action cannot be undone.",
                           "type": "paragraph",
                           "items": [
                             {
@@ -7434,12 +8349,12 @@
           ]
         },
         {
-          "id": "section- Card-483-h3",
+          "id": "section- Card-521-h3",
           "type": "section",
-          "headingId": " Card-483-h3",
+          "headingId": " Card-521-h3",
           "items": [
             {
-              "id": " Card-483-h3",
+              "id": " Card-521-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -7451,15 +8366,15 @@
               ]
             },
             {
-              "id": "484-tabs-",
+              "id": "522-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "485-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "523-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "490-::card{title=\"Icons\"",
+                      "id": "528-::card{title=\"Icons\"",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -7882,15 +8797,15 @@
                   }
                 },
                 {
-                  "id": "494-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "532-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "496-card-title=\"Icons\" icon=\"users\" color=\"secondary\" link=\"https://heroicons.com\"",
+                      "id": "534-card-title=\"Icons\" icon=\"users\" color=\"secondary\" link=\"https://heroicons.com\"",
                       "type": "card",
                       "items": [
                         {
-                          "id": "497-p-Click here to see __icons__.",
+                          "id": "535-p-Click here to see __icons__.",
                           "type": "paragraph",
                           "items": [
                             {
@@ -7936,12 +8851,12 @@
           ]
         },
         {
-          "id": "section- Card Group-504-h3",
+          "id": "section- Card Group-542-h3",
           "type": "section",
-          "headingId": " Card Group-504-h3",
+          "headingId": " Card Group-542-h3",
           "items": [
             {
-              "id": " Card Group-504-h3",
+              "id": " Card Group-542-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -7953,15 +8868,15 @@
               ]
             },
             {
-              "id": "505-tabs-",
+              "id": "543-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "506-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "544-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "527-::card-group\n\n::card",
+                      "id": "565-::card-group\n\n::card",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -8918,19 +9833,19 @@
                   }
                 },
                 {
-                  "id": "529-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "567-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "530-card-group-",
+                      "id": "568-card-group-",
                       "type": "card-group",
                       "items": [
                         {
-                          "id": "532-card-title='Dashboard' icon='chart-bar' link'https://github.com/nuxt-ui-pro/dashboard'",
+                          "id": "570-card-title='Dashboard' icon='chart-bar' link'https://github.com/nuxt-ui-pro/dashboard'",
                           "type": "card",
                           "items": [
                             {
-                              "id": "533-p-A dashboard with multi-column layout.",
+                              "id": "571-p-A dashboard with multi-column layout.",
                               "type": "paragraph",
                               "items": [
                                 {
@@ -8955,11 +9870,11 @@
                           }
                         },
                         {
-                          "id": "535-card-title='SaaS' icon='credit-card' link='https://github.com/nuxt-ui-pro/saas'",
+                          "id": "573-card-title='SaaS' icon='credit-card' link='https://github.com/nuxt-ui-pro/saas'",
                           "type": "card",
                           "items": [
                             {
-                              "id": "536-p-A template with landing, pricing, docs and blog.",
+                              "id": "574-p-A template with landing, pricing, docs and blog.",
                               "type": "paragraph",
                               "items": [
                                 {
@@ -8977,11 +9892,11 @@
                           }
                         },
                         {
-                          "id": "538-card-title='Docs' icon='document' link='https://github.com/nuxt-ui-pro/docs'",
+                          "id": "576-card-title='Docs' icon='document' link='https://github.com/nuxt-ui-pro/docs'",
                           "type": "card",
                           "items": [
                             {
-                              "id": "539-p-A documentation with `@nuxt/content`.",
+                              "id": "577-p-A documentation with `@nuxt/content`.",
                               "type": "paragraph",
                               "items": [
                                 {
@@ -9009,11 +9924,11 @@
                           }
                         },
                         {
-                          "id": "541-card-title='Landing' icon='presentation-chart-line' link='https://github.com/nuxt-ui-pro/landing'",
+                          "id": "579-card-title='Landing' icon='presentation-chart-line' link='https://github.com/nuxt-ui-pro/landing'",
                           "type": "card",
                           "items": [
                             {
-                              "id": "542-p-A landing page you can use as starting point.",
+                              "id": "580-p-A landing page you can use as starting point.",
                               "type": "paragraph",
                               "items": [
                                 {
@@ -9045,12 +9960,12 @@
           ]
         },
         {
-          "id": "section- Code Collapse-550-h3",
+          "id": "section- Code Collapse-588-h3",
           "type": "section",
-          "headingId": " Code Collapse-550-h3",
+          "headingId": " Code Collapse-588-h3",
           "items": [
             {
-              "id": " Code Collapse-550-h3",
+              "id": " Code Collapse-588-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -9062,15 +9977,15 @@
               ]
             },
             {
-              "id": "551-tabs-",
+              "id": "589-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "553-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "591-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "582-::code-collapse\n\n```",
+                      "id": "620-::code-collapse\n\n```",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -9911,15 +10826,15 @@
                   }
                 },
                 {
-                  "id": "584-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "622-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "585-code-collapse-open=true",
+                      "id": "623-code-collapse-open=true",
                       "type": "code-collapse",
                       "items": [
                         {
-                          "id": "607-@import \"tailwindcss",
+                          "id": "645-@import \"tailwindcss",
                           "type": "code-block",
                           "language": "css",
                           "name": "main.css",
@@ -10677,7 +11592,7 @@
               "componentProps": {}
             },
             {
-              "id": "611-table",
+              "id": "649-table",
               "type": "table",
               "headers": [
                 [
@@ -10994,12 +11909,12 @@
           ]
         },
         {
-          "id": "section- Code Group-618-h3",
+          "id": "section- Code Group-656-h3",
           "type": "section",
-          "headingId": " Code Group-618-h3",
+          "headingId": " Code Group-656-h3",
           "items": [
             {
-              "id": " Code Group-618-h3",
+              "id": " Code Group-656-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -11011,7 +11926,7 @@
               ]
             },
             {
-              "id": "619-p-Wrap your code-blocks around a `code-group` component to group them together in tabs.",
+              "id": "657-p-Wrap your code-blocks around a `code-group` component to group them together in tabs.",
               "type": "paragraph",
               "items": [
                 {
@@ -11032,15 +11947,15 @@
               ]
             },
             {
-              "id": "620-tabs-",
+              "id": "658-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "622-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "660-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "644-::code-group\n\n```bas",
+                      "id": "682-::code-group\n\n```bas",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -11349,15 +12264,15 @@
                   }
                 },
                 {
-                  "id": "648-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "686-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "650-code-group-",
+                      "id": "688-code-group-",
                       "type": "code-group",
                       "items": [
                         {
-                          "id": "654-pnpm add @nuxt/ui",
+                          "id": "692-pnpm add @nuxt/ui",
                           "type": "code-block",
                           "language": "bash",
                           "name": "pnpm",
@@ -11431,7 +12346,7 @@
                           ]
                         },
                         {
-                          "id": "658-yarn add @nuxt/ui",
+                          "id": "696-yarn add @nuxt/ui",
                           "type": "code-block",
                           "language": "bash",
                           "name": "yarn",
@@ -11505,7 +12420,7 @@
                           ]
                         },
                         {
-                          "id": "662-npm install @nuxt/ui",
+                          "id": "700-npm install @nuxt/ui",
                           "type": "code-block",
                           "language": "bash",
                           "name": "npm",
@@ -11579,7 +12494,7 @@
                           ]
                         },
                         {
-                          "id": "666-bun add @nuxt/ui",
+                          "id": "704-bun add @nuxt/ui",
                           "type": "code-block",
                           "language": "bash",
                           "name": "bun",
@@ -11665,7 +12580,7 @@
               "componentProps": {}
             },
             {
-              "id": "673-table",
+              "id": "711-table",
               "type": "table",
               "headers": [
                 [
@@ -11765,12 +12680,12 @@
           ]
         },
         {
-          "id": "section- Code Tree-676-h3",
+          "id": "section- Code Tree-714-h3",
           "type": "section",
-          "headingId": " Code Tree-676-h3",
+          "headingId": " Code Tree-714-h3",
           "items": [
             {
-              "id": " Code Tree-676-h3",
+              "id": " Code Tree-714-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -11782,19 +12697,19 @@
               ]
             },
             {
-              "id": "677-tabs-",
+              "id": "715-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "679-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "717-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "681-code-collapse-",
+                      "id": "719-code-collapse-",
                       "type": "code-collapse",
                       "items": [
                         {
-                          "id": "753-::code-tree{defaultV",
+                          "id": "791-::code-tree{defaultV",
                           "type": "code-block",
                           "language": "text",
                           "syntaxHighlightedTokens": [
@@ -12643,7 +13558,7 @@
                           ]
                         },
                         {
-                          "id": " Nuxt 3 Minimal Starter-754-h1",
+                          "id": " Nuxt 3 Minimal Starter-792-h1",
                           "type": "heading",
                           "depth": 1,
                           "items": [
@@ -12655,7 +13570,7 @@
                           ]
                         },
                         {
-                          "id": "756-p-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.",
+                          "id": "794-p-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.",
                           "type": "paragraph",
                           "items": [
                             {
@@ -12677,7 +13592,7 @@
                           ]
                         },
                         {
-                          "id": " Setup-758-h2",
+                          "id": " Setup-796-h2",
                           "type": "heading",
                           "depth": 2,
                           "items": [
@@ -12689,7 +13604,7 @@
                           ]
                         },
                         {
-                          "id": "760-p-Make sure to install the dependencies:",
+                          "id": "798-p-Make sure to install the dependencies:",
                           "type": "paragraph",
                           "items": [
                             {
@@ -12700,7 +13615,7 @@
                           ]
                         },
                         {
-                          "id": "774-# npm\nnpm install\n\n#",
+                          "id": "812-# npm\nnpm install\n\n#",
                           "type": "code-block",
                           "language": "bash",
                           "syntaxHighlightedTokens": [
@@ -12939,7 +13854,7 @@
                           ]
                         },
                         {
-                          "id": " Development Server-776-h2",
+                          "id": " Development Server-814-h2",
                           "type": "heading",
                           "depth": 2,
                           "items": [
@@ -12951,7 +13866,7 @@
                           ]
                         },
                         {
-                          "id": "778-p-Start the development server on `http://localhost:3000`:",
+                          "id": "816-p-Start the development server on `http://localhost:3000`:",
                           "type": "paragraph",
                           "items": [
                             {
@@ -12972,7 +13887,7 @@
                           ]
                         },
                         {
-                          "id": "792-# npm\nnpm run dev\n\n#",
+                          "id": "830-# npm\nnpm run dev\n\n#",
                           "type": "code-block",
                           "language": "bash",
                           "syntaxHighlightedTokens": [
@@ -13283,7 +14198,7 @@
                           ]
                         },
                         {
-                          "id": " Production-794-h2",
+                          "id": " Production-832-h2",
                           "type": "heading",
                           "depth": 2,
                           "items": [
@@ -13295,7 +14210,7 @@
                           ]
                         },
                         {
-                          "id": "796-p-Build the application for production:",
+                          "id": "834-p-Build the application for production:",
                           "type": "paragraph",
                           "items": [
                             {
@@ -13306,7 +14221,7 @@
                           ]
                         },
                         {
-                          "id": "810-# npm\nnpm run build\n",
+                          "id": "848-# npm\nnpm run build\n",
                           "type": "code-block",
                           "language": "bash",
                           "syntaxHighlightedTokens": [
@@ -13617,7 +14532,7 @@
                           ]
                         },
                         {
-                          "id": "812-p-Locally preview production build:",
+                          "id": "850-p-Locally preview production build:",
                           "type": "paragraph",
                           "items": [
                             {
@@ -13628,7 +14543,7 @@
                           ]
                         },
                         {
-                          "id": "826-# npm\nnpm run previe",
+                          "id": "864-# npm\nnpm run previe",
                           "type": "code-block",
                           "language": "bash",
                           "syntaxHighlightedTokens": [
@@ -13939,7 +14854,7 @@
                           ]
                         },
                         {
-                          "id": "828-p-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.",
+                          "id": "866-p-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.",
                           "type": "paragraph",
                           "items": [
                             {
@@ -13961,7 +14876,7 @@
                           ]
                         },
                         {
-                          "id": "833-\n::\n",
+                          "id": "871-\n::\n",
                           "type": "code-block",
                           "language": "text",
                           "syntaxHighlightedTokens": [
@@ -14015,15 +14930,15 @@
                   }
                 },
                 {
-                  "id": "838-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "876-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "840-code-tree-defaultValue=\"app/app.config.ts\"",
+                      "id": "878-code-tree-defaultValue=\"app/app.config.ts\"",
                       "type": "code-tree",
                       "items": [
                         {
-                          "id": "853-export default defin",
+                          "id": "891-export default defin",
                           "type": "code-block",
                           "language": "ts",
                           "name": "nuxt.config.ts",
@@ -14523,7 +15438,7 @@
                           ]
                         },
                         {
-                          "id": "858-@import \"tailwindcss",
+                          "id": "896-@import \"tailwindcss",
                           "type": "code-block",
                           "language": "css",
                           "name": "app/assets/css/main.css",
@@ -14685,7 +15600,7 @@
                           ]
                         },
                         {
-                          "id": "869-export default defin",
+                          "id": "907-export default defin",
                           "type": "code-block",
                           "language": "ts",
                           "name": "app/app.config.ts",
@@ -15183,7 +16098,7 @@
                           ]
                         },
                         {
-                          "id": "877-<template>\n  <UApp>\n",
+                          "id": "915-<template>\n  <UApp>\n",
                           "type": "code-block",
                           "language": "vue",
                           "name": "app/app.vue",
@@ -15429,7 +16344,7 @@
                           ]
                         },
                         {
-                          "id": "902-{\n  \"name\": \"nuxt-ap",
+                          "id": "940-{\n  \"name\": \"nuxt-ap",
                           "type": "code-block",
                           "language": "json",
                           "name": "package.json",
@@ -17483,7 +18398,7 @@
                           ]
                         },
                         {
-                          "id": "908-{\n  \"extends\": \"./.n",
+                          "id": "946-{\n  \"extends\": \"./.n",
                           "type": "code-block",
                           "language": "json",
                           "name": "tsconfig.json",
@@ -17637,7 +18552,7 @@
                           ]
                         },
                         {
-                          "id": "986-# Nuxt 3 Minimal Sta",
+                          "id": "1024-# Nuxt 3 Minimal Sta",
                           "type": "code-block",
                           "language": "md",
                           "name": "README.md",
@@ -19399,7 +20314,7 @@
               "componentProps": {}
             },
             {
-              "id": "994-table",
+              "id": "1032-table",
               "type": "table",
               "headers": [
                 [
@@ -19502,12 +20417,12 @@
           ]
         },
         {
-          "id": "section- Collapsible-998-h3",
+          "id": "section- Collapsible-1036-h3",
           "type": "section",
-          "headingId": " Collapsible-998-h3",
+          "headingId": " Collapsible-1036-h3",
           "items": [
             {
-              "id": " Collapsible-998-h3",
+              "id": " Collapsible-1036-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -19519,7 +20434,7 @@
               ]
             },
             {
-              "id": "1000-p-Wrap your content with the `collapsible` component to display a [Collapse](https://ui.nuxt.com/components/collapsible) in your content.",
+              "id": "1038-p-Wrap your content with the `collapsible` component to display a [Collapse](https://ui.nuxt.com/components/collapsible) in your content.",
               "type": "paragraph",
               "items": [
                 {
@@ -19551,15 +20466,15 @@
               ]
             },
             {
-              "id": "1002-tabs-",
+              "id": "1040-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "1004-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "1042-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "1016-::collapsible\n\n| Pro",
+                      "id": "1054-::collapsible\n\n| Pro",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -20086,15 +21001,15 @@
                   }
                 },
                 {
-                  "id": "1018-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "1056-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "1019-collapsible-",
+                      "id": "1057-collapsible-",
                       "type": "collapsible",
                       "items": [
                         {
-                          "id": "1020-table",
+                          "id": "1058-table",
                           "type": "table",
                           "headers": [
                             [
@@ -20262,7 +21177,7 @@
               "componentProps": {}
             },
             {
-              "id": "1028-table",
+              "id": "1066-table",
               "type": "table",
               "headers": [
                 [
@@ -20562,12 +21477,12 @@
           ]
         },
         {
-          "id": "section- Field-1034-h3",
+          "id": "section- Field-1072-h3",
           "type": "section",
-          "headingId": " Field-1034-h3",
+          "headingId": " Field-1072-h3",
           "items": [
             {
-              "id": " Field-1034-h3",
+              "id": " Field-1072-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -20579,7 +21494,7 @@
               ]
             },
             {
-              "id": "1035-p-A field, prop or parameter to display in your content.",
+              "id": "1073-p-A field, prop or parameter to display in your content.",
               "type": "paragraph",
               "items": [
                 {
@@ -20590,15 +21505,15 @@
               ]
             },
             {
-              "id": "1036-tabs-",
+              "id": "1074-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "1037-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "1075-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "1042-::field{name=\"name\" ",
+                      "id": "1080-::field{name=\"name\" ",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -20949,15 +21864,15 @@
                   }
                 },
                 {
-                  "id": "1044-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "1082-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "1045-field-name=\"name\" type=\"string\" required",
+                      "id": "1083-field-name=\"name\" type=\"string\" required",
                       "type": "field",
                       "items": [
                         {
-                          "id": "1046-p-The `description` can be set here with full **markdown** support.",
+                          "id": "1084-p-The `description` can be set here with full **markdown** support.",
                           "type": "paragraph",
                           "items": [
                             {
@@ -21010,7 +21925,7 @@
               "componentProps": {}
             },
             {
-              "id": "1051-table",
+              "id": "1089-table",
               "type": "table",
               "headers": [
                 [
@@ -21120,12 +22035,12 @@
           ]
         },
         {
-          "id": "section- Field Group-1056-h3",
+          "id": "section- Field Group-1094-h3",
           "type": "section",
-          "headingId": " Field Group-1056-h3",
+          "headingId": " Field Group-1094-h3",
           "items": [
             {
-              "id": " Field Group-1056-h3",
+              "id": " Field Group-1094-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -21137,19 +22052,19 @@
               ]
             },
             {
-              "id": "1057-tabs-",
+              "id": "1095-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "1058-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "1096-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "1059-code-collapse-",
+                      "id": "1097-code-collapse-",
                       "type": "code-collapse",
                       "items": [
                         {
-                          "id": "1078-::field-group\n  ::fi",
+                          "id": "1116-::field-group\n  ::fi",
                           "type": "code-block",
                           "language": "mdc",
                           "syntaxHighlightedTokens": [
@@ -22453,19 +23368,19 @@
                   }
                 },
                 {
-                  "id": "1081-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "1119-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "1082-field-group-",
+                      "id": "1120-field-group-",
                       "type": "field-group",
                       "items": [
                         {
-                          "id": "1083-field-name=\"analytics\" type=\"boolean\"",
+                          "id": "1121-field-name=\"analytics\" type=\"boolean\"",
                           "type": "field",
                           "items": [
                             {
-                              "id": "1084-p-Default to `false` - Enables analytics for your project (coming soon).",
+                              "id": "1122-p-Default to `false` - Enables analytics for your project (coming soon).",
                               "type": "paragraph",
                               "items": [
                                 {
@@ -22492,11 +23407,11 @@
                           }
                         },
                         {
-                          "id": "1086-field-name=\"blob\" type=\"boolean\"",
+                          "id": "1124-field-name=\"blob\" type=\"boolean\"",
                           "type": "field",
                           "items": [
                             {
-                              "id": "1087-p-Default to `false` - Enables blob storage to store static assets, such as images, videos and more.",
+                              "id": "1125-p-Default to `false` - Enables blob storage to store static assets, such as images, videos and more.",
                               "type": "paragraph",
                               "items": [
                                 {
@@ -22523,11 +23438,11 @@
                           }
                         },
                         {
-                          "id": "1089-field-name=\"cache\" type=\"boolean\"",
+                          "id": "1127-field-name=\"cache\" type=\"boolean\"",
                           "type": "field",
                           "items": [
                             {
-                              "id": "1090-p-Default to `false` - Enables cache storage to cache your server route responses or functions using Nitro's `cachedEventHandler` and `cachedFunction`",
+                              "id": "1128-p-Default to `false` - Enables cache storage to cache your server route responses or functions using Nitro's `cachedEventHandler` and `cachedFunction`",
                               "type": "paragraph",
                               "items": [
                                 {
@@ -22569,11 +23484,11 @@
                           }
                         },
                         {
-                          "id": "1092-field-name=\"database\" type=\"boolean\"",
+                          "id": "1130-field-name=\"database\" type=\"boolean\"",
                           "type": "field",
                           "items": [
                             {
-                              "id": "1093-p-Default to `false` - Enables SQL database to store your application's data.",
+                              "id": "1131-p-Default to `false` - Enables SQL database to store your application's data.",
                               "type": "paragraph",
                               "items": [
                                 {
@@ -22614,12 +23529,12 @@
           ]
         },
         {
-          "id": "section- Icon-1099-h3",
+          "id": "section- Icon-1137-h3",
           "type": "section",
-          "headingId": " Icon-1099-h3",
+          "headingId": " Icon-1137-h3",
           "items": [
             {
-              "id": " Icon-1099-h3",
+              "id": " Icon-1137-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -22631,7 +23546,7 @@
               ]
             },
             {
-              "id": "1100-p-Find icon names from [heroicons](https://heroicons.com/) or just type `/` and search for the icon you are looking for.",
+              "id": "1138-p-Find icon names from [heroicons](https://heroicons.com/) or just type `/` and search for the icon you are looking for.",
               "type": "paragraph",
               "items": [
                 {
@@ -22663,15 +23578,15 @@
               ]
             },
             {
-              "id": "1101-tabs-",
+              "id": "1139-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "1102-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "1140-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "1105-Icons can be display",
+                      "id": "1143-Icons can be display",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -22702,11 +23617,11 @@
                   }
                 },
                 {
-                  "id": "1107-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "1145-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "1108-p-Icons can be displayed inline :icon{name=\"face-smile\"}",
+                      "id": "1146-p-Icons can be displayed inline :icon{name=\"face-smile\"}",
                       "type": "paragraph",
                       "items": [
                         {
@@ -22734,7 +23649,7 @@
               "componentProps": {}
             },
             {
-              "id": "1112-table",
+              "id": "1150-table",
               "type": "table",
               "headers": [
                 [
@@ -22783,12 +23698,12 @@
           ]
         },
         {
-          "id": "section- Key Binding-1115-h3",
+          "id": "section- Key Binding-1153-h3",
           "type": "section",
-          "headingId": " Key Binding-1115-h3",
+          "headingId": " Key Binding-1153-h3",
           "items": [
             {
-              "id": " Key Binding-1115-h3",
+              "id": " Key Binding-1153-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -22800,7 +23715,7 @@
               ]
             },
             {
-              "id": "1116-p-Search for special keys by typing `/` such as :kbd{value=\"meta\"} and :kbd{value=\"shift\"}",
+              "id": "1154-p-Search for special keys by typing `/` such as :kbd{value=\"meta\"} and :kbd{value=\"shift\"}",
               "type": "paragraph",
               "items": [
                 {
@@ -22842,15 +23757,15 @@
               ]
             },
             {
-              "id": "1117-tabs-",
+              "id": "1155-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "1118-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "1156-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "1121-Search by pressing :",
+                      "id": "1159-Search by pressing :",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -22881,11 +23796,11 @@
                   }
                 },
                 {
-                  "id": "1123-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "1161-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "1124-p-Search by pressing :kbd{value=\"meta\"} :kbd{value=\"K\"}",
+                      "id": "1162-p-Search by pressing :kbd{value=\"meta\"} :kbd{value=\"K\"}",
                       "type": "paragraph",
                       "items": [
                         {
@@ -22926,7 +23841,7 @@
               "componentProps": {}
             },
             {
-              "id": "1127-table",
+              "id": "1165-table",
               "type": "table",
               "headers": [
                 [
@@ -22975,12 +23890,12 @@
           ]
         },
         {
-          "id": "section- Tabs-1130-h3",
+          "id": "section- Tabs-1168-h3",
           "type": "section",
-          "headingId": " Tabs-1130-h3",
+          "headingId": " Tabs-1168-h3",
           "items": [
             {
-              "id": " Tabs-1130-h3",
+              "id": " Tabs-1168-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -22992,7 +23907,7 @@
               ]
             },
             {
-              "id": "1132-p-Use the `tabs` and `tabs-item` components to display tabs in your content.",
+              "id": "1170-p-Use the `tabs` and `tabs-item` components to display tabs in your content.",
               "type": "paragraph",
               "items": [
                 {
@@ -23023,15 +23938,15 @@
               ]
             },
             {
-              "id": "1133-tabs-",
+              "id": "1171-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "1134-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "1172-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "1158-::tabs\n\n::tabs-item{",
+                      "id": "1196-::tabs\n\n::tabs-item{",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -23656,23 +24571,23 @@
                   }
                 },
                 {
-                  "id": "1160-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "1198-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "1161-card-",
+                      "id": "1199-card-",
                       "type": "card",
                       "items": [
                         {
-                          "id": "1162-tabs-",
+                          "id": "1200-tabs-",
                           "type": "tabs",
                           "items": [
                             {
-                              "id": "1163-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                              "id": "1201-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                               "type": "tabs-item",
                               "items": [
                                 {
-                                  "id": "1168-::callout\nLorem veli",
+                                  "id": "1206-::callout\nLorem veli",
                                   "type": "code-block",
                                   "language": "mdc",
                                   "syntaxHighlightedTokens": [
@@ -23747,15 +24662,15 @@
                               }
                             },
                             {
-                              "id": "1170-tabs-item-label=\"Preview\" icon=\"eye\"",
+                              "id": "1208-tabs-item-label=\"Preview\" icon=\"eye\"",
                               "type": "tabs-item",
                               "items": [
                                 {
-                                  "id": "1171-callout-",
+                                  "id": "1209-callout-",
                                   "type": "callout",
                                   "items": [
                                     {
-                                      "id": "1172-p-Lorem velit voluptate ex reprehenderit ullamco et culpa.",
+                                      "id": "1210-p-Lorem velit voluptate ex reprehenderit ullamco et culpa.",
                                       "type": "paragraph",
                                       "items": [
                                         {
@@ -23790,7 +24705,7 @@
               "componentProps": {}
             },
             {
-              "id": "1179-table",
+              "id": "1217-table",
               "type": "table",
               "headers": [
                 [
@@ -23845,12 +24760,12 @@
           ]
         },
         {
-          "id": "section- Steps-1183-h3",
+          "id": "section- Steps-1221-h3",
           "type": "section",
-          "headingId": " Steps-1183-h3",
+          "headingId": " Steps-1221-h3",
           "items": [
             {
-              "id": " Steps-1183-h3",
+              "id": " Steps-1221-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -23862,7 +24777,7 @@
               ]
             },
             {
-              "id": "1184-p-Wrap your headings with the Steps component to display a list of steps.",
+              "id": "1222-p-Wrap your headings with the Steps component to display a list of steps.",
               "type": "paragraph",
               "items": [
                 {
@@ -23873,7 +24788,7 @@
               ]
             },
             {
-              "id": "1186-p-Use the `level` prop to define which heading will be used for the steps.",
+              "id": "1224-p-Use the `level` prop to define which heading will be used for the steps.",
               "type": "paragraph",
               "items": [
                 {
@@ -23894,15 +24809,15 @@
               ]
             },
             {
-              "id": "1187-tabs-",
+              "id": "1225-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "1189-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "1227-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "1211-::steps{level=\"3\"}\n\n",
+                      "id": "1249-::steps{level=\"3\"}\n\n",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -24437,15 +25352,15 @@
                   }
                 },
                 {
-                  "id": "1215-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "1253-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "1217-steps-level=\"3\"",
+                      "id": "1255-steps-level=\"3\"",
                       "type": "steps",
                       "items": [
                         {
-                          "id": " Add the Nuxt UI Pro module in your `nuxt.config.ts`-1219-h3",
+                          "id": " Add the Nuxt UI Pro module in your `nuxt.config.ts`-1257-h3",
                           "type": "heading",
                           "depth": 3,
                           "items": [
@@ -24462,7 +25377,7 @@
                           ]
                         },
                         {
-                          "id": "1225-export default defin",
+                          "id": "1263-export default defin",
                           "type": "code-block",
                           "language": "ts",
                           "name": "nuxt.config.ts",
@@ -24688,7 +25603,7 @@
                           ]
                         },
                         {
-                          "id": " Import Tailwind CSS and Nuxt UI Pro in your CSS-1227-h3",
+                          "id": " Import Tailwind CSS and Nuxt UI Pro in your CSS-1265-h3",
                           "type": "heading",
                           "depth": 3,
                           "items": [
@@ -24700,7 +25615,7 @@
                           ]
                         },
                         {
-                          "id": "1232-@import \"tailwindcss",
+                          "id": "1270-@import \"tailwindcss",
                           "type": "code-block",
                           "language": "css",
                           "name": "assets/css/main.css",
@@ -24876,7 +25791,7 @@
               "componentProps": {}
             },
             {
-              "id": "1240-table",
+              "id": "1278-table",
               "type": "table",
               "headers": [
                 [
