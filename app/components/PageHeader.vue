@@ -35,15 +35,14 @@ const deleteCover = () => {
 
 <template>
   <div
-    class="relative z-0 flex w-full flex-initial justify-center"
-    :class="{ 'h-96': page?.coverUrl }"
+    class="relative z-0 flex w-full flex-initial flex-col items-center justify-center"
   >
-    <div v-if="page?.coverUrl" class="absolute top-0 right-0 left-0 z-0 h-64">
+    <div v-if="page?.coverUrl" class="h-64 w-full">
       <img
         :src="
-          !page?.coverUrl?.includes('https://')
-            ? `/api/private/avatars/${page?.coverUrl}`
-            : page?.coverUrl
+          !/^https?:\/\//.test(page.coverUrl)
+            ? `/api/private/avatars/${page.coverUrl}`
+            : page.coverUrl
         "
         alt="Page Cover"
         style="object-position: center 20%"

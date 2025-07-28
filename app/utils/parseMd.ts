@@ -15,6 +15,7 @@ import { bundledLanguages, codeToTokens } from "shiki";
 import type { BundledLanguage, ThemedToken } from "shiki";
 import katex from "katex";
 import { sanitizeUrl } from "@braintree/sanitize-url";
+import DOMPurify from "dompurify";
 
 /**
  *
@@ -110,9 +111,12 @@ export async function parseMd(markdown: string): Promise<MdNode[]> {
     }
     if (trimmed.startsWith("$$") && trimmed.endsWith("$$")) {
       // Inline math block
-      const content = katex.renderToString(trimmed.slice(2, -2), {
-        throwOnError: false,
-      });
+      const content = katex.renderToString(
+        DOMPurify.sanitize(trimmed.slice(2, -2)),
+        {
+          throwOnError: false,
+        },
+      );
       listToPushTo.push({
         id: `${index}-block-math`,
         type: "block-math",
@@ -322,9 +326,12 @@ export async function parseLine(mdLine: string): Promise<MdNode[]> {
         items: await parseLine(part.slice(1, -1)),
       });
     } else if (part.startsWith("$") && part.endsWith("$")) {
-      const renderedMath = katex.renderToString(part.slice(1, -1), {
-        throwOnError: false,
-      });
+      const renderedMath = katex.renderToString(
+        DOMPurify.sanitize(part.slice(1, -1)),
+        {
+          throwOnError: false,
+        },
+      );
       tokens.push({
         id: `inline-math-${part.slice(1, -1)}`,
         type: "inline-math",
