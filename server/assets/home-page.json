@@ -2,7 +2,7 @@
   "id": 2,
   "userId": 1,
   "title": "Typography",
-  "emoji": "👶🏻",
+  "emoji": "🎨",
   "coverUrl": "https://www.notion.so/images/page-cover/woodcuts_3.jpg",
   "isPublic": false,
   "isFavorite": false,
@@ -15,7 +15,7 @@
     }
   ],
   "parentId": null,
-  "lastUpdatedAt": 1753207511726,
+  "lastUpdatedAt": 1753737499451,
   "lastUpdatedByName": "Tyler Higgs",
   "createdAt": 1750112383000,
   "createdByName": "Tyler Higgs",
@@ -26,15 +26,15 @@
       "pageId": 2,
       "index": 0,
       "type": "text",
-      "textContent": "\n\n## Introduction\nWelcome! If you navigate to the [editor](../edit) (after logging in with Google) you can create pages like this one by using a mixture of markdown and extra components.\n\n## Colors\nFor any `color` properties, here are your options:\n| Color | Description |\n| `primary`{color='primary'} | Main brand color, used as the default color for components. |\n| `secondary`{color='secondary'} | Secondary color to complement the primary color. |\n| `success`{color='success'} | Used for success states. |\n| `warning`{color='warning'} | Used for warning states. |\n| `info`{color='info'} | Used for informational states. |\n| `neutral`{color='neutral'} | Neutral color for backgrounds, text, etc. |\n\n## Markdown components\n### `h1`\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n# This is an h1\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n# This is an h1\n\n::\n\n::\n### `h2`\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n# This is an h2\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n# This is an h2\n\n::\n\n::\n### `h3`\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n# This is an h3\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n# This is an h3\n\n::\n\n::\n\n### `a` (link)\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n[Nuxt documentation](https://nuxt.com)\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n[Nuxt documentation](https://nuxt.com)\n\n::\n\n::\n\n### `blockquote`\n\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n> While Nuxt UI is free and open source, Nuxt UI Pro is a premium product that helps sustain Nuxt OSS development, check out the License section to learn more.\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n> While Nuxt UI is free and open source, Nuxt UI Pro is a premium product that helps sustain Nuxt OSS development, check out the License section to learn more.\n\n\n::\n\n::\n### `strong`\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n**Strong text**\n```\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n**Strong text**\n::\n::\n### `em`\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n*Emphasized text*\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n*Emphasized text*\n::\n::\n### `s` (strikethrough)\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n~~The world is flat~~ We now know that the world is round.\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n~~The world is flat~~ We now know that the world is round.\n::\n::\n### `mark` (highlighted)\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\nI need to highlight these ==very important words==.\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\nI need to highlight these ==very important words==.\n::\n::\n### `sup` (superscript)\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\nx^2^ is a square\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\nx^2^ is a square\n::\n::\n### `sub` (subscript)\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\nH~2~O\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\nH~2~O\n::\n::\n\n### `ul` (unordered list)\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n- I'm a list item.\n  - I'm nested.\n- I'm the last list item.\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n- I'm a list item.\n  - I'm nested.\n- I'm the last list item.\n::\n::\n\n### `ol` (ordered list)\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n1. I'm a list item.\n  1. I'm another list item.\n2. I'm the last list item.\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n1. I'm a list item.\n  1. I'm nested.\n2. I'm the last list item.\n::\n::\n\n### `hr` (horizontal rule)\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n-------\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n-------\n::\n::\n\n### `table`\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n| Prop    | Default   | Type                |\n|---------|-----------|---------------------|\n| `name`  |           | `string`{lang=\"ts\"} |\n| `size`  | `md`      | `string`{lang=\"ts\"} |\n| `color` | `neutral` | `string`{lang=\"ts\"} |\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n| Prop    | Default   | Type                |\n|---------|-----------|---------------------|\n| `name`  |           | `string`{lang=\"ts\"} |\n| `size`  | `md`      | `string`{lang=\"ts\"} |\n| `color` | `neutral` | `string`{lang=\"ts\"} |\n::\n::\n\n### `img`\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n![Nuxt Social Image](https://nuxt.com/new-social.jpg)\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n![Nuxt Social Image](https://nuxt.com/new-social.jpg)\n::\n::\n\n### `code`\n\nInline code\n\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n`inline code`\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n`inline code`\n::\n::\n\nYou can use any of the [colors](#3-h2)\n\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n`inline code`{color=\"error\"}\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n`inline code`{color=\"error\"}\n::\n::\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n`const isFalse = (b: boolean) => !b`{lang=\"typescript\"}\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n`const isFalse = (b: boolean) => !b`{lang=\"typescript\"}\n::\n::\n\n| Prop    | Default   | Type |\n| `lang`  |           | `string`{lang='typescript'} |\n| `color` | `neutral` | `\"error\" | \"primary\" | \"secondary\" | \"success\" | \"info\" | \"warning\" | \"neutral\"`{lang='typescript'} |\n\n### `pre` (code block)\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n````mdc\n```typescript\nconst isFalse = (b: boolean) => {\n  return !b\n}\n```\n````\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n```typescript\nconst isFalse = (b: boolean) => {\n  return !b\n}\n```\n::\n::\nOr name the code block like this:\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n````mdc\n```typescript [is-false.ts]\nconst isFalse = (b: boolean) => {\n  return !b\n}\n```\n````\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n```typescript [is-false.ts]\nconst isFalse = (b: boolean) => {\n  return !b\n}\n```\n::\n::\n\n## Components\n\n### Youtube\nJust add a link to a youtube video and it will render as a playable video on the page\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\nhttps://www.youtube.com/watch?v=dCxSsr5xuL8&t=11s\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\nhttps://www.youtube.com/watch?v=dCxSsr5xuL8&t=11s\n\n::\n\n::\n\n### Accordion\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n::accordion\n\n::accordion-item{label='First Item' icon='question-mark-circle'}\nAdd **markdown** content here\n::\n\n::accordion-item{label=\"Second Item\" icon=\"light-bulb\"}\n==Second== item's content\n::\n\n::\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n::accordion\n::accordion-item{label='First Item' icon='question-mark-circle'}\nAdd **markdown** content here\n::\n::accordion-item{label=\"Second Item\" icon=\"light-bulb\"}\n==Second== item's content\n::\n::\n\n::\n\n::\n| Prop   | Default      | Type                    |\n| `type` | `'multiple'` | `'multiple' | 'single'`{lang='typescript'} |\n### Badge\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n::badge{color='secondary'}\nLabel **here**\n::\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n::badge{color='secondary'}\nLabel **here**\n::\n\n::\n\n::\n| Prop    | Default     | Type                    |\n| `color` | `'primary'` | `\"neutral\" | \"error\" | \"warning\" | \"info\" | \"success\" | \"primary\" | \"secondary\"`{lang='typescript'} |\n\n### Callout\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n::callout\nLorem velit voluptate ex reprehenderit ullamco et culpa.\n::\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n::callout\nLorem velit voluptate ex reprehenderit ullamco et culpa.\n::\n::\n::\n\n| Prop    | Default     | Type     |\n| `color` | `'primary'` | `\"neutral\" | \"error\" | \"warning\" | \"info\" | \"success\" | \"primary\" | \"secondary\"`{lang='typescript'} |\n| `icon`  |             | `string` |\n| `link`  |             | `string` | \n\nYou can also use the `note`, `tip`, `warning` and `caution` shortcuts with pre-defined icons and colors:\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n::note\nHere's some additional information.\n::\n\n::tip\nHere's a helpful suggestion.\n::\n\n::warning\nBe careful with this action as it might have unexpected results.\n::\n\n::caution\nThis action cannot be undone.\n::\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n::note\nHere's some additional information.\n::\n::tip\nHere's a helpful suggestion.\n::\n::warning\nBe careful with this action as it might have unexpected results.\n::\n::caution\nThis action cannot be undone.\n::\n::\n::\n\n### Card\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n::card{title=\"Icons\" icon=\"users\" color=\"secondary\" link=\"https://heroicons.com\"}\nClick here to see __icons__.\n::\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n::card{title=\"Icons\" icon=\"users\" color=\"secondary\" link=\"https://heroicons.com\"}\nClick here to see __icons__.\n::\n\n::\n\n::\n\n### Card Group\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n::card-group\n\n::card{title='Dashboard' icon='chart-bar' link'https://github.com/nuxt-ui-pro/dashboard'}\nA dashboard with multi-column layout.\n::\n\n::card{title='SaaS' icon='credit-card' link='https://github.com/nuxt-ui-pro/saas'}\nA template with landing, pricing, docs and blog.\n::\n\n::card{title='Docs' icon='document' link='https://github.com/nuxt-ui-pro/docs'}\nA documentation with `@nuxt/content`.\n::\n\n::card{title='Landing' icon='presentation-chart-line' link='https://github.com/nuxt-ui-pro/landing'}\nA landing page you can use as starting point.\n::\n\n::\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n::card-group\n\n::card{title='Dashboard' icon='chart-bar' link'https://github.com/nuxt-ui-pro/dashboard'}\nA dashboard with multi-column layout.\n::\n::card{title='SaaS' icon='credit-card' link='https://github.com/nuxt-ui-pro/saas'}\nA template with landing, pricing, docs and blog.\n::\n::card{title='Docs' icon='document' link='https://github.com/nuxt-ui-pro/docs'}\nA documentation with `@nuxt/content`.\n::\n::card{title='Landing' icon='presentation-chart-line' link='https://github.com/nuxt-ui-pro/landing'}\nA landing page you can use as starting point.\n::\n\n::\n::\n\n::\n\n### Code Collapse\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n````mdc\n::code-collapse\n\n```css [main.css]\n@import \"tailwindcss\";\n@import \"@nuxt/ui\";\n\n@theme static {\n  --font-sans: 'Public Sans', sans-serif;\n\n  --breakpoint-3xl: 1920px;\n\n  --color-green-50: #EFFDF5;\n  --color-green-100: #D9FBE8;\n  --color-green-200: #B3F5D1;\n  --color-green-300: #75EDAE;\n  --color-green-400: #00DC82;\n  --color-green-500: #00C16A;\n  --color-green-600: #00A155;\n  --color-green-700: #007F45;\n  --color-green-800: #016538;\n  --color-green-900: #0A5331;\n  --color-green-950: #052E16;\n}\n```\n\n::\n````\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n::code-collapse{open=true}\n```css [main.css]\n@import \"tailwindcss\";\n@import \"@nuxt/ui\";\n\n@theme static {\n  --font-sans: 'Public Sans', sans-serif;\n\n  --breakpoint-3xl: 1920px;\n\n  --color-green-50: #EFFDF5;\n  --color-green-100: #D9FBE8;\n  --color-green-200: #B3F5D1;\n  --color-green-300: #75EDAE;\n  --color-green-400: #00DC82;\n  --color-green-500: #00C16A;\n  --color-green-600: #00A155;\n  --color-green-700: #007F45;\n  --color-green-800: #016538;\n  --color-green-900: #0A5331;\n  --color-green-950: #052E16;\n}\n```\n::\n::\n::\n| Prop        | Default                             | Type                                                    |\n| `icon`      | `'chevron-down'`{lang='typescript'} | `string` The icon displayed to toggle the code.         |\n| `name`      |                                     | `string` The name displayed in the trigger label.       |\n| `openText`  | `'Expand'`{lang='typescript'}       | `string` The text displayed when the code is collapsed. |\n| `closeText` | `'Collapse'`{lang='typescript'}     | `string` The text displayed when the code is expanded.  |\n| `open`      | `false`{lang='typescript'}          | `boolean`                                               |\n\n### Code Group\nWrap your code-blocks around a `code-group` component to group them together in tabs.\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n````mdc\n::code-group\n\n```bash [pnpm]\npnpm add @nuxt/ui\n```\n\n```bash [yarn]\nyarn add @nuxt/ui\n```\n\n```bash [npm]\nnpm install @nuxt/ui\n```\n\n```bash [bun]\nbun add @nuxt/ui\n```\n\n::\n````\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n::code-group\n\n```bash [pnpm]\npnpm add @nuxt/ui\n```\n\n```bash [yarn]\nyarn add @nuxt/ui\n```\n\n```bash [npm]\nnpm install @nuxt/ui\n```\n\n```bash [bun]\nbun add @nuxt/ui\n```\n\n::\n\n::\n\n::\n| Prop | Default | Type |\n| `'defaultValue'` | 0 | `number | string`{lang='typescript'} |\n\n### Code Tree\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n::code-collapse\n`````mdc\n::code-tree{defaultValue=\"app/app.config.ts\"}\n\n```ts [nuxt.config.ts]\nexport default defineNuxtConfig({\n  modules: ['@nuxt/ui-pro'],\n\n  future: {\n    compatibilityVersion: 4\n  },\n\n  css: ['~/assets/css/main.css']\n})\n\n```\n\n```css [app/assets/css/main.css]\n@import \"tailwindcss\";\n@import \"@nuxt/ui-pro\";\n```\n\n```ts [app/app.config.ts]\nexport default defineAppConfig({\n  ui: {\n    colors: {\n      primary: 'sky',\n      colors: 'slate'\n    }\n  }\n})\n```\n\n```vue [app/app.vue]\n<template>\n  <UApp>\n    <NuxtPage />\n  </UApp>\n</template>\n```\n\n```json [package.json]\n{\n  \"name\": \"nuxt-app\",\n  \"private\": true,\n  \"type\": \"module\",\n  \"scripts\": {\n    \"build\": \"nuxt build\",\n    \"dev\": \"nuxt dev\",\n    \"generate\": \"nuxt generate\",\n    \"preview\": \"nuxt preview\",\n    \"postinstall\": \"nuxt prepare\",\n    \"typecheck\": \"nuxt typecheck\"\n  },\n  \"dependencies\": {\n    \"@iconify-json/lucide\": \"^1.2.18\",\n    \"@nuxt/ui-pro\": \"^3.0.0\",\n    \"nuxt\": \"^3.16.0\"\n  },\n  \"devDependencies\": {\n    \"typescript\": \"^5.8.2\",\n    \"vue-tsc\": \"^2.2.10\"\n  }\n}\n```\n\n```json [tsconfig.json]\n{\n  \"extends\": \"./.nuxt/tsconfig.json\"\n}\n```\n\n````md [README.md]\n# Nuxt 3 Minimal Starter\n\nLook at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.\n\n## Setup\n\nMake sure to install the dependencies:\n\n```bash\n# npm\nnpm install\n\n# pnpm\npnpm install\n\n# yarn\nyarn install\n\n# bun\nbun install\n```\n\n## Development Server\n\nStart the development server on `http://localhost:3000`:\n\n```bash\n# npm\nnpm run dev\n\n# pnpm\npnpm run dev\n\n# yarn\nyarn dev\n\n# bun\nbun run dev\n```\n\n## Production\n\nBuild the application for production:\n\n```bash\n# npm\nnpm run build\n\n# pnpm\npnpm run build\n\n# yarn\nyarn build\n\n# bun\nbun run build\n```\n\nLocally preview production build:\n\n```bash\n# npm\nnpm run preview\n\n# pnpm\npnpm run preview\n\n# yarn\nyarn preview\n\n# bun\nbun run preview\n```\n\nCheck out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.\n````\n\n::\n\n`````\n::\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n::code-tree{defaultValue=\"app/app.config.ts\"}\n\n```ts [nuxt.config.ts]\nexport default defineNuxtConfig({\n  modules: ['@nuxt/ui-pro'],\n\n  future: {\n    compatibilityVersion: 4\n  },\n\n  css: ['~/assets/css/main.css']\n})\n\n```\n\n```css [app/assets/css/main.css]\n@import \"tailwindcss\";\n@import \"@nuxt/ui-pro\";\n```\n\n```ts [app/app.config.ts]\nexport default defineAppConfig({\n  ui: {\n    colors: {\n      primary: 'sky',\n      colors: 'slate'\n    }\n  }\n})\n```\n\n```vue [app/app.vue]\n<template>\n  <UApp>\n    <NuxtPage />\n  </UApp>\n</template>\n```\n\n```json [package.json]\n{\n  \"name\": \"nuxt-app\",\n  \"private\": true,\n  \"type\": \"module\",\n  \"scripts\": {\n    \"build\": \"nuxt build\",\n    \"dev\": \"nuxt dev\",\n    \"generate\": \"nuxt generate\",\n    \"preview\": \"nuxt preview\",\n    \"postinstall\": \"nuxt prepare\",\n    \"typecheck\": \"nuxt typecheck\"\n  },\n  \"dependencies\": {\n    \"@iconify-json/lucide\": \"^1.2.18\",\n    \"@nuxt/ui-pro\": \"^3.0.0\",\n    \"nuxt\": \"^3.16.0\"\n  },\n  \"devDependencies\": {\n    \"typescript\": \"^5.8.2\",\n    \"vue-tsc\": \"^2.2.10\"\n  }\n}\n```\n\n```json [tsconfig.json]\n{\n  \"extends\": \"./.nuxt/tsconfig.json\"\n}\n```\n\n````md [README.md]\n# Nuxt 3 Minimal Starter\n\nLook at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.\n\n## Setup\n\nMake sure to install the dependencies:\n\n```bash\n# npm\nnpm install\n\n# pnpm\npnpm install\n\n# yarn\nyarn install\n\n# bun\nbun install\n```\n\n## Development Server\n\nStart the development server on `http://localhost:3000`:\n\n```bash\n# npm\nnpm run dev\n\n# pnpm\npnpm run dev\n\n# yarn\nyarn dev\n\n# bun\nbun run dev\n```\n\n## Production\n\nBuild the application for production:\n\n```bash\n# npm\nnpm run build\n\n# pnpm\npnpm run build\n\n# yarn\nyarn build\n\n# bun\nbun run build\n```\n\nLocally preview production build:\n\n```bash\n# npm\nnpm run preview\n\n# pnpm\npnpm run preview\n\n# yarn\nyarn preview\n\n# bun\nbun run preview\n```\n\nCheck out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.\n````\n\n::\n\n\n::\n\n::\n| Props          | Default                    | Type                                         |\n| `defaultValue` |                            | `string` The default tab to select.          |\n| `expandAll`    | `false`{lang=\"typescript\"} | `boolean` Expand all directories by default. |\n\n### Collapsible\n\nWrap your content with the `collapsible` component to display a [Collapse](https://ui.nuxt.com/components/collapsible) in your content.\n\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n::collapsible\n\n| Prop    | Default   | Type                     |\n|---------|-----------|--------------------------|\n| `name`  |           | `string`{lang=\"ts\"}      |\n| `size`  | `md`      | `string`{lang=\"ts\"}      |\n| `color` | `neutral` | `string`{lang=\"ts\"}      |\n\n::\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n::collapsible\n| Prop    | Default   | Type                     |\n|---------|-----------|--------------------------|\n| `name`  |           | `string`{lang=\"ts\"} |\n| `size`  | `md`      | `string`{lang=\"ts\"} |\n| `color` | `neutral` | `string`{lang=\"ts\"} |\n::\n::\n::\n| Props       | Default                      | Type                                                           |\n| `icon`      | `'chevron-down'`{lang=\"ts\"}  | `string` The **icon** displayed to toggle the show/hide button |\n| `name`      |                              | `string` The name displayed in the trigger **label**           |\n| `openText`  | `'Show'`{lang=\"ts\"}          | `string` The text displayed when the content is collapsed      |\n| `closeText` | `'Hide'`{lang=\"ts\"}          | `string` The text disolayed when the content is expanded       |\n\n### Field\nA field, prop or parameter to display in your content.\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n::field{name=\"name\" type=\"string\" required}\nThe `description` can be set here with full **markdown** support.\n::\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n::field{name=\"name\" type=\"string\" required}\nThe `description` can be set here with full **markdown** support.\n::\n::\n::\n\n| Prop       | Default            | Type      |\n| `name`     |                    | `string`  |\n| `type`     |                    | `string`  |\n| `required` | `false`{lang=\"ts\"} | `boolean` |\n\n### Field Group\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n::code-collapse\n```mdc\n::field-group\n  ::field{name=\"analytics\" type=\"boolean\"}\n    Default to `false` - Enables analytics for your project (coming soon).\n  ::\n\n  ::field{name=\"blob\" type=\"boolean\"}\n    Default to `false` - Enables blob storage to store static assets, such as images, videos and more.\n  ::\n\n  ::field{name=\"cache\" type=\"boolean\"}\n    Default to `false` - Enables cache storage to cache your server route responses or functions using Nitro's `cachedEventHandler` and `cachedFunction`\n  ::\n\n  ::field{name=\"database\" type=\"boolean\"}\n    Default to `false` - Enables SQL database to store your application's data.\n  ::\n::\n```\n::\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n::field-group\n  ::field{name=\"analytics\" type=\"boolean\"}\n    Default to `false` - Enables analytics for your project (coming soon).\n  ::\n  ::field{name=\"blob\" type=\"boolean\"}\n    Default to `false` - Enables blob storage to store static assets, such as images, videos and more.\n  ::\n  ::field{name=\"cache\" type=\"boolean\"}\n    Default to `false` - Enables cache storage to cache your server route responses or functions using Nitro's `cachedEventHandler` and `cachedFunction`\n  ::\n  ::field{name=\"database\" type=\"boolean\"}\n    Default to `false` - Enables SQL database to store your application's data.\n  ::\n::\n::\n::\n\n### Icon\nFind icon names from [heroicons](https://heroicons.com/) or just type `/` and search for the icon you are looking for.\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\nIcons can be displayed inline: :icon{name=\"face-smile\"}\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\nIcons can be displayed inline :icon{name=\"face-smile\"}\n::\n::\n\n| Prop   | Default | Type     |\n| `name` |         | `string` |\n\n### Key Binding\nSearch for special keys by typing `/` such as :kbd{value=\"meta\"} and :kbd{value=\"shift\"}\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\nSearch by pressing :kbd{value=\"meta\"} :kbd{value=\"K\"}\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\nSearch by pressing :kbd{value=\"meta\"} :kbd{value=\"K\"}\n::\n::\n| Prop    | Default | Type     |\n| `value` |         | `string` |\n\n### Tabs\n\nUse the `tabs` and `tabs-item` components to display tabs in your content.\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n````mdc\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n::callout\nLorem velit voluptate ex reprehenderit ullamco et culpa.\n::\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n::callout\nLorem velit voluptate ex reprehenderit ullamco et culpa.\n::\n\n::\n\n::\n````\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n::card\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n::callout\nLorem velit voluptate ex reprehenderit ullamco et culpa.\n::\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n::callout\nLorem velit voluptate ex reprehenderit ullamco et culpa.\n::\n::\n::\n::\n::\n::\n| Props          | Default | Type     |\n| `defaultValue` | `0`     | `string` |\n\n\n### Steps\nWrap your headings with the Steps component to display a list of steps.\n\nUse the `level` prop to define which heading will be used for the steps.\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n````mdc\n::steps{level=\"3\"}\n\n### Add the Nuxt UI Pro module in your `nuxt.config.ts`\n\n```ts [nuxt.config.ts]\nexport default defineNuxtConfig({\n  modules: ['@nuxt/ui']\n})\n```\n\n### Import Tailwind CSS and Nuxt UI Pro in your CSS\n\n```css [assets/css/main.css]\n@import \"tailwindcss\";\n@import \"@nuxt/ui\";\n```\n\n::\n\n````\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n::steps{level=\"3\"}\n\n### Add the Nuxt UI Pro module in your `nuxt.config.ts`\n\n```ts [nuxt.config.ts]\nexport default defineNuxtConfig({\n  modules: ['@nuxt/ui']\n})\n```\n\n### Import Tailwind CSS and Nuxt UI Pro in your CSS\n\n```css [assets/css/main.css]\n@import \"tailwindcss\";\n@import \"@nuxt/ui\";\n```\n\n::\n\n::\n\n::\n\n| Prop | Default | Type |\n| `level` | `'3'`{lang=\"ts\"} | `\"3\" | \"2\" | \"4\"`{lang=\"ts\"} |\n\n",
+      "textContent": "## Introduction\nWelcome! If you navigate to the [editor](../edit) (after logging in with Google) you can create pages like this one by using a mixture of markdown and extra components.\n\n## Colors\nFor any `color` properties, here are your options:\n| Color | Description |\n| `primary`{color='primary'} | Main brand color, used as the default color for components. |\n| `secondary`{color='secondary'} | Secondary color to complement the primary color. |\n| `success`{color='success'} | Used for success states. |\n| `warning`{color='warning'} | Used for warning states. |\n| `info`{color='info'} | Used for informational states. |\n| `neutral`{color='neutral'} | Neutral color for backgrounds, text, etc. |\n\n## Markdown components\n### `h1`\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n# This is an h1\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n# This is an h1\n\n::\n\n::\n### `h2`\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n# This is an h2\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n# This is an h2\n\n::\n\n::\n### `h3`\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n# This is an h3\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n# This is an h3\n\n::\n\n::\n\n### `a` (link)\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n[Nuxt documentation](https://nuxt.com)\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n[Nuxt documentation](https://nuxt.com)\n\n::\n\n::\n\n### `blockquote`\n\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n> While Nuxt UI is free and open source, Nuxt UI Pro is a premium product that helps sustain Nuxt OSS development, check out the License section to learn more.\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n> While Nuxt UI is free and open source, Nuxt UI Pro is a premium product that helps sustain Nuxt OSS development, check out the License section to learn more.\n\n\n::\n\n::\n### `strong`\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n**Strong text**\n```\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n**Strong text**\n::\n::\n### `em`\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n*Emphasized text*\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n*Emphasized text*\n::\n::\n### `s` (strikethrough)\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n~~The world is flat~~ We now know that the world is round.\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n~~The world is flat~~ We now know that the world is round.\n::\n::\n### `mark` (highlighted)\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\nI need to highlight these ==very important words==.\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\nI need to highlight these ==very important words==.\n::\n::\n### `sup` (superscript)\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\nx^2^ is a square\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\nx^2^ is a square\n::\n::\n### `sub` (subscript)\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\nH~2~O\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\nH~2~O\n::\n::\n\n### `ul` (unordered list)\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n- I'm a list item.\n  - I'm nested.\n- I'm the last list item.\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n- I'm a list item.\n  - I'm nested.\n- I'm the last list item.\n::\n::\n\n### `ol` (ordered list)\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n1. I'm a list item.\n  1. I'm another list item.\n2. I'm the last list item.\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n1. I'm a list item.\n  1. I'm nested.\n2. I'm the last list item.\n::\n::\n\n### `hr` (horizontal rule)\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n-------\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n-------\n::\n::\n\n### `table`\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n| Prop    | Default   | Type                |\n|---------|-----------|---------------------|\n| `name`  |           | `string`{lang=\"ts\"} |\n| `size`  | `md`      | `string`{lang=\"ts\"} |\n| `color` | `neutral` | `string`{lang=\"ts\"} |\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n| Prop    | Default   | Type                |\n|---------|-----------|---------------------|\n| `name`  |           | `string`{lang=\"ts\"} |\n| `size`  | `md`      | `string`{lang=\"ts\"} |\n| `color` | `neutral` | `string`{lang=\"ts\"} |\n::\n::\n\n### `img`\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n![Nuxt Social Image](https://nuxt.com/new-social.jpg)\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n![Nuxt Social Image](https://nuxt.com/new-social.jpg)\n::\n::\n\n### `code`\n\nInline code\n\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n`inline code`\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n`inline code`\n::\n::\n\nYou can use any of the [colors](#3-h2)\n\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n`inline code`{color=\"error\"}\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n`inline code`{color=\"error\"}\n::\n::\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n`const isFalse = (b: boolean) => !b`{lang=\"typescript\"}\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n`const isFalse = (b: boolean) => !b`{lang=\"typescript\"}\n::\n::\n\n| Prop    | Default   | Type |\n| `lang`  |           | `string`{lang='typescript'} |\n| `color` | `neutral` | `\"error\" | \"primary\" | \"secondary\" | \"success\" | \"info\" | \"warning\" | \"neutral\"`{lang='typescript'} |\n\n### `pre` (code block)\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n````mdc\n```typescript\nconst isFalse = (b: boolean) => {\n  return !b\n}\n```\n````\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n```typescript\nconst isFalse = (b: boolean) => {\n  return !b\n}\n```\n::\n::\nOr name the code block like this:\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n````mdc\n```typescript [is-false.ts]\nconst isFalse = (b: boolean) => {\n  return !b\n}\n```\n````\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n```typescript [is-false.ts]\nconst isFalse = (b: boolean) => {\n  return !b\n}\n```\n::\n::\n\n### Inline math\n\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\nEnergy $e$ and mass $m$ are related in the following way: $e = mc^2$\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\nEnergy $e$ and mass $m$ are related in the following way: $e = mc^2$\n::\n\n::\n\n\n### Math blocks\n\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n$$y = \\sum_{i=0}^{n-1} (1 + r/12)^{12n} - \\sum_{i=0}^{n-1} r_0^i - r_0^n$$\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n$$y = \\sum_{i=0}^{n-1} (1 + r/12)^{12n} - \\sum_{i=0}^{n-1} r_0^i - r_0^n$$\n::\n::\n\n\n## Components\n\n### Youtube\nJust add a link to a youtube video and it will render as a playable video on the page\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\nhttps://www.youtube.com/watch?v=dCxSsr5xuL8&t=11s\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\nhttps://www.youtube.com/watch?v=dCxSsr5xuL8&t=11s\n\n::\n\n::\n\n### Accordion\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n::accordion\n\n::accordion-item{label='First Item' icon='question-mark-circle'}\nAdd **markdown** content here\n::\n\n::accordion-item{label=\"Second Item\" icon=\"light-bulb\"}\n==Second== item's content\n::\n\n::\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n::accordion\n::accordion-item{label='First Item' icon='question-mark-circle'}\nAdd **markdown** content here\n::\n::accordion-item{label=\"Second Item\" icon=\"light-bulb\"}\n==Second== item's content\n::\n::\n\n::\n\n::\n| Prop   | Default      | Type                    |\n| `type` | `'multiple'` | `'multiple' | 'single'`{lang='typescript'} |\n### Badge\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n::badge{color='secondary'}\nLabel **here**\n::\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n::badge{color='secondary'}\nLabel **here**\n::\n\n::\n\n::\n| Prop    | Default     | Type                    |\n| `color` | `'primary'` | `\"neutral\" | \"error\" | \"warning\" | \"info\" | \"success\" | \"primary\" | \"secondary\"`{lang='typescript'} |\n\n### Callout\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n::callout\nLorem velit voluptate ex reprehenderit ullamco et culpa.\n::\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n::callout\nLorem velit voluptate ex reprehenderit ullamco et culpa.\n::\n::\n::\n\n| Prop    | Default     | Type     |\n| `color` | `'primary'` | `\"neutral\" | \"error\" | \"warning\" | \"info\" | \"success\" | \"primary\" | \"secondary\"`{lang='typescript'} |\n| `icon`  |             | `string` |\n| `link`  |             | `string` | \n\nYou can also use the `note`, `tip`, `warning` and `caution` shortcuts with pre-defined icons and colors:\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n::note\nHere's some additional information.\n::\n\n::tip\nHere's a helpful suggestion.\n::\n\n::warning\nBe careful with this action as it might have unexpected results.\n::\n\n::caution\nThis action cannot be undone.\n::\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n::note\nHere's some additional information.\n::\n::tip\nHere's a helpful suggestion.\n::\n::warning\nBe careful with this action as it might have unexpected results.\n::\n::caution\nThis action cannot be undone.\n::\n::\n::\n\n### Card\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n::card{title=\"Icons\" icon=\"users\" color=\"secondary\" link=\"https://heroicons.com\"}\nClick here to see __icons__.\n::\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n::card{title=\"Icons\" icon=\"users\" color=\"secondary\" link=\"https://heroicons.com\"}\nClick here to see __icons__.\n::\n\n::\n\n::\n\n### Card Group\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n::card-group\n\n::card{title='Dashboard' icon='chart-bar' link'https://github.com/nuxt-ui-pro/dashboard'}\nA dashboard with multi-column layout.\n::\n\n::card{title='SaaS' icon='credit-card' link='https://github.com/nuxt-ui-pro/saas'}\nA template with landing, pricing, docs and blog.\n::\n\n::card{title='Docs' icon='document' link='https://github.com/nuxt-ui-pro/docs'}\nA documentation with `@nuxt/content`.\n::\n\n::card{title='Landing' icon='presentation-chart-line' link='https://github.com/nuxt-ui-pro/landing'}\nA landing page you can use as starting point.\n::\n\n::\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n::card-group\n\n::card{title='Dashboard' icon='chart-bar' link'https://github.com/nuxt-ui-pro/dashboard'}\nA dashboard with multi-column layout.\n::\n::card{title='SaaS' icon='credit-card' link='https://github.com/nuxt-ui-pro/saas'}\nA template with landing, pricing, docs and blog.\n::\n::card{title='Docs' icon='document' link='https://github.com/nuxt-ui-pro/docs'}\nA documentation with `@nuxt/content`.\n::\n::card{title='Landing' icon='presentation-chart-line' link='https://github.com/nuxt-ui-pro/landing'}\nA landing page you can use as starting point.\n::\n\n::\n::\n\n::\n\n### Code Collapse\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n````mdc\n::code-collapse\n\n```css [main.css]\n@import \"tailwindcss\";\n@import \"@nuxt/ui\";\n\n@theme static {\n  --font-sans: 'Public Sans', sans-serif;\n\n  --breakpoint-3xl: 1920px;\n\n  --color-green-50: #EFFDF5;\n  --color-green-100: #D9FBE8;\n  --color-green-200: #B3F5D1;\n  --color-green-300: #75EDAE;\n  --color-green-400: #00DC82;\n  --color-green-500: #00C16A;\n  --color-green-600: #00A155;\n  --color-green-700: #007F45;\n  --color-green-800: #016538;\n  --color-green-900: #0A5331;\n  --color-green-950: #052E16;\n}\n```\n\n::\n````\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n::code-collapse{open=true}\n```css [main.css]\n@import \"tailwindcss\";\n@import \"@nuxt/ui\";\n\n@theme static {\n  --font-sans: 'Public Sans', sans-serif;\n\n  --breakpoint-3xl: 1920px;\n\n  --color-green-50: #EFFDF5;\n  --color-green-100: #D9FBE8;\n  --color-green-200: #B3F5D1;\n  --color-green-300: #75EDAE;\n  --color-green-400: #00DC82;\n  --color-green-500: #00C16A;\n  --color-green-600: #00A155;\n  --color-green-700: #007F45;\n  --color-green-800: #016538;\n  --color-green-900: #0A5331;\n  --color-green-950: #052E16;\n}\n```\n::\n::\n::\n| Prop        | Default                             | Type                                                    |\n| `icon`      | `'chevron-down'`{lang='typescript'} | `string` The icon displayed to toggle the code.         |\n| `name`      |                                     | `string` The name displayed in the trigger label.       |\n| `openText`  | `'Expand'`{lang='typescript'}       | `string` The text displayed when the code is collapsed. |\n| `closeText` | `'Collapse'`{lang='typescript'}     | `string` The text displayed when the code is expanded.  |\n| `open`      | `false`{lang='typescript'}          | `boolean`                                               |\n\n### Code Group\nWrap your code-blocks around a `code-group` component to group them together in tabs.\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n````mdc\n::code-group\n\n```bash [pnpm]\npnpm add @nuxt/ui\n```\n\n```bash [yarn]\nyarn add @nuxt/ui\n```\n\n```bash [npm]\nnpm install @nuxt/ui\n```\n\n```bash [bun]\nbun add @nuxt/ui\n```\n\n::\n````\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n::code-group\n\n```bash [pnpm]\npnpm add @nuxt/ui\n```\n\n```bash [yarn]\nyarn add @nuxt/ui\n```\n\n```bash [npm]\nnpm install @nuxt/ui\n```\n\n```bash [bun]\nbun add @nuxt/ui\n```\n\n::\n\n::\n\n::\n| Prop | Default | Type |\n| `'defaultValue'` | 0 | `number | string`{lang='typescript'} |\n\n### Code Tree\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n::code-collapse\n`````mdc\n::code-tree{defaultValue=\"app/app.config.ts\"}\n\n```ts [nuxt.config.ts]\nexport default defineNuxtConfig({\n  modules: ['@nuxt/ui-pro'],\n\n  future: {\n    compatibilityVersion: 4\n  },\n\n  css: ['~/assets/css/main.css']\n})\n\n```\n\n```css [app/assets/css/main.css]\n@import \"tailwindcss\";\n@import \"@nuxt/ui-pro\";\n```\n\n```ts [app/app.config.ts]\nexport default defineAppConfig({\n  ui: {\n    colors: {\n      primary: 'sky',\n      colors: 'slate'\n    }\n  }\n})\n```\n\n```vue [app/app.vue]\n<template>\n  <UApp>\n    <NuxtPage />\n  </UApp>\n</template>\n```\n\n```json [package.json]\n{\n  \"name\": \"nuxt-app\",\n  \"private\": true,\n  \"type\": \"module\",\n  \"scripts\": {\n    \"build\": \"nuxt build\",\n    \"dev\": \"nuxt dev\",\n    \"generate\": \"nuxt generate\",\n    \"preview\": \"nuxt preview\",\n    \"postinstall\": \"nuxt prepare\",\n    \"typecheck\": \"nuxt typecheck\"\n  },\n  \"dependencies\": {\n    \"@iconify-json/lucide\": \"^1.2.18\",\n    \"@nuxt/ui-pro\": \"^3.0.0\",\n    \"nuxt\": \"^3.16.0\"\n  },\n  \"devDependencies\": {\n    \"typescript\": \"^5.8.2\",\n    \"vue-tsc\": \"^2.2.10\"\n  }\n}\n```\n\n```json [tsconfig.json]\n{\n  \"extends\": \"./.nuxt/tsconfig.json\"\n}\n```\n\n````md [README.md]\n# Nuxt 3 Minimal Starter\n\nLook at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.\n\n## Setup\n\nMake sure to install the dependencies:\n\n```bash\n# npm\nnpm install\n\n# pnpm\npnpm install\n\n# yarn\nyarn install\n\n# bun\nbun install\n```\n\n## Development Server\n\nStart the development server on `http://localhost:3000`:\n\n```bash\n# npm\nnpm run dev\n\n# pnpm\npnpm run dev\n\n# yarn\nyarn dev\n\n# bun\nbun run dev\n```\n\n## Production\n\nBuild the application for production:\n\n```bash\n# npm\nnpm run build\n\n# pnpm\npnpm run build\n\n# yarn\nyarn build\n\n# bun\nbun run build\n```\n\nLocally preview production build:\n\n```bash\n# npm\nnpm run preview\n\n# pnpm\npnpm run preview\n\n# yarn\nyarn preview\n\n# bun\nbun run preview\n```\n\nCheck out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.\n````\n\n::\n\n`````\n::\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n::code-tree{defaultValue=\"app/app.config.ts\"}\n\n```ts [nuxt.config.ts]\nexport default defineNuxtConfig({\n  modules: ['@nuxt/ui-pro'],\n\n  future: {\n    compatibilityVersion: 4\n  },\n\n  css: ['~/assets/css/main.css']\n})\n\n```\n\n```css [app/assets/css/main.css]\n@import \"tailwindcss\";\n@import \"@nuxt/ui-pro\";\n```\n\n```ts [app/app.config.ts]\nexport default defineAppConfig({\n  ui: {\n    colors: {\n      primary: 'sky',\n      colors: 'slate'\n    }\n  }\n})\n```\n\n```vue [app/app.vue]\n<template>\n  <UApp>\n    <NuxtPage />\n  </UApp>\n</template>\n```\n\n```json [package.json]\n{\n  \"name\": \"nuxt-app\",\n  \"private\": true,\n  \"type\": \"module\",\n  \"scripts\": {\n    \"build\": \"nuxt build\",\n    \"dev\": \"nuxt dev\",\n    \"generate\": \"nuxt generate\",\n    \"preview\": \"nuxt preview\",\n    \"postinstall\": \"nuxt prepare\",\n    \"typecheck\": \"nuxt typecheck\"\n  },\n  \"dependencies\": {\n    \"@iconify-json/lucide\": \"^1.2.18\",\n    \"@nuxt/ui-pro\": \"^3.0.0\",\n    \"nuxt\": \"^3.16.0\"\n  },\n  \"devDependencies\": {\n    \"typescript\": \"^5.8.2\",\n    \"vue-tsc\": \"^2.2.10\"\n  }\n}\n```\n\n```json [tsconfig.json]\n{\n  \"extends\": \"./.nuxt/tsconfig.json\"\n}\n```\n\n````md [README.md]\n# Nuxt 3 Minimal Starter\n\nLook at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.\n\n## Setup\n\nMake sure to install the dependencies:\n\n```bash\n# npm\nnpm install\n\n# pnpm\npnpm install\n\n# yarn\nyarn install\n\n# bun\nbun install\n```\n\n## Development Server\n\nStart the development server on `http://localhost:3000`:\n\n```bash\n# npm\nnpm run dev\n\n# pnpm\npnpm run dev\n\n# yarn\nyarn dev\n\n# bun\nbun run dev\n```\n\n## Production\n\nBuild the application for production:\n\n```bash\n# npm\nnpm run build\n\n# pnpm\npnpm run build\n\n# yarn\nyarn build\n\n# bun\nbun run build\n```\n\nLocally preview production build:\n\n```bash\n# npm\nnpm run preview\n\n# pnpm\npnpm run preview\n\n# yarn\nyarn preview\n\n# bun\nbun run preview\n```\n\nCheck out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.\n````\n\n::\n\n\n::\n\n::\n| Props          | Default                    | Type                                         |\n| `defaultValue` |                            | `string` The default tab to select.          |\n| `expandAll`    | `false`{lang=\"typescript\"} | `boolean` Expand all directories by default. |\n\n### Collapsible\n\nWrap your content with the `collapsible` component to display a [Collapse](https://ui.nuxt.com/components/collapsible) in your content.\n\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n::collapsible\n\n| Prop    | Default   | Type                     |\n|---------|-----------|--------------------------|\n| `name`  |           | `string`{lang=\"ts\"}      |\n| `size`  | `md`      | `string`{lang=\"ts\"}      |\n| `color` | `neutral` | `string`{lang=\"ts\"}      |\n\n::\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n::collapsible\n| Prop    | Default   | Type                     |\n|---------|-----------|--------------------------|\n| `name`  |           | `string`{lang=\"ts\"} |\n| `size`  | `md`      | `string`{lang=\"ts\"} |\n| `color` | `neutral` | `string`{lang=\"ts\"} |\n::\n::\n::\n| Props       | Default                      | Type                                                           |\n| `icon`      | `'chevron-down'`{lang=\"ts\"}  | `string` The **icon** displayed to toggle the show/hide button |\n| `name`      |                              | `string` The name displayed in the trigger **label**           |\n| `openText`  | `'Show'`{lang=\"ts\"}          | `string` The text displayed when the content is collapsed      |\n| `closeText` | `'Hide'`{lang=\"ts\"}          | `string` The text disolayed when the content is expanded       |\n\n### Field\nA field, prop or parameter to display in your content.\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n::field{name=\"name\" type=\"string\" required}\nThe `description` can be set here with full **markdown** support.\n::\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n::field{name=\"name\" type=\"string\" required}\nThe `description` can be set here with full **markdown** support.\n::\n::\n::\n\n| Prop       | Default            | Type      |\n| `name`     |                    | `string`  |\n| `type`     |                    | `string`  |\n| `required` | `false`{lang=\"ts\"} | `boolean` |\n\n### Field Group\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n::code-collapse\n```mdc\n::field-group\n  ::field{name=\"analytics\" type=\"boolean\"}\n    Default to `false` - Enables analytics for your project (coming soon).\n  ::\n\n  ::field{name=\"blob\" type=\"boolean\"}\n    Default to `false` - Enables blob storage to store static assets, such as images, videos and more.\n  ::\n\n  ::field{name=\"cache\" type=\"boolean\"}\n    Default to `false` - Enables cache storage to cache your server route responses or functions using Nitro's `cachedEventHandler` and `cachedFunction`\n  ::\n\n  ::field{name=\"database\" type=\"boolean\"}\n    Default to `false` - Enables SQL database to store your application's data.\n  ::\n::\n```\n::\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n::field-group\n  ::field{name=\"analytics\" type=\"boolean\"}\n    Default to `false` - Enables analytics for your project (coming soon).\n  ::\n  ::field{name=\"blob\" type=\"boolean\"}\n    Default to `false` - Enables blob storage to store static assets, such as images, videos and more.\n  ::\n  ::field{name=\"cache\" type=\"boolean\"}\n    Default to `false` - Enables cache storage to cache your server route responses or functions using Nitro's `cachedEventHandler` and `cachedFunction`\n  ::\n  ::field{name=\"database\" type=\"boolean\"}\n    Default to `false` - Enables SQL database to store your application's data.\n  ::\n::\n::\n::\n\n### Icon\nFind icon names from [heroicons](https://heroicons.com/) or just type `/` and search for the icon you are looking for.\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\nIcons can be displayed inline: :icon{name=\"face-smile\"}\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\nIcons can be displayed inline :icon{name=\"face-smile\"}\n::\n::\n\n| Prop   | Default | Type     |\n| `name` |         | `string` |\n\n### Key Binding\nSearch for special keys by typing `/` such as :kbd{value=\"meta\"} and :kbd{value=\"shift\"}\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\nSearch by pressing :kbd{value=\"meta\"} :kbd{value=\"K\"}\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\nSearch by pressing :kbd{value=\"meta\"} :kbd{value=\"K\"}\n::\n::\n| Prop    | Default | Type     |\n| `value` |         | `string` |\n\n### Tabs\n\nUse the `tabs` and `tabs-item` components to display tabs in your content.\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n````mdc\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n```mdc\n::callout\nLorem velit voluptate ex reprehenderit ullamco et culpa.\n::\n```\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n::callout\nLorem velit voluptate ex reprehenderit ullamco et culpa.\n::\n\n::\n\n::\n````\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n::card\n::tabs\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n```mdc\n::callout\nLorem velit voluptate ex reprehenderit ullamco et culpa.\n::\n```\n::\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n::callout\nLorem velit voluptate ex reprehenderit ullamco et culpa.\n::\n::\n::\n::\n::\n::\n| Props          | Default | Type     |\n| `defaultValue` | `0`     | `string` |\n\n\n### Steps\nWrap your headings with the Steps component to display a list of steps.\n\nUse the `level` prop to define which heading will be used for the steps.\n::tabs\n\n::tabs-item{label=\"Code\" icon=\"code-bracket\"}\n\n````mdc\n::steps{level=\"3\"}\n\n### Add the Nuxt UI Pro module in your `nuxt.config.ts`\n\n```ts [nuxt.config.ts]\nexport default defineNuxtConfig({\n  modules: ['@nuxt/ui']\n})\n```\n\n### Import Tailwind CSS and Nuxt UI Pro in your CSS\n\n```css [assets/css/main.css]\n@import \"tailwindcss\";\n@import \"@nuxt/ui\";\n```\n\n::\n\n````\n\n::\n\n::tabs-item{label=\"Preview\" icon=\"eye\"}\n\n::steps{level=\"3\"}\n\n### Add the Nuxt UI Pro module in your `nuxt.config.ts`\n\n```ts [nuxt.config.ts]\nexport default defineNuxtConfig({\n  modules: ['@nuxt/ui']\n})\n```\n\n### Import Tailwind CSS and Nuxt UI Pro in your CSS\n\n```css [assets/css/main.css]\n@import \"tailwindcss\";\n@import \"@nuxt/ui\";\n```\n\n::\n\n::\n\n::\n\n| Prop | Default | Type |\n| `level` | `'3'`{lang=\"ts\"} | `\"3\" | \"2\" | \"4\"`{lang=\"ts\"} |\n\n",
       "renderedMd": [
         {
-          "id": "section- Introduction-2-h2",
+          "id": "section- Introduction-0-h2",
           "type": "section",
-          "headingId": " Introduction-2-h2",
+          "headingId": " Introduction-0-h2",
           "items": [
             {
-              "id": " Introduction-2-h2",
+              "id": " Introduction-0-h2",
               "type": "heading",
               "depth": 2,
               "items": [
@@ -46,7 +46,7 @@
               ]
             },
             {
-              "id": "3-p-Welcome! If you navigate to the [editor](../edit) (after logging in with Google) you can create pages like this one by using a mixture of markdown and extra components.",
+              "id": "1-p-Welcome! If you navigate to the [editor](../edit) (after logging in with Google) you can create pages like this one by using a mixture of markdown and extra components.",
               "type": "paragraph",
               "items": [
                 {
@@ -70,12 +70,12 @@
           ]
         },
         {
-          "id": "section- Colors-5-h2",
+          "id": "section- Colors-3-h2",
           "type": "section",
-          "headingId": " Colors-5-h2",
+          "headingId": " Colors-3-h2",
           "items": [
             {
-              "id": " Colors-5-h2",
+              "id": " Colors-3-h2",
               "type": "heading",
               "depth": 2,
               "items": [
@@ -87,7 +87,7 @@
               ]
             },
             {
-              "id": "6-p-For any `color` properties, here are your options:",
+              "id": "4-p-For any `color` properties, here are your options:",
               "type": "paragraph",
               "items": [
                 {
@@ -108,7 +108,7 @@
               ]
             },
             {
-              "id": "7-table",
+              "id": "5-table",
               "type": "table",
               "headers": [
                 [
@@ -235,31 +235,31 @@
           ]
         },
         {
-          "id": "section- Prose components-15-h2",
+          "id": "section- Markdown components-13-h2",
           "type": "section",
-          "headingId": " Prose components-15-h2",
+          "headingId": " Markdown components-13-h2",
           "items": [
             {
-              "id": " Prose components-15-h2",
+              "id": " Markdown components-13-h2",
               "type": "heading",
               "depth": 2,
               "items": [
                 {
-                  "id": "text-Prose components",
+                  "id": "text-Markdown components",
                   "type": "text",
-                  "text": "Prose components"
+                  "text": "Markdown components"
                 }
               ]
             }
           ]
         },
         {
-          "id": "section- `h1`-16-h3",
+          "id": "section- `h1`-14-h3",
           "type": "section",
-          "headingId": " `h1`-16-h3",
+          "headingId": " `h1`-14-h3",
           "items": [
             {
-              "id": " `h1`-16-h3",
+              "id": " `h1`-14-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -271,15 +271,15 @@
               ]
             },
             {
-              "id": "17-tabs-",
+              "id": "15-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "19-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "17-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "23-# This is an h1",
+                      "id": "21-# This is an h1",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -322,11 +322,11 @@
                   }
                 },
                 {
-                  "id": "27-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "25-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": " This is an h1-29-h1",
+                      "id": " This is an h1-27-h1",
                       "type": "heading",
                       "depth": 1,
                       "items": [
@@ -349,12 +349,12 @@
           ]
         },
         {
-          "id": "section- `h2`-34-h3",
+          "id": "section- `h2`-32-h3",
           "type": "section",
-          "headingId": " `h2`-34-h3",
+          "headingId": " `h2`-32-h3",
           "items": [
             {
-              "id": " `h2`-34-h3",
+              "id": " `h2`-32-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -366,15 +366,15 @@
               ]
             },
             {
-              "id": "35-tabs-",
+              "id": "33-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "37-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "35-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "41-# This is an h2",
+                      "id": "39-# This is an h2",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -417,11 +417,11 @@
                   }
                 },
                 {
-                  "id": "45-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "43-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": " This is an h2-47-h1",
+                      "id": " This is an h2-45-h1",
                       "type": "heading",
                       "depth": 1,
                       "items": [
@@ -444,12 +444,12 @@
           ]
         },
         {
-          "id": "section- `h3`-52-h3",
+          "id": "section- `h3`-50-h3",
           "type": "section",
-          "headingId": " `h3`-52-h3",
+          "headingId": " `h3`-50-h3",
           "items": [
             {
-              "id": " `h3`-52-h3",
+              "id": " `h3`-50-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -461,15 +461,15 @@
               ]
             },
             {
-              "id": "53-tabs-",
+              "id": "51-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "55-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "53-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "59-# This is an h3",
+                      "id": "57-# This is an h3",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -512,11 +512,11 @@
                   }
                 },
                 {
-                  "id": "63-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "61-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": " This is an h3-65-h1",
+                      "id": " This is an h3-63-h1",
                       "type": "heading",
                       "depth": 1,
                       "items": [
@@ -539,12 +539,12 @@
           ]
         },
         {
-          "id": "section- `a` (link)-71-h3",
+          "id": "section- `a` (link)-69-h3",
           "type": "section",
-          "headingId": " `a` (link)-71-h3",
+          "headingId": " `a` (link)-69-h3",
           "items": [
             {
-              "id": " `a` (link)-71-h3",
+              "id": " `a` (link)-69-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -561,15 +561,15 @@
               ]
             },
             {
-              "id": "72-tabs-",
+              "id": "70-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "74-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "72-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "78-[Nuxt documentation]",
+                      "id": "76-[Nuxt documentation]",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -648,11 +648,11 @@
                   }
                 },
                 {
-                  "id": "82-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "80-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "84-p-[Nuxt documentation](https://nuxt.com)",
+                      "id": "82-p-[Nuxt documentation](https://nuxt.com)",
                       "type": "paragraph",
                       "items": [
                         {
@@ -675,12 +675,12 @@
           ]
         },
         {
-          "id": "section- `blockquote`-90-h3",
+          "id": "section- `blockquote`-88-h3",
           "type": "section",
-          "headingId": " `blockquote`-90-h3",
+          "headingId": " `blockquote`-88-h3",
           "items": [
             {
-              "id": " `blockquote`-90-h3",
+              "id": " `blockquote`-88-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -692,15 +692,15 @@
               ]
             },
             {
-              "id": "92-tabs-",
+              "id": "90-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "94-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "92-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "98-> While Nuxt UI is f",
+                      "id": "96-> While Nuxt UI is f",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -743,11 +743,11 @@
                   }
                 },
                 {
-                  "id": "102-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "100-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "104-blockquote-> While Nuxt UI is free and open source, Nuxt UI Pro is a premium product that helps sustain Nuxt OSS development, check out the License section to learn more.",
+                      "id": "102-blockquote-> While Nuxt UI is free and open source, Nuxt UI Pro is a premium product that helps sustain Nuxt OSS development, check out the License section to learn more.",
                       "type": "blockquote",
                       "items": [
                         {
@@ -769,12 +769,12 @@
           ]
         },
         {
-          "id": "section- `strong`-110-h3",
+          "id": "section- `strong`-108-h3",
           "type": "section",
-          "headingId": " `strong`-110-h3",
+          "headingId": " `strong`-108-h3",
           "items": [
             {
-              "id": " `strong`-110-h3",
+              "id": " `strong`-108-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -786,15 +786,15 @@
               ]
             },
             {
-              "id": "111-tabs-",
+              "id": "109-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "112-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "110-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "115-**Strong text**",
+                      "id": "113-**Strong text**",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -849,11 +849,11 @@
                   }
                 },
                 {
-                  "id": "118-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "116-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "119-p-**Strong text**",
+                      "id": "117-p-**Strong text**",
                       "type": "paragraph",
                       "items": [
                         {
@@ -881,12 +881,12 @@
           ]
         },
         {
-          "id": "section- `em`-122-h3",
+          "id": "section- `em`-120-h3",
           "type": "section",
-          "headingId": " `em`-122-h3",
+          "headingId": " `em`-120-h3",
           "items": [
             {
-              "id": " `em`-122-h3",
+              "id": " `em`-120-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -898,15 +898,15 @@
               ]
             },
             {
-              "id": "123-tabs-",
+              "id": "121-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "124-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "122-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "127-*Emphasized text*",
+                      "id": "125-*Emphasized text*",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -961,11 +961,11 @@
                   }
                 },
                 {
-                  "id": "129-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "127-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "130-p-*Emphasized text*",
+                      "id": "128-p-*Emphasized text*",
                       "type": "paragraph",
                       "items": [
                         {
@@ -993,12 +993,12 @@
           ]
         },
         {
-          "id": "section- `s` (strikethrough)-133-h3",
+          "id": "section- `s` (strikethrough)-131-h3",
           "type": "section",
-          "headingId": " `s` (strikethrough)-133-h3",
+          "headingId": " `s` (strikethrough)-131-h3",
           "items": [
             {
-              "id": " `s` (strikethrough)-133-h3",
+              "id": " `s` (strikethrough)-131-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -1015,15 +1015,15 @@
               ]
             },
             {
-              "id": "134-tabs-",
+              "id": "132-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "135-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "133-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "138-~~The world is flat~",
+                      "id": "136-~~The world is flat~",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -1090,11 +1090,11 @@
                   }
                 },
                 {
-                  "id": "140-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "138-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "141-p-~~The world is flat~~ We now know that the world is round.",
+                      "id": "139-p-~~The world is flat~~ We now know that the world is round.",
                       "type": "paragraph",
                       "items": [
                         {
@@ -1127,12 +1127,12 @@
           ]
         },
         {
-          "id": "section- `mark` (highlighted)-144-h3",
+          "id": "section- `mark` (highlighted)-142-h3",
           "type": "section",
-          "headingId": " `mark` (highlighted)-144-h3",
+          "headingId": " `mark` (highlighted)-142-h3",
           "items": [
             {
-              "id": " `mark` (highlighted)-144-h3",
+              "id": " `mark` (highlighted)-142-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -1149,15 +1149,15 @@
               ]
             },
             {
-              "id": "145-tabs-",
+              "id": "143-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "146-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "144-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "149-I need to highlight ",
+                      "id": "147-I need to highlight ",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -1188,11 +1188,11 @@
                   }
                 },
                 {
-                  "id": "151-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "149-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "152-p-I need to highlight these ==very important words==.",
+                      "id": "150-p-I need to highlight these ==very important words==.",
                       "type": "paragraph",
                       "items": [
                         {
@@ -1230,12 +1230,12 @@
           ]
         },
         {
-          "id": "section- `sup` (superscript)-155-h3",
+          "id": "section- `sup` (superscript)-153-h3",
           "type": "section",
-          "headingId": " `sup` (superscript)-155-h3",
+          "headingId": " `sup` (superscript)-153-h3",
           "items": [
             {
-              "id": " `sup` (superscript)-155-h3",
+              "id": " `sup` (superscript)-153-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -1252,15 +1252,15 @@
               ]
             },
             {
-              "id": "156-tabs-",
+              "id": "154-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "157-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "155-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "160-x^2^ is a square",
+                      "id": "158-x^2^ is a square",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -1291,11 +1291,11 @@
                   }
                 },
                 {
-                  "id": "162-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "160-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "163-p-x^2^ is a square",
+                      "id": "161-p-x^2^ is a square",
                       "type": "paragraph",
                       "items": [
                         {
@@ -1333,12 +1333,12 @@
           ]
         },
         {
-          "id": "section- `sub` (subscript)-166-h3",
+          "id": "section- `sub` (subscript)-164-h3",
           "type": "section",
-          "headingId": " `sub` (subscript)-166-h3",
+          "headingId": " `sub` (subscript)-164-h3",
           "items": [
             {
-              "id": " `sub` (subscript)-166-h3",
+              "id": " `sub` (subscript)-164-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -1355,15 +1355,15 @@
               ]
             },
             {
-              "id": "167-tabs-",
+              "id": "165-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "168-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "166-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "171-H~2~O",
+                      "id": "169-H~2~O",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -1394,11 +1394,11 @@
                   }
                 },
                 {
-                  "id": "173-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "171-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "174-p-H~2~O",
+                      "id": "172-p-H~2~O",
                       "type": "paragraph",
                       "items": [
                         {
@@ -1436,12 +1436,12 @@
           ]
         },
         {
-          "id": "section- `ul` (unordered list)-178-h3",
+          "id": "section- `ul` (unordered list)-176-h3",
           "type": "section",
-          "headingId": " `ul` (unordered list)-178-h3",
+          "headingId": " `ul` (unordered list)-176-h3",
           "items": [
             {
-              "id": " `ul` (unordered list)-178-h3",
+              "id": " `ul` (unordered list)-176-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -1458,15 +1458,15 @@
               ]
             },
             {
-              "id": "179-tabs-",
+              "id": "177-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "180-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "178-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "185-- I'm a list item.\n ",
+                      "id": "183-- I'm a list item.\n ",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -1577,15 +1577,15 @@
                   }
                 },
                 {
-                  "id": "187-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "185-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "188-li-- I'm a list item.-list-items",
+                      "id": "186-li-- I'm a list item.-list-items",
                       "type": "list-items",
                       "items": [
                         {
-                          "id": "188-li-- I'm a list item.",
+                          "id": "186-li-- I'm a list item.",
                           "type": "list-item",
                           "depth": 0,
                           "items": [
@@ -1595,11 +1595,11 @@
                               "text": "I'm a list item."
                             },
                             {
-                              "id": "189-li-- I'm nested.-nested",
+                              "id": "187-li-- I'm nested.-nested",
                               "type": "list-items",
                               "items": [
                                 {
-                                  "id": "189-li-- I'm nested.",
+                                  "id": "187-li-- I'm nested.",
                                   "type": "list-item",
                                   "depth": 1,
                                   "items": [
@@ -1616,7 +1616,7 @@
                           ]
                         },
                         {
-                          "id": "190-li-- I'm the last list item.",
+                          "id": "188-li-- I'm the last list item.",
                           "type": "list-item",
                           "depth": 0,
                           "items": [
@@ -1642,12 +1642,12 @@
           ]
         },
         {
-          "id": "section- `ol` (ordered list)-194-h3",
+          "id": "section- `ol` (ordered list)-192-h3",
           "type": "section",
-          "headingId": " `ol` (ordered list)-194-h3",
+          "headingId": " `ol` (ordered list)-192-h3",
           "items": [
             {
-              "id": " `ol` (ordered list)-194-h3",
+              "id": " `ol` (ordered list)-192-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -1664,15 +1664,15 @@
               ]
             },
             {
-              "id": "195-tabs-",
+              "id": "193-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "196-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "194-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "201-1. I'm a list item.\n",
+                      "id": "199-1. I'm a list item.\n",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -1783,15 +1783,15 @@
                   }
                 },
                 {
-                  "id": "203-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "201-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "204-ol-1. I'm a list item.-ordered-list-items",
+                      "id": "202-ol-1. I'm a list item.-ordered-list-items",
                       "type": "ordered-list-items",
                       "items": [
                         {
-                          "id": "204-ol-1. I'm a list item.",
+                          "id": "202-ol-1. I'm a list item.",
                           "type": "ordered-list-item",
                           "depth": 0,
                           "items": [
@@ -1801,11 +1801,11 @@
                               "text": "I'm a list item."
                             },
                             {
-                              "id": "205-ol-1. I'm nested.-nested",
+                              "id": "203-ol-1. I'm nested.-nested",
                               "type": "ordered-list-items",
                               "items": [
                                 {
-                                  "id": "205-ol-1. I'm nested.",
+                                  "id": "203-ol-1. I'm nested.",
                                   "type": "ordered-list-item",
                                   "depth": 1,
                                   "items": [
@@ -1824,7 +1824,7 @@
                           "number": 1
                         },
                         {
-                          "id": "206-ol-2. I'm the last list item.",
+                          "id": "204-ol-2. I'm the last list item.",
                           "type": "ordered-list-item",
                           "depth": 0,
                           "items": [
@@ -1852,12 +1852,12 @@
           ]
         },
         {
-          "id": "section- `hr` (horizontal rule)-210-h3",
+          "id": "section- `hr` (horizontal rule)-208-h3",
           "type": "section",
-          "headingId": " `hr` (horizontal rule)-210-h3",
+          "headingId": " `hr` (horizontal rule)-208-h3",
           "items": [
             {
-              "id": " `hr` (horizontal rule)-210-h3",
+              "id": " `hr` (horizontal rule)-208-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -1874,15 +1874,15 @@
               ]
             },
             {
-              "id": "211-tabs-",
+              "id": "209-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "212-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "210-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "215--------",
+                      "id": "213--------",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -1913,7 +1913,7 @@
                   }
                 },
                 {
-                  "id": "217-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "215-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [],
                   "componentProps": {
@@ -1925,18 +1925,18 @@
               "componentProps": {}
             },
             {
-              "id": "218-hr",
+              "id": "216-hr",
               "type": "hr"
             }
           ]
         },
         {
-          "id": "section- `table`-222-h3",
+          "id": "section- `table`-220-h3",
           "type": "section",
-          "headingId": " `table`-222-h3",
+          "headingId": " `table`-220-h3",
           "items": [
             {
-              "id": " `table`-222-h3",
+              "id": " `table`-220-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -1948,15 +1948,15 @@
               ]
             },
             {
-              "id": "223-tabs-",
+              "id": "221-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "224-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "222-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "231-| Prop    | Default ",
+                      "id": "229-| Prop    | Default ",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -2435,11 +2435,11 @@
                   }
                 },
                 {
-                  "id": "233-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "231-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "234-table",
+                      "id": "232-table",
                       "type": "table",
                       "headers": [
                         [
@@ -2606,12 +2606,12 @@
           ]
         },
         {
-          "id": "section- `img`-242-h3",
+          "id": "section- `img`-240-h3",
           "type": "section",
-          "headingId": " `img`-242-h3",
+          "headingId": " `img`-240-h3",
           "items": [
             {
-              "id": " `img`-242-h3",
+              "id": " `img`-240-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -2623,15 +2623,15 @@
               ]
             },
             {
-              "id": "243-tabs-",
+              "id": "241-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "244-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "242-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "247-![Nuxt Social Image]",
+                      "id": "245-![Nuxt Social Image]",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -2710,11 +2710,11 @@
                   }
                 },
                 {
-                  "id": "249-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "247-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "250-p-![Nuxt Social Image](https://nuxt.com/new-social.jpg)",
+                      "id": "248-p-![Nuxt Social Image](https://nuxt.com/new-social.jpg)",
                       "type": "paragraph",
                       "items": [
                         {
@@ -2737,12 +2737,12 @@
           ]
         },
         {
-          "id": "section- `code`-254-h3",
+          "id": "section- `code`-252-h3",
           "type": "section",
-          "headingId": " `code`-254-h3",
+          "headingId": " `code`-252-h3",
           "items": [
             {
-              "id": " `code`-254-h3",
+              "id": " `code`-252-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -2754,7 +2754,7 @@
               ]
             },
             {
-              "id": "256-p-Inline code",
+              "id": "254-p-Inline code",
               "type": "paragraph",
               "items": [
                 {
@@ -2765,15 +2765,15 @@
               ]
             },
             {
-              "id": "258-tabs-",
+              "id": "256-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "259-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "257-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "263-`inline code`",
+                      "id": "261-`inline code`",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -2828,11 +2828,11 @@
                   }
                 },
                 {
-                  "id": "265-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "263-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "266-p-`inline code`",
+                      "id": "264-p-`inline code`",
                       "type": "paragraph",
                       "items": [
                         {
@@ -2852,7 +2852,7 @@
               "componentProps": {}
             },
             {
-              "id": "270-p-You can use any of the [colors](#3-h2)",
+              "id": "268-p-You can use any of the [colors](#3-h2)",
               "type": "paragraph",
               "items": [
                 {
@@ -2869,15 +2869,15 @@
               ]
             },
             {
-              "id": "272-tabs-",
+              "id": "270-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "273-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "271-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "276-`inline code`{color=",
+                      "id": "274-`inline code`{color=",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -2944,11 +2944,11 @@
                   }
                 },
                 {
-                  "id": "278-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "276-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "279-p-`inline code`{color=\"error\"}",
+                      "id": "277-p-`inline code`{color=\"error\"}",
                       "type": "paragraph",
                       "items": [
                         {
@@ -2969,15 +2969,15 @@
               "componentProps": {}
             },
             {
-              "id": "282-tabs-",
+              "id": "280-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "283-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "281-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "286-`const isFalse = (b:",
+                      "id": "284-`const isFalse = (b:",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -3044,11 +3044,11 @@
                   }
                 },
                 {
-                  "id": "288-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "286-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "289-p-`const isFalse = (b: boolean) => !b`{lang=\"typescript\"}",
+                      "id": "287-p-`const isFalse = (b: boolean) => !b`{lang=\"typescript\"}",
                       "type": "paragraph",
                       "items": [
                         {
@@ -3257,7 +3257,7 @@
               "componentProps": {}
             },
             {
-              "id": "293-table",
+              "id": "291-table",
               "type": "table",
               "headers": [
                 [
@@ -3827,12 +3827,12 @@
           ]
         },
         {
-          "id": "section- `pre` (code block)-297-h3",
+          "id": "section- `pre` (code block)-295-h3",
           "type": "section",
-          "headingId": " `pre` (code block)-297-h3",
+          "headingId": " `pre` (code block)-295-h3",
           "items": [
             {
-              "id": " `pre` (code block)-297-h3",
+              "id": " `pre` (code block)-295-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -3849,15 +3849,15 @@
               ]
             },
             {
-              "id": "298-tabs-",
+              "id": "296-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "300-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "298-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "308-```typescript\nconst ",
+                      "id": "306-```typescript\nconst ",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -3964,11 +3964,11 @@
                   }
                 },
                 {
-                  "id": "310-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "308-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "315-const isFalse = (b: ",
+                      "id": "313-const isFalse = (b: ",
                       "type": "code-block",
                       "language": "typescript",
                       "syntaxHighlightedTokens": [
@@ -4238,7 +4238,7 @@
               "componentProps": {}
             },
             {
-              "id": "318-p-Or name the code block like this:",
+              "id": "316-p-Or name the code block like this:",
               "type": "paragraph",
               "items": [
                 {
@@ -4249,15 +4249,15 @@
               ]
             },
             {
-              "id": "319-tabs-",
+              "id": "317-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "320-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "318-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "327-```typescript [is-fa",
+                      "id": "325-```typescript [is-fa",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -4364,11 +4364,11 @@
                   }
                 },
                 {
-                  "id": "329-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "327-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "334-const isFalse = (b: ",
+                      "id": "332-const isFalse = (b: ",
                       "type": "code-block",
                       "language": "typescript",
                       "name": "is-false.ts",
@@ -4641,12 +4641,12 @@
           ]
         },
         {
-          "id": "section- Components-338-h2",
+          "id": "section- Components-336-h2",
           "type": "section",
-          "headingId": " Components-338-h2",
+          "headingId": " Components-336-h2",
           "items": [
             {
-              "id": " Components-338-h2",
+              "id": " Components-336-h2",
               "type": "heading",
               "depth": 2,
               "items": [
@@ -4660,12 +4660,105 @@
           ]
         },
         {
-          "id": "section- Accordion-340-h3",
+          "id": "section- Youtube-338-h3",
           "type": "section",
-          "headingId": " Accordion-340-h3",
+          "headingId": " Youtube-338-h3",
           "items": [
             {
-              "id": " Accordion-340-h3",
+              "id": " Youtube-338-h3",
+              "type": "heading",
+              "depth": 3,
+              "items": [
+                {
+                  "id": "text-Youtube",
+                  "type": "text",
+                  "text": "Youtube"
+                }
+              ]
+            },
+            {
+              "id": "339-p-Just add a link to a youtube video and it will render as a playable video on the page",
+              "type": "paragraph",
+              "items": [
+                {
+                  "id": "text-Just add a link to a youtube video and it will render as a playable video on the page",
+                  "type": "text",
+                  "text": "Just add a link to a youtube video and it will render as a playable video on the page"
+                }
+              ]
+            },
+            {
+              "id": "340-tabs-",
+              "type": "tabs",
+              "items": [
+                {
+                  "id": "342-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "type": "tabs-item",
+                  "items": [
+                    {
+                      "id": "346-https://www.youtube.",
+                      "type": "code-block",
+                      "language": "mdc",
+                      "syntaxHighlightedTokens": [
+                        [
+                          {
+                            "content": "https://www.youtube.com/watch?v=dCxSsr5xuL8&t=11s",
+                            "offset": 0,
+                            "color": "#90A4AE",
+                            "fontStyle": 0
+                          }
+                        ]
+                      ],
+                      "darkSyntaxHighlightedTokens": [
+                        [
+                          {
+                            "content": "https://www.youtube.com/watch?v=dCxSsr5xuL8&t=11s",
+                            "offset": 0,
+                            "color": "#BABED8",
+                            "fontStyle": 0
+                          }
+                        ]
+                      ]
+                    }
+                  ],
+                  "componentProps": {
+                    "label": "Code",
+                    "icon": "code-bracket"
+                  }
+                },
+                {
+                  "id": "350-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "type": "tabs-item",
+                  "items": [
+                    {
+                      "id": "352-p-https://www.youtube.com/watch?v=dCxSsr5xuL8&t=11s",
+                      "type": "paragraph",
+                      "items": [
+                        {
+                          "id": "youtube-dCxSsr5xuL8",
+                          "type": "youtube",
+                          "videoId": "dCxSsr5xuL8"
+                        }
+                      ]
+                    }
+                  ],
+                  "componentProps": {
+                    "label": "Preview",
+                    "icon": "eye"
+                  }
+                }
+              ],
+              "componentProps": {}
+            }
+          ]
+        },
+        {
+          "id": "section- Accordion-358-h3",
+          "type": "section",
+          "headingId": " Accordion-358-h3",
+          "items": [
+            {
+              "id": " Accordion-358-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -4677,15 +4770,15 @@
               ]
             },
             {
-              "id": "341-tabs-",
+              "id": "359-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "343-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "361-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "357-::accordion\n\n::accor",
+                      "id": "375-::accordion\n\n::accor",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -5206,19 +5299,19 @@
                   }
                 },
                 {
-                  "id": "361-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "379-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "363-accordion-",
+                      "id": "381-accordion-",
                       "type": "accordion",
                       "items": [
                         {
-                          "id": "364-accordion-item-label='First Item' icon='question-mark-circle'",
+                          "id": "382-accordion-item-label='First Item' icon='question-mark-circle'",
                           "type": "accordion-item",
                           "items": [
                             {
-                              "id": "365-p-Add **markdown** content here",
+                              "id": "383-p-Add **markdown** content here",
                               "type": "paragraph",
                               "items": [
                                 {
@@ -5251,11 +5344,11 @@
                           }
                         },
                         {
-                          "id": "367-accordion-item-label=\"Second Item\" icon=\"light-bulb\"",
+                          "id": "385-accordion-item-label=\"Second Item\" icon=\"light-bulb\"",
                           "type": "accordion-item",
                           "items": [
                             {
-                              "id": "368-p-==Second== item's content",
+                              "id": "386-p-==Second== item's content",
                               "type": "paragraph",
                               "items": [
                                 {
@@ -5295,7 +5388,7 @@
               "componentProps": {}
             },
             {
-              "id": "375-table",
+              "id": "393-table",
               "type": "table",
               "headers": [
                 [
@@ -5467,12 +5560,12 @@
           ]
         },
         {
-          "id": "section- Badge-377-h3",
+          "id": "section- Badge-395-h3",
           "type": "section",
-          "headingId": " Badge-377-h3",
+          "headingId": " Badge-395-h3",
           "items": [
             {
-              "id": " Badge-377-h3",
+              "id": " Badge-395-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -5484,15 +5577,15 @@
               ]
             },
             {
-              "id": "378-tabs-",
+              "id": "396-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "380-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "398-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "386-::badge{color='secon",
+                      "id": "404-::badge{color='secon",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -5663,15 +5756,15 @@
                   }
                 },
                 {
-                  "id": "390-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "408-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "392-badge-color='secondary'",
+                      "id": "410-badge-color='secondary'",
                       "type": "badge",
                       "items": [
                         {
-                          "id": "393-p-Label **here**",
+                          "id": "411-p-Label **here**",
                           "type": "paragraph",
                           "items": [
                             {
@@ -5707,7 +5800,7 @@
               "componentProps": {}
             },
             {
-              "id": "399-table",
+              "id": "417-table",
               "type": "table",
               "headers": [
                 [
@@ -6239,12 +6332,12 @@
           ]
         },
         {
-          "id": "section- Callout-402-h3",
+          "id": "section- Callout-420-h3",
           "type": "section",
-          "headingId": " Callout-402-h3",
+          "headingId": " Callout-420-h3",
           "items": [
             {
-              "id": " Callout-402-h3",
+              "id": " Callout-420-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -6256,15 +6349,15 @@
               ]
             },
             {
-              "id": "403-tabs-",
+              "id": "421-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "405-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "423-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "411-::callout\nLorem veli",
+                      "id": "429-::callout\nLorem veli",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -6339,15 +6432,15 @@
                   }
                 },
                 {
-                  "id": "415-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "433-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "417-callout-",
+                      "id": "435-callout-",
                       "type": "callout",
                       "items": [
                         {
-                          "id": "418-p-Lorem velit voluptate ex reprehenderit ullamco et culpa.",
+                          "id": "436-p-Lorem velit voluptate ex reprehenderit ullamco et culpa.",
                           "type": "paragraph",
                           "items": [
                             {
@@ -6370,7 +6463,7 @@
               "componentProps": {}
             },
             {
-              "id": "423-table",
+              "id": "441-table",
               "type": "table",
               "headers": [
                 [
@@ -6934,7 +7027,7 @@
               "align": []
             },
             {
-              "id": "428-p-You can also use the `note`, `tip`, `warning` and `caution` shortcuts with pre-defined icons and colors:",
+              "id": "446-p-You can also use the `note`, `tip`, `warning` and `caution` shortcuts with pre-defined icons and colors:",
               "type": "paragraph",
               "items": [
                 {
@@ -6985,15 +7078,15 @@
               ]
             },
             {
-              "id": "429-tabs-",
+              "id": "447-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "430-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "448-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "447-::note\nHere's some a",
+                      "id": "465-::note\nHere's some a",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -7254,15 +7347,15 @@
                   }
                 },
                 {
-                  "id": "449-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "467-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "450-note-",
+                      "id": "468-note-",
                       "type": "note",
                       "items": [
                         {
-                          "id": "451-p-Here's some additional information.",
+                          "id": "469-p-Here's some additional information.",
                           "type": "paragraph",
                           "items": [
                             {
@@ -7276,11 +7369,11 @@
                       "componentProps": {}
                     },
                     {
-                      "id": "453-tip-",
+                      "id": "471-tip-",
                       "type": "tip",
                       "items": [
                         {
-                          "id": "454-p-Here's a helpful suggestion.",
+                          "id": "472-p-Here's a helpful suggestion.",
                           "type": "paragraph",
                           "items": [
                             {
@@ -7294,11 +7387,11 @@
                       "componentProps": {}
                     },
                     {
-                      "id": "456-warning-",
+                      "id": "474-warning-",
                       "type": "warning",
                       "items": [
                         {
-                          "id": "457-p-Be careful with this action as it might have unexpected results.",
+                          "id": "475-p-Be careful with this action as it might have unexpected results.",
                           "type": "paragraph",
                           "items": [
                             {
@@ -7312,11 +7405,11 @@
                       "componentProps": {}
                     },
                     {
-                      "id": "459-caution-",
+                      "id": "477-caution-",
                       "type": "caution",
                       "items": [
                         {
-                          "id": "460-p-This action cannot be undone.",
+                          "id": "478-p-This action cannot be undone.",
                           "type": "paragraph",
                           "items": [
                             {
@@ -7341,12 +7434,12 @@
           ]
         },
         {
-          "id": "section- Card-465-h3",
+          "id": "section- Card-483-h3",
           "type": "section",
-          "headingId": " Card-465-h3",
+          "headingId": " Card-483-h3",
           "items": [
             {
-              "id": " Card-465-h3",
+              "id": " Card-483-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -7358,15 +7451,15 @@
               ]
             },
             {
-              "id": "466-tabs-",
+              "id": "484-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "467-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "485-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "472-::card{title=\"Icons\"",
+                      "id": "490-::card{title=\"Icons\"",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -7789,15 +7882,15 @@
                   }
                 },
                 {
-                  "id": "476-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "494-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "478-card-title=\"Icons\" icon=\"users\" color=\"secondary\" link=\"https://heroicons.com\"",
+                      "id": "496-card-title=\"Icons\" icon=\"users\" color=\"secondary\" link=\"https://heroicons.com\"",
                       "type": "card",
                       "items": [
                         {
-                          "id": "479-p-Click here to see __icons__.",
+                          "id": "497-p-Click here to see __icons__.",
                           "type": "paragraph",
                           "items": [
                             {
@@ -7843,12 +7936,12 @@
           ]
         },
         {
-          "id": "section- Card Group-486-h3",
+          "id": "section- Card Group-504-h3",
           "type": "section",
-          "headingId": " Card Group-486-h3",
+          "headingId": " Card Group-504-h3",
           "items": [
             {
-              "id": " Card Group-486-h3",
+              "id": " Card Group-504-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -7860,15 +7953,15 @@
               ]
             },
             {
-              "id": "487-tabs-",
+              "id": "505-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "488-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "506-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "509-::card-group\n\n::card",
+                      "id": "527-::card-group\n\n::card",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -8825,19 +8918,19 @@
                   }
                 },
                 {
-                  "id": "511-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "529-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "512-card-group-",
+                      "id": "530-card-group-",
                       "type": "card-group",
                       "items": [
                         {
-                          "id": "514-card-title='Dashboard' icon='chart-bar' link'https://github.com/nuxt-ui-pro/dashboard'",
+                          "id": "532-card-title='Dashboard' icon='chart-bar' link'https://github.com/nuxt-ui-pro/dashboard'",
                           "type": "card",
                           "items": [
                             {
-                              "id": "515-p-A dashboard with multi-column layout.",
+                              "id": "533-p-A dashboard with multi-column layout.",
                               "type": "paragraph",
                               "items": [
                                 {
@@ -8862,11 +8955,11 @@
                           }
                         },
                         {
-                          "id": "517-card-title='SaaS' icon='credit-card' link='https://github.com/nuxt-ui-pro/saas'",
+                          "id": "535-card-title='SaaS' icon='credit-card' link='https://github.com/nuxt-ui-pro/saas'",
                           "type": "card",
                           "items": [
                             {
-                              "id": "518-p-A template with landing, pricing, docs and blog.",
+                              "id": "536-p-A template with landing, pricing, docs and blog.",
                               "type": "paragraph",
                               "items": [
                                 {
@@ -8884,11 +8977,11 @@
                           }
                         },
                         {
-                          "id": "520-card-title='Docs' icon='document' link='https://github.com/nuxt-ui-pro/docs'",
+                          "id": "538-card-title='Docs' icon='document' link='https://github.com/nuxt-ui-pro/docs'",
                           "type": "card",
                           "items": [
                             {
-                              "id": "521-p-A documentation with `@nuxt/content`.",
+                              "id": "539-p-A documentation with `@nuxt/content`.",
                               "type": "paragraph",
                               "items": [
                                 {
@@ -8916,11 +9009,11 @@
                           }
                         },
                         {
-                          "id": "523-card-title='Landing' icon='presentation-chart-line' link='https://github.com/nuxt-ui-pro/landing'",
+                          "id": "541-card-title='Landing' icon='presentation-chart-line' link='https://github.com/nuxt-ui-pro/landing'",
                           "type": "card",
                           "items": [
                             {
-                              "id": "524-p-A landing page you can use as starting point.",
+                              "id": "542-p-A landing page you can use as starting point.",
                               "type": "paragraph",
                               "items": [
                                 {
@@ -8952,12 +9045,12 @@
           ]
         },
         {
-          "id": "section- Code Collapse-532-h3",
+          "id": "section- Code Collapse-550-h3",
           "type": "section",
-          "headingId": " Code Collapse-532-h3",
+          "headingId": " Code Collapse-550-h3",
           "items": [
             {
-              "id": " Code Collapse-532-h3",
+              "id": " Code Collapse-550-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -8969,15 +9062,15 @@
               ]
             },
             {
-              "id": "533-tabs-",
+              "id": "551-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "535-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "553-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "564-::code-collapse\n\n```",
+                      "id": "582-::code-collapse\n\n```",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -9818,15 +9911,15 @@
                   }
                 },
                 {
-                  "id": "566-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "584-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "567-code-collapse-open=true",
+                      "id": "585-code-collapse-open=true",
                       "type": "code-collapse",
                       "items": [
                         {
-                          "id": "589-@import \"tailwindcss",
+                          "id": "607-@import \"tailwindcss",
                           "type": "code-block",
                           "language": "css",
                           "name": "main.css",
@@ -10584,7 +10677,7 @@
               "componentProps": {}
             },
             {
-              "id": "593-table",
+              "id": "611-table",
               "type": "table",
               "headers": [
                 [
@@ -10901,12 +10994,12 @@
           ]
         },
         {
-          "id": "section- Code Group-600-h3",
+          "id": "section- Code Group-618-h3",
           "type": "section",
-          "headingId": " Code Group-600-h3",
+          "headingId": " Code Group-618-h3",
           "items": [
             {
-              "id": " Code Group-600-h3",
+              "id": " Code Group-618-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -10918,7 +11011,7 @@
               ]
             },
             {
-              "id": "601-p-Wrap your code-blocks around a `code-group` component to group them together in tabs.",
+              "id": "619-p-Wrap your code-blocks around a `code-group` component to group them together in tabs.",
               "type": "paragraph",
               "items": [
                 {
@@ -10939,15 +11032,15 @@
               ]
             },
             {
-              "id": "602-tabs-",
+              "id": "620-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "604-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "622-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "626-::code-group\n\n```bas",
+                      "id": "644-::code-group\n\n```bas",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -11256,15 +11349,15 @@
                   }
                 },
                 {
-                  "id": "630-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "648-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "632-code-group-",
+                      "id": "650-code-group-",
                       "type": "code-group",
                       "items": [
                         {
-                          "id": "636-pnpm add @nuxt/ui",
+                          "id": "654-pnpm add @nuxt/ui",
                           "type": "code-block",
                           "language": "bash",
                           "name": "pnpm",
@@ -11338,7 +11431,7 @@
                           ]
                         },
                         {
-                          "id": "640-yarn add @nuxt/ui",
+                          "id": "658-yarn add @nuxt/ui",
                           "type": "code-block",
                           "language": "bash",
                           "name": "yarn",
@@ -11412,7 +11505,7 @@
                           ]
                         },
                         {
-                          "id": "644-npm install @nuxt/ui",
+                          "id": "662-npm install @nuxt/ui",
                           "type": "code-block",
                           "language": "bash",
                           "name": "npm",
@@ -11486,7 +11579,7 @@
                           ]
                         },
                         {
-                          "id": "648-bun add @nuxt/ui",
+                          "id": "666-bun add @nuxt/ui",
                           "type": "code-block",
                           "language": "bash",
                           "name": "bun",
@@ -11572,7 +11665,7 @@
               "componentProps": {}
             },
             {
-              "id": "655-table",
+              "id": "673-table",
               "type": "table",
               "headers": [
                 [
@@ -11672,12 +11765,12 @@
           ]
         },
         {
-          "id": "section- Code Tree-658-h3",
+          "id": "section- Code Tree-676-h3",
           "type": "section",
-          "headingId": " Code Tree-658-h3",
+          "headingId": " Code Tree-676-h3",
           "items": [
             {
-              "id": " Code Tree-658-h3",
+              "id": " Code Tree-676-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -11689,19 +11782,19 @@
               ]
             },
             {
-              "id": "659-tabs-",
+              "id": "677-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "661-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "679-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "663-code-collapse-",
+                      "id": "681-code-collapse-",
                       "type": "code-collapse",
                       "items": [
                         {
-                          "id": "735-::code-tree{defaultV",
+                          "id": "753-::code-tree{defaultV",
                           "type": "code-block",
                           "language": "text",
                           "syntaxHighlightedTokens": [
@@ -12550,7 +12643,7 @@
                           ]
                         },
                         {
-                          "id": " Nuxt 3 Minimal Starter-736-h1",
+                          "id": " Nuxt 3 Minimal Starter-754-h1",
                           "type": "heading",
                           "depth": 1,
                           "items": [
@@ -12562,7 +12655,7 @@
                           ]
                         },
                         {
-                          "id": "738-p-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.",
+                          "id": "756-p-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.",
                           "type": "paragraph",
                           "items": [
                             {
@@ -12584,7 +12677,7 @@
                           ]
                         },
                         {
-                          "id": " Setup-740-h2",
+                          "id": " Setup-758-h2",
                           "type": "heading",
                           "depth": 2,
                           "items": [
@@ -12596,7 +12689,7 @@
                           ]
                         },
                         {
-                          "id": "742-p-Make sure to install the dependencies:",
+                          "id": "760-p-Make sure to install the dependencies:",
                           "type": "paragraph",
                           "items": [
                             {
@@ -12607,7 +12700,7 @@
                           ]
                         },
                         {
-                          "id": "756-# npm\nnpm install\n\n#",
+                          "id": "774-# npm\nnpm install\n\n#",
                           "type": "code-block",
                           "language": "bash",
                           "syntaxHighlightedTokens": [
@@ -12846,7 +12939,7 @@
                           ]
                         },
                         {
-                          "id": " Development Server-758-h2",
+                          "id": " Development Server-776-h2",
                           "type": "heading",
                           "depth": 2,
                           "items": [
@@ -12858,7 +12951,7 @@
                           ]
                         },
                         {
-                          "id": "760-p-Start the development server on `http://localhost:3000`:",
+                          "id": "778-p-Start the development server on `http://localhost:3000`:",
                           "type": "paragraph",
                           "items": [
                             {
@@ -12879,7 +12972,7 @@
                           ]
                         },
                         {
-                          "id": "774-# npm\nnpm run dev\n\n#",
+                          "id": "792-# npm\nnpm run dev\n\n#",
                           "type": "code-block",
                           "language": "bash",
                           "syntaxHighlightedTokens": [
@@ -13190,7 +13283,7 @@
                           ]
                         },
                         {
-                          "id": " Production-776-h2",
+                          "id": " Production-794-h2",
                           "type": "heading",
                           "depth": 2,
                           "items": [
@@ -13202,7 +13295,7 @@
                           ]
                         },
                         {
-                          "id": "778-p-Build the application for production:",
+                          "id": "796-p-Build the application for production:",
                           "type": "paragraph",
                           "items": [
                             {
@@ -13213,7 +13306,7 @@
                           ]
                         },
                         {
-                          "id": "792-# npm\nnpm run build\n",
+                          "id": "810-# npm\nnpm run build\n",
                           "type": "code-block",
                           "language": "bash",
                           "syntaxHighlightedTokens": [
@@ -13524,7 +13617,7 @@
                           ]
                         },
                         {
-                          "id": "794-p-Locally preview production build:",
+                          "id": "812-p-Locally preview production build:",
                           "type": "paragraph",
                           "items": [
                             {
@@ -13535,7 +13628,7 @@
                           ]
                         },
                         {
-                          "id": "808-# npm\nnpm run previe",
+                          "id": "826-# npm\nnpm run previe",
                           "type": "code-block",
                           "language": "bash",
                           "syntaxHighlightedTokens": [
@@ -13846,7 +13939,7 @@
                           ]
                         },
                         {
-                          "id": "810-p-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.",
+                          "id": "828-p-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.",
                           "type": "paragraph",
                           "items": [
                             {
@@ -13868,7 +13961,7 @@
                           ]
                         },
                         {
-                          "id": "815-\n::\n",
+                          "id": "833-\n::\n",
                           "type": "code-block",
                           "language": "text",
                           "syntaxHighlightedTokens": [
@@ -13922,15 +14015,15 @@
                   }
                 },
                 {
-                  "id": "820-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "838-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "822-code-tree-defaultValue=\"app/app.config.ts\"",
+                      "id": "840-code-tree-defaultValue=\"app/app.config.ts\"",
                       "type": "code-tree",
                       "items": [
                         {
-                          "id": "835-export default defin",
+                          "id": "853-export default defin",
                           "type": "code-block",
                           "language": "ts",
                           "name": "nuxt.config.ts",
@@ -14430,7 +14523,7 @@
                           ]
                         },
                         {
-                          "id": "840-@import \"tailwindcss",
+                          "id": "858-@import \"tailwindcss",
                           "type": "code-block",
                           "language": "css",
                           "name": "app/assets/css/main.css",
@@ -14592,7 +14685,7 @@
                           ]
                         },
                         {
-                          "id": "851-export default defin",
+                          "id": "869-export default defin",
                           "type": "code-block",
                           "language": "ts",
                           "name": "app/app.config.ts",
@@ -15090,7 +15183,7 @@
                           ]
                         },
                         {
-                          "id": "859-<template>\n  <UApp>\n",
+                          "id": "877-<template>\n  <UApp>\n",
                           "type": "code-block",
                           "language": "vue",
                           "name": "app/app.vue",
@@ -15336,7 +15429,7 @@
                           ]
                         },
                         {
-                          "id": "884-{\n  \"name\": \"nuxt-ap",
+                          "id": "902-{\n  \"name\": \"nuxt-ap",
                           "type": "code-block",
                           "language": "json",
                           "name": "package.json",
@@ -17390,7 +17483,7 @@
                           ]
                         },
                         {
-                          "id": "890-{\n  \"extends\": \"./.n",
+                          "id": "908-{\n  \"extends\": \"./.n",
                           "type": "code-block",
                           "language": "json",
                           "name": "tsconfig.json",
@@ -17544,7 +17637,7 @@
                           ]
                         },
                         {
-                          "id": "968-# Nuxt 3 Minimal Sta",
+                          "id": "986-# Nuxt 3 Minimal Sta",
                           "type": "code-block",
                           "language": "md",
                           "name": "README.md",
@@ -19306,7 +19399,7 @@
               "componentProps": {}
             },
             {
-              "id": "976-table",
+              "id": "994-table",
               "type": "table",
               "headers": [
                 [
@@ -19409,12 +19502,12 @@
           ]
         },
         {
-          "id": "section- Collapsible-980-h3",
+          "id": "section- Collapsible-998-h3",
           "type": "section",
-          "headingId": " Collapsible-980-h3",
+          "headingId": " Collapsible-998-h3",
           "items": [
             {
-              "id": " Collapsible-980-h3",
+              "id": " Collapsible-998-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -19426,7 +19519,7 @@
               ]
             },
             {
-              "id": "982-p-Wrap your content with the `collapsible` component to display a [Collapse](https://ui.nuxt.com/components/collapsible) in your content.",
+              "id": "1000-p-Wrap your content with the `collapsible` component to display a [Collapse](https://ui.nuxt.com/components/collapsible) in your content.",
               "type": "paragraph",
               "items": [
                 {
@@ -19458,15 +19551,15 @@
               ]
             },
             {
-              "id": "984-tabs-",
+              "id": "1002-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "986-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "1004-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "998-::collapsible\n\n| Pro",
+                      "id": "1016-::collapsible\n\n| Pro",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -19993,15 +20086,15 @@
                   }
                 },
                 {
-                  "id": "1000-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "1018-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "1001-collapsible-",
+                      "id": "1019-collapsible-",
                       "type": "collapsible",
                       "items": [
                         {
-                          "id": "1002-table",
+                          "id": "1020-table",
                           "type": "table",
                           "headers": [
                             [
@@ -20169,7 +20262,7 @@
               "componentProps": {}
             },
             {
-              "id": "1010-table",
+              "id": "1028-table",
               "type": "table",
               "headers": [
                 [
@@ -20469,12 +20562,12 @@
           ]
         },
         {
-          "id": "section- Field-1016-h3",
+          "id": "section- Field-1034-h3",
           "type": "section",
-          "headingId": " Field-1016-h3",
+          "headingId": " Field-1034-h3",
           "items": [
             {
-              "id": " Field-1016-h3",
+              "id": " Field-1034-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -20486,7 +20579,7 @@
               ]
             },
             {
-              "id": "1017-p-A field, prop or parameter to display in your content.",
+              "id": "1035-p-A field, prop or parameter to display in your content.",
               "type": "paragraph",
               "items": [
                 {
@@ -20497,15 +20590,15 @@
               ]
             },
             {
-              "id": "1018-tabs-",
+              "id": "1036-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "1019-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "1037-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "1024-::field{name=\"name\" ",
+                      "id": "1042-::field{name=\"name\" ",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -20856,15 +20949,15 @@
                   }
                 },
                 {
-                  "id": "1026-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "1044-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "1027-field-name=\"name\" type=\"string\" required",
+                      "id": "1045-field-name=\"name\" type=\"string\" required",
                       "type": "field",
                       "items": [
                         {
-                          "id": "1028-p-The `description` can be set here with full **markdown** support.",
+                          "id": "1046-p-The `description` can be set here with full **markdown** support.",
                           "type": "paragraph",
                           "items": [
                             {
@@ -20917,7 +21010,7 @@
               "componentProps": {}
             },
             {
-              "id": "1033-table",
+              "id": "1051-table",
               "type": "table",
               "headers": [
                 [
@@ -21027,12 +21120,12 @@
           ]
         },
         {
-          "id": "section- Field Group-1038-h3",
+          "id": "section- Field Group-1056-h3",
           "type": "section",
-          "headingId": " Field Group-1038-h3",
+          "headingId": " Field Group-1056-h3",
           "items": [
             {
-              "id": " Field Group-1038-h3",
+              "id": " Field Group-1056-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -21044,19 +21137,19 @@
               ]
             },
             {
-              "id": "1039-tabs-",
+              "id": "1057-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "1040-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "1058-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "1041-code-collapse-",
+                      "id": "1059-code-collapse-",
                       "type": "code-collapse",
                       "items": [
                         {
-                          "id": "1060-::field-group\n  ::fi",
+                          "id": "1078-::field-group\n  ::fi",
                           "type": "code-block",
                           "language": "mdc",
                           "syntaxHighlightedTokens": [
@@ -22360,19 +22453,19 @@
                   }
                 },
                 {
-                  "id": "1063-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "1081-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "1064-field-group-",
+                      "id": "1082-field-group-",
                       "type": "field-group",
                       "items": [
                         {
-                          "id": "1065-field-name=\"analytics\" type=\"boolean\"",
+                          "id": "1083-field-name=\"analytics\" type=\"boolean\"",
                           "type": "field",
                           "items": [
                             {
-                              "id": "1066-p-Default to `false` - Enables analytics for your project (coming soon).",
+                              "id": "1084-p-Default to `false` - Enables analytics for your project (coming soon).",
                               "type": "paragraph",
                               "items": [
                                 {
@@ -22399,11 +22492,11 @@
                           }
                         },
                         {
-                          "id": "1068-field-name=\"blob\" type=\"boolean\"",
+                          "id": "1086-field-name=\"blob\" type=\"boolean\"",
                           "type": "field",
                           "items": [
                             {
-                              "id": "1069-p-Default to `false` - Enables blob storage to store static assets, such as images, videos and more.",
+                              "id": "1087-p-Default to `false` - Enables blob storage to store static assets, such as images, videos and more.",
                               "type": "paragraph",
                               "items": [
                                 {
@@ -22430,11 +22523,11 @@
                           }
                         },
                         {
-                          "id": "1071-field-name=\"cache\" type=\"boolean\"",
+                          "id": "1089-field-name=\"cache\" type=\"boolean\"",
                           "type": "field",
                           "items": [
                             {
-                              "id": "1072-p-Default to `false` - Enables cache storage to cache your server route responses or functions using Nitro's `cachedEventHandler` and `cachedFunction`",
+                              "id": "1090-p-Default to `false` - Enables cache storage to cache your server route responses or functions using Nitro's `cachedEventHandler` and `cachedFunction`",
                               "type": "paragraph",
                               "items": [
                                 {
@@ -22476,11 +22569,11 @@
                           }
                         },
                         {
-                          "id": "1074-field-name=\"database\" type=\"boolean\"",
+                          "id": "1092-field-name=\"database\" type=\"boolean\"",
                           "type": "field",
                           "items": [
                             {
-                              "id": "1075-p-Default to `false` - Enables SQL database to store your application's data.",
+                              "id": "1093-p-Default to `false` - Enables SQL database to store your application's data.",
                               "type": "paragraph",
                               "items": [
                                 {
@@ -22521,12 +22614,12 @@
           ]
         },
         {
-          "id": "section- Icon-1081-h3",
+          "id": "section- Icon-1099-h3",
           "type": "section",
-          "headingId": " Icon-1081-h3",
+          "headingId": " Icon-1099-h3",
           "items": [
             {
-              "id": " Icon-1081-h3",
+              "id": " Icon-1099-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -22538,7 +22631,7 @@
               ]
             },
             {
-              "id": "1082-p-Find icon names from [heroicons](https://heroicons.com/) or just type `/` and search for the icon you are looking for.",
+              "id": "1100-p-Find icon names from [heroicons](https://heroicons.com/) or just type `/` and search for the icon you are looking for.",
               "type": "paragraph",
               "items": [
                 {
@@ -22570,15 +22663,15 @@
               ]
             },
             {
-              "id": "1083-tabs-",
+              "id": "1101-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "1084-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "1102-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "1087-Icons can be display",
+                      "id": "1105-Icons can be display",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -22609,11 +22702,11 @@
                   }
                 },
                 {
-                  "id": "1089-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "1107-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "1090-p-Icons can be displayed inline :icon{name=\"face-smile\"}",
+                      "id": "1108-p-Icons can be displayed inline :icon{name=\"face-smile\"}",
                       "type": "paragraph",
                       "items": [
                         {
@@ -22641,7 +22734,7 @@
               "componentProps": {}
             },
             {
-              "id": "1094-table",
+              "id": "1112-table",
               "type": "table",
               "headers": [
                 [
@@ -22690,12 +22783,12 @@
           ]
         },
         {
-          "id": "section- Key Binding-1097-h3",
+          "id": "section- Key Binding-1115-h3",
           "type": "section",
-          "headingId": " Key Binding-1097-h3",
+          "headingId": " Key Binding-1115-h3",
           "items": [
             {
-              "id": " Key Binding-1097-h3",
+              "id": " Key Binding-1115-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -22707,7 +22800,7 @@
               ]
             },
             {
-              "id": "1098-p-Search for special keys by typing `/` such as :kbd{value=\"meta\"} and :kbd{value=\"shift\"}",
+              "id": "1116-p-Search for special keys by typing `/` such as :kbd{value=\"meta\"} and :kbd{value=\"shift\"}",
               "type": "paragraph",
               "items": [
                 {
@@ -22749,15 +22842,15 @@
               ]
             },
             {
-              "id": "1099-tabs-",
+              "id": "1117-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "1100-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "1118-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "1103-Search by pressing :",
+                      "id": "1121-Search by pressing :",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -22788,11 +22881,11 @@
                   }
                 },
                 {
-                  "id": "1105-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "1123-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "1106-p-Search by pressing :kbd{value=\"meta\"} :kbd{value=\"K\"}",
+                      "id": "1124-p-Search by pressing :kbd{value=\"meta\"} :kbd{value=\"K\"}",
                       "type": "paragraph",
                       "items": [
                         {
@@ -22833,7 +22926,7 @@
               "componentProps": {}
             },
             {
-              "id": "1109-table",
+              "id": "1127-table",
               "type": "table",
               "headers": [
                 [
@@ -22882,12 +22975,12 @@
           ]
         },
         {
-          "id": "section- Tabs-1112-h3",
+          "id": "section- Tabs-1130-h3",
           "type": "section",
-          "headingId": " Tabs-1112-h3",
+          "headingId": " Tabs-1130-h3",
           "items": [
             {
-              "id": " Tabs-1112-h3",
+              "id": " Tabs-1130-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -22899,7 +22992,7 @@
               ]
             },
             {
-              "id": "1114-p-Use the `tabs` and `tabs-item` components to display tabs in your content.",
+              "id": "1132-p-Use the `tabs` and `tabs-item` components to display tabs in your content.",
               "type": "paragraph",
               "items": [
                 {
@@ -22930,15 +23023,15 @@
               ]
             },
             {
-              "id": "1115-tabs-",
+              "id": "1133-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "1116-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "1134-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "1140-::tabs\n\n::tabs-item{",
+                      "id": "1158-::tabs\n\n::tabs-item{",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -23563,23 +23656,23 @@
                   }
                 },
                 {
-                  "id": "1142-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "1160-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "1143-card-",
+                      "id": "1161-card-",
                       "type": "card",
                       "items": [
                         {
-                          "id": "1144-tabs-",
+                          "id": "1162-tabs-",
                           "type": "tabs",
                           "items": [
                             {
-                              "id": "1145-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                              "id": "1163-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                               "type": "tabs-item",
                               "items": [
                                 {
-                                  "id": "1150-::callout\nLorem veli",
+                                  "id": "1168-::callout\nLorem veli",
                                   "type": "code-block",
                                   "language": "mdc",
                                   "syntaxHighlightedTokens": [
@@ -23654,15 +23747,15 @@
                               }
                             },
                             {
-                              "id": "1152-tabs-item-label=\"Preview\" icon=\"eye\"",
+                              "id": "1170-tabs-item-label=\"Preview\" icon=\"eye\"",
                               "type": "tabs-item",
                               "items": [
                                 {
-                                  "id": "1153-callout-",
+                                  "id": "1171-callout-",
                                   "type": "callout",
                                   "items": [
                                     {
-                                      "id": "1154-p-Lorem velit voluptate ex reprehenderit ullamco et culpa.",
+                                      "id": "1172-p-Lorem velit voluptate ex reprehenderit ullamco et culpa.",
                                       "type": "paragraph",
                                       "items": [
                                         {
@@ -23697,7 +23790,7 @@
               "componentProps": {}
             },
             {
-              "id": "1161-table",
+              "id": "1179-table",
               "type": "table",
               "headers": [
                 [
@@ -23752,12 +23845,12 @@
           ]
         },
         {
-          "id": "section- Steps-1165-h3",
+          "id": "section- Steps-1183-h3",
           "type": "section",
-          "headingId": " Steps-1165-h3",
+          "headingId": " Steps-1183-h3",
           "items": [
             {
-              "id": " Steps-1165-h3",
+              "id": " Steps-1183-h3",
               "type": "heading",
               "depth": 3,
               "items": [
@@ -23769,7 +23862,7 @@
               ]
             },
             {
-              "id": "1166-p-Wrap your headings with the Steps component to display a list of steps.",
+              "id": "1184-p-Wrap your headings with the Steps component to display a list of steps.",
               "type": "paragraph",
               "items": [
                 {
@@ -23780,7 +23873,7 @@
               ]
             },
             {
-              "id": "1168-p-Use the `level` prop to define which heading will be used for the steps.",
+              "id": "1186-p-Use the `level` prop to define which heading will be used for the steps.",
               "type": "paragraph",
               "items": [
                 {
@@ -23801,15 +23894,15 @@
               ]
             },
             {
-              "id": "1169-tabs-",
+              "id": "1187-tabs-",
               "type": "tabs",
               "items": [
                 {
-                  "id": "1171-tabs-item-label=\"Code\" icon=\"code-bracket\"",
+                  "id": "1189-tabs-item-label=\"Code\" icon=\"code-bracket\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "1193-::steps{level=\"3\"}\n\n",
+                      "id": "1211-::steps{level=\"3\"}\n\n",
                       "type": "code-block",
                       "language": "mdc",
                       "syntaxHighlightedTokens": [
@@ -24344,15 +24437,15 @@
                   }
                 },
                 {
-                  "id": "1197-tabs-item-label=\"Preview\" icon=\"eye\"",
+                  "id": "1215-tabs-item-label=\"Preview\" icon=\"eye\"",
                   "type": "tabs-item",
                   "items": [
                     {
-                      "id": "1199-steps-level=\"3\"",
+                      "id": "1217-steps-level=\"3\"",
                       "type": "steps",
                       "items": [
                         {
-                          "id": " Add the Nuxt UI Pro module in your `nuxt.config.ts`-1201-h3",
+                          "id": " Add the Nuxt UI Pro module in your `nuxt.config.ts`-1219-h3",
                           "type": "heading",
                           "depth": 3,
                           "items": [
@@ -24369,7 +24462,7 @@
                           ]
                         },
                         {
-                          "id": "1207-export default defin",
+                          "id": "1225-export default defin",
                           "type": "code-block",
                           "language": "ts",
                           "name": "nuxt.config.ts",
@@ -24595,7 +24688,7 @@
                           ]
                         },
                         {
-                          "id": " Import Tailwind CSS and Nuxt UI Pro in your CSS-1209-h3",
+                          "id": " Import Tailwind CSS and Nuxt UI Pro in your CSS-1227-h3",
                           "type": "heading",
                           "depth": 3,
                           "items": [
@@ -24607,7 +24700,7 @@
                           ]
                         },
                         {
-                          "id": "1214-@import \"tailwindcss",
+                          "id": "1232-@import \"tailwindcss",
                           "type": "code-block",
                           "language": "css",
                           "name": "assets/css/main.css",
@@ -24783,7 +24876,7 @@
               "componentProps": {}
             },
             {
-              "id": "1222-table",
+              "id": "1240-table",
               "type": "table",
               "headers": [
                 [
