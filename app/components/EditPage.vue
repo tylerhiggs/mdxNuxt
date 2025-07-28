@@ -155,20 +155,25 @@ const insertFormating = (text: string, defaultTxt = "", text2 = "") => {
     middle = defaultTxt;
     mode = 1;
   } else {
-    if (front.slice(-textLen) == text && back.slice(0, text2Len) == text2) {
+    if (front.slice(-textLen) === text && back.slice(0, text2Len) === text2) {
       front = front.slice(0, front.length - textLen);
       back = back.slice(text2Len);
       text = "";
       text2 = "";
       mode = 2;
     } else if (
-      middle.slice(0, textLen) == text &&
-      middle.slice(-text2Len) == text2
+      middle.slice(0, textLen) === text &&
+      middle.slice(-text2Len) === text2
     ) {
       middle = middle.slice(textLen, middle.length - text2Len);
       text = "";
       text2 = "";
       mode = 3;
+    } else {
+      front += text;
+      middle = defaultTxt;
+      back = text2 + back;
+      mode = 1;
     }
   }
   txtarea.value = front + text + middle + text2 + back;
