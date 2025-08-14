@@ -401,7 +401,7 @@ const copied = ref(false);
     class="my-4 flex w-full items-center justify-center"
   >
     <span
-      class="text-md inline-block rounded-md px-1.5 py-0.5 font-mono font-medium"
+      class="inline-block rounded-md px-1.5 py-0.5 font-mono font-medium"
       v-html="node.content"
     ></span>
     <!-- esline-enable -->

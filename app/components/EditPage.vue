@@ -30,13 +30,10 @@ watch(
   },
 );
 const element = computed(() => {
-  console.log("focusedBlockId", focusedBlockId.value);
-  console.log(
-    "elements",
-    elements.value?.map((el) => el.id),
+  return (
+    elements.value?.find((el) => Number(el.id) === focusedBlockId.value) ||
+    elements.value?.[0]
   );
-  console.log("we should have made it here");
-  return elements.value?.find((el) => Number(el.id) === focusedBlockId.value);
 });
 const elements = useTemplateRef<HTMLTextAreaElement[]>("elements");
 const caretPosition = ref(0);
@@ -226,11 +223,9 @@ const syntaxHighlightedTokens = ref<TokensResult[]>([]);
 watch(
   [() => page.value?.blocks, () => colorMode.value, caretPosition],
   async ([blocks, colorMode, caretPosition]) => {
-    console.log("what about this time");
     if (!blocks || !blocks.length) {
       return;
     }
-    console.log("blocks", blocks);
     const editorHighlighter = await editorHighlighterPromise;
     const tokens = await Promise.all(
       blocks.map((block) =>
@@ -330,7 +325,6 @@ const uploadImage = (file: File) => {
         e.response?._data?.message || "Failed to upload image",
         "error",
       );
-      console.log(e, Object.entries(e.FetchError));
     });
 };
 
@@ -346,10 +340,7 @@ const onPaste = (event: ClipboardEvent) => {
     return;
   }
   const items = clipboardData.items;
-  console.log("html", clipboardData.getData("text/html"));
-  console.log("text", clipboardData.getData("text/plain"));
   for (const item of items) {
-    console.log("item", item);
     if (item.kind === "file" && item.type.startsWith("image/")) {
       const file = item.getAsFile();
       if (file) {

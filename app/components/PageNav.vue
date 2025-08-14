@@ -169,7 +169,7 @@ defineShortcuts({
         </UTooltip>
         <template #content>
           <div v-if="!page?.isPublic" class="w-96 p-4">
-            <div class="text-md font-bold">Publish to web</div>
+            <div class="font-bold">Publish to web</div>
             <div class="text-sm text-gray-500">
               Share your page with anyone by publishing it to the web.
             </div>
@@ -214,7 +214,7 @@ defineShortcuts({
             </button>
           </div>
           <div v-else class="p-3">
-            <div class="text-md font-bold">Share link</div>
+            <div class="font-bold">Share link</div>
             <div class="mt-2 border-t pt-2"></div>
             <div class="flex items-center justify-between gap-1">
               <a
