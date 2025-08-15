@@ -464,7 +464,7 @@ export async function parseLine(mdLine: string): Promise<MdNode[]> {
       tokens.push({
         id: `text-${part}`,
         type: "text",
-        text: part.replaceAll("->", "→"),
+        text: part.replaceAll(" -> ", " → "),
       });
     }
   }

@@ -166,26 +166,25 @@ const insertFormating = (text: string, defaultTxt = "", text2 = "") => {
       text = "";
       text2 = "";
       mode = 3;
-    } else {
-      front += text;
-      middle = defaultTxt;
-      back = text2 + back;
-      mode = 1;
     }
   }
   txtarea.value = front + text + middle + text2 + back;
   if (selectStart !== selectEnd) {
     if (mode === 0) {
+      console.log("what");
       txtarea.selectionStart = selectStart + textLen;
       txtarea.selectionEnd = selectEnd + textLen;
     } else if (mode === 2) {
+      console.log("about");
       txtarea.selectionStart = selectStart - textLen;
       txtarea.selectionEnd = selectEnd - textLen;
     } else if (mode === 3) {
+      console.log("here");
       txtarea.selectionStart = selectStart;
       txtarea.selectionEnd = selectEnd - textLen - text2Len;
     }
   } else {
+    console.log("else");
     txtarea.selectionStart = selectStart + textLen;
     txtarea.selectionEnd = txtarea.selectionStart + middle.length;
   }
@@ -334,6 +333,28 @@ const updateCaretPosition = (event: Event) => {
     caretPosition.value = target.selectionStart;
   }, 0);
 };
+const insertOrReplace = (text: string) => {
+  if (
+    !element.value ||
+    !page.value ||
+    !page.value.id ||
+    !focusedBlockId.value
+  ) {
+    return;
+  }
+  const selectionStart = element.value.selectionStart;
+  const selectionEnd = element.value.selectionEnd;
+  const currentText = element.value.value;
+
+  // If there's a selection, replace it; otherwise, insert at cursor
+  const newText =
+    currentText.slice(0, selectionStart) +
+    text +
+    currentText.slice(selectionEnd);
+
+  updateBlock(page.value.id, focusedBlockId.value, newText);
+  element.value.focus();
+};
 const onPaste = (event: ClipboardEvent) => {
   const clipboardData = event.clipboardData;
   if (!clipboardData) {
@@ -362,12 +383,12 @@ const onPaste = (event: ClipboardEvent) => {
       }
     }
     const mdText = Array.from(doc.body.children).map((el) => parseDom(el));
-    insertFormating("", mdText.join("\n"), "");
+    insertOrReplace(mdText.join("\n"));
     return;
   }
   const text = clipboardData.getData("text/plain");
   if (text) {
-    insertFormating("", text, "");
+    insertOrReplace(text);
     return;
   }
 };

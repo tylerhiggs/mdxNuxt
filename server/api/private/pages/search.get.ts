@@ -89,9 +89,12 @@ export default defineEventHandler<{
   });
   if (query.titleOnly !== "true") {
     const blocksPromise = drizzle.query.blocks.findMany({
-      where: (blocks, { like }) => {
+      where: (blocks, { like, and }) => {
         const searchTerm = `%${query.search}%`;
-        return like(blocks.textContent, searchTerm);
+        return and(
+          like(blocks.textContent, searchTerm),
+          eq(blocks.userId, Number(user.id)),
+        );
       },
       with: {
         page: true,
