@@ -1,4 +1,4 @@
-const publicRoutes = ["/login", "/signup", "public"];
+const publicRoutes = ["/login", "/signup", "public", "/"];
 export default defineNuxtRouteMiddleware((to) => {
   if (publicRoutes.some((route) => to.path.startsWith(route))) {
     return;

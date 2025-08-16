@@ -247,7 +247,7 @@ const copied = ref(false);
   </s>
   <mark
     v-else-if="node.type === 'highlighted'"
-    class="inline rounded-md px-1.5 py-0.5"
+    class="bg-primary inline rounded-md px-1.5 py-0.5"
   >
     <MdNode v-for="item in node.items" :key="item.id" :node="item" />
   </mark>

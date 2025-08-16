@@ -34,7 +34,6 @@ export async function parseMd(markdown: string): Promise<MdNode[]> {
     console.error(
       "parseMd should only be called on the client side, as it uses shiki to parse code blocks.",
     );
-    return [];
   }
   const tokens: MdNode[] = [];
   // Stack to keep track of nested components
