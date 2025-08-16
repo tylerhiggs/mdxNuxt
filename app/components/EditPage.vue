@@ -17,17 +17,8 @@ defineShortcuts({
     usingInput: true,
   },
 });
-const focusedBlockId = ref(
+const focusedBlockId = computed(() =>
   page.value?.blocks.length ? page.value.blocks.at(0)?.id : undefined,
-);
-watch(
-  () => page.value?.blocks,
-  (newBlocks) => {
-    if (newBlocks?.some((block) => block.id === focusedBlockId.value)) {
-      return;
-    }
-    focusedBlockId.value = newBlocks?.at(0)?.id;
-  },
 );
 const element = computed(() => {
   return (
@@ -171,20 +162,16 @@ const insertFormating = (text: string, defaultTxt = "", text2 = "") => {
   txtarea.value = front + text + middle + text2 + back;
   if (selectStart !== selectEnd) {
     if (mode === 0) {
-      console.log("what");
       txtarea.selectionStart = selectStart + textLen;
       txtarea.selectionEnd = selectEnd + textLen;
     } else if (mode === 2) {
-      console.log("about");
       txtarea.selectionStart = selectStart - textLen;
       txtarea.selectionEnd = selectEnd - textLen;
     } else if (mode === 3) {
-      console.log("here");
       txtarea.selectionStart = selectStart;
       txtarea.selectionEnd = selectEnd - textLen - text2Len;
     }
   } else {
-    console.log("else");
     txtarea.selectionStart = selectStart + textLen;
     txtarea.selectionEnd = txtarea.selectionStart + middle.length;
   }

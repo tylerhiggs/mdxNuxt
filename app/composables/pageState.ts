@@ -1,4 +1,4 @@
-import type { Page, PageUpdate, BlockUpdate } from "~~/types/page";
+import type { PageUpdate, BlockUpdate } from "~~/types/page";
 
 const DEBOUNCE_TIME = 5000;
 
@@ -11,10 +11,6 @@ export function usePageState() {
 
   const currentPageId = useState<number | undefined>(
     "currentPageId",
-    () => undefined,
-  );
-  const currentPage = useState<Page | undefined>(
-    "currentPage",
     () => undefined,
   );
 
@@ -37,7 +33,7 @@ export function usePageState() {
     error: _pageGetError,
     status: pageStatus,
   } = useFetch(() => `/api/private/pages/${currentPageId.value}`, {
-    watch: [currentPageId],
+    watch: [() => currentPageId.value],
     method: "get",
     transform: (data) => ({
       ...data.body,
@@ -50,13 +46,15 @@ export function usePageState() {
   });
 
   const selectPage = async (pageId: number) => {
-    currentPageId.value = pageId;
-    if (currentPage.value && pageUpdateToSave.value) {
+    if (pageUpdateToSave.value || blockUpdateToSave.value) {
       lastPageUpdateAt.value = Date.now();
       lastBlockUpdateAt.value = Date.now();
-      executePageUpdateDb();
-      executeBlockUpdateDb();
+      executePageUpdateDb(false);
+      executeBlockUpdateDb(false);
     }
+    blockUpdateToSave.value = undefined;
+    currentPageId.value = pageId;
+
     navigateTo(`/edit/${pageId}`);
   };
 
@@ -84,7 +82,7 @@ export function usePageState() {
     snackbarStore.enqueue("Page created", "success");
   };
 
-  const executePageUpdateDb = async () => {
+  const executePageUpdateDb = async (updateLocalState = true) => {
     if (!pageUpdateToSave.value) {
       console.error("No page update to save");
       snackbarStore.enqueue("No page update to save", "error");
@@ -107,7 +105,11 @@ export function usePageState() {
       snackbarStore.enqueue("Error updating page", "error");
       return;
     }
-    if (pagesData.value) {
+    if (!updateLocalState) {
+      pageUpdateToSave.value = undefined;
+      return;
+    }
+    if (pagesData.value && pageUpdateToSave.value?.id === currentPageId.value) {
       pagesData.value = pageUpdateToSave.value
         ? pagesData.value?.map((page) =>
             page.id === pageUpdateToSave.value?.id
@@ -121,7 +123,7 @@ export function usePageState() {
           )
         : pagesData.value;
     }
-    if (pageData.value) {
+    if (pageData.value && pageUpdateToSave.value?.id === currentPageId.value) {
       pageData.value = {
         ...pageData.value,
         ...pageUpdateToSave.value,
@@ -136,7 +138,7 @@ export function usePageState() {
     pageUpdateToSave.value = undefined;
   };
 
-  const executeBlockUpdateDb = async () => {
+  const executeBlockUpdateDb = async (updateLocalState = true) => {
     const update = blockUpdateToSave.value;
     if (!update) {
       console.error("No page update to save");
@@ -161,7 +163,11 @@ export function usePageState() {
       snackbarStore.enqueue("Error updating page block", "error");
       return;
     }
-    if (pageData.value) {
+    if (!updateLocalState) {
+      blockUpdateToSave.value = undefined;
+      return;
+    }
+    if (pageData.value && pageUpdateToSave.value?.id === currentPageId.value) {
       pageData.value = {
         ...pageData.value,
         ...pageUpdateToSave.value,
@@ -194,8 +200,12 @@ export function usePageState() {
       return;
     }
     if (update.id !== currentPageId.value) {
-      console.error("Unable to update page due to mismatching ids");
+      console.error(
+        "Unable to update page due to mismatching ids",
+        `udpate.id: ${update.id}, currentPageId: ${currentPageId.value}`,
+      );
       snackbarStore.enqueue("Unable to update page", "error");
+      return;
     }
     if (update.title) {
       const newPath = pageData.value.path.map((p) => ({ ...p }));
@@ -234,7 +244,12 @@ export function usePageState() {
       return;
     }
     setTimeout(() => {
-      if (lastPageUpdateAt.value + DEBOUNCE_TIME > Date.now()) return;
+      if (
+        !pageUpdateToSave.value ||
+        pageUpdateToSave.value.id !== currentPageId.value ||
+        lastPageUpdateAt.value + DEBOUNCE_TIME > Date.now()
+      )
+        return;
       executePageUpdateDb();
     }, DEBOUNCE_TIME);
   };
@@ -267,8 +282,12 @@ export function usePageState() {
     instantSave: boolean = false,
   ) => {
     if (pageId !== currentPageId.value) {
-      console.error("Unable to update page due to mismatching ids");
+      console.error(
+        "Unable to update block due to mismatching ids",
+        `pageId: ${pageId}, currentPageId: ${currentPageId.value}, pageUpdateToSave: ${pageUpdateToSave.value?.id}, pageData: ${pageData.value?.id}`,
+      );
       snackbarStore.enqueue("Unable to update page", "error");
+      return;
     }
     blockUpdateToSave.value = {
       blockId,
@@ -282,7 +301,13 @@ export function usePageState() {
       return;
     }
     setTimeout(() => {
-      if (lastBlockUpdateAt.value + DEBOUNCE_TIME > Date.now()) return;
+      if (
+        !blockUpdateToSave.value ||
+        blockUpdateToSave.value.blockId !== blockId ||
+        blockUpdateToSave.value.pageId !== currentPageId.value ||
+        lastBlockUpdateAt.value + DEBOUNCE_TIME > Date.now()
+      )
+        return;
       executeBlockUpdateDb();
     }, DEBOUNCE_TIME);
   };
