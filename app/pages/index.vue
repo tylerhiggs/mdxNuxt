@@ -1,29 +1,23 @@
 <script setup lang="ts">
-import type { MdNode } from "~~/shared/types";
-
-const { data: page } = useFetch("/api/public/home", {
-  method: "GET",
-  transform: async (data: string) => {
-    return {
-      title: "Extended Markdown Editor - Typography",
-      emoji: "🎨",
-      showOutline: true,
-      blocks: data
-        ? [
-            {
-              type: "text",
-              renderedMd: (await parseMd(data)) || "",
-            },
-          ]
-        : [],
-    };
-  },
+defineRouteRules({
+  prerender: true,
 });
+const page = {
+  title: "Extended Markdown Editor - Typography",
+  emoji: "🎨",
+  showOutline: true,
+  blocks: [
+    {
+      type: "text",
+      renderedMd: await parseMd((await import("~~/home.md?raw")).default),
+    },
+  ],
+};
 const pageTitle = computed(() => {
-  return page.value?.title || "No Page Title";
+  return page?.title || "No Page Title";
 });
 const pageEmojiPath = computed(() => {
-  return `data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">${page.value?.emoji || "📄"}</text></svg>`;
+  return `data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">${page?.emoji || "📄"}</text></svg>`;
 });
 watch(
   pageEmojiPath,
@@ -42,13 +36,9 @@ useHead({
   ],
 });
 
-const nodes = computed<MdNode[][]>(() =>
-  page.value && "blocks" in page.value
-    ? page.value.blocks
-        .filter((block) => block.type === "text")
-        .map((block) => block.renderedMd || [])
-    : [],
-);
+const nodes = page.blocks
+  .filter((block) => block.type === "text")
+  .map((block) => block.renderedMd || []);
 </script>
 
 <template>

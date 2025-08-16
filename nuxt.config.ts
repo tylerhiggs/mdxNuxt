@@ -64,4 +64,7 @@ export default defineNuxtConfig({
     blob: true,
     database: true,
   },
+  experimental: {
+    inlineRouteRules: true,
+  },
 });
