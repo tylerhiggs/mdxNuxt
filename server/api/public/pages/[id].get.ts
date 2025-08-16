@@ -1,15 +1,7 @@
 import { desc } from "drizzle-orm";
 import { MdNode } from "~~/shared/types";
-import { Page } from "~~/types/page";
 export default defineEventHandler(async (event) => {
   const { id } = getRouterParams(event);
-  if (id === "home") {
-    const homePageData = await import("~~/server/assets/home-page.json");
-    return {
-      statusCode: 200,
-      body: homePageData as Omit<Page, "updatedAt" | "createdAt" | "deletedAt">,
-    };
-  }
   if (!id || isNaN(Number(id))) {
     throw createError({ statusCode: 400, message: "Page ID is required" });
   }

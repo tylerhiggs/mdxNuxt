@@ -1,0 +1,1156 @@
+## Introduction
+
+Welcome! If you navigate to the [editor](/edit) (after logging in with Google) you can create pages like this one by using a mixture of markdown and extra components.
+
+## Shortcuts and Commands
+
+- :kbd{value="meta"} :kbd{value="shift"} :kbd{value="B"} toggles sidebar.
+- :kbd{value="meta"} :kbd{value="K"} toggles search.
+- :kbd{value="meta"} :kbd{value="E"} toggles preview.
+  - :kbd{value="meta"} :kbd{value="shift"} :kbd{value="E"} toggles fullscreen preview.
+- Editor shortcuts (while typing in editor):
+  - :kbd{value="/"} opens command pallet, search for any markdown or component syntax without needing to memorize.
+    - Also search for any icon (:icon{name="bug-ant"}) and special key binding (:kbd{value="meta"})
+    - This is how you
+  - :kbd{value="meta"} :kbd{value="B"} bold (also works for highlighted characters)
+  - :kbd{value="meta"} :kbd{value="I"} italic (also works for highlighted characters)
+  - :kbd{value="meta"} :kbd{value="V"} paste formatted text gets translated and pasted as markdown.
+
+## Colors
+
+For any `color` properties, here are your options:
+
+| **Color** | **Description** |
+| `primary`{color="primary"} | Main brand color, used as the default color for components. |
+| `secondary`{color="secondary"} | Secondary color to complement the primary color. |
+| `success`{color="success"} | Used for success states. |
+| `warning`{color="warning"} | Used for warning states. |
+| `info`{color="info"} | Used for informational states. |
+| `neutral` | Neutral color for backgrounds, text, etc. |
+
+## Markdown Components
+
+### `h1`
+
+::tabs
+::tabs-item{label="Preview" icon="eye"}
+
+# This is an h1
+
+::
+::tabs-item{label="Code" icon="code-bracket"}
+
+```mdc
+# This is an h1
+```
+
+::
+::
+
+### `h2`
+
+::tabs
+::tabs-item{label="Preview" icon="eye"}
+
+## This is an h2
+
+::
+::tabs-item{label="Code" icon="code-bracket"}
+
+```mdc
+## This is an h2
+```
+
+::
+::
+
+### `h3`
+
+::tabs
+::tabs-item{label="Preview" icon="eye"}
+
+### This is an h3
+
+::
+::tabs-item{label="Code" icon="code-bracket"}
+
+```mdc
+### This is an h3
+```
+
+::
+::
+
+### `a` (link)
+
+::tabs
+::tabs-item{label="Preview" icon="eye"}
+[Nuxt documentation](https://nuxt.com)
+::
+::tabs-item{label="Code" icon="code-bracket"}
+
+```mdc
+[Nuxt documentation](https://nuxt.com)
+```
+
+::
+::
+
+### `blockquote`
+
+::tabs
+::tabs-item{label="Preview" icon="eye"}
+
+> While Nuxt UI is free and open source, Nuxt UI Pro is a premium product that helps sustain Nuxt OSS development, check out the License section to learn more.
+> ::
+> ::tabs-item{label="Code" icon="code-bracket"}
+
+```mdc
+> While Nuxt UI is free and open source, Nuxt UI Pro is a premium product that helps sustain Nuxt OSS development, check out the License section to learn more.
+```
+
+::
+::
+
+### `strong`
+
+::tabs
+::tabs-item{label="Preview" icon="eye"}
+**strong text** (can be triggered with :kbd{value="meta"} :kbd{value="B"})
+::
+::tabs-item{label="Code" icon="code-bracket"}
+
+```mdc
+**strong text** (can be triggered with :kbd{value="meta"} :kbd{value="B"})
+```
+
+::
+::
+
+### `em`
+
+::tabs
+::tabs-item{label="Preview" icon="eye"}
+_Emphasized text_ (can be triggered with :kbd{value="meta"} :kbd{value="I"})
+::
+::tabs-item{label="Code" icon="code-bracket"}
+
+```mdc
+*Emphasized text* (can be triggered with :kbd{value="meta"} :kbd{value="I"})
+```
+
+::
+::
+
+### `s` (strikethrough)
+
+::tabs
+::tabs-item{label="Preview" icon="eye"}
+~~The world is flat~~ We now know that the world is round.
+::
+::tabs-item{label="Code" icon="code-bracket"}
+
+```mdc
+~~The world is flat~~ We now know that the world is round.
+```
+
+::
+::
+
+### `mark` (highlighted)
+
+::tabs
+::tabs-item{label="Preview" icon="eye"}
+I need to highlight these ==very important words==.
+::
+::tabs-item{label="Code" icon="code-bracket"}
+
+```mdc
+I need to highlight these ==very important words==.
+```
+
+::
+::
+
+### `sup` (superscript)
+
+::tabs
+::tabs-item{label="Preview" icon="eye"}
+x^2^ is a square
+::
+::tabs-item{label="Code" icon="code-bracket"}
+
+```mdc
+x^2^ is a square
+```
+
+::
+::
+
+### `sub` (subscript)
+
+::tabs
+::tabs-item{label="Preview" icon="eye"}
+H~2~O
+::
+::tabs-item{label="Code" icon="code-bracket"}
+
+```mdc
+H~2~O
+```
+
+::
+::
+
+### `ul` (unordered list)
+
+::tabs
+::tabs-item{label="Preview" icon="eye"}
+
+- I'm a list item.
+  - I'm nested.
+- I'm the last list item.
+
+::
+::tabs-item{label="Code" icon="code-bracket"}
+
+```mdc
+- I'm a list item.
+  - I'm nested.
+- I'm the last list item.
+```
+
+::
+::
+
+### `ol` (ordered list)
+
+::tabs
+::tabs-item{label="Preview" icon="eye"}
+
+1. I'm a list item.
+1. I'm another list item. Use tab :kbd{value="tab"} or 2 spaces to indent for a nested list
+1. I'm the last list item.
+
+::
+::tabs-item{label="Code" icon="code-bracket"}
+
+```mdc
+1. I'm a list item.
+  1. I'm another list item. Use tab :kbd{value="tab"} or 2 spaces to indent for a nested list
+2. I'm the last list item.
+```
+
+::
+::
+
+### `hr` (horizontal rule)
+
+::tabs
+::tabs-item{label="Preview" icon="eye"}
+
+---
+
+::
+::tabs-item{label="Code" icon="code-bracket"}
+
+```mdc
+----------
+```
+
+::
+::
+
+### `table`
+
+::tabs
+::tabs-item{label="Preview" icon="eye"}
+| Prop | Default | Type |
+|---------|-----------|---------------------|
+| `name` | | `string`{lang="ts"} |
+| `size` | `md` | `string`{lang="ts"} |
+| `color` | `neutral` | `string`{lang="ts"} |
+::
+::tabs-item{label="Code" icon="code-bracket"}
+
+```mdc
+| Prop    | Default   | Type                |
+|---------|-----------|---------------------|
+| `name`  |           | `string`{lang="ts"} |
+| `size`  | `md`      | `string`{lang="ts"} |
+| `color` | `neutral` | `string`{lang="ts"} |
+```
+
+::
+::
+
+### `img` (image)
+
+::tabs
+::tabs-item{label="Preview" icon="eye"}
+![Nuxt Social Image](https://nuxt.com/new-social.jpg)
+::
+::tabs-item{label="Code" icon="code-bracket"}
+
+```mdc
+![Nuxt Social Image](https://nuxt.com/new-social.jpg)
+```
+
+::
+::
+
+### `code`
+
+Inline code
+::tabs
+::tabs-item{label="Preview" icon="eye"}
+`inline code`
+::
+::tabs-item{label="Code" icon="code-bracket"}
+
+```mdc
+`inline code`
+```
+
+::
+::
+You can style inline code with any of the [colors](#%20Colors-18-h2)
+::tabs
+::tabs-item{label="Preview" icon="eye"}
+`inline code`{color="error"}
+::
+::tabs-item{label="Code" icon="code-bracket"}
+
+```mdc
+`inline code`{color="error"}
+```
+
+::
+::
+Syntax highlight inline code by adding a language using the `lang` prop:
+::tabs
+::tabs-item{label="Preview" icon="eye"}
+`const isFalse = (b: boolean) => !b`{lang="typescript"}
+::
+::tabs-item{label="Code" icon="code-bracket"}
+
+```mdc
+`const isFalse = (b: boolean) => !b`{lang="typescript"}
+```
+
+::
+::
+| Prop | Default | Type |
+| `lang` | | `string` |
+| `color` | `neutral` | `"error" | "primary" | "secondary" | "success" | "info" | "warning" | "neutral"`{lang="typescript"} |
+
+### pre (code block)
+
+Syntax highlight by adding a language
+::tabs
+::tabs-item{label="Preview" icon="eye"}
+
+```typescript
+const isFalse = (b: boolean) => {
+  return !b;
+};
+```
+
+::
+::tabs-item{label="Code" icon="code-bracket"}
+
+````mdc
+```typescript
+const isFalse = (b: boolean) => {
+  return !b
+}
+```
+````
+
+::
+::
+Add a name or filename:
+::tabs
+::tabs-item{label="Preview" icon="eye"}
+
+```typescript [is-true.ts]
+const isTrue = (b: boolean) => {
+  return b;
+};
+```
+
+::
+::tabs-item{label="Code" icon="code-bracket"}
+
+````mdc
+```typescript [is-true.ts]
+const isTrue = (b: boolean) => {
+  return b
+}
+```
+````
+
+::
+::
+
+### Inline Math
+
+::tabs
+::tabs-item{label="Preview" icon="eye"}
+Energy $e$ and mass $m$ are related in the following way: $e = mc^2$
+::
+::tabs-item{label="Code" icon="code-bracket"}
+
+```mdc
+Energy $e$ and mass $m$ are related in the following way: $e = mc^2$
+```
+
+::
+::
+
+### Math Blocks
+
+::tabs
+::tabs-item{label="Preview" icon="eye"}
+$$y = \sum_{i=0}^{n-1} (1 + r/12)^{12n} - \sum_{i=0}^{n-1} r_0^i - r_0^n$$
+::
+::tabs-item{label="Code" icon="code-bracket"}
+
+```mdc
+$$y = \sum_{i=0}^{n-1} (1 + r/12)^{12n} - \sum_{i=0}^{n-1} r_0^i - r_0^n$$
+```
+
+::
+::
+
+## Components
+
+### Youtube
+
+Just add a link to a youtube video and it will render as a playable video on the page
+::tabs
+::tabs-item{label="Preview" icon="eye"}
+https://www.youtube.com/watch?v=dCxSsr5xuL8&t
+::
+::tabs-item{label="Code" icon="code-bracket"}
+
+```mdc
+https://www.youtube.com/watch?v=dCxSsr5xuL8&t
+```
+
+::
+::
+
+### Accordion
+
+::tabs
+::tabs-item{label="Preview" icon="eye"}
+::accordion
+::accordion-item{label='First Item' icon='question-mark-circle'}
+Add **markdown** content here
+::
+::accordion-item{label="Second Item" icon="light-bulb"}
+==Second== item's content
+::
+::
+::
+::tabs-item{label="Code" icon="code-bracket"}
+
+```mdc
+::accordion
+
+::accordion-item{label='First Item' icon='question-mark-circle'}
+Add **markdown** content here
+::
+
+::accordion-item{label="Second Item" icon="light-bulb"}
+==Second== item's content
+::
+
+::
+```
+
+::
+::
+| Prop | Default | Type |
+| `type` | `"single"` | `"multiple" | "single"` |
+
+### Badge
+
+::tabs
+::tabs-item{label="Preview" icon="eye"}
+::badge{color="primary"}
+Label **here**
+::
+::
+::tabs-item{label="Code" icon="code-bracket"}
+
+```mdc
+::badge{color="primary"}
+Label **here**
+::
+```
+
+::
+::
+
+| Prop | Default | Type |
+| `color` | `"primary"` | `"error" | "primary" | "secondary" | "success" | "info" | "warning" | "neutral"`{lang="typescript"} |
+
+### Callout
+
+::tabs
+::tabs-item{label="Preview" icon="eye"}
+::callout{color="primary" icon="light-bulb"}
+Lorem velit voluptate ex reprehenderit ullamco et culpa.
+::
+::
+::tabs-item{label="Code" icon="code-bracket"}
+
+```mdc
+::callout{color="primary" icon="light-bulb"}
+Lorem velit voluptate ex reprehenderit ullamco et culpa.
+::
+```
+
+::
+::
+
+| Prop | Default | Type |
+| `color` | `"neutral"` | `"error" | "primary" | "secondary" | "success" | "info" | "warning" | "neutral"`{lang="typescript"} |
+| `icon` | | `string` |
+| `link` | | `string` |
+You can also use the `note`, `tip`, `warning` and `caution` shortcuts with pre-defined icons and colors:
+::tabs
+::tabs-item{label="Preview" icon="eye"}
+::note
+Here's some additional information.
+::
+::tip
+Here's a helpful suggestion.
+::
+::warning
+Be careful with this action as it might have unexpected results.
+::
+::caution
+This action cannot be undone.
+::
+::
+::tabs-item{label="Code" icon="code-bracket"}
+
+```mdc
+::note
+Here's some additional information.
+::
+
+::tip
+Here's a helpful suggestion.
+::
+
+::warning
+Be careful with this action as it might have unexpected results.
+::
+
+::caution
+This action cannot be undone.
+::
+```
+
+::
+::
+
+### Card
+
+::tabs
+::tabs-item{label="Preview" icon="eye"}
+::card{title="Icons" icon="users" color="primary" link="https://heroicons.com"}
+Click here to see **icons**.
+::
+::
+::tabs-item{label="Code" icon="code-bracket"}
+
+```mdc
+::card{title="Icons" icon="users" color="secondary" link="https://heroicons.com"}
+Click here to see __icons__.
+::
+```
+
+::
+::
+
+### Card Group
+
+::tabs
+::tabs-item{label="Preview" icon="eye"}
+::card-group
+::card{title='Dashboard' icon='chart-bar' link'https://github.com/nuxt-ui-pro/dashboard'}
+A dashboard with multi-column layout.
+::
+::card{title='SaaS' icon='credit-card' link='https://github.com/nuxt-ui-pro/saas'}
+A template with landing, pricing, docs and blog.
+::
+::card{title='Docs' icon='document' link='https://github.com/nuxt-ui-pro/docs'}
+A documentation with `@nuxt/content`.
+::
+::card{title='Landing' icon='presentation-chart-line' link='https://github.com/nuxt-ui-pro/landing'}
+A landing page you can use as starting point.
+::
+::
+::
+::tabs-item{label="Code" icon="code-bracket"}
+
+```mdc
+::card-group
+
+::card{title='Dashboard' icon='chart-bar' link'https://github.com/nuxt-ui-pro/dashboard'}
+A dashboard with multi-column layout.
+::
+
+::card{title='SaaS' icon='credit-card' link='https://github.com/nuxt-ui-pro/saas'}
+A template with landing, pricing, docs and blog.
+::
+
+::card{title='Docs' icon='document' link='https://github.com/nuxt-ui-pro/docs'}
+A documentation with `@nuxt/content`.
+::
+
+::card{title='Landing' icon='presentation-chart-line' link='https://github.com/nuxt-ui-pro/landing'}
+A landing page you can use as starting point.
+::
+
+::
+```
+
+::
+::
+
+### Code Collapse
+
+::tabs
+::tabs-item{label="Preview" icon="eye"}
+::code-collapse
+
+```css [main.css]
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+@theme static {
+  --font-sans: "Public Sans", sans-serif;
+
+  --breakpoint-3xl: 1920px;
+
+  --color-green-50: #effdf5;
+  --color-green-100: #d9fbe8;
+  --color-green-200: #b3f5d1;
+  --color-green-300: #75edae;
+  --color-green-400: #00dc82;
+  --color-green-500: #00c16a;
+  --color-green-600: #00a155;
+  --color-green-700: #007f45;
+  --color-green-800: #016538;
+  --color-green-900: #0a5331;
+  --color-green-950: #052e16;
+}
+```
+
+::
+::
+::tabs-item{label="Code" icon="code-bracket"}
+
+````mdc
+::code-collapse
+
+```css [main.css]
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+@theme static {
+  --font-sans: 'Public Sans', sans-serif;
+
+  --breakpoint-3xl: 1920px;
+
+  --color-green-50: #EFFDF5;
+  --color-green-100: #D9FBE8;
+  --color-green-200: #B3F5D1;
+  --color-green-300: #75EDAE;
+  --color-green-400: #00DC82;
+  --color-green-500: #00C16A;
+  --color-green-600: #00A155;
+  --color-green-700: #007F45;
+  --color-green-800: #016538;
+  --color-green-900: #0A5331;
+  --color-green-950: #052E16;
+}
+```
+
+::
+````
+
+::
+::
+
+| Prop        | Default                     | Type                                                    |
+| ----------- | --------------------------- | ------------------------------------------------------- |
+| `icon`      | `'chevron-down'`{lang='ts'} | `string` The icon displayed to toggle the code.         |
+| `name`      |                             | `string` The name displayed in the trigger label.       |
+| `openText`  | `'Expand'`{lang='ts'}       | `string` The text displayed when the code is collapsed. |
+| `closeText` | `'Collapse'`{lang='ts'}     | `string` The text displayed when the code is expanded.  |
+| `open`      | `false`{lang='ts'}          | `boolean`                                               |
+
+### Code Group
+
+Wrap your code-blocks around a `code-group` component to group them together in tabs.
+::tabs
+::tabs-item{label="Preview" icon="eye"}
+::code-group
+
+```bash [pnpm]
+pnpm add @nuxt/ui
+```
+
+```bash [yarn]
+yarn add @nuxt/ui
+```
+
+```bash [npm]
+npm install @nuxt/ui
+```
+
+```bash [bun]
+bun add @nuxt/ui
+```
+
+::
+::
+::tabs-item{label="Code" icon="code-bracket"}
+
+````mdc
+::code-group
+
+```bash [pnpm]
+pnpm add @nuxt/ui
+```
+
+```bash [yarn]
+yarn add @nuxt/ui
+```
+
+```bash [npm]
+npm install @nuxt/ui
+```
+
+```bash [bun]
+bun add @nuxt/ui
+```
+
+::
+````
+
+::
+::
+
+| Prop | Default | Type |
+| `'defaultValue'` | `0` | `number | string` |
+
+### Code Tree
+
+::tabs
+::tabs-item{label="Preview" icon="eye"}
+::code-tree{defaultValue="app/app.config.ts"}
+
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
+  modules: ["@nuxt/ui-pro"],
+
+  future: {
+    compatibilityVersion: 4,
+  },
+
+  css: ["~/assets/css/main.css"],
+});
+```
+
+```css [app/assets/css/main.css]
+@import "tailwindcss";
+@import "@nuxt/ui-pro";
+```
+
+```ts [app/app.config.ts]
+export default defineAppConfig({
+  ui: {
+    colors: {
+      primary: "sky",
+      colors: "slate",
+    },
+  },
+});
+```
+
+```vue [app/app.vue]
+<template>
+  <UApp>
+    <NuxtPage />
+  </UApp>
+</template>
+```
+
+```json [package.json]
+{
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "typecheck": "nuxt typecheck"
+  },
+  "dependencies": {
+    "@iconify-json/lucide": "^1.2.18",
+    "@nuxt/ui-pro": "^3.0.0",
+    "nuxt": "^3.16.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.2",
+    "vue-tsc": "^2.2.10"
+  }
+}
+```
+
+```json [tsconfig.json]
+{
+  "extends": "./.nuxt/tsconfig.json"
+}
+```
+
+::
+::
+::tabs-item{label="Code" icon="code-bracket"}
+
+````mdc
+::code-tree{defaultValue="app/app.config.ts"}
+
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
+  modules: ['@nuxt/ui-pro'],
+
+  future: {
+    compatibilityVersion: 4
+  },
+
+  css: ['~/assets/css/main.css']
+})
+
+```
+
+```css [app/assets/css/main.css]
+@import "tailwindcss";
+@import "@nuxt/ui-pro";
+```
+
+```ts [app/app.config.ts]
+export default defineAppConfig({
+  ui: {
+    colors: {
+      primary: 'sky',
+      colors: 'slate'
+    }
+  }
+})
+```
+
+```vue [app/app.vue]
+<template>
+  <UApp>
+    <NuxtPage />
+  </UApp>
+</template>
+```
+
+```json [package.json]
+{
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "typecheck": "nuxt typecheck"
+  },
+  "dependencies": {
+    "@iconify-json/lucide": "^1.2.18",
+    "@nuxt/ui-pro": "^3.0.0",
+    "nuxt": "^3.16.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.2",
+    "vue-tsc": "^2.2.10"
+  }
+}
+```
+
+```json [tsconfig.json]
+{
+  "extends": "./.nuxt/tsconfig.json"
+}
+```
+::
+````
+
+::
+::
+| Props | Default | Type |
+| `defaultValue` | | `string` The default tab to select. |
+| `expandAll` | `false`{lang='ts'} | `boolean` Expand all directories by default. |
+
+### Collapsible
+
+::tabs
+::tabs-item{label="Preview" icon="eye"}
+::collapsible
+| Prop | Default | Type |
+|---------|-----------|--------------------------|
+| `name` | | `string`{lang="ts"} |
+| `size` | `md` | `string`{lang="ts"} |
+| `color` | `neutral` | `string`{lang="ts"} |
+::
+::
+::tabs-item{label="Code" icon="code-bracket"}
+
+```mdc
+::collapsible
+
+| Prop    | Default   | Type                     |
+|---------|-----------|--------------------------|
+| `name`  |           | `string`{lang="ts"}      |
+| `size`  | `md`      | `string`{lang="ts"}      |
+| `color` | `neutral` | `string`{lang="ts"}      |
+
+::
+```
+
+::
+::
+| Props | Default | Type |
+| `icon` | `'chevron-down'` | `string` The icon displayed to toggle the show/hide button |
+| `name` | | `string` The name displayed in the trigger label |
+| `openText` | `'Show'` | `string` The text displayed when the content is collapsed |
+| `closeText` | `'Hide'` | `string` The text disolayed when the content is expanded |
+
+### Field
+
+A field, prop or parameter to display in your content.
+
+::tabs
+::tabs-item{label="Preview" icon="eye"}
+::field{name="name" type="string" required}
+The `description` can be set here with inline **markdown** support.
+::
+::
+::tabs-item{label="Code" icon="code-bracket"}
+
+```mdc
+::field{name="name" type="string" required}
+The `description` can be set here with inline **markdown** support.
+::
+```
+
+::
+::
+| Prop | Default | Type |
+| `name` | | `string` |
+| `type` | | `string` |
+| `required` | `false`{lang='ts'} | `boolean` |
+
+### Field Group
+
+::tabs
+::tabs-item{label="Preview" icon="eye"}
+::field-group
+::field{name="analytics" type="boolean"}
+Default to `false` - Enables analytics for your project (coming soon).
+::
+::field{name="blob" type="boolean"}
+Default to `false` - Enables blob storage to store static assets, such as images, videos and more.
+::
+::field{name="cache" type="boolean"}
+Default to `false` - Enables cache storage to cache your server route responses or functions using Nitro's `cachedEventHandler` and `cachedFunction`
+::
+::field{name="database" type="boolean"}
+Default to `false` - Enables SQL database to store your application's data.
+::
+::
+::
+::tabs-item{label="Code" icon="code-bracket"}
+
+```mdc
+::field-group
+  ::field{name="analytics" type="boolean"}
+    Default to `false` - Enables analytics for your project (coming soon).
+  ::
+
+  ::field{name="blob" type="boolean"}
+    Default to `false` - Enables blob storage to store static assets, such as images, videos and more.
+  ::
+
+  ::field{name="cache" type="boolean"}
+    Default to `false` - Enables cache storage to cache your server route responses or functions using Nitro's `cachedEventHandler` and `cachedFunction`
+  ::
+
+  ::field{name="database" type="boolean"}
+    Default to `false` - Enables SQL database to store your application's data.
+  ::
+::
+```
+
+::
+::
+
+### Icon
+
+Find icon names from [heroicons](https://heroicons.com/) or just type `/` and search for the icon you are looking for.
+::tabs
+::tabs-item{label="Preview" icon="eye"}
+Icons can be displayed inline: :icon{name="face-smile"}
+::
+::tabs-item{label="Code" icon="code-bracket"}
+
+```mdc
+Icons can be displayed inline: :icon{name="face-smile"}
+```
+
+::
+::
+| Prop | Default | Type |
+| `name` | | `string` |
+
+### Key Binding
+
+Search for special keys by typing `/` such as :kbd{value="meta"} and :kbd{value="shift"}
+::tabs
+::tabs-item{label="Preview" icon="eye"}
+Search by pressing :kbd{value="meta"} :kbd{value="K"}
+::
+::tabs-item{label="Code" icon="code-bracket"}
+
+```mdc
+Search by pressing :kbd{value="meta"} :kbd{value="K"}
+```
+
+::
+::
+| Prop | Default | Type |
+| value | | string |
+
+### Tabs
+
+Use the `tabs` and `tabs-item` components to display tabs in your content.
+
+::tabs
+::tabs-item{label="Preview" icon="eye"}
+::card
+::tabs
+::tabs-item{label="Code" icon="code-bracket"}
+
+```mdc
+::callout
+Lorem velit voluptate ex reprehenderit ullamco et culpa.
+::
+```
+
+::
+::tabs-item{label="Preview" icon="eye"}
+::callout
+Lorem velit voluptate ex reprehenderit ullamco et culpa.
+::
+::
+::
+::
+::
+::tabs-item{label="Code" icon="code-bracket"}
+
+````mdc
+::tabs
+
+::tabs-item{label="Code" icon="code-bracket"}
+
+```mdc
+::callout
+Lorem velit voluptate ex reprehenderit ullamco et culpa.
+::
+```
+
+::
+
+::tabs-item{label="Preview" icon="eye"}
+
+::callout
+Lorem velit voluptate ex reprehenderit ullamco et culpa.
+::
+
+::
+
+::
+````
+
+::
+::
+| Props | Default | Type |
+| `defaultValue` | `0` | `string` |
+
+### Steps
+
+Wrap your headings with the Steps component to display a list of steps.
+
+Use the `level` prop to define which heading will be used for the steps.
+::tabs
+::tabs-item{label="Preview" icon="eye"}
+::steps{level="3"}
+
+### Add the Nuxt UI Pro module in your `nuxt.config.ts`
+
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
+  modules: ["@nuxt/ui"],
+});
+```
+
+### Import Tailwind CSS and Nuxt UI Pro in your CSS
+
+```css [assets/css/main.css]
+@import "tailwindcss";
+@import "@nuxt/ui";
+```
+
+::
+::
+::tabs-item{label="Code" icon="code-bracket"}
+
+````mdc
+::steps{level="3"}
+### Add the Nuxt UI Pro module in your `nuxt.config.ts`
+
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
+  modules: ['@nuxt/ui']
+})
+```
+
+### Import Tailwind CSS and Nuxt UI Pro in your CSS
+
+```css [assets/css/main.css]
+@import "tailwindcss";
+@import "@nuxt/ui";
+```
+::
+````
+
+::
+::
+| Prop | Default | Type |
+| `level` | `'3'` | `"3" | "2" | "4"` |

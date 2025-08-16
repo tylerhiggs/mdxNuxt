@@ -176,13 +176,6 @@ const insertFormating = (text: string, defaultTxt = "", text2 = "") => {
     txtarea.selectionEnd = txtarea.selectionStart + middle.length;
   }
   txtarea.focus();
-
-  // Manually dispatch input event so undo works
-  const event =
-    typeof InputEvent === "function"
-      ? new InputEvent("input", { bubbles: true, inputType: "insertText" })
-      : new Event("input", { bubbles: true });
-  txtarea.dispatchEvent(event);
 };
 
 const colorMode = useColorMode();

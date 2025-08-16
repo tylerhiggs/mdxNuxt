@@ -11,6 +11,10 @@ export default defineNuxtConfig({
 
   nitro: {
     preset: "cloudflare-pages",
+    prerender: {
+      routes: ["/", "/login", "/signup"],
+      ignore: ["/edit/**", "/public/**"],
+    },
   },
 
   vite: {

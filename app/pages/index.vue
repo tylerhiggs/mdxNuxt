@@ -1,10 +1,22 @@
 <script setup lang="ts">
 import type { MdNode } from "~~/shared/types";
 
-const { data: page } = useFetch("/api/public/pages/home", {
+const { data: page } = useFetch("/api/public/home", {
   method: "GET",
-  transform: (data) => {
-    return "body" in data ? data.body : null;
+  transform: async (data: string) => {
+    return {
+      title: "Extended Markdown Editor - Typography",
+      emoji: "🎨",
+      showOutline: true,
+      blocks: data
+        ? [
+            {
+              type: "text",
+              renderedMd: (await parseMd(data)) || "",
+            },
+          ]
+        : [],
+    };
   },
 });
 const pageTitle = computed(() => {
