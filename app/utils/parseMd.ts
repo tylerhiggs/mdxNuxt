@@ -15,7 +15,7 @@ import { bundledLanguages, codeToTokens } from "shiki";
 import type { BundledLanguage, ThemedToken } from "shiki";
 import katex from "katex";
 import { sanitizeUrl } from "@braintree/sanitize-url";
-import DOMPurify from "dompurify";
+import DOMPurify from "isomorphic-dompurify";
 
 /**
  *
@@ -31,8 +31,8 @@ import DOMPurify from "dompurify";
  */
 export async function parseMd(markdown: string): Promise<MdNode[]> {
   if (import.meta.server) {
-    console.error(
-      "parseMd should only be called on the client side, as it uses shiki to parse code blocks.",
+    console.warn(
+      "parseMd should only be called on the client side or at build time, as it uses shiki to parse code blocks.",
     );
   }
   const tokens: MdNode[] = [];
