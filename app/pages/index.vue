@@ -4,6 +4,9 @@ import fs from "fs";
 defineRouteRules({
   prerender: true,
 });
+definePageMeta({
+  layout: false,
+});
 const { data: page } = await useAsyncData("home-page", async () => {
   const staticData = fs.readFileSync("app/home.txt", "utf-8");
   return {
