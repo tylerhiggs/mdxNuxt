@@ -2,6 +2,9 @@
 definePageMeta({
   layout: "editor",
 });
+// defineRouteRules({
+//   ssr: false,
+// })
 </script>
 
 <template>

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ClientOnly } from "#components";
+
 const { pages, currentPage, createPage, deletePage } = usePageState();
 const auth = useAuth();
 const showSearch = ref(false);
@@ -32,21 +34,23 @@ useHead({
 </script>
 
 <template>
-  <div v-if="auth.loggedIn && auth.dbUser.value" class="m-0 h-screen">
-    <div class="relative m-0 flex h-full w-full">
-      <SidePanel
-        :pages="pages || []"
-        :current-page-id="currentPage?.id"
-        @toggle-search="showSearch = !showSearch"
-        @open-settings="showSettings = true"
-        @create-page="createPage"
-        @delete-page="deletePage"
-      />
-      <slot />
-      <SearchDialog v-model:open="showSearch" @close="showSearch = false" />
-      <SettingsDialog v-model:open="showSettings" />
-      <SnackBar />
-      <OuterToolTip />
+  <ClientOnly>
+    <div v-if="auth.loggedIn && auth.dbUser.value" class="m-0 h-screen">
+      <div class="relative m-0 flex h-full w-full">
+        <SidePanel
+          :pages="pages || []"
+          :current-page-id="currentPage?.id"
+          @toggle-search="showSearch = !showSearch"
+          @open-settings="showSettings = true"
+          @create-page="createPage"
+          @delete-page="deletePage"
+        />
+        <slot />
+        <SearchDialog v-model:open="showSearch" @close="showSearch = false" />
+        <SettingsDialog v-model:open="showSettings" />
+        <SnackBar />
+        <OuterToolTip />
+      </div>
     </div>
-  </div>
+  </ClientOnly>
 </template>
