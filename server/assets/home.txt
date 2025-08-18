@@ -102,8 +102,8 @@ For any `color` properties, here are your options:
 ::tabs-item{label="Preview" icon="eye"}
 
 > While Nuxt UI is free and open source, Nuxt UI Pro is a premium product that helps sustain Nuxt OSS development, check out the License section to learn more.
-> ::
-> ::tabs-item{label="Code" icon="code-bracket"}
+::
+::tabs-item{label="Code" icon="code-bracket"}
 
 ```mdc
 > While Nuxt UI is free and open source, Nuxt UI Pro is a premium product that helps sustain Nuxt OSS development, check out the License section to learn more.
