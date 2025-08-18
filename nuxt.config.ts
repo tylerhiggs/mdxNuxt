@@ -13,7 +13,6 @@ export default defineNuxtConfig({
     preset: "cloudflare-pages",
     prerender: {
       routes: ["/"],
-      ignore: ["/edit/**", "/public/**"],
     },
   },
 
