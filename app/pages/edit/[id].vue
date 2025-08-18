@@ -1,6 +1,10 @@
 <script setup lang="ts">
 definePageMeta({
   layout: "editor",
+  ssr: false,
+});
+defineRouteRules({
+  ssr: false,
 });
 const emojiDataStore = useEmojiData();
 const { selectPage, currentPage } = usePageState();

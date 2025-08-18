@@ -1,10 +1,11 @@
 <script setup lang="ts">
 definePageMeta({
   layout: "editor",
+  ssr: false,
 });
-// defineRouteRules({
-//   ssr: false,
-// })
+defineRouteRules({
+  ssr: false,
+});
 </script>
 
 <template>
