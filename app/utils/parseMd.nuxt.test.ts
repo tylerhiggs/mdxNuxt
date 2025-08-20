@@ -5,7 +5,7 @@ import type {
   ListItemNode,
   MdNode,
   ParagraphNode,
-} from "~/shared/types";
+} from "~~/shared/types";
 import { sanitizeUrl } from "@braintree/sanitize-url";
 
 test("parseMd - empty input", async () => {
@@ -349,10 +349,10 @@ test("parseMd - bold text mixture", async () => {
 test("parseMd - link XXS safety", async () => {
   const input = `[Link text](javascript:alert('XSS'))`;
   const output = await parseMd(input);
-  expect((output[0] as ParagraphNode).items[0].type).toEqual("link");
-  expect(((output[0] as ParagraphNode).items[0] as LinkNode).href).not.toEqual(
-    "javascript:alert('XSS')",
-  );
+  expect((output[0] as ParagraphNode)?.items[0]?.type).toEqual("link");
+  expect(
+    ((output[0] as ParagraphNode)?.items[0] as LinkNode)?.href,
+  ).not.toEqual("javascript:alert('XSS')");
 });
 
 test("parseMd - inline code", async () => {

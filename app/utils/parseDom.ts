@@ -1,4 +1,5 @@
 export const parseDom = (el: Element, listDepth = 0): string => {
+  console.log(el);
   const tagToMarkdown: Record<string, (el: Element) => string> = {
     STRONG: (el) =>
       `**${Array.from(el.childNodes)
@@ -64,7 +65,7 @@ export const parseDom = (el: Element, listDepth = 0): string => {
               ? node.textContent || ""
               : "",
         )
-        .join("")}\n\n`,
+        .join("")}\n`,
     H2: (el) =>
       `## ${Array.from(el.childNodes)
         .map((node) =>
@@ -74,7 +75,7 @@ export const parseDom = (el: Element, listDepth = 0): string => {
               ? node.textContent || ""
               : "",
         )
-        .join("")}\n\n`,
+        .join("")}\n`,
     H3: (el) =>
       `### ${Array.from(el.childNodes)
         .map((node) =>
@@ -84,7 +85,7 @@ export const parseDom = (el: Element, listDepth = 0): string => {
               ? node.textContent || ""
               : "",
         )
-        .join("")}\n\n`,
+        .join("")}\n`,
     H4: (el) =>
       `#### ${Array.from(el.childNodes)
         .map((node) =>
@@ -94,7 +95,7 @@ export const parseDom = (el: Element, listDepth = 0): string => {
               ? node.textContent || ""
               : "",
         )
-        .join("")}\n\n`,
+        .join("")}\n`,
     H5: (el) =>
       `##### ${Array.from(el.childNodes)
         .map((node) =>
@@ -104,7 +105,7 @@ export const parseDom = (el: Element, listDepth = 0): string => {
               ? node.textContent || ""
               : "",
         )
-        .join("")}\n\n`,
+        .join("")}\n`,
     H6: (el) =>
       `###### ${Array.from(el.childNodes)
         .map((node) =>
@@ -114,7 +115,7 @@ export const parseDom = (el: Element, listDepth = 0): string => {
               ? node.textContent || ""
               : "",
         )
-        .join("")}\n\n`,
+        .join("")}\n`,
     UL: (el) =>
       Array.from(el.children)
         .map(
@@ -164,7 +165,7 @@ export const parseDom = (el: Element, listDepth = 0): string => {
               ? node.textContent || ""
               : "",
         )
-        .join("")}\n\n`,
+        .join("")}\n`,
     BR: () => "\n",
     P: (el) =>
       `${Array.from(el.childNodes)
@@ -175,7 +176,7 @@ export const parseDom = (el: Element, listDepth = 0): string => {
               ? node.textContent || ""
               : "",
         )
-        .join("")}\n\n`,
+        .join("")}\n`,
     IMG: (el) => {
       const alt = el.getAttribute("alt") || "";
       const src = el.getAttribute("src") || "";
@@ -183,7 +184,7 @@ export const parseDom = (el: Element, listDepth = 0): string => {
     },
     TABLE: (el) => {
       const rows = Array.from(el.querySelectorAll("tr"));
-      if (rows.length === 0) return "";
+      if (rows.length === 0 || !rows[0]) return "";
       const headerRow = rows[0];
       const headerCells = Array.from(headerRow.querySelectorAll("th, td"));
       const headerMarkdown =
@@ -214,14 +215,14 @@ export const parseDom = (el: Element, listDepth = 0): string => {
                 : "",
           )
           .join("");
-        return `\`\`\`${codeEl.getAttribute("lang") || ""}\n${codeContent}\n\`\`\`\n`;
+        return `\`\`\`${codeEl.getAttribute("lang") || ""}${codeContent}\`\`\`\n`;
       }
       return "";
     },
   };
-
-  if (tagToMarkdown[el.tagName]) {
-    return tagToMarkdown[el.tagName](el);
+  const md = tagToMarkdown[el.tagName];
+  if (md) {
+    return md(el);
   }
 
   if (el.children.length > 0) {

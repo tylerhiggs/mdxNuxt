@@ -2,7 +2,6 @@
 import { createHighlighter } from "shiki";
 import type { TokensResult } from "shiki";
 import type { MdNode } from "~~/shared/types";
-import type { Command, CommandOptions } from "~~/types/page";
 const snackbarStore = useSnackbar();
 
 const { currentPage: page, updatePage, updateBlock, saveNow } = usePageState();
@@ -17,166 +16,16 @@ defineShortcuts({
     usingInput: true,
   },
 });
-const focusedBlockId = computed(() =>
-  page.value?.blocks.length ? page.value.blocks.at(0)?.id : undefined,
-);
-const element = computed(() => {
-  return (
-    elements.value?.find((el) => Number(el.id) === focusedBlockId.value) ||
-    elements.value?.[0]
-  );
-});
-const elements = useTemplateRef<HTMLTextAreaElement[]>("elements");
+const element = (blockId: number) => {
+  const blockElement = document.getElementById(`block-${blockId}`) as
+    | HTMLTextAreaElement
+    | undefined;
+  if (!blockElement) {
+    console.warn(`No block found with ID ${blockId} in page ${page.value?.id}`);
+  }
+  return blockElement;
+};
 const caretPosition = ref(0);
-
-watch(element, (el) => {
-  if (el) {
-    el.focus();
-  }
-});
-
-const updateBlockTextarea = (
-  event: Event,
-  block: Omit<Block, "renderedMd">,
-) => {
-  const target = event.target as HTMLTextAreaElement;
-  if (!page.value || !page.value.id) {
-    return;
-  }
-  updateBlock(page.value.id, block.id, target.value);
-};
-
-const platformConsistent = (event: KeyboardEvent) => {
-  if (navigator.platform.toLocaleLowerCase().includes("mac")) {
-    return event.metaKey;
-  }
-  return event.ctrlKey;
-};
-
-const bold = (event: KeyboardEvent, blockId: number) => {
-  event.preventDefault(); // Prevent the default browser action
-  if (!platformConsistent(event)) {
-    return;
-  }
-  insertFormating("**", "", "**");
-  if (!element.value || !page.value || !page.value.id) {
-    return;
-  }
-  updateBlock(page.value.id, blockId, element.value.value);
-};
-
-const italic = (event: KeyboardEvent, blockId: number) => {
-  event.preventDefault(); // Prevent the default browser action
-  if (!platformConsistent(event)) {
-    return;
-  }
-  insertFormating("__", "", "__");
-  if (!element.value || !page.value || !page.value.id) {
-    return;
-  }
-  updateBlock(page.value.id, blockId, element.value.value);
-};
-
-const tab = (blockId: number) => {
-  insertFormating("  ", "", "");
-  if (!element.value || !page.value || !page.value.id) {
-    return;
-  }
-  updateBlock(page.value.id, blockId, element.value.value);
-};
-
-const paren = (event: KeyboardEvent, blockId: number) => {
-  const parens: Record<string, string> = {
-    "(": ")",
-    "{": "}",
-    "[": "]",
-    "<": ">",
-  };
-  if (!(event.key in parens) && !Object.values(parens).includes(event.key)) {
-    return;
-  }
-  if (event.key in parens) {
-    event.preventDefault();
-    insertFormating(event.key, "", parens[event.key]);
-  } else if (Object.values(parens).includes(event.key) && element.value) {
-    const textarea = element.value;
-    const caretPos = textarea.selectionStart;
-    const text = textarea.value;
-    const charAfterCaret = text.charAt(caretPos);
-
-    if (charAfterCaret === event.key) {
-      event.preventDefault();
-      // Move the caret after the existing closing parenthesis
-      textarea.setSelectionRange(caretPos + 1, caretPos + 1);
-      textarea.focus();
-    }
-  }
-  if (!element.value || !page.value || !page.value.id) {
-    return;
-  }
-  updateBlock(page.value.id, blockId, element.value.value);
-};
-
-//https://dev.to/shivams136/simple-markdown-insertion-in-the-text-using-pure-javascript-pl4
-const insertFormating = (text: string, defaultTxt = "", text2 = "") => {
-  const txtarea = element.value;
-  if (!txtarea) {
-    console.error(
-      `No text area found in insertFormating(${text}, ${defaultTxt}, ${text2})`,
-    );
-    return;
-  }
-  const selectStart = txtarea.selectionStart;
-  const selectEnd = txtarea.selectionEnd;
-  const caretPos = txtarea.selectionStart;
-  let mode = 0;
-  let front = txtarea.value.substring(0, caretPos);
-  let back = txtarea.value.substring(selectEnd, txtarea.value.length);
-  let middle = txtarea.value.substring(caretPos, selectEnd);
-
-  // Sets ending tag as opening tag if empty
-
-  const textLen = text.length;
-  const text2Len = text2.length;
-
-  if (selectStart === selectEnd) {
-    middle = defaultTxt;
-    mode = 1;
-  } else {
-    if (front.slice(-textLen) === text && back.slice(0, text2Len) === text2) {
-      front = front.slice(0, front.length - textLen);
-      back = back.slice(text2Len);
-      text = "";
-      text2 = "";
-      mode = 2;
-    } else if (
-      middle.slice(0, textLen) === text &&
-      middle.slice(-text2Len) === text2
-    ) {
-      middle = middle.slice(textLen, middle.length - text2Len);
-      text = "";
-      text2 = "";
-      mode = 3;
-    }
-  }
-  txtarea.value = front + text + middle + text2 + back;
-  if (selectStart !== selectEnd) {
-    if (mode === 0) {
-      txtarea.selectionStart = selectStart + textLen;
-      txtarea.selectionEnd = selectEnd + textLen;
-    } else if (mode === 2) {
-      txtarea.selectionStart = selectStart - textLen;
-      txtarea.selectionEnd = selectEnd - textLen;
-    } else if (mode === 3) {
-      txtarea.selectionStart = selectStart;
-      txtarea.selectionEnd = selectEnd - textLen - text2Len;
-    }
-  } else {
-    txtarea.selectionStart = selectStart + textLen;
-    txtarea.selectionEnd = txtarea.selectionStart + middle.length;
-  }
-  txtarea.focus();
-};
 
 const colorMode = useColorMode();
 const mdNodes = ref<MdNode[][]>([]);
@@ -217,12 +66,13 @@ watch(
         }),
       ),
     );
-    const mostAccurateCaretPosition =
-      element.value?.selectionStart || caretPosition;
+    const blockId = page.value?.blocks?.at(0)?.id;
+    if (!blockId) return;
+    const textArea = element(blockId);
+    const mostAccurateCaretPosition = textArea?.selectionStart || caretPosition;
     const caretLineIndex =
-      (element.value?.value ?? "")
-        .slice(0, mostAccurateCaretPosition)
-        .split("\n").length - 1 || 0;
+      (textArea?.value ?? "").slice(0, mostAccurateCaretPosition).split("\n")
+        .length - 1 || 0;
     syntaxHighlightedTokens.value = tokens.map((blockTokenResult) => ({
       ...blockTokenResult,
       tokens: blockTokenResult.tokens.map((line, index) =>
@@ -235,35 +85,13 @@ watch(
   { deep: true, immediate: true },
 );
 
-const editMenuOpen = ref(false);
 const fileUploadOpen = ref(false);
-const isFileUploadCover = ref(false);
-const slash = (event: KeyboardEvent) => {
-  if (event.key !== "/") {
-    return;
-  }
-  event.preventDefault();
-  event.stopPropagation();
-  editMenuOpen.value = true;
-};
 
-const onEditMenuSelect = (
-  command: Command | undefined,
-  commandOptions: CommandOptions | undefined,
-) => {
-  editMenuOpen.value = false;
-  setTimeout(() => {
-    element.value?.focus();
-  }, 0);
-  if (command === "Upload Image") {
-    fileUploadOpen.value = true;
-    isFileUploadCover.value = false;
-    return;
-  }
-  insertFormating(...getDefaultCommandItems(command, commandOptions));
-};
-
-const uploadImage = (file: File) => {
+const uploadCoverImage = (file: File) => {
+  const blockId = page.value?.blocks?.at(0)?.id;
+  if (!blockId) return;
+  const textArea = element(blockId);
+  if (!textArea) return;
   const form = new FormData();
   form.append("file", file);
   $fetch("/api/private/photos", {
@@ -271,7 +99,7 @@ const uploadImage = (file: File) => {
     body: form,
     query: {
       pageId: page.value?.id,
-      isCover: isFileUploadCover.value,
+      isCover: true,
     },
   })
     .then((res) => {
@@ -279,25 +107,16 @@ const uploadImage = (file: File) => {
         snackbarStore.enqueue("Failed to upload image", "error");
         return;
       }
-      if (isFileUploadCover.value) {
-        if (!page.value?.id) {
-          console.warn("No page found to update cover URL");
-          return;
-        }
-        updatePage({
-          id: page.value.id,
-          coverUrl: res.pathname,
-        });
-        fileUploadOpen.value = false;
+      if (!page.value?.id) {
+        console.warn("No page found to update cover URL");
         return;
       }
-      const fileName = file.name;
+      updatePage({
+        id: page.value.id,
+        coverUrl: res.pathname,
+      });
       fileUploadOpen.value = false;
-      snackbarStore.enqueue("Image uploaded successfully", "success");
-      setTimeout(() => {
-        element.value?.focus();
-      }, 0);
-      insertFormating("![", fileName, `](${res.pathname})`);
+      return;
     })
     .catch((e) => {
       snackbarStore.enqueue(
@@ -313,76 +132,17 @@ const updateCaretPosition = (event: Event) => {
     caretPosition.value = target.selectionStart;
   }, 0);
 };
-const insertOrReplace = (text: string) => {
-  if (
-    !element.value ||
-    !page.value ||
-    !page.value.id ||
-    !focusedBlockId.value
-  ) {
-    return;
-  }
-  const selectionStart = element.value.selectionStart;
-  const selectionEnd = element.value.selectionEnd;
-  const currentText = element.value.value;
-
-  // If there's a selection, replace it; otherwise, insert at cursor
-  const newText =
-    currentText.slice(0, selectionStart) +
-    text +
-    currentText.slice(selectionEnd);
-
-  updateBlock(page.value.id, focusedBlockId.value, newText);
-  element.value.focus();
-};
-const onPaste = (event: ClipboardEvent) => {
-  const clipboardData = event.clipboardData;
-  if (!clipboardData) {
-    return;
-  }
-  const items = clipboardData.items;
-  for (const item of items) {
-    if (item.kind === "file" && item.type.startsWith("image/")) {
-      const file = item.getAsFile();
-      if (file) {
-        uploadImage(file);
-        return;
-      }
-    }
-  }
-  const parser = new DOMParser();
-  const html = clipboardData.getData("text/html");
-  if (html) {
-    const doc = parser.parseFromString(html, "text/html");
-    const images = doc.querySelectorAll("img");
-    if (images.length > 0) {
-      const image = images[0];
-      const src = image?.getAttribute("src");
-      if (src) {
-        insertFormating("![", "Image", `](${src})`);
-      }
-    }
-    const mdText = Array.from(doc.body.children).map((el) => parseDom(el));
-    insertOrReplace(mdText.join("\n"));
-    return;
-  }
-  const text = clipboardData.getData("text/plain");
-  if (text) {
-    insertOrReplace(text);
-    return;
-  }
-};
 </script>
 
 <template>
   <div
+    :id="`page-${page?.id}`"
     class="z-0 flex h-full flex-auto flex-col dark:bg-stone-900 dark:text-white"
   >
-    <EditMenu v-model:open="editMenuOpen" @option-selected="onEditMenuSelect" />
     <FileUploadModal
       v-model:open="fileUploadOpen"
       accept="image/*"
-      @save="uploadImage"
+      @save="uploadCoverImage"
     />
     <div class="relative flex flex-initial flex-col">
       <PageNav
@@ -399,72 +159,22 @@ const onPaste = (event: ClipboardEvent) => {
           'w-7/12': previewPage,
         }"
       >
-        <PageHeader
-          v-if="page"
-          @upload-cover="
-            fileUploadOpen = true;
-            isFileUploadCover = true;
-          "
-        />
+        <PageHeader v-if="page" @upload-cover="fileUploadOpen = true" />
         <div
           v-for="(block, i) in page?.blocks"
           :key="block.id"
           class="relative flex w-full flex-auto flex-col items-center pb-8"
         >
-          <div
-            v-if="syntaxHighlightedTokens?.[i]?.tokens"
-            class="relative mt-4 flex w-full px-2 sm:w-8/12 lg:px-0"
-            :class="{ 'sm:w-11/12': previewPage }"
-          >
-            <div class="flex w-full text-lg">
-              <pre
-                class="relative flex flex-col overflow-x-auto text-lg break-words whitespace-pre-wrap"
-              >
-                <code class="relative flex flex-col"><span
-                    v-for="(line, lineIndex) in syntaxHighlightedTokens[i].tokens"
-                    :key="lineIndex"
-                    class="line block indent-0 relative min-h-[1lh]"
-                  ><span
-                      v-for="(token, tokenIndex) in line"
-                      :key="tokenIndex"
-                      :style="{
-                        color: token.color,
-                      }"
-                    >{{token.content}}</span></span></code>
-              </pre>
-            </div>
-            <textarea
-              :id="`${block.id}`"
-              ref="elements"
-              :spellcheck="false"
-              :value="block.textContent"
-              :style="{
-                caretColor:
-                  colorMode.value === 'dark'
-                    ? 'var(--color-neutral-100)'
-                    : 'var(--color-neutral-900)',
-              }"
-              class="absolute inset-0 field-sizing-content h-full w-full resize-none overflow-visible border-none bg-transparent font-mono text-lg font-normal whitespace-pre-wrap text-transparent outline-hidden"
-              @input="(event) => updateBlockTextarea(event, block)"
-              @paste.prevent="onPaste"
-              @keydown.meta.b="(event) => bold(event, block.id)"
-              @keydown.ctrl.b="(event) => bold(event, block.id)"
-              @keydown.meta.i="(event) => italic(event, block.id)"
-              @keydown.ctrl.i="(event) => italic(event, block.id)"
-              @keydown.tab.prevent.exact="() => tab(block.id)"
-              @keydown.shift.tab.prevent="() => tab(block.id)"
-              @keydown.meta.s.prevent="saveNow"
-              @keydown.ctrl.s.prevent="saveNow"
-              @keydown="
-                (event) => {
-                  updateCaretPosition(event);
-                  paren(event, block.id);
-                  slash(event);
-                }
-              "
-              @click="updateCaretPosition"
-            />
-          </div>
+          <EditBlock
+            v-if="block"
+            :block="block"
+            :tokens="syntaxHighlightedTokens[i]"
+            :preview-page="previewPage"
+            :color-mode="colorMode.value"
+            @update-block="(text) => updateBlock(block.pageId, block.id, text)"
+            @save-now="saveNow"
+            @update-caret-position="updateCaretPosition"
+          />
         </div>
       </div>
       <div
