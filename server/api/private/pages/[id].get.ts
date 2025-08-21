@@ -2,6 +2,7 @@ import { asc } from "drizzle-orm";
 import type { MdNode } from "~~/shared/types";
 export default eventHandler(async (event) => {
   const { id } = getRouterParams(event);
+  const { user } = await requireUserSession(event);
   if (!id || isNaN(Number(id))) {
     console.error(
       "[pages.get]: Error getting page - ",
@@ -10,14 +11,19 @@ export default eventHandler(async (event) => {
     );
     throw createError({ statusCode: 400, message: "Page ID is required" });
   }
-  const pages = await useDrizzle().query.pages.findMany({
+  const drizzle = useDrizzle();
+  const pages = await drizzle.query.pages.findMany({
     with: {
       blocks: {
         orderBy: (blocks) => asc(blocks.index),
       },
+      user: true,
     },
-    where: (pages, { eq }) => eq(pages.id, Number(id)),
+    where: (pages, { eq, and }) =>
+      and(eq(pages.id, Number(id)), eq(pages.userId, user.id)),
+    limit: 1,
   });
+
   if (!pages || !pages.length) {
     console.error("[pages.get]: Error getting page - ", id, " - No page found");
     throw createError({ statusCode: 404, message: "Page not found" });

@@ -9,6 +9,10 @@ defineProps<{
     showOutline?: boolean;
     userId?: number;
     lastUpdatedByName?: string;
+    createdByName?: string;
+    user?: {
+      name: string;
+    };
   };
   narrowView?: boolean;
   noTitle?: boolean;
@@ -41,6 +45,9 @@ defineProps<{
         <div class="text-5xl">{{ page.emoji }}</div>
         <h1 class="text-4xl font-bold">{{ page.title }}</h1>
       </div>
+      <h2 v-if="page.user" class="text-muted mb-3 text-xl font-semibold">
+        {{ page.user.name }}
+      </h2>
       <div v-for="(block, i) in nodes" :key="`block-${i}`">
         <div v-for="node in block" :key="node.id">
           <MdNode :node="node" />

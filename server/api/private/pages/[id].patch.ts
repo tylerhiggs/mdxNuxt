@@ -26,7 +26,9 @@ export default eventHandler(async (event) => {
       coverUrl: tables.pages.coverUrl,
     })
     .from(tables.pages)
-    .where(eq(tables.pages.id, Number(id)))
+    .where(
+      and(eq(tables.pages.id, Number(id)), eq(tables.pages.userId, user.id)),
+    )
     .get();
 
   if (!previousPage) {

@@ -55,6 +55,10 @@ export const pagesRelations = relations(pages, ({ many, one }) => ({
     references: [pages.id],
   }),
   children: many(pages),
+  user: one(users, {
+    fields: [pages.userId],
+    references: [users.id],
+  }),
 }));
 export const blocks = sqliteTable(
   "blocks",

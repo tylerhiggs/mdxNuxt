@@ -142,17 +142,23 @@ defineShortcuts({
         }}
       </p>
       <UTooltip text="Preview page to the side" :kbds="['meta', 'E']">
-        <UButton
-          icon="i-heroicons-eye"
-          variant="ghost"
-          color="neutral"
-          size="sm"
-          :class="{
-            'text-muted': !props.previewPage,
-            'text-primary-300 hover:text-primary-500': props.previewPage,
-          }"
-          @click="() => emits('togglePreview')"
-        />
+        <Toggle
+          checkbox-id="preview-toggle"
+          :model-value="props.previewPage"
+          hidden-label="Toggle Preview"
+          @update:model-value="emits('togglePreview')"
+        >
+          <UButton
+            icon="i-heroicons-eye"
+            variant="ghost"
+            color="neutral"
+            size="sm"
+            :class="{
+              'text-muted': !props.previewPage,
+              'text-primary-300 hover:text-primary-500': props.previewPage,
+            }"
+          />
+        </Toggle>
       </UTooltip>
       <UPopover class="relative">
         <UTooltip
@@ -236,19 +242,25 @@ defineShortcuts({
           </div>
         </template>
       </UPopover>
-      <button
-        class="flex items-center text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-        @click="favoritePage"
+      <Toggle
+        checkbox-id="favorite-toggle"
+        :model-value="page?.isFavorite"
+        hidden-label="Toggle Favorite"
+        @update:model-value="favoritePage"
       >
-        <UIcon
-          :name="
-            page?.isFavorite ? 'i-heroicons-solid-star' : 'i-heroicons-star'
-          "
-          class="size-5"
-          :class="{ 'text-yellow-200': page?.isFavorite }"
-          aria-label="Favorite"
-        />
-      </button>
+        <button
+          class="flex items-center text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+        >
+          <UIcon
+            :name="
+              page?.isFavorite ? 'i-heroicons-solid-star' : 'i-heroicons-star'
+            "
+            class="size-5"
+            :class="{ 'text-yellow-200': page?.isFavorite }"
+            aria-label="Favorite"
+          />
+        </button>
+      </Toggle>
       <UPopover mode="hover">
         <UButton
           icon="i-heroicons-clipboard-document"
@@ -269,13 +281,19 @@ defineShortcuts({
         </template>
       </UPopover>
       <UTooltip :text="page?.showOutline ? 'Hide Outline' : 'Show Outline'">
-        <UButton
-          icon="i-heroicons-list-bullet"
-          :variant="page?.showOutline ? 'solid' : 'ghost'"
-          :color="page?.showOutline ? 'secondary' : 'neutral'"
-          size="sm"
-          @click="toggleShowOutline()"
-        />
+        <Toggle
+          checkbox-id="outline-toggle"
+          :model-value="page?.showOutline"
+          hidden-label="Toggle Outline"
+          @update:model-value="toggleShowOutline()"
+        >
+          <UButton
+            icon="i-heroicons-list-bullet"
+            :variant="page?.showOutline ? 'solid' : 'ghost'"
+            :color="page?.showOutline ? 'secondary' : 'neutral'"
+            size="sm"
+          />
+        </Toggle>
       </UTooltip>
     </div>
   </header>

@@ -16,6 +16,7 @@ export default defineEventHandler(async (event) => {
       blocks: {
         orderBy: (blocks) => desc(blocks.index),
       },
+      user: true,
     },
   });
   if (!page) {
