@@ -2,6 +2,8 @@
 
 Welcome! If you navigate to the [editor](/edit) (after logging in with Google) you can create pages like this one by using a mixture of markdown and extra components.
 
+https://www.youtube.com/watch?v=Dzvs-GNx-ww
+
 ## Shortcuts and Commands
 * :kbd{value="meta"} :kbd{value="shift"} :kbd{value="B"} toggles sidebar.
 * :kbd{value="meta"} :kbd{value="K"} toggles search.
@@ -14,7 +16,6 @@ Welcome! If you navigate to the [editor](/edit) (after logging in with Google)
   * :kbd{value="meta"} :kbd{value="B"} bold (also works for highlighted characters).
   * :kbd{value="meta"} :kbd{value="I"} italic (also works for highlighted characters).
   * :kbd{value="meta"} :kbd{value="V"} paste formatted text gets translated and pasted as markdown.
-
 
 ## Colors
 

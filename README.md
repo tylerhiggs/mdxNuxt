@@ -1,6 +1,14 @@
-# [MeDotDev](https://md-me-dot-dev.nuxt.dev/)
+# [Extended Markdown Editor](https://md-me-dot-dev.nuxt.dev/)
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Watch the [YouTube video](https://www.youtube.com/watch?v=Dzvs-GNx-ww) for a walkthrough.
+
+Browser based extended **markdown editor**, private pages protected behind **Google OAuth**, automatic saving to **SQL** database, real-time preview while editing, and published pages are server side rendered (**SSR**) for best performance and **SEO**.
+
+Typical markdown syntax is extended with additional components such as **tabs**, **accordions**, **icons**, **keybindings**, **LaTeX** support for math, and much more. We also support image uploads which save to our blob store and markdown syntax is automatically generated which references these images.
+
+The home page is server side generated (**SSG**) for improved performance and SEO. It is rendered at build time from [server/assets/home.txt](./server/assets/home.txt).
+
+Rendering logic happens in [app/utils/parseMd.ts](./app/utils/parseMd.ts). Everything is tokenized into a structured format that can be easily rendered while also ensuring complete safety from **XSS** attacks, including syntax highlighting of code blocks and inline code. Additional sanitization happens to protect links.
 
 ## Setup
 
@@ -34,6 +42,26 @@ Locally preview production build:
 ```bash
 # bun
 bun run preview
+```
+
+## Testing
+
+```bash
+bun test
+```
+
+## ESLint
+
+This project uses [ESLint](https://eslint.org/) for linting TypeScript and Vue (also TypeScript, HTML, and CSS) code.
+
+```bash
+bun run lint
+```
+
+or to fix auto-fixable linting issues:
+
+```bash
+bun run lint:fix
 ```
 
 ## Tailwind CSS
