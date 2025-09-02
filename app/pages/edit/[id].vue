@@ -7,7 +7,7 @@ defineRouteRules({
   ssr: false,
 });
 const emojiDataStore = useEmojiData();
-const { selectPage, currentPage } = usePageState();
+const { selectPage, currentPage, pageStatus, pageGetError } = usePageState();
 const route = useRoute();
 const snackbar = useSnackbar();
 
@@ -37,14 +37,36 @@ onMounted(() => {
 
 <template>
   <ClientOnly>
-    <EditPage v-if="currentPage" />
+    <div
+      v-if="pageStatus === 'pending' || pageStatus === 'idle'"
+      class="flex h-screen w-full items-center justify-center"
+    >
+      <div>
+        <UIcon name="i-heroicons-arrow-path" class="h-5 w-5 animate-spin" />
+      </div>
+    </div>
+    <div
+      v-else-if="pageStatus === 'error'"
+      class="flex h-screen w-full items-center justify-center"
+    >
+      <div class="text-center">
+        <UIcon
+          name="i-heroicons-exclamation-triangle"
+          class="text-error-500 mx-auto mb-4 h-10 w-10"
+        />
+        <h2 class="mb-2 text-2xl font-bold">Error Loading Page</h2>
+        <p class="">
+          There was an error loading the page. Please try again later.
+        </p>
+        <p class="text-gray-600 dark:text-gray-400">{{ pageGetError }}</p>
+      </div>
+    </div>
+
+    <EditPage v-else-if="currentPage" />
 
     <div v-else>
       <div>
-        <UIcon
-          name="i-heroicons-arrow-path"
-          class="h-5 w-5 animate-spin text-white"
-        />
+        <UIcon name="i-heroicons-arrow-path" class="h-5 w-5 animate-spin" />
       </div>
     </div>
   </ClientOnly>

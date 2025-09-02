@@ -215,7 +215,7 @@ export const parseDom = (el: Element, listDepth = 0): string => {
                 : "",
           )
           .join("");
-        return `\`\`\`${codeEl.getAttribute("lang") || ""}${codeContent}\`\`\`\n`;
+        return `\`\`\`\n${codeEl.getAttribute("lang") || ""}${codeContent}\`\`\`\n`;
       }
       return "";
     },

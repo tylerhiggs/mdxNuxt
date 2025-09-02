@@ -30,7 +30,7 @@ export function usePageState() {
 
   const {
     data: pageData,
-    error: _pageGetError,
+    error: pageGetError,
     status: pageStatus,
   } = useFetch(() => `/api/private/pages/${currentPageId.value}`, {
     watch: [() => currentPageId.value],
@@ -53,6 +53,7 @@ export function usePageState() {
       executeBlockUpdateDb(false);
     }
     blockUpdateToSave.value = undefined;
+    pageUpdateToSave.value = undefined;
     currentPageId.value = pageId;
 
     navigateTo(`/edit/${pageId}`);
@@ -388,5 +389,6 @@ export function usePageState() {
     duplicatePage,
     pageStatus,
     saveNow,
+    pageGetError,
   };
 }
