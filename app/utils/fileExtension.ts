@@ -2,7 +2,7 @@ export const fileIcon = (name: string | undefined) => {
   for (const [key, value] of Object.entries(codeIcons).sort(
     ([keyA], [keyB]) => keyB.length - keyA.length,
   )) {
-    if (name?.endsWith(key)) {
+    if (name?.toLowerCase()?.endsWith(key)) {
       return value;
     }
   }
