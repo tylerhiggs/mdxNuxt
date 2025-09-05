@@ -10,7 +10,7 @@ export const fileIcon = (name: string | undefined) => {
 };
 
 export const codeIcons = {
-  "package.json": "i-vscode-icons-file-type-node",
+  ".json": "i-vscode-icons-file-type-json",
   "tsconfig.json": "i-vscode-icons-file-type-tsconfig",
   ".npmrc": "i-vscode-icons-file-type-npm",
   ".editorconfig": "i-vscode-icons-file-type-editorconfig",

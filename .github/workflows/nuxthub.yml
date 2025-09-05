@@ -21,10 +21,6 @@ jobs:
       - name: Install dependencies
         run: bun install
 
-      - name: Debug hash
-        run: |
-          echo "Hash: ${{ hashFiles('bun.lock') }}"
-
       - name: Cache bun dependencies
         uses: actions/cache@v4
         with:
