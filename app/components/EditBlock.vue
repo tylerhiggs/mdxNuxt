@@ -199,6 +199,7 @@ const onPaste = (event: ClipboardEvent) => {
   const html = clipboardData.getData("text/html");
   if (html) {
     const doc = parser.parseFromString(html, "text/html");
+    console.log(doc);
     const images = doc.querySelectorAll("img");
     if (images.length > 0) {
       const image = images[0];
@@ -218,6 +219,7 @@ const onPaste = (event: ClipboardEvent) => {
     return;
   }
   const text = clipboardData.getData("text/plain");
+  console.log({ text });
   if (text) {
     insertOrReplace(event.target as HTMLTextAreaElement, text);
     return;

@@ -1,5 +1,4 @@
 export const parseDom = (el: Element, listDepth = 0): string => {
-  console.log(el);
   const tagToMarkdown: Record<string, (el: Element) => string> = {
     STRONG: (el) =>
       `**${Array.from(el.childNodes)
@@ -167,6 +166,18 @@ export const parseDom = (el: Element, listDepth = 0): string => {
         )
         .join("")}\n`,
     BR: () => "\n",
+    DIV: (el) => {
+      const content = Array.from(el.childNodes)
+        .map((node) =>
+          node.nodeType === Node.ELEMENT_NODE
+            ? parseDom(node as Element)
+            : node.nodeType === Node.TEXT_NODE
+              ? node.textContent || ""
+              : "",
+        )
+        .join("");
+      return content ? `${content}\n` : "";
+    },
     P: (el) =>
       `${Array.from(el.childNodes)
         .map((node) =>
