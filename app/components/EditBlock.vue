@@ -174,7 +174,13 @@ const insertOrReplace = (textArea: HTMLTextAreaElement, text: string) => {
     currentText.slice(selectionEnd);
 
   updateBlock(newText);
-  textArea.focus();
+
+  // Set cursor position to the end of the inserted text
+  const newCursorPosition = selectionStart + text.length;
+  nextTick().then(() =>
+    textArea.setSelectionRange(newCursorPosition, newCursorPosition),
+  );
+  // textArea.focus();
 };
 const updateBlockTextarea = (event: Event) => {
   const target = event.target as HTMLTextAreaElement;
@@ -335,6 +341,7 @@ const paren = (event: KeyboardEvent) => {
         class="absolute inset-0 field-sizing-content h-full w-full resize-none overflow-visible border-none bg-transparent font-mono text-lg font-normal whitespace-pre-wrap text-transparent outline-hidden"
         @input="(event) => updateBlockTextarea(event)"
         @paste.prevent="onPaste"
+        @keydown.meta.shift.v="() => {}"
         @keydown.meta.b="bold"
         @keydown.ctrl.b="bold"
         @keydown.meta.i="italic"
@@ -345,8 +352,8 @@ const paren = (event: KeyboardEvent) => {
         @keydown.ctrl.s.prevent="() => emits('saveNow')"
         @keydown.meta.z.prevent="undo"
         @keydown.ctrl.z.prevent="undo"
-        @keydown.meta.y.prevent="redo"
-        @keydown.ctrl.y.prevent="redo"
+        @keydown.meta.shift.z.prevent="redo"
+        @keydown.ctrl.shift.z.prevent="redo"
         @keydown="
           (event) => {
             emits('updateCaretPosition', event);

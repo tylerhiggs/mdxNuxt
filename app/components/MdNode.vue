@@ -52,7 +52,7 @@ const copied = ref(false);
 <template>
   <blockquote
     v-if="node.type === 'blockquote'"
-    class="border-accented my-4 border-s-4 ps-4 italic"
+    class="border-accented border-s-4 py-2 ps-4 italic"
   >
     <MdNode v-for="item in node.items" :key="item.id" :node="item" />
   </blockquote>

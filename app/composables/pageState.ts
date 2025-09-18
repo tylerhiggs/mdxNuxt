@@ -6,8 +6,8 @@ export function usePageState() {
   const snackbarStore = useSnackbar();
 
   // private state
-  const lastPageUpdateAt = useState("lastUpdatedAt", () => Date.now());
-  const lastBlockUpdateAt = useState("lastBlockUpdatedAt", () => Date.now());
+  let pageUpdateTimeout: ReturnType<typeof setTimeout> | null = null;
+  let blockUpdateTimeout: ReturnType<typeof setTimeout> | null = null;
 
   const currentPageId = useState<number | undefined>(
     "currentPageId",
@@ -47,8 +47,6 @@ export function usePageState() {
 
   const selectPage = async (pageId: number) => {
     if (pageUpdateToSave.value || blockUpdateToSave.value) {
-      lastPageUpdateAt.value = Date.now();
-      lastBlockUpdateAt.value = Date.now();
       executePageUpdateDb(false);
       executeBlockUpdateDb(false);
     }
@@ -239,19 +237,21 @@ export function usePageState() {
       };
     }
     pageUpdateToSave.value = { ...pageUpdateToSave.value, ...update };
-    lastPageUpdateAt.value = Date.now();
     if (instantSave) {
       executePageUpdateDb();
       return;
     }
-    setTimeout(() => {
+    if (pageUpdateTimeout) {
+      clearTimeout(pageUpdateTimeout);
+    }
+    pageUpdateTimeout = setTimeout(() => {
       if (
         !pageUpdateToSave.value ||
-        pageUpdateToSave.value.id !== currentPageId.value ||
-        lastPageUpdateAt.value + DEBOUNCE_TIME > Date.now()
+        pageUpdateToSave.value.id !== currentPageId.value
       )
         return;
       executePageUpdateDb();
+      pageUpdateTimeout = null;
     }, DEBOUNCE_TIME);
   };
 
@@ -296,20 +296,22 @@ export function usePageState() {
       textContent,
     };
     updatePage({ id: pageId, lastUpdatedAt: Date.now() });
-    lastBlockUpdateAt.value = Date.now();
     if (instantSave) {
       executeBlockUpdateDb();
       return;
     }
-    setTimeout(() => {
+    if (blockUpdateTimeout) {
+      clearTimeout(blockUpdateTimeout);
+    }
+    blockUpdateTimeout = setTimeout(() => {
       if (
         !blockUpdateToSave.value ||
         blockUpdateToSave.value.blockId !== blockId ||
-        blockUpdateToSave.value.pageId !== currentPageId.value ||
-        lastBlockUpdateAt.value + DEBOUNCE_TIME > Date.now()
+        blockUpdateToSave.value.pageId !== currentPageId.value
       )
         return;
       executeBlockUpdateDb();
+      blockUpdateTimeout = null;
     }, DEBOUNCE_TIME);
   };
 
@@ -344,12 +346,18 @@ export function usePageState() {
   );
 
   const saveNow = async () => {
+    if (pageUpdateTimeout) {
+      clearTimeout(pageUpdateTimeout);
+      pageUpdateTimeout = null;
+    }
+    if (blockUpdateTimeout) {
+      clearTimeout(blockUpdateTimeout);
+      blockUpdateTimeout = null;
+    }
     if (pageUpdateToSave.value) {
-      lastPageUpdateAt.value = Date.now();
       executePageUpdateDb();
     }
     if (blockUpdateToSave.value) {
-      lastBlockUpdateAt.value = Date.now();
       executeBlockUpdateDb();
     }
   };
