@@ -1,3 +1,4 @@
+import { diffLines as tsDiffLines } from "../utils/diff";
 export interface LineChange {
   type: "added" | "removed" | "changed";
   lineNum: number;
@@ -24,6 +25,10 @@ declare global {
 export function useDiff() {
   let wasmModule: WebAssembly.Instance | null = null;
   let diffLines: ((previous: string, updated: string) => string) | null = null;
+  let totalDiffTime = 0;
+  let diffCount = 0;
+  let tsTotalDiffTime = 0;
+  let tsDiffCount = 0;
 
   const loadGoWasmScript = async (): Promise<boolean> => {
     if (import.meta.server) return false;
@@ -73,20 +78,38 @@ export function useDiff() {
     }
   };
 
-  const diff = async (
-    previous: string,
-    newText: string,
-  ): Promise<DiffResult | null> => {
-    await loadWasm();
-
+  const diff = (previous: string, newText: string): DiffResult | null => {
+    // please load the wasm module first
     if (!diffLines) {
       console.error("WASM module not loaded");
       return null;
     }
 
     try {
+      const startTime = performance.now();
       const result = diffLines(previous, newText);
-      return JSON.parse(result) as DiffResult;
+      const parsed = JSON.parse(result) as DiffResult;
+      const endTime = performance.now();
+      diffCount++;
+      totalDiffTime += endTime - startTime;
+      console.log(
+        `Current averageDiffTime is ${(totalDiffTime / diffCount).toFixed(2)}ms`,
+      );
+      const startTimeTS = performance.now();
+      const resultTS = tsDiffLines(previous, newText);
+      const endTimeTS = performance.now();
+      tsDiffCount++;
+      tsTotalDiffTime += endTimeTS - startTimeTS;
+      console.log(
+        `Current tsAverageDiffTime is ${(tsTotalDiffTime / tsDiffCount).toFixed(
+          2,
+        )}ms`,
+      );
+      console.log(
+        "results are equal",
+        JSON.stringify(resultTS) === JSON.stringify(parsed),
+      );
+      return parsed;
     } catch (error) {
       console.error("Error calling diff function:", error);
       return null;

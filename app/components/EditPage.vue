@@ -5,11 +5,6 @@ import type { MdNode } from "~~/shared/types";
 const snackbarStore = useSnackbar();
 
 const { currentPage: page, updatePage, updateBlock, saveNow } = usePageState();
-const diff = useDiff();
-
-onMounted(() => {
-  diff.loadWasm();
-});
 const previewPage = ref(false);
 const fullscreenPreview = ref(false);
 defineShortcuts({
@@ -76,7 +71,8 @@ watch(
     if (!blocks || !blocks.length) {
       return;
     }
-    const difference = await diff.diff(
+
+    const difference = diffLines(
       oldBlocks?.map((b) => b.textContent).join("\n") || "",
       blocks.map((b) => b.textContent).join("\n"),
     );
