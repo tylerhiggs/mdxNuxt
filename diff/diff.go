@@ -31,8 +31,8 @@ func diffLines(previous, updated string) DiffResult {
 	oldLines := strings.Split(previous, "\n")
 	newLines := strings.Split(updated, "\n")
 
-	// Use a simple LCS-based approach to find differences
-	changes := []LineChange{}
+	// Pre-allocate slice capacity to avoid reallocations
+    changes := make([]LineChange, 0, max(len(newLines), len(oldLines)))
 
 	newStart, oldStart, newEnd, oldEnd := 0, 0, len(newLines), len(oldLines) // exclusive
 	for newStart < newEnd && oldStart < oldEnd && newLines[newStart] == oldLines[oldStart] {
@@ -75,4 +75,11 @@ func diffLines(previous, updated string) DiffResult {
 	}
 
 	return DiffResult{Changes: changes}
+}
+
+func max(a, b int) int {
+    if a > b {
+        return a
+    }
+    return b
 }
