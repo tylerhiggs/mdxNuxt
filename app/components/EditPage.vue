@@ -125,7 +125,7 @@ watch(
       }
     }
   },
-  { deep: true, immediate: true },
+  { deep: true },
 );
 
 const fileUploadOpen = ref(false);
