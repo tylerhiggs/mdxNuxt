@@ -10,5 +10,6 @@
     ["ui:\\s*{([^)]*)\\s*}", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
   ],
   "vue.server.hybridMode": "auto",
-  "vue.trace.server": "messages"
+  "vue.trace.server": "messages",
+  "cSpell.words": ["rehighlighted"]
 }
