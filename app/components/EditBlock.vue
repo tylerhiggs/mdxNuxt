@@ -12,7 +12,6 @@ const element = useTemplateRef("element");
 const emits = defineEmits<{
   updateBlock: [text: string];
   saveNow: [];
-  updateCaretPosition: [event: Event];
 }>();
 const snackbarStore = useSnackbar();
 const undoRedo = useUndoRedo();
@@ -40,6 +39,18 @@ onUnmounted(() => {
   undoRedo.clear();
 });
 
+const caretPosition = ref(0);
+
+const updateCaretPosition = (event: Event) => {
+  const target = event.target as HTMLTextAreaElement;
+  setTimeout(() => {
+    const mostAccurateCaretPosition = target?.selectionStart;
+    caretPosition.value =
+      (target?.value ?? "").slice(0, mostAccurateCaretPosition).split("\n")
+        .length - 1 || 0;
+  }, 0);
+};
+
 const editMenuOpen = ref(false);
 const fileUploadOpen = ref(false);
 const slash = (event: KeyboardEvent) => {
@@ -51,7 +62,7 @@ const slash = (event: KeyboardEvent) => {
   editMenuOpen.value = true;
 };
 //https://dev.to/shivams136/simple-markdown-insertion-in-the-text-using-pure-javascript-pl4
-const insertFormating = (
+const insertFormatting = (
   txtarea: HTMLTextAreaElement,
   text: string,
   defaultTxt = "",
@@ -125,7 +136,10 @@ const onEditMenuSelect = (
     fileUploadOpen.value = true;
     return;
   }
-  insertFormating(textArea, ...getDefaultCommandItems(command, commandOptions));
+  insertFormatting(
+    textArea,
+    ...getDefaultCommandItems(command, commandOptions),
+  );
   updateBlock(textArea.value);
 };
 const uploadImage = (file: File) => {
@@ -152,7 +166,7 @@ const uploadImage = (file: File) => {
       setTimeout(() => {
         textArea?.focus();
       }, 0);
-      insertFormating(textArea, "![", fileName, `](${res.pathname})`);
+      insertFormatting(textArea, "![", fileName, `](${res.pathname})`);
       updateBlock(textArea.value);
     })
     .catch((e) => {
@@ -175,12 +189,10 @@ const insertOrReplace = (textArea: HTMLTextAreaElement, text: string) => {
 
   updateBlock(newText);
 
-  // Set cursor position to the end of the inserted text
   const newCursorPosition = selectionStart + text.length;
   nextTick().then(() =>
     textArea.setSelectionRange(newCursorPosition, newCursorPosition),
   );
-  // textArea.focus();
 };
 const updateBlockTextarea = (event: Event) => {
   const target = event.target as HTMLTextAreaElement;
@@ -210,7 +222,7 @@ const onPaste = (event: ClipboardEvent) => {
       const image = images[0];
       const src = image?.getAttribute("src");
       if (src) {
-        insertFormating(
+        insertFormatting(
           event.target as HTMLTextAreaElement,
           "![",
           "Image",
@@ -242,7 +254,7 @@ const bold = (event: KeyboardEvent) => {
     return;
   }
   event.preventDefault();
-  insertFormating(target, "**", "", "**");
+  insertFormatting(target, "**", "", "**");
 
   updateBlock(target.value);
 };
@@ -253,13 +265,13 @@ const italic = (event: KeyboardEvent) => {
   if (!platformConsistent(event)) {
     return;
   }
-  insertFormating(target, "__", "", "__");
+  insertFormatting(target, "__", "", "__");
   updateBlock(target.value);
 };
 
 const tab = (event: Event) => {
   const target = event.target as HTMLTextAreaElement;
-  insertFormating(target, "  ", "", "");
+  insertFormatting(target, "  ", "", "");
   updateBlock(target.value);
 };
 const paren = (event: KeyboardEvent) => {
@@ -275,7 +287,7 @@ const paren = (event: KeyboardEvent) => {
   }
   if (event.key in parens) {
     event.preventDefault();
-    insertFormating(
+    insertFormatting(
       event.target as HTMLTextAreaElement,
       event.key,
       "",
@@ -316,15 +328,17 @@ const paren = (event: KeyboardEvent) => {
         >
           <code class="relative flex flex-col"><span
               v-for="(line, lineIndex) in tokens.tokens"
-              :key="lineIndex"
+              :key="line.map((t) => t.content).join('')"
               class="line block indent-0 relative min-h-[1lh]"
             ><span
-                v-for="(token, tokenIndex) in line"
-                :key="tokenIndex"
+                v-for="(token) in line"
+                :key="token.content"
                 :style="{
                   color: token.color,
                 }"
-              >{{token.content}}</span></span></code>
+              >{{token.content}}</span><span
+                v-if="caretPosition === lineIndex && !line.length" 
+                class="text-gray-400">Press '/' for commands</span></span></code>
         </pre>
       </div>
       <textarea
@@ -338,7 +352,7 @@ const paren = (event: KeyboardEvent) => {
               ? 'var(--color-neutral-100)'
               : 'var(--color-neutral-900)',
         }"
-        class="absolute inset-0 field-sizing-content h-full w-full resize-none overflow-visible border-none bg-transparent font-mono text-lg font-normal whitespace-pre-wrap text-transparent outline-hidden"
+        class="absolute inset-0 field-sizing-content h-full w-full resize-none overflow-visible border-none bg-transparent font-mono text-lg font-normal whitespace-pre-wrap text-transparent outline-hidden dark:text-white/25"
         @input="(event) => updateBlockTextarea(event)"
         @paste.prevent="onPaste"
         @keydown.meta.shift.v="() => {}"
@@ -356,12 +370,12 @@ const paren = (event: KeyboardEvent) => {
         @keydown.ctrl.shift.z.prevent="redo"
         @keydown="
           (event) => {
-            emits('updateCaretPosition', event);
+            updateCaretPosition(event);
             paren(event);
             slash(event);
           }
         "
-        @click="(e) => emits('updateCaretPosition', e)"
+        @click="(e) => updateCaretPosition(e)"
       />
     </div>
   </div>

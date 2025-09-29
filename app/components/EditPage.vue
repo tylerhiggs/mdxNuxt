@@ -5,7 +5,11 @@ import type { MdNode } from "~~/shared/types";
 const snackbarStore = useSnackbar();
 
 const { currentPage: page, updatePage, updateBlock, saveNow } = usePageState();
+const diff = useDiff();
 
+onMounted(() => {
+  diff.loadWasm();
+});
 const previewPage = ref(false);
 const fullscreenPreview = ref(false);
 defineShortcuts({
@@ -25,11 +29,10 @@ const element = (blockId: number) => {
   }
   return blockElement;
 };
-const caretPosition = ref(0);
 
 const colorMode = useColorMode();
 const mdNodes = ref<MdNode[][]>([]);
-watch(
+watchDebounced(
   [() => page.value?.blocks, () => colorMode.value],
   async ([blocks]) => {
     if (!blocks || !blocks.length) {
@@ -40,7 +43,7 @@ watch(
     );
     mdNodes.value = nodes;
   },
-  { immediate: true },
+  { immediate: true, debounce: 1000 },
 );
 const editorHighlighterPromise = createHighlighter({
   themes: ["material-theme-lighter", "material-theme-palenight"],
@@ -48,41 +51,81 @@ const editorHighlighterPromise = createHighlighter({
 });
 
 const syntaxHighlightedTokens = ref<TokensResult[]>([]);
+onMounted(async () => {
+  const blocks = page.value?.blocks;
+  if (!blocks || !blocks.length) {
+    return;
+  }
+  const editorHighlighter = await editorHighlighterPromise;
+  const tokens = await Promise.all(
+    blocks.map((block) =>
+      editorHighlighter.codeToTokens(block.textContent, {
+        lang: "mdc",
+        theme:
+          colorMode.value === "light"
+            ? "material-theme-lighter"
+            : "material-theme-palenight",
+      }),
+    ),
+  );
+  syntaxHighlightedTokens.value = tokens;
+});
 watch(
-  [() => page.value?.blocks, () => colorMode.value, caretPosition],
-  async ([blocks, colorMode, caretPosition]) => {
+  [() => page.value?.blocks, () => colorMode.value],
+  async ([blocks, colorMode], [oldBlocks]) => {
     if (!blocks || !blocks.length) {
       return;
     }
+    const difference = await diff.diff(
+      oldBlocks?.map((b) => b.textContent).join("\n") || "",
+      blocks.map((b) => b.textContent).join("\n"),
+    );
     const editorHighlighter = await editorHighlighterPromise;
-    const tokens = await Promise.all(
-      blocks.map((block) =>
-        editorHighlighter.codeToTokens(block.textContent, {
+    for (const change of difference?.changes || []) {
+      if (change.type === "changed") {
+        if (!syntaxHighlightedTokens.value[0]?.tokens?.[change.lineNum]) {
+          return;
+        }
+        const rehighlightedLine = editorHighlighter.codeToTokens(
+          change.content,
+          {
+            lang: "mdc",
+            theme:
+              colorMode === "light"
+                ? "material-theme-lighter"
+                : "material-theme-palenight",
+          },
+        ).tokens[0];
+        if (!rehighlightedLine) continue;
+        syntaxHighlightedTokens.value[0].tokens[change.lineNum] =
+          rehighlightedLine;
+        continue;
+      }
+      if (change.type === "added") {
+        if (!syntaxHighlightedTokens.value[0]?.tokens) {
+          continue;
+        }
+        const newTokens = editorHighlighter.codeToTokens(change.content, {
           lang: "mdc",
           theme:
             colorMode === "light"
               ? "material-theme-lighter"
               : "material-theme-palenight",
-        }),
-      ),
-    );
-    const blockId = page.value?.blocks?.at(0)?.id;
-    if (!blockId) return;
-    const textArea = element(blockId);
-    const mostAccurateCaretPosition = textArea?.selectionStart || caretPosition;
-    const caretLineIndex =
-      (textArea?.value ?? "").slice(0, mostAccurateCaretPosition).split("\n")
-        .length - 1 || 0;
-    syntaxHighlightedTokens.value = tokens.map((blockTokenResult) => ({
-      ...blockTokenResult,
-      tokens: blockTokenResult.tokens.map((line, index) =>
-        index === caretLineIndex && !line.length
-          ? [{ content: "Press '/' for commands", color: "gray", offset: 0 }]
-          : line,
-      ),
-    }));
+        }).tokens;
+        syntaxHighlightedTokens.value[0].tokens.splice(
+          change.lineNum,
+          0,
+          ...newTokens,
+        );
+        continue;
+      }
+      if (change.type === "removed") {
+        syntaxHighlightedTokens.value[0]?.tokens?.splice(change.lineNum, 1);
+        continue;
+      }
+    }
   },
-  { deep: true, immediate: true },
+  { deep: true },
 );
 
 const fileUploadOpen = ref(false);
@@ -125,13 +168,6 @@ const uploadCoverImage = (file: File) => {
       );
     });
 };
-
-const updateCaretPosition = (event: Event) => {
-  const target = event.target as HTMLTextAreaElement;
-  setTimeout(() => {
-    caretPosition.value = target.selectionStart;
-  }, 0);
-};
 </script>
 
 <template>
@@ -171,9 +207,10 @@ const updateCaretPosition = (event: Event) => {
             :tokens="syntaxHighlightedTokens[i]"
             :preview-page="previewPage"
             :color-mode="colorMode.value"
-            @update-block="(text) => updateBlock(block.pageId, block.id, text)"
+            @update-block="
+              (text: string) => updateBlock(block.pageId, block.id, text)
+            "
             @save-now="saveNow"
-            @update-caret-position="updateCaretPosition"
           />
         </div>
       </div>
