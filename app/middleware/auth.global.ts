@@ -1,11 +1,15 @@
-const publicRoutes = ["/login", "/signup", "public", "/"];
+const publicPrefixes = [
+  "/login",
+  "/signup",
+  "public",
+  "/public",
+  "/auth/google",
+];
 export default defineNuxtRouteMiddleware((to) => {
-  if (publicRoutes.some((route) => to.path.startsWith(route))) {
-    return;
-  }
-
-  const unauthenticatedRoutes = ["/public", "/auth/google"];
-  if (unauthenticatedRoutes.some((route) => to.path.startsWith(route))) {
+  if (
+    publicPrefixes.some((route) => to.path.startsWith(route)) ||
+    to.path === "/"
+  ) {
     return;
   }
 
