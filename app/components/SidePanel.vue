@@ -27,7 +27,7 @@ defineShortcuts({
   },
 });
 
-const isOpen = ref(true);
+const { isOpen } = useSidebar();
 const favoritePages = computed(() =>
   props.pages.filter((page) => page.isFavorite),
 );
@@ -65,14 +65,14 @@ const avatarUrl = computed(() => {
       workspaceTitle &&
       userFirstLetter
     "
-    class="group relative flex h-full w-64 flex-initial flex-col bg-slate-50 px-1 py-0.5 dark:bg-stone-800"
+    class="group relative flex h-full w-screen flex-initial flex-col bg-slate-50 px-1 py-0.5 md:w-64 dark:bg-stone-800"
   >
     <ClientOnly>
       <div
         v-if="userFirstLetter"
         variant="ghost"
         color="neutral"
-        class="flex w-full items-center justify-between rounded-md border-transparent p-2"
+        class="flex w-screen items-center justify-between rounded-md border-transparent p-2 md:w-full"
       >
         <img
           v-if="avatarUrl"
@@ -99,7 +99,7 @@ const avatarUrl = computed(() => {
           <UButton
             variant="ghost"
             color="neutral"
-            class="invisible ml-0.5 flex items-center rounded-md p-0.5 text-2xl group-hover:visible hover:bg-gray-300 dark:hover:bg-stone-600"
+            class="ml-0.5 flex items-center rounded-md p-0.5 text-2xl group-hover:visible hover:bg-gray-300 sm:invisible dark:hover:bg-stone-600"
             @click="isOpen = false"
           >
             <UIcon
@@ -183,9 +183,10 @@ const avatarUrl = computed(() => {
     <UButton
       variant="ghost"
       color="neutral"
-      class="fixed top-12 left-2 z-50"
-      icon="i-heroicons-chevron-double-right"
+      class="fixed top-20 left-2 z-50 md:top-12"
       @click="isOpen = true"
-    />
+    >
+      <Icon name="i-heroicons-chevron-double-right" class="size-12 md:size-6" />
+    </UButton>
   </UTooltip>
 </template>

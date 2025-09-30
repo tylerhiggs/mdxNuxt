@@ -1,7 +1,7 @@
 <template>
   <div class="flex h-screen w-full items-center justify-center bg-slate-200">
     <div
-      class="flex w-4/12 flex-col items-center rounded-lg bg-slate-50 pt-4 pb-8 shadow-lg"
+      class="flex w-full flex-col items-center rounded-lg bg-slate-50 pt-4 pb-8 shadow-lg md:w-4/12"
     >
       <div class="mb-8 flex flex-col items-center justify-center gap-3">
         <h1 class="text-4xl font-bold text-slate-900">Sign In</h1>

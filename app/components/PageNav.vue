@@ -112,7 +112,7 @@ defineShortcuts({
 <template>
   <header
     v-if="page"
-    class="flex w-full flex-row items-center justify-between p-2"
+    class="flex w-full flex-row items-center justify-between p-2 not-last:hidden md:flex"
   >
     <button
       v-for="(p, index) in page.path"
@@ -121,18 +121,21 @@ defineShortcuts({
       @click="() => selectPage(p.id)"
     >
       <p v-if="index !== 0" class="mx-2 text-gray-500 dark:text-stone-400">/</p>
-      <p class="text-sm">{{ page.emoji }}</p>
-      <p class="ml-2 text-sm">{{ page.title || "Untitled" }}</p>
+      <p class="text-3xl md:text-sm">{{ page.emoji }}</p>
+      <p class="ml-2 text-3xl md:text-sm">{{ page.title || "Untitled" }}</p>
     </button>
-    <div class="flex items-center gap-1">
+    <div class="flex items-center gap-3 md:gap-1">
       <UIcon
         v-if="saved"
         name="i-heroicons-check"
-        class="size-5 text-emerald-400"
+        class="size-16 text-emerald-400 md:size-5"
         aria-label="Saved"
       />
-      <p v-else class="text-gray-500">...Saving</p>
-      <p v-if="page" class="ml-2 text-xs font-semibold text-gray-400">
+      <p v-else class="text-3xl text-gray-500 md:text-sm">...Saving</p>
+      <p
+        v-if="page"
+        class="ml-2 hidden text-xs font-semibold text-gray-400 md:block"
+      >
         Last Edited
         {{
           new Date(page.lastUpdatedAt).toLocaleString("en-US", {
@@ -141,7 +144,11 @@ defineShortcuts({
           })
         }}
       </p>
-      <UTooltip text="Preview page to the side" :kbds="['meta', 'E']">
+      <UTooltip
+        class="hidden md:block"
+        text="Preview page to the side"
+        :kbds="['meta', 'E']"
+      >
         <Toggle
           checkbox-id="preview-toggle"
           :model-value="props.previewPage"
@@ -168,7 +175,7 @@ defineShortcuts({
           <UButton
             variant="ghost"
             color="neutral"
-            class="flex items-center rounded-md px-1 py-0.5 text-xs font-semibold text-gray-700 hover:bg-gray-200 dark:text-gray-200 dark:hover:bg-gray-700"
+            class="flex items-center rounded-md px-1 py-0.5 text-3xl font-semibold text-gray-700 hover:bg-gray-200 md:text-xs dark:text-gray-200 dark:hover:bg-gray-700"
           >
             Share
           </UButton>
@@ -255,18 +262,17 @@ defineShortcuts({
             :name="
               page?.isFavorite ? 'i-heroicons-solid-star' : 'i-heroicons-star'
             "
-            class="size-5"
+            class="size-16 md:size-5"
             :class="{ 'text-yellow-200': page?.isFavorite }"
             aria-label="Favorite"
           />
         </button>
       </Toggle>
-      <UPopover mode="hover">
+      <UPopover mode="hover" class="hidden md:block">
         <UButton
           icon="i-heroicons-clipboard-document"
           variant="ghost"
           color="neutral"
-          size="sm"
           @click="copyMd()"
         />
         <template #content>
@@ -288,11 +294,11 @@ defineShortcuts({
           @update:model-value="toggleShowOutline()"
         >
           <UButton
-            icon="i-heroicons-list-bullet"
             :variant="page?.showOutline ? 'solid' : 'ghost'"
             :color="page?.showOutline ? 'secondary' : 'neutral'"
-            size="sm"
-          />
+          >
+            <UIcon name="i-heroicons-list-bullet" class="size-16 md:size-5" />
+          </UButton>
         </Toggle>
       </UTooltip>
     </div>

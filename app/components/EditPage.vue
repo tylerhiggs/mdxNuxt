@@ -5,6 +5,7 @@ import type { MdNode } from "~~/shared/types";
 const snackbarStore = useSnackbar();
 
 const { currentPage: page, updatePage, updateBlock, saveNow } = usePageState();
+const { isOpen: sidebarOpen } = useSidebar();
 const previewPage = ref(false);
 const fullscreenPreview = ref(false);
 defineShortcuts({
@@ -169,7 +170,10 @@ const uploadCoverImage = (file: File) => {
 <template>
   <div
     :id="`page-${page?.id}`"
-    class="z-0 flex h-full flex-auto flex-col dark:bg-stone-900 dark:text-white"
+    class="z-0 flex h-full w-full flex-col dark:bg-stone-900 dark:text-white"
+    :class="{
+      'md:w-[calc(100%-theme(space.64))]': sidebarOpen,
+    }"
   >
     <FileUploadModal
       v-model:open="fileUploadOpen"

@@ -319,10 +319,10 @@ const paren = (event: KeyboardEvent) => {
     />
     <div
       v-if="tokens?.tokens"
-      class="relative mt-4 flex w-full px-2 sm:w-8/12 lg:px-0"
+      class="relative m-4 flex w-full sm:w-8/12 lg:px-0"
       :class="{ 'sm:w-11/12': previewPage }"
     >
-      <div class="flex w-full text-lg">
+      <div class="flex w-full p-4 text-lg">
         <pre
           class="relative flex flex-col overflow-x-auto text-lg break-words whitespace-pre-wrap"
         >
@@ -352,7 +352,7 @@ const paren = (event: KeyboardEvent) => {
               ? 'var(--color-neutral-100)'
               : 'var(--color-neutral-900)',
         }"
-        class="absolute inset-0 field-sizing-content h-full w-full resize-none overflow-visible border-none bg-transparent font-mono text-lg font-normal whitespace-pre-wrap text-transparent outline-hidden dark:text-white/25"
+        class="absolute inset-0 field-sizing-content h-full w-full resize-none overflow-visible border-none bg-transparent p-4 font-mono text-lg font-normal whitespace-pre-wrap text-transparent outline-hidden dark:text-white/25"
         @input="(event) => updateBlockTextarea(event)"
         @paste.prevent="onPaste"
         @keydown.meta.shift.v="() => {}"

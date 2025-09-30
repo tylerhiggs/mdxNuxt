@@ -36,7 +36,7 @@ useHead({
 <template>
   <ClientOnly>
     <div v-if="auth.loggedIn && auth.dbUser.value" class="m-0 h-screen">
-      <div class="relative m-0 flex h-full w-full">
+      <div class="relative m-0 flex h-full w-screen">
         <SidePanel
           :pages="pages || []"
           :current-page-id="currentPage?.id"
