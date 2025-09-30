@@ -114,16 +114,26 @@ defineShortcuts({
     v-if="page"
     class="flex w-full flex-row items-center justify-end p-2 md:justify-between"
   >
-    <button
-      v-for="(p, index) in page.path"
-      :key="p.id"
-      class="hidden items-center rounded-xs p-0.5 text-gray-700 hover:bg-gray-200 md:flex dark:text-stone-300 dark:hover:bg-stone-700"
-      @click="() => selectPage(p.id)"
-    >
-      <p v-if="index !== 0" class="mx-2 text-gray-500 dark:text-stone-400">/</p>
-      <p class="text-3xl md:text-sm">{{ page.emoji }}</p>
-      <p class="ml-2 text-3xl md:text-sm">{{ page.title || "Untitled" }}</p>
-    </button>
+    <div class="flex items-center gap-3 md:gap-1">
+      <button
+        v-for="(p, index) in page.path"
+        :key="p.id"
+        class="hidden items-center rounded-xs p-0.5 text-gray-700 hover:bg-gray-200 md:flex dark:text-stone-300 dark:hover:bg-stone-700"
+        @click="() => selectPage(p.id)"
+      >
+        <p v-if="index !== 0" class="mx-2 text-gray-500 dark:text-stone-400">
+          /
+        </p>
+        <p class="text-3xl md:text-sm">{{ page.emoji }}</p>
+        <p class="ml-2 text-3xl md:text-sm">{{ page.title || "Untitled" }}</p>
+      </button>
+      <p
+        v-if="(page.views || page.views === 0) && page.isPublic"
+        class="text-muted hidden text-sm md:block"
+      >
+        ({{ page.views }} views)
+      </p>
+    </div>
     <div class="flex items-center gap-3 md:gap-1">
       <UIcon
         v-if="saved"

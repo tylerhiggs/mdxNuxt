@@ -12,7 +12,7 @@ export default eventHandler(async (event) => {
     throw createError({ statusCode: 400, message: "Page ID is required" });
   }
   const drizzle = useDrizzle();
-  const pages = await drizzle.query.pages.findMany({
+  const queriedPages = await drizzle.query.pages.findMany({
     with: {
       blocks: {
         orderBy: (blocks) => asc(blocks.index),
@@ -24,18 +24,18 @@ export default eventHandler(async (event) => {
     limit: 1,
   });
 
-  if (!pages || !pages.length) {
+  if (!queriedPages || !queriedPages.length) {
     console.error("[pages.get]: Error getting page - ", id, " - No page found");
     throw createError({ statusCode: 404, message: "Page not found" });
   }
   return {
     statusCode: 200,
     body: {
-      ...pages[0],
-      lastUpdatedAt: pages[0].lastUpdatedAt.getTime(),
-      createdAt: pages[0].createdAt.getTime(),
+      ...queriedPages[0],
+      lastUpdatedAt: queriedPages[0].lastUpdatedAt.getTime(),
+      createdAt: queriedPages[0].createdAt.getTime(),
       blocks: await Promise.all(
-        pages[0].blocks.map(async (block) =>
+        queriedPages[0].blocks.map(async (block) =>
           block.type === "text"
             ? {
                 ...block,
