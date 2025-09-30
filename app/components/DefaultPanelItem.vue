@@ -15,6 +15,6 @@ const emit = defineEmits<{
     @click="() => emit('click')"
   >
     <slot></slot>
-    <p class="ml-3 text-sm">{{ props.title }}</p>
+    <p class="ml-3 text-xl md:text-sm">{{ props.title }}</p>
   </button>
 </template>

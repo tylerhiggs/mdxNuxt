@@ -112,12 +112,12 @@ defineShortcuts({
 <template>
   <header
     v-if="page"
-    class="flex w-full flex-row items-center justify-between p-2 not-last:hidden md:flex"
+    class="flex w-full flex-row items-center justify-end p-2 md:justify-between"
   >
     <button
       v-for="(p, index) in page.path"
       :key="p.id"
-      class="flex items-center rounded-xs p-0.5 text-gray-700 hover:bg-gray-200 dark:text-stone-300 dark:hover:bg-stone-700"
+      class="hidden items-center rounded-xs p-0.5 text-gray-700 hover:bg-gray-200 md:flex dark:text-stone-300 dark:hover:bg-stone-700"
       @click="() => selectPage(p.id)"
     >
       <p v-if="index !== 0" class="mx-2 text-gray-500 dark:text-stone-400">/</p>

@@ -74,51 +74,55 @@ const avatarUrl = computed(() => {
         color="neutral"
         class="flex w-screen items-center justify-between rounded-md border-transparent p-2 md:w-full"
       >
-        <img
-          v-if="avatarUrl"
-          :src="'/api/private/avatars/' + auth.dbUser.value.avatar"
-          alt="Profile Picture"
-          class="h-8 w-8 rounded-full"
-        />
-        <div
-          v-else
-          class="flex aspect-square size-6 items-center justify-center rounded-md bg-gray-300 text-xs text-gray-500 dark:bg-stone-700 dark:text-stone-300"
-        >
-          {{ userFirstLetter }}
-        </div>
-        <div
-          class="mx-2 truncate overflow-hidden text-sm text-ellipsis text-black dark:text-white"
-        >
-          {{ workspaceTitle }}
-        </div>
-        <ToolTip
-          message="Close sidebar"
-          position="bottom"
-          command="meta+shift+b"
-        >
-          <UButton
-            variant="ghost"
-            color="neutral"
-            class="ml-0.5 flex items-center rounded-md p-0.5 text-2xl group-hover:visible hover:bg-gray-300 sm:invisible dark:hover:bg-stone-600"
-            @click="isOpen = false"
+        <div class="flex max-w-2/3 items-center gap-3">
+          <img
+            v-if="avatarUrl"
+            :src="'/api/private/avatars/' + auth.dbUser.value.avatar"
+            alt="Profile Picture"
+            class="h-8 w-8 rounded-full"
+          />
+          <div
+            v-else
+            class="flex aspect-square size-6 items-center justify-center rounded-md bg-gray-300 text-xs text-gray-500 dark:bg-stone-700 dark:text-stone-300"
           >
-            <UIcon
-              name="i-heroicons-x-mark"
-              class="size-5 font-bold text-gray-500 dark:text-stone-400 dark:hover:text-white"
-            />
-          </UButton>
-        </ToolTip>
-        <ToolTip message="Create a new page" position="right">
-          <button
-            class="flex items-center rounded-md p-1 text-2xl hover:bg-gray-300 dark:hover:bg-stone-600"
-            @click.prevent.stop="emit('createPage')"
+            {{ userFirstLetter }}
+          </div>
+          <div
+            class="mx-2 truncate overflow-hidden text-xl text-ellipsis text-black md:text-sm dark:text-white"
           >
-            <UIcon
-              name="i-heroicons-pencil-square"
-              class="size-5 font-bold text-gray-600 dark:text-stone-100"
-            />
-          </button>
-        </ToolTip>
+            {{ workspaceTitle }}
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <ToolTip
+            message="Close sidebar"
+            position="bottom"
+            command="meta+shift+b"
+          >
+            <UButton
+              variant="ghost"
+              color="neutral"
+              class="ml-0.5 flex items-center rounded-md p-0.5 text-2xl group-hover:visible hover:bg-gray-300 sm:invisible dark:hover:bg-stone-600"
+              @click="isOpen = false"
+            >
+              <UIcon
+                name="i-heroicons-x-mark"
+                class="size-12 font-bold text-gray-500 md:size-5 dark:text-stone-400 dark:hover:text-white"
+              />
+            </UButton>
+          </ToolTip>
+          <ToolTip message="Create a new page" position="right">
+            <button
+              class="flex items-center rounded-md p-1 text-2xl hover:bg-gray-300 dark:hover:bg-stone-600"
+              @click.prevent.stop="emit('createPage')"
+            >
+              <UIcon
+                name="i-heroicons-pencil-square"
+                class="size-12 font-bold text-gray-600 md:size-5 dark:text-stone-100"
+              />
+            </button>
+          </ToolTip>
+        </div>
       </div>
     </ClientOnly>
     <ToolTip
@@ -131,7 +135,7 @@ const avatarUrl = computed(() => {
         title="Search"
         @click="emit('toggleSearch')"
       >
-        <UIcon name="i-heroicons-magnifying-glass" class="size-4" />
+        <UIcon name="i-heroicons-magnifying-glass" class="size-6 md:size-4" />
       </DefaultPanelItem>
     </ToolTip>
     <ToolTip message="Manage your account and settings" position="right">
@@ -140,12 +144,12 @@ const avatarUrl = computed(() => {
         title="Settings"
         @click="emit('openSettings')"
       >
-        <UIcon name="i-heroicons-cog-6-tooth" class="size-4" />
+        <UIcon name="i-heroicons-cog-6-tooth" class="size-6 md:size-4" />
       </DefaultPanelItem>
     </ToolTip>
     <p
       v-if="favoritePages.length"
-      class="my-0.5 ml-3 text-xs font-normal text-gray-400"
+      class="my-0.5 ml-3 text-lg font-normal text-gray-400 md:text-xs"
     >
       Favorites
     </p>
@@ -156,7 +160,9 @@ const avatarUrl = computed(() => {
       :selected="page.id === currentPageId"
     />
     <template v-if="publicPages.length">
-      <p class="my-0.5 ml-3 text-xs font-normal text-gray-400">Public</p>
+      <p class="my-0.5 ml-3 text-lg font-normal text-gray-400 md:text-xs">
+        Public
+      </p>
       <PagePanelItem
         v-for="page in publicPages"
         :key="page.id"
@@ -183,7 +189,7 @@ const avatarUrl = computed(() => {
     <UButton
       variant="ghost"
       color="neutral"
-      class="fixed top-20 left-2 z-50 md:top-12"
+      class="fixed top-4 left-2 z-50 md:top-12"
       @click="isOpen = true"
     >
       <Icon name="i-heroicons-chevron-double-right" class="size-12 md:size-6" />

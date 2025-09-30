@@ -51,10 +51,12 @@ const menuItems = computed<DropdownMenuItem[]>(() => [
     :to="`/edit/${props.page.id}`"
   >
     <div class="flex">
-      <p class="ml-3 text-sm">
+      <p class="ml-3 text-xl md:text-sm">
         {{ props.page.emoji }}
       </p>
-      <p class="ml-3 text-sm text-ellipsis text-black dark:text-gray-400">
+      <p
+        class="ml-3 text-xl text-ellipsis text-black md:text-sm dark:text-gray-400"
+      >
         {{ props.page.title || "Untitled" }}
       </p>
     </div>

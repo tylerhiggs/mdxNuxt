@@ -45,11 +45,19 @@ export function usePageState() {
     }),
   });
 
+  const { isOpen: sidebarOpen } = useSidebar();
+  const closeSidebarOnMobile = () => {
+    if (window.innerWidth < 768) {
+      sidebarOpen.value = false;
+    }
+  };
+
   const selectPage = async (pageId: number) => {
     if (pageUpdateToSave.value || blockUpdateToSave.value) {
       executePageUpdateDb(false);
       executeBlockUpdateDb(false);
     }
+    closeSidebarOnMobile();
     blockUpdateToSave.value = undefined;
     pageUpdateToSave.value = undefined;
     currentPageId.value = pageId;
